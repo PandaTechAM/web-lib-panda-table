@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = {
   mode: "production",
-  entry: "./src/Table/index.tsx",
+  entry: "./index.tsx",
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
