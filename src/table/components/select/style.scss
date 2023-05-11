@@ -1,0 +1,135 @@
+@import "src/assets/style/variables";
+// @import "src/assets/style/mixin";
+// @import "src/assets/style/font";
+
+
+.G-select {
+  position: relative;
+  //z-index: 1000;
+}
+
+.G-select-header {
+  width: 100%;
+  max-width: 100%;
+  height: 55px;
+  border: 1px solid #ACBCC3;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.03), 0 5px 13px rgba(41, 46, 70, 0.07), 0 1px 2px rgba(41, 46, 70, 0.09);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 35px 0 15px;
+  background-color: white;
+  z-index: 99999;
+  // @include screen-max-width-1200 {
+  //   height: 45px;
+  // }
+
+  &.G-with-icon {
+    p {
+      width: calc(100% - 35px);
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.G-opacity-placeholder {
+      opacity: 0.5;
+    }
+  }
+
+  .G-select-icon {
+    // position: absolute;
+    // right: 10px;
+    // top: 50%;
+    // transform: translateY(-50%);
+    // color: var(--grey-40);
+    font-size: 14px;
+    margin-top:2px;
+  }
+}
+
+.G-select-list {
+  width: 100%;
+  max-width: 100%;
+  position: absolute;
+  top: 55px;
+  z-index: 5;
+  border-radius: 10px;
+  overflow: hidden;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 9px rgba(41, 46, 70, 0.08), 0 11px 28px rgba(41, 46, 70, 0.1);
+
+
+  ul {
+    background-color: white;
+    ;
+
+    li {
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: --transition;
+
+      &.G-selected-item {
+        // background-color: #e3e4e4 !important;
+        color: $active-color;
+      }
+
+      &:hover {
+        background-color: $hover-color;
+      }
+
+      p {
+        font-size: 12px;
+        color: var(--blue-base);
+        // font-family: $Medium;
+      }
+    }
+
+    li + li {
+      border-top: 1px dashed rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.G-select-image {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  margin-right: 10px;
+  display: block;
+  border: 1px solid var(--grey-10);
+}
+
+.G-select-label {
+  position: absolute;
+  background-color: var(--white);
+  padding: 2px 3px 0 3px;
+  left: 12px;
+  top: -10px;
+  font-size: var(--font-size-12);
+  font-weight: bold;
+  letter-spacing: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 20px);
+  white-space: nowrap;
+  border-radius: 5px;
+
+}
+
+.G-select-status {
+  width: 11px;
+  height: 11px;
+  margin-right: 10px;
+  border-radius: 50%;
+}

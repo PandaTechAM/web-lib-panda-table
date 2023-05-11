@@ -1,0 +1,286 @@
+@import "src/assets/style/variables";
+// @import "src/assets/style/mixin";
+
+@keyframes example {
+  from {height: 0px;}
+  to {height: 50px;}
+}
+
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root{
+  width: '60px' !important;
+}
+
+.G-table-actions-header{
+  background-color: white;
+  align-items: center;
+  height:55px;
+  .G-checkbox{
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+  .G-edit{
+    padding: 6px 8px;
+    border-radius: 4px;
+
+    &:hover{
+      background-color: $hover-color;
+      cursor: pointer;
+    }
+    .icon-material-symbols_edit{
+      font-size: 16px;
+      margin-right: 10px;
+    }
+  }
+  .G-delete{
+    padding: 6px 8px;
+    border-radius: 4px;
+    &:hover{
+      background-color: $hover-color;
+      cursor: pointer;
+    }
+    &:focus{
+      .icon-material-symbols_delete{
+        color: $active-color;
+        outline: none;
+      }
+    }
+    .icon-material-symbols_delete{
+      font-size: 16px;
+      margin-right: 10px;
+  
+    }
+  }
+  
+  .G-Select-container{
+   width: 56px;
+   height: 32px;
+    .G-select-header{
+      padding: 0;
+      box-shadow:none;
+      display: flex;
+      justify-content: center;
+      height: 32px;
+      p{
+        width: 50%;
+      }
+      span{
+        font-size: 12px;
+      }
+    }
+  }
+  .G-pagionation{
+    margin: 0 10px;
+    height: 24px;
+  }
+}
+
+.G-data-table {
+  color         : #161515;
+  overflow-y    : auto;
+  overflow-x    : auto;
+  max-height    : calc(100vh - 320px);
+  border-radius : 5px;
+  margin        : 0;
+  position      : relative;
+  z-index       : 1;
+  
+  .G-table-actions {
+    width           : 40px;
+    min-width       : 40px;
+    position        : -webkit-sticky;
+    position        : sticky;
+    right           : 0;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    z-index         : 99;
+  }
+}
+
+.G-data-scroll {
+  display : grid;
+.G-header{
+  display: flex; 
+  position: sticky; 
+  top: 0; 
+  z-index: 998;
+  border-bottom:1px solid #CED8DD;
+
+  .G-data-table-header {
+    margin          : 0;
+    z-index         : 999;
+    display         : flex;
+    font-size       : 14px;
+    list-style-type : none;
+    position        : -webkit-sticky;
+    position        : sticky;
+    top             : 0;
+    background-color      : #CED8DD;
+    text-align: center;
+
+    li {
+      background-color: #CED8DD;
+      padding     : 14px 15px;
+      width       : 100%;
+      color       : var(--blue-base);
+      font-size   : var(--font-size-14);
+      font-weight : 600;
+      transition  : .3s;
+      left        : auto;
+      position    : relative;
+      &:first-child {
+        border-left : none;
+      }
+    }
+}
+}
+.G-data-table-body {
+  .G-dropdown-link{
+    border: 1px solid #CED8DD;
+  }
+  .G-data-table-body div:nth-child(1){
+    background-color: #000;
+  }
+  .G-checkbox{
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+  .G-FreezedRow{
+    position: sticky;
+    top: 48px;
+    box-shadow: 0px 7px 5px 0px rgba(0, 0, 0, 0.08);
+    z-index: 35  ;
+  }
+  
+  
+  ul {
+    color           : #000;
+    margin          : 0;
+    display         : flex;
+    position        : relative;
+    list-style-type : none;
+    border-bottom : 1px solid #CED8DD;
+    background-color : white;
+
+    .G-rows-icons{
+      align-items      : center;
+      padding: 0 !important;
+      position: sticky !important;
+      top: 0;
+      z-index: 13;
+      width: 0 !important;
+      height: auto;
+      left: calc(100% - 120px) !important;
+      display: none;
+      .G-icons-group{
+        display: flex;
+        width: 150px;
+        align-items: center;
+        backdrop-filter: blur(1px) !important;
+        .icon-material-symbols_edit{
+          cursor: pointer;
+          font-size: 24px;
+          padding-right: 8px;
+        }
+        .icon-material-symbols_delete{
+          cursor: pointer;
+          
+          font-size: 24px;
+          padding: 0 8px;
+         
+        }
+        .icon-material-symbols_dashboard-rounded{
+          cursor: pointer;
+
+          font-size: 24px;
+          padding:0 18px 0 8px;
+        }
+      }
+    }
+    &:nth-child(odd) {
+      li {
+        text-align: center;
+      }
+    }
+
+    &:hover {
+      & li:nth-child(1){
+        display:flex
+        
+      }
+      li {
+        background-color : #F2F2F2 !important
+      }
+    }
+
+    li {
+      width            : 100%;
+      display          : flex;
+      position         : relative;
+      font-size        : 14px;
+      color            : var(--grey-base);
+      align-items      : center;
+      padding          : 14px 15px;
+      transition       : var(--transition);
+      background-color : var(--white-01);
+      justify-content: center;
+      &:first-child {
+        border-left   : none;
+      }
+    }
+    
+    &:last-child {
+      .P-actions-list {
+        bottom    : 0;
+        top       : auto;
+        transform : translateY(0);
+      }
+    }
+    
+  }
+}
+
+.G-total-footer{
+  display: flex; 
+  position: sticky; 
+  bottom: 0; 
+  z-index:998;
+  
+  .G-data-table-footer
+  {
+    margin          : 0;
+    z-index         : 999;
+    display         : flex;
+    font-size       : 14px;
+    list-style-type : none;
+    position        : -webkit-sticky;
+    position        : sticky;
+    top             : 0;
+    background      : var(--grey-55);
+    text-align: center;
+    background-color      : #CED8DD;
+  
+    li {
+      background-color: #CED8DD;
+      padding     : 14px 15px;
+      width       : 100%;
+      color       : var(--blue-base);
+      font-size   : var(--font-size-14);
+      font-weight : 600;
+      transition  : .3s;
+      left        : auto;
+      position    : relative;
+      &:first-child {
+        border-left : none;
+      }
+    }
+  }
+  }
+}
+
+
+

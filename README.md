@@ -10,9 +10,9 @@ npm install react-beautiful-table
 
 # Usage
 
-Import the necessary components and interfaces from the "react-app-table" package:
+Import the necessary components and interfaces from the "beautiful-react-table" package:
 
-import { Table } from 'react-app-table';
+import { Table } from 'beautiful-react-table';
 
 # Props
 

@@ -1,0 +1,22 @@
+.MuiButtonBase-root {
+    padding: 0;
+}
+.css-6hp17o-MuiList-root-MuiMenu-list{
+    padding: 0 !important;
+}
+.icon-bx_columns{
+    font-size: 20px !important;
+    margin-right: 10px;
+}
+.G-confirm-button{
+    display: flex;
+    justify-content: end;
+    button{
+        background: #FB9C59;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
+        border-radius: 4px;
+        margin: 10px 32px 32px 10px;
+        width: 100px;
+        padding: 5px 0;
+    }
+}
