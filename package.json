@@ -1,72 +1,34 @@
 {
-  "name": "beautiful-react-table",
-  "version": "1.2.0",
-  "description": "My first react typescript package",
-  "main": "./dist/bundle.js",
+  "name": "react-beautiful-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
-    "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
-    "prepublishOnly": "npm run prettier && npm run lint"
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html --dist-dir docs --public-url .",
+    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\""
   },
-  "files": [
-    "dist",
-    "LICENSE",
-    "README.md"
-  ],
-  "keywords": [
-    "react",
-    "typescript",
-    "awesome-project",
-    "react-beautiful-table",
-    "beautiful-react-table",
-    "table"
-  ],
-  "author": "Samvel Baghdasaryan (samvel97)",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PandaTechAM/table-package.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PandaTechAM/table-package/issues"
+  },
+  "homepage": "https://github.com/PandaTechAM/table-package#readme",
   "devDependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.12.2",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/lodash": "^4.14.194",
-    "@types/node": "^16.18.25",
     "@types/react": "^18.2.6",
-    "@types/react-beautiful-dnd": "^13.1.4",
-    "@types/react-dom": "^18.2.1",
-    "axios": "^1.4.0",
-    "classnames": "^2.3.2",
-    "eslint": "^8.40.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.8.8",
+    "@types/react-dom": "^18.2.4",
+    "beautiful-react-table": "^1.2.0",
+    "i": "^0.3.7",
+    "npm": "^9.6.6",
+    "parcel": "^2.8.3",
+    "process": "^0.11.10",
     "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "sass": "^1.62.1",
-    "typescript": "^4.9.5",
-    "webpack-cli": "^5.1.1"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "dependencies": {
-    "beautiful-react-table": "^1.1.0",
-    "sass-loader": "^13.2.2",
-    "ts-loader": "^9.4.2",
-    "webpack": "^5.82.1"
+    "typescript": "^5.0.4"
   }
 }
