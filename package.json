@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc --declaration",
+    "build:esm": "tsc --declaration --outDir dist/esm",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs --declaration --declarationDir dist/cjs",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
@@ -74,6 +74,7 @@
     "beautiful-react-table": "^1.1.0",
     "sass-loader": "^13.2.2",
     "ts-loader": "^9.4.2",
+    "tslib": "^2.5.0",
     "webpack": "^5.82.1"
   }
 }
