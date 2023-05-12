@@ -24,7 +24,8 @@ const HoveredRow = <T extends Object>({
     <li className='G-rows-icons'>
       <div className='G-icons-group' ref={ref}>
         {rowActions && rowActions.length
-          ? rowActions.map((elem, index) => {
+          ? //@ts-ignore
+            rowActions.map((elem, index) => {
               if (index < 2)
                 return (
                   <i

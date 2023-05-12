@@ -15,6 +15,7 @@ interface IUsePagination {
 }
 
 export const usePagination = ({ totalCount, pageSize, siblingCount = 1, currentPage }: IUsePagination) => {
+  //@ts-ignore
   return useMemo(() => {
     const totalPageCount = Math.ceil(totalCount / pageSize)
 

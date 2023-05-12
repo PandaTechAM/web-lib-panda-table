@@ -10,6 +10,7 @@ export const formatPrice = (num: number, symbol: string, isPrice = false, fixedC
     p[0]
       .split('')
       .reverse()
+      //@ts-ignore
       .reduce(function (acc, num, i, orig) {
         return num + (num !== '-' && i && !(i % 3) ? ',' : '') + acc
       }, '') +

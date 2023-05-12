@@ -1,6 +1,3 @@
-import { ReactElement } from 'react'
-import { StructureConfig } from './table.enum'
-
 export interface IProps<T extends Object> {
   data: T[]
   columnsConfigStructure: IColumnConfigStructure<T>

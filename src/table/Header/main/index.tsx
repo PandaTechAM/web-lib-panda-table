@@ -39,6 +39,7 @@ const HeaderMain = <T extends Object>({
         </li>
       )}
       {columnsHeaderStructure[StructureConfig.BB55].items.map((item: IColumnHeader, index: number) =>
+        //@ts-ignore
         columnsConfigStructure[StructureConfig.BB55].items.map((column: IColumnConfig<T>, indexx: number) => {
           if (index === indexx) {
             return (

@@ -123,7 +123,8 @@ const FreezedRows = <T extends Object>({
                           <li className='G-rows-icons' style={{ left: !isStickyFirstColumn ? '50%' : '' }}>
                             <div className='G-icons-group'>
                               {rowActions && rowActions.length
-                                ? rowActions.map((elem, index) => {
+                                ? //@ts-ignore
+                                  rowActions.map((elem, index) => {
                                     if (index < 2)
                                       return (
                                         <i
@@ -165,7 +166,7 @@ const FreezedRows = <T extends Object>({
                               )}
                             </li>
                           )}
-                          {columnsConfigStructure[StructureConfig.BB55].items.map((column, i) => {
+                          {columnsConfigStructure[StructureConfig.BB55].items.map((column) => {
                             return (
                               column.isVisible && (
                                 <li

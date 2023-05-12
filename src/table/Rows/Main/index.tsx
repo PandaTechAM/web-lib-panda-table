@@ -141,7 +141,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                 )}
 
                 {/* Columns */}
-                {columnsConfigStructure[StructureConfig.BB55].items.map((column: IColumnConfig<any>, i: number) => {
+                {columnsConfigStructure[StructureConfig.BB55].items.map((column: IColumnConfig<any>) => {
                   return (
                     column.isVisible && (
                       <li

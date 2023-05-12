@@ -126,6 +126,7 @@ const FooterMain = <T extends Object>({
         </li>
       ) : null}
       {columnsTotalStructure[StructureConfig.BB55].items.map((item: IColumnTotal, index: number) =>
+        //@ts-ignore
         columnsConfigStructure[StructureConfig.BB55].items.map((column: IColumnConfig<T>, indexx: number) => {
           if (index === indexx) {
             return (

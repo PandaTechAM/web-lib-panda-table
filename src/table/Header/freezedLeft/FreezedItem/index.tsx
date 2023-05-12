@@ -18,6 +18,7 @@ const FreezedItem = <T extends Object>({
   return (
     <>
       {columnsHeaderStructure[StructureConfig.BB33].items.map((item, index) =>
+        //@ts-ignore
         columnsConfigStructure[StructureConfig.BB33].items.map((column, indexx) => {
           if (index === indexx) {
             return (

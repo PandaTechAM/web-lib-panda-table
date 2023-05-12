@@ -11,8 +11,10 @@ const useTable = <T extends Object>(
   const [checkedLink, setCheckedLink] = useState<T>()
 
   const freezeRow = (indexx: number) => {
+    //@ts-ignore
     data.map((row, index) => {
       if (index === indexx) {
+        //@ts-ignore
         const newArr = unFreezedRows.filter((item, index) => index !== indexx)
         setFreezedRows((prev) => [...prev, unFreezedRows[indexx]])
         setUnFreezedRows(newArr)
@@ -32,7 +34,7 @@ const useTable = <T extends Object>(
 
   const getRowForDropdown = (id: number) => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
-    allRows.map((item, index) => {
+    allRows.map((item) => {
       //@ts-ignore
       if (item.id === id) {
         setCheckedLink(item)
@@ -67,7 +69,7 @@ const useTable = <T extends Object>(
       return
     }
 
-    allRows.map((item: any, index) => {
+    allRows.map((item: any) => {
       if (item.id === id) {
         setCheckedRows((prev) => [...prev, item])
       }
@@ -76,7 +78,7 @@ const useTable = <T extends Object>(
 
   const isCheckedRows = (id: number): boolean => {
     let isChecked = false
-    checkedRows.map((elem: any, i) => {
+    checkedRows.map((elem: any) => {
       if (elem.id === id) isChecked = true
     })
 

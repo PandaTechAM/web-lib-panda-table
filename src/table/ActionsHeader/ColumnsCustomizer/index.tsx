@@ -221,7 +221,7 @@ function ColumnsCustomizer<T extends Object>({
 
   useEffect(() => {
     let count = 0
-    allColumns.map((item, indexx) => {
+    allColumns.map((item) => {
       if (item.isVisible) {
         count += 1
       }
@@ -312,7 +312,7 @@ function ColumnsCustomizer<T extends Object>({
                   >
                     <div style={{ margin: 8 }}>
                       <Droppable droppableId={typeof columnId === 'string' ? columnId : '' + columnId} key={columnId}>
-                        {(provided, snapshot) => {
+                        {(provided) => {
                           return (
                             <div
                               {...provided.droppableProps}
