@@ -2,22 +2,22 @@
   "name": "beautiful-react-table",
   "version": "1.5.0",
   "description": "My first react typescript package",
-  "main": "./dist/cjs/index.d.ts",
-  "module": "./dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
-  "scripts": {
-    "build": "npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
-    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
-    "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
-    "prepublishOnly": "npm run prettier && npm run lint"
-  },
   "files": [
-    "dist",
+    "dist/",
     "LICENSE",
     "README.md"
   ],
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc --declaration",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs --declaration --declarationDir dist/cjs",
+    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
+    "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
+    "prepublishOnly": "npm run prettier && npm r  un lint"
+  },
   "keywords": [
     "react",
     "typescript",
