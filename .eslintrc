@@ -25,7 +25,20 @@
     "@typescript-eslint/no-empty-function":"off",
     "no-undef":"off",
     "no-useless-escape":"off",
-    "@typescript-eslint/no-var-requires":"off"
+    "@typescript-eslint/no-var-requires":"off",
+    "no-func-assign":"off",
+    "@typescript-eslint/no-this-alias":"off",
+    "no-cond-assign":"off",
+    "no-fallthrough":"off",
+    "no-empty":"off",
+    "no-unsafe-finally":"off",
+    "no-prototype-builtins":"off",
+    "no-inner-declarations":"off",
+    "react-internal/safe-string-coercion":"off",
+    "react-internal/no-production-logging":"off",
+    "react-internal/prod-error-codes":"off",
+    "no-redeclare":"off"
+    
   },
   "settings": {
     "react": {

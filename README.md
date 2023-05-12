@@ -6,7 +6,7 @@ React App Table is a customizable table component for React applications. It pro
 
 To install React App Table, use the following command:
 
-npm install react-beautiful-table
+npm install beautiful-react-table
 
 # Usage
 
