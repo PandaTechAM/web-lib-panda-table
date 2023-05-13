@@ -5,7 +5,9 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
-  "sideEffects": ["./src/scss/styles.scss"],
+  "sideEffects": [
+    "./src/scss/styles.scss"
+  ],
   "files": [
     "dist/",
     "src/",
@@ -13,14 +15,19 @@
     "README.md"
   ],
   "scripts": {
-    "build": "webpack --config webpack.config.js && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc --declaration --outDir dist/esm",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs --declaration --declarationDir dist/cjs",
+    "build": "rollup -c --bundleConfigAsCjs",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
     "prepublishOnly": "npm run prettier && npm run lint"
   },
   "keywords": [
+    "demo",
+    "library",
+    "tutorial",
+    "learning",
+    "educational",
+    "example",
+    "practice",
     "react",
     "typescript",
     "awesome-project",
@@ -35,18 +42,21 @@
     "url": "git+https://github.com/PandaTechAM/table-package.git"
   },
   "peerDependencies": {
-    "@mui/material": "^5.12.2",
-    "react": ">=16",
-    "react-beautiful-dnd": "13.1.1",
-    "react-dom": ">=16",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "classnames": "^2.3.2"
+    "@mui/material": "^5.12.2",
+    "classnames": "^2.3.2",
+    "react": ">=16",
+    "react-beautiful-dnd": "13.1.1",
+    "react-dom": ">=16"
   },
   "devDependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.12.2",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-typescript": "^11.1.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -67,6 +77,12 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "rollup": "^2.79.1",
+    "rollup-plugin-dts": "^5.3.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-sass": "^1.12.19",
+    "rollup-plugin-scss": "^3.0.0",
+    "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.62.1",
     "typescript": "^4.9.5"
   },
