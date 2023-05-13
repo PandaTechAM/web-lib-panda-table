@@ -1,6 +1,6 @@
 {
   "name": "beautiful-react-table",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "My first react typescript package",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -33,10 +33,13 @@
     "url": "git+https://github.com/PandaTechAM/table-package.git"
   },
   "peerDependencies": {
+    "@mui/material": "^5.12.2",
     "react": ">=16",
-    "react-dom": ">=16",
     "react-beautiful-dnd": "13.1.1",
-    "@mui/material":"^5.12.2"
+    "react-dom": ">=16",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "classnames": "^2.3.2"
   },
   "devDependencies": {
     "@emotion/react": "^11.10.6",
@@ -63,8 +66,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "sass": "^1.62.1",
-    "typescript": "^4.9.5",
-    "webpack-cli": "^5.1.1"
+    "typescript": "^4.9.5"
   },
   "eslintConfig": {
     "extends": [
@@ -77,6 +79,7 @@
     "sass-loader": "^13.2.2",
     "ts-loader": "^9.4.2",
     "tslib": "^2.5.0",
-    "webpack": "^5.82.1"
+    "webpack": "^5.82.1",
+    "webpack-cli": "^5.1.1"
   }
 }
