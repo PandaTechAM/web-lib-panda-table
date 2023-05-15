@@ -25,6 +25,7 @@ export default [
       },
     ],
     plugins: [
+      peerDepsExternal(),
       resolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
@@ -32,7 +33,7 @@ export default [
     ],
   },
   {
-    input: "dist/esm/types/index.d.ts",
+    input: "src/index.ts",
     output: [{ file: "dist/types.d.ts", format: "esm" }],
     plugins: [dts()],
     external: [/\.scss$/],
