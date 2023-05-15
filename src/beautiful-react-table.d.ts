@@ -1,1 +1,1 @@
-declare module 'beautiful-react-table';
+declare module 'beautiful-react-table'

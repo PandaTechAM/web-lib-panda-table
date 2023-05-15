@@ -1,22 +1,16 @@
 {
   "name": "beautiful-react-table",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "My first react typescript package",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types.d.ts",
-  "sideEffects": [
-    "./src/scss/styles.scss"
-  ],
   "files": [
-    "dist/",
-    "src/",
-    "LICENSE",
-    "README.md"
+    "dist/"
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && rollup -c --bundleConfigAsCjs",
+    "build": "npm run clean && rollup -c",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
     "prepublishOnly": "npm run prettier && npm run lint"
