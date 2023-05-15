@@ -17,6 +17,7 @@
   "exclude": [
     "dist",
     "node_modules",
+    "node_modules/beautiful-react-table",
     "src/**/*.test.tsx",
     "src/**/*.stories.tsx"
   ]
