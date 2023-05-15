@@ -5,7 +5,15 @@
 @import "mixin";
 @import "../icons/style.css";
 @import "mask-icons";
-@import "../../table/index.scss"
+@import "../../table/index.scss";
+@import "../../table/ActionsHeader/CheckRows/style.scss";
+@import "../../table/ActionsHeader/ColumnsCustomizer/style.scss";
+@import "../../table/components/checkbox/style.scss";
+@import "../../table/components/Input/Input.scss";
+@import "../../table/components/pagination/style.scss";
+@import "../../table/components/select/style.scss";
+@import "../../table/Footer/FreezedLeft/style.scss";
+@import "../../table/Footer/Main/style.scss";
 
 
 

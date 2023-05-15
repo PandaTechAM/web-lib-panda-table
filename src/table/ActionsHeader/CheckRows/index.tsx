@@ -2,7 +2,7 @@ import React from 'react'
 import Checkbox from '../../components/checkbox'
 import { Button, Menu } from '@mui/material'
 import { useState } from 'react'
-import './style.scss'
+// import './style.scss'
 import { CheckedItems } from '../../../Models/table.enum'
 
 interface ICheckRows<T extends Object> {

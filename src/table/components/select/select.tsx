@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './style.scss'
+// import './style.scss'
 import ClickOutside from '../click-outside'
 /**
  * Main  props  for select component
