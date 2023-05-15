@@ -3,7 +3,7 @@ import { IColumnConfigStructure, IColumnTotalStructure, ITotalList } from '../..
 import { Button, Menu } from '@mui/material'
 import FreezedItems from './FreezedItems'
 import { useState } from 'react'
-// import './style.scss'
+import './style.scss'
 import { StructureConfig } from '../../../Models/table.enum'
 interface IFooterFreezedLeft<T extends Object> {
   columnsTotalStructure: IColumnTotalStructure

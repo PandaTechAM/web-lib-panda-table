@@ -1,7 +1,7 @@
 import React from 'react'
 import { InputHTMLAttributes, DetailedHTMLProps, forwardRef } from 'react'
 import cx from 'classnames'
-// import './Input.scss'
+import './Input.scss'
 import { regExp } from '../../../constants/regExp'
 
 const Input = forwardRef<HTMLInputElement, DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>>(

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
-// import './style.scss'
+import './style.scss'
 import {
   IColumnConfigStructure,
   IColumnHeaderStructure,

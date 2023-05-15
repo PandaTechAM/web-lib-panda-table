@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { usePagination, DOTS } from './usePagination'
-// import './style.scss'
+import './style.scss'
 import { containsOnlyNumbers } from '../../../utils'
 import Input from '../Input/Input'
 

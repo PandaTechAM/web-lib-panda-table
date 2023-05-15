@@ -8,7 +8,7 @@ import {
 } from '../../../Models/table.models'
 import { Button, Menu } from '@mui/material'
 import { useState } from 'react'
-// import './style.scss'
+import './style.scss'
 import { formatPrice } from '../../../utils'
 import { StructureConfig } from '../../../Models/table.enum'
 interface IFooterMain<T extends Object> {
