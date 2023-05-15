@@ -5,7 +5,6 @@ import Header from './Header'
 import Rows from './Rows'
 import useTable from './useTable'
 import Footer from './Footer'
-import './index.scss'
 import '../index.scss'
 import '../assets/style/index.scss'
 
