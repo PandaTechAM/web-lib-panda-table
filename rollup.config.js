@@ -42,6 +42,6 @@ export default [
     input: "src/index.ts",
     output: [{ file: "dist/types.d.ts", format: "es" }],
     plugins: [dts()],
-    external: [/\.scss$/],
+    external: [/\.css$/,/\.scss$/],
   },
 ];
