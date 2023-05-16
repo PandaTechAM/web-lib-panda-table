@@ -10,6 +10,7 @@ import {
   ISelectPage,
 } from '../../Models/table.models'
 import CheckRows from './CheckRows'
+import SortSvgIcon from '../../svgIcons/SortSvgIcon'
 
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -117,6 +118,13 @@ const ActionsHeader = <T extends Object>({
           {pageSize && selectedPage && (
             <div className='G-justify-between G-align-center' style={{ width: '138px' }}>
               <div>Show</div>
+              <div
+                style={{
+                  fontSize: '16px',
+                }}
+              >
+                <SortSvgIcon />
+              </div>
               <Select
                 optionsList={pageSize}
                 value={selectedPage.id}

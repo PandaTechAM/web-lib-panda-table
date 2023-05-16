@@ -39,6 +39,8 @@ export default [
         emitFiles: true,
         limit: Infinity,
       }),
+      svg(),
+      json()
     ],
   },
   {
