@@ -13,7 +13,6 @@ npm install beautiful-react-table
 Import the necessary components and interfaces from the "beautiful-react-table" package:
 
 import { useState } from "react";
-import SortSvgIcon from "./svgIcons/SortSvgIcon";
 import {
   Table,
   IColumnConfig,
