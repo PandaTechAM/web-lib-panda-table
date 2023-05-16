@@ -32,20 +32,12 @@ export default [
       resolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
-      // terser(),
-      // scss({
-      //   output: 'dist/cjs/index.css',
-      //   extensions: ['.sass','.css'],
-      //   // outputStyle: "compressed"
-      // }),
       postcss(),
       url({
-        // by default, rollup-plugin-url will not handle font files
         include: ['**/*.woff', '**/*.woff2', '**/*.eot', '**/*.ttf', '**/*.svg'],
         emitFiles: true,
-        // setting infinite limit will ensure that the files 
-        // are always bundled with the code, not copied to /dist
         limit: Infinity,}),
+      svg(),
       json(),
       
     ],
