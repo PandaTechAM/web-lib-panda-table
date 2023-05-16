@@ -34,29 +34,17 @@ export default [
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
       postcss(),
-      copy({
-        targets: [
-          {
-            src: 'src/assets/icons/*',
-            dest: 'dist/fonts',
-          },
-        ],
-      }),
       url({
-        include: ['**/*.woff', '**/*.woff2', '**/*.eot', '**/*.ttf', '**/*.svg'],
+        include: ['**/*.woff', '**/*.woff2', '**/*.eot', '**/*.ttf', '**/*.svg', '**/*.json'],
         emitFiles: true,
         limit: Infinity,
-        fileName: "[name][extname]",
-        destDir: "dist/fonts"
       }),
-      json(),
-      
     ],
   },
   {
     input: "src/index.ts",
     output: [{ file: "dist/types.d.ts", format: "es" }],
     plugins: [dts()],
-    external: [/\.css$/,/\.scss$/],
+    external: [/\.css$/, /\.scss$/, /\.woff$/, /\.woff2$/, /\.eot$/, /\.ttf$/, /\.svg$/, /\.json$/],
   },
 ];

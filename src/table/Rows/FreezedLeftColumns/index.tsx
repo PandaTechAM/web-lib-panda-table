@@ -4,7 +4,7 @@ import { IFreezeProps } from '../../../Models/table.models'
 import { forwardRef } from 'react'
 
 const FreezedLeftColumns = forwardRef<any, IFreezeProps<any>>(
-  ({ columnsConfigStructure, columnMinWidth, item, freezedLeftSideColor }) => {
+  ({ columnsConfigStructure, columnMinWidth, item, freezedLeftSideColor }, ref) => {
     return (
       <>
         {columnsConfigStructure[StructureConfig.BB33].items.map((column) => {
