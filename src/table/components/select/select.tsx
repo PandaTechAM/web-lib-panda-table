@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
 import ClickOutside from '../click-outside'
+import DropdownSvgIcon from '../../../svgIcons/DropdownSvgIcon'
+
 /**
  * Main  props  for select component
  * T is  the main type for  component
@@ -173,13 +175,9 @@ function Select<T>({
           {selectedValueName ? selectedValueName : placeholder}
         </p>
         {(!selectedValueName || (selectedValueName && !isClear)) && (
-          <i
-            className={`G-select-icon ${
-              isOpenList
-                ? 'icon-material-symbols_arrow-forward-ios-rounded'
-                : 'icon-material-symbols_arrow-forward-ios-rounded-1'
-            } `}
-          />
+          <div style={{ display: 'flex' }}>
+            <DropdownSvgIcon />
+          </div>
         )}
         {isClear && selectedValueName && (
           <i onClick={resetData} className={`G-select-icon icon-close G-cursor-pointer`} />

@@ -11,7 +11,8 @@ import {
 } from '../../../Models/table.models'
 import Checkbox from '../../components/checkbox'
 import { StructureConfig } from '../../../Models/table.enum'
-
+import ColumnsSvgIcon from '../../../svgIcons/ColumnsSvgIcon'
+import GroupSvgIcons from '../../../svgIcons/GroupSvgIcon'
 const onDragEnd = <T extends Object>(
   result: DropResult,
   columnsConfigStructure: IColumnConfigStructure<T>,
@@ -241,8 +242,16 @@ function ColumnsCustomizer<T extends Object>({
             color: open ? '#4844C5' : 'black',
           }}
         >
-          <i className='icon-bx_columns' />
-          <div style={{ fontWeight: 'bold' }}>Customize Columns</div>
+          <div
+            style={{
+              marginRight: 10,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <ColumnsSvgIcon />
+          </div>
+          <div style={{ fontWeight: 'bold', color: '#494949' }}>Customize Columns</div>
         </Button>
       </div>
 
@@ -355,13 +364,15 @@ function ColumnsCustomizer<T extends Object>({
                                               height: '24px',
                                             }}
                                           >
-                                            <i
-                                              className='icon-Group-173'
+                                            <div
                                               style={{
-                                                fontSize: '10px',
-                                                paddingRight: '8px',
+                                                marginRight: 8,
+                                                display: 'flex',
+                                                alignItems: 'center',
                                               }}
-                                            />
+                                            >
+                                              <GroupSvgIcons />
+                                            </div>
                                             <Checkbox
                                               isCheck={item.isVisible}
                                               onClick={() =>

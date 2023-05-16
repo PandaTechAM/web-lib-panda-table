@@ -3,7 +3,8 @@ import { usePagination, DOTS } from './usePagination'
 import './style.scss'
 import { containsOnlyNumbers } from '../../../utils'
 import Input from '../Input/Input'
-
+import ArrowLeftSvgIcon from '../../../svgIcons/ArrowLeftSvgIcon'
+import ArrowRightSvgIcon from '../../../svgIcons/ArrowRightSvgIcon'
 interface IPagination {
   onPageChange(page: number | string): void
   totalCount: number
@@ -59,7 +60,9 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
     <>
       <ul className={`pagination-container ${className} G-flex G-align-center G-justify-between`}>
         <li className={`pagination-item ${currentPage === 1 ? 'disabled' : ''}`} onClick={onPrevious}>
-          <div className='arrow left icon-material-symbols_arrow-forward-ios-rounded-2' />
+          <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+            <ArrowLeftSvgIcon />
+          </div>
         </li>
         {/*@ts-ignore*/}
         {paginationRange.map((pageNumber, index) => {
@@ -83,7 +86,9 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
           )
         })}
         <li className={`pagination-item ${currentPage === lastPage ? 'disabled' : ''}`} onClick={onNext}>
-          <div className='arrow right icon-material-symbols_arrow-forward-ios-rounded-3' />
+          <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+            <ArrowRightSvgIcon />
+          </div>
         </li>
       </ul>
       <div className='G-align-center'>

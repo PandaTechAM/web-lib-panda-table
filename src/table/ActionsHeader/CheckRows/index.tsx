@@ -4,7 +4,7 @@ import { Button, Menu } from '@mui/material'
 import { useState } from 'react'
 import './style.scss'
 import { CheckedItems } from '../../../Models/table.enum'
-
+import DropdownSvgIcon from '../../../svgIcons/DropdownSvgIcon'
 interface ICheckRows<T extends Object> {
   data: T[]
   checkedRows: T[]
@@ -91,13 +91,9 @@ const CheckRows = <T extends Object>({
             minWidth: 10,
           }}
         >
-          <i
-            style={{
-              fontSize: '9px',
-              color: open ? '#4844c5' : 'black',
-            }}
-            className={'icon-Polygon-4'}
-          />
+          <div>
+            <DropdownSvgIcon />
+          </div>
         </Button>
         <Menu
           id='basic-menu'

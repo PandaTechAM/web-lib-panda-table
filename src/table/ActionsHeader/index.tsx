@@ -10,7 +10,8 @@ import {
   ISelectPage,
 } from '../../Models/table.models'
 import CheckRows from './CheckRows'
-import SortSvgIcon from '../../svgIcons/SortSvgIcon'
+import DeleteSvgIcon from '../../svgIcons/DeleteSvgIcon'
+import EditSvgIcon from '../../svgIcons/EditSvgIcon'
 
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -80,17 +81,21 @@ const ActionsHeader = <T extends Object>({
           <div className='G-flex' style={{ marginRight: '27px' }}>
             {checkedRows.length !== 1 ? null : (
               <div
-                className='G-edit'
+                className='G-flex G-edit'
                 style={{ marginRight: '20px' }}
                 onClick={() => handleEdit && handleEdit(checkedRows[0])}
               >
-                <i className='icon-material-symbols_edit' />
+                <div>
+                  <EditSvgIcon />
+                </div>
                 <span>Edit</span>
               </div>
             )}
             {checkedRows.length ? (
-              <div className='G-delete' onClick={() => handleDelete && handleDelete(checkedRows)}>
-                <i className='icon-material-symbols_delete' />
+              <div className='G-flex G-delete' onClick={() => handleDelete && handleDelete(checkedRows)}>
+                <div>
+                  <DeleteSvgIcon />
+                </div>
                 <span>Delete</span>
               </div>
             ) : null}
@@ -122,9 +127,7 @@ const ActionsHeader = <T extends Object>({
                 style={{
                   fontSize: '16px',
                 }}
-              >
-                <SortSvgIcon />
-              </div>
+              ></div>
               <Select
                 optionsList={pageSize}
                 value={selectedPage.id}

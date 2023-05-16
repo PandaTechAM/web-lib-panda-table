@@ -1,4 +1,43 @@
-import { IProps } from './Models/table.models'
+import {
+  IProps,
+  IColumnTotal,
+  IColumns,
+  IHeaders,
+  ITotals,
+  IColumnConfigStructure,
+  IColumnHeaderStructure,
+  IColumnTotalStructure,
+  ITotalList,
+  IFreezeProps,
+  IColumnConfig,
+  IPageSizes,
+  ISelectPage,
+  IColumnHeader,
+  IColumn,
+  IrowActions,
+  ILinksList,
+} from './Models/table.models'
+import { StructureConfig } from './Models/table.enum'
 import Table from './table'
 
-export { Table, IProps as ITableProps }
+export {
+  Table,
+  IProps as ITableProps,
+  IColumnTotal,
+  IColumns,
+  IHeaders,
+  ITotals,
+  IColumnConfigStructure,
+  IColumnHeaderStructure,
+  IColumnTotalStructure,
+  ITotalList,
+  IFreezeProps,
+  IColumnConfig,
+  IPageSizes,
+  ISelectPage,
+  IColumnHeader,
+  IColumn,
+  IrowActions,
+  ILinksList,
+  StructureConfig,
+}

@@ -5,6 +5,8 @@ import FreezedItems from './FreezedItems'
 import { useState } from 'react'
 import './style.scss'
 import { StructureConfig } from '../../../Models/table.enum'
+import ArrowTopSvgIcon from '../../../svgIcons/ArrowtopSvgIcon'
+import ArrowBottomSvgIcon from '../../../svgIcons/ArrowBottomSvgIcon'
 interface IFooterFreezedLeft<T extends Object> {
   columnsTotalStructure: IColumnTotalStructure
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -73,16 +75,15 @@ const FooterFreezedLeft = <T extends Object>({
             >
               {`Total ${listForDropdown && listForDropdown[selectedItem].title}`}
             </div>
-            <i
-              style={{
-                color: open ? '#4844c5' : 'black',
-              }}
-              className={
-                open
-                  ? 'icon-material-symbols_arrow-forward-ios-rounded G-dropdown-icon'
-                  : 'icon-material-symbols_arrow-forward-ios-rounded-1 G-dropdown-icon'
-              }
-            />
+            {open ? (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <ArrowTopSvgIcon />
+              </div>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <ArrowBottomSvgIcon />
+              </div>
+            )}
           </Button>
           <Menu
             id='basic-menu'
