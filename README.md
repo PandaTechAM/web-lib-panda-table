@@ -9,8 +9,10 @@ To install beautiful-react-table, use the following command:
 npm install beautiful-react-table
 
 # Usage
-```JSX
+
 Import the necessary components and interfaces from the "beautiful-react-table" package:
+
+```JSX
 
 import { useState } from "react";
 import {
