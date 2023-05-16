@@ -29,12 +29,16 @@ export default [
       resolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
-      scss()
+      postcss({
+        extract: true, // Extract CSS to a separate file
+        minimize: true, // Minify CSS
+        extensions: ['.sass','.css']
+      }),
     ],
   },
   {
     input: "src/index.ts",
-    output: [{ file: "dist/types.d.ts", format: "esm" }],
+    output: [{ file: "dist/types.d.ts", format: "es" }],
     plugins: [dts()],
     external: [/\.scss$/],
   },

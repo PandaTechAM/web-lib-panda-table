@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
+
     "jsx": "react",
     "module": "ESNext",
     "declaration": true,
@@ -10,15 +13,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "moduleResolution": "node",
-    "emitDeclarationOnly": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true
+    "emitDeclarationOnly": true,
   },
-  "exclude": [
-    "dist",
-    "node_modules",
-    "node_modules/beautiful-react-table",
-    "src/**/*.test.tsx",
-    "src/**/*.stories.tsx"
-  ]
 }
