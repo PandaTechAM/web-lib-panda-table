@@ -42,7 +42,13 @@ export default [
           },
         ],
       }),
-      svg(),
+      url({
+        include: ['**/*.woff', '**/*.woff2', '**/*.eot', '**/*.ttf', '**/*.svg'],
+        emitFiles: true,
+        limit: Infinity,
+        fileName: "[name][extname]",
+        destDir: "dist/fonts"
+      }),
       json(),
       
     ],
