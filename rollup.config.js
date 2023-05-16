@@ -4,9 +4,12 @@ import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import dts from "rollup-plugin-dts";
-import sass from "rollup-plugin-sass"
-import scss from "rollup-plugin-scss"
+import sass from "rollup-plugin-sass";
+import scss from "rollup-plugin-scss";
 import postcss from "rollup-plugin-postcss";
+import url from 'rollup-plugin-url';
+import svg from 'rollup-plugin-svg';
+import json from 'rollup-plugin-json';
 const packageJson = require("./package.json");
 
 export default [
@@ -36,6 +39,15 @@ export default [
       //   // outputStyle: "compressed"
       // }),
       postcss(),
+      url({
+        // by default, rollup-plugin-url will not handle font files
+        include: ['**/*.woff', '**/*.woff2', '**/*.eot', '**/*.ttf', '**/*.svg'],
+        emitFiles: true,
+        // setting infinite limit will ensure that the files 
+        // are always bundled with the code, not copied to /dist
+        limit: Infinity,}),
+      json(),
+      
     ],
   },
   {
