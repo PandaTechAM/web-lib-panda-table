@@ -29,11 +29,14 @@ export default [
       resolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
-      postcss({
-        extract: true, // Extract CSS to a separate file
-        minimize: true, // Minify CSS
+      scss({
+        output: 'dist/cjs/index.css',
         extensions: ['.sass','.css']
       }),
+      // postcss({
+      //   extract: true, // Extract CSS to a separate file
+      //   extensions: ['.sass','.css']
+      // }),
     ],
   },
   {
