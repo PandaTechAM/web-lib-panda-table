@@ -29,14 +29,13 @@ export default [
       resolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
-      scss({
-        output: 'dist/cjs/index.css',
-        extensions: ['.sass','.css']
-      }),
-      // postcss({
-      //   extract: true, // Extract CSS to a separate file
-      //   extensions: ['.sass','.css']
+      // terser(),
+      // scss({
+      //   output: 'dist/cjs/index.css',
+      //   extensions: ['.sass','.css'],
+      //   // outputStyle: "compressed"
       // }),
+      postcss(),
     ],
   },
   {
