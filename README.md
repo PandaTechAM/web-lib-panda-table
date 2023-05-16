@@ -711,7 +711,7 @@ export default App;
 # Props
 
 The "Table" component accepts the following props:
-
+```TS
 data (required): An array of objects representing the table data.
 columnsConfigStructure (required): An object representing the column configuration structure.
 columnsHeaderStructure (required): An object representing the column header structure.
@@ -748,3 +748,4 @@ handleDelete (optional): A function to handle the delete action for multiple tab
 setColumnsConfigStructure (optional): A function to set the column configuration structure.
 setColumnHeaderStructure (optional): A function to set the column header structure.
 handleSelectDataSize (optional): A function to handle the selection of data size for pagination
+```
