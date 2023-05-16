@@ -9,7 +9,7 @@ To install beautiful-react-table, use the following command:
 npm install beautiful-react-table
 
 # Usage
-
+```JSX
 Import the necessary components and interfaces from the "beautiful-react-table" package:
 
 import { useState } from "react";
@@ -707,7 +707,7 @@ function App() {
 
 
 export default App;
-
+```
 # Props
 
 The "Table" component accepts the following props:
