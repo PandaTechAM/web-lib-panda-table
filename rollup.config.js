@@ -10,6 +10,7 @@ import postcss from "rollup-plugin-postcss";
 import url from 'rollup-plugin-url';
 import svg from 'rollup-plugin-svg';
 import json from 'rollup-plugin-json';
+import copy from 'rollup-plugin-copy';
 const packageJson = require("./package.json");
 
 export default [
@@ -33,10 +34,14 @@ export default [
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
       postcss(),
-      url({
-        include: ['**/*.woff', '**/*.woff2', '**/*.eot', '**/*.ttf', '**/*.svg'],
-        emitFiles: true,
-        limit: Infinity,}),
+      copy({
+        targets: [
+          {
+            src: 'src/assets/icons/*',
+            dest: 'dist/fonts',
+          },
+        ],
+      }),
       svg(),
       json(),
       
