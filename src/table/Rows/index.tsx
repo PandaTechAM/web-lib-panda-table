@@ -13,7 +13,7 @@ interface IRows<T extends Object> {
   checkedLink?: T
   tableWidth?: number
   columnMinWidth?: number
-  freezeIcon?: string
+  FreezeIcon?: any
   multipleCheck?: boolean
   isStickyFirstColumn?: boolean
   isHoveredRow?: boolean
@@ -21,11 +21,11 @@ interface IRows<T extends Object> {
   freezedLeftSideColor?: string
   freezedRightSideColor?: string
   freezedRightSide?: string
-  leftSideIcon?: string
+  RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   headerHeight?: number
-  LeftSideSelfAction?: (option: number | string) => void
+  RightSideSelfAction?: (option: number | string) => void
   freezeRow(option: number): void
   unFreezeRow(option: number): void
   handleCheck(option: number): void
@@ -42,7 +42,7 @@ const Rows = forwardRef<any, IRows<any>>(
       multipleCheck,
       columnMinWidth,
       rowActions,
-      freezeIcon,
+      FreezeIcon,
       links,
       checkedLink,
       unFreezedRows,
@@ -52,11 +52,11 @@ const Rows = forwardRef<any, IRows<any>>(
       freezedRightSideVisible,
       freezedRightSide,
       isStickyFirstColumn,
-      leftSideIcon,
+      RightSideIcon,
       leftFreezedColumnWidth,
       rightFreezedColumnWidth,
       headerHeight,
-      LeftSideSelfAction,
+      RightSideSelfAction,
       freezeRow,
       getRowForDropdown,
       isCheckedRows,
@@ -68,14 +68,14 @@ const Rows = forwardRef<any, IRows<any>>(
   ) => {
     return (
       <>
-        {freezedRows && freezeIcon ? (
+        {freezedRows ? (
           <FreezedRows
             freezedRows={freezedRows}
             columnsConfigStructure={columnsConfigStructure}
             multipleCheck={multipleCheck}
             columnMinWidth={columnMinWidth}
             rowActions={rowActions}
-            freezeIcon={freezeIcon}
+            FreezeIcon={FreezeIcon}
             links={links}
             checkedLink={checkedLink}
             freezedLeftSideColor={freezedLeftSideColor}
@@ -83,11 +83,11 @@ const Rows = forwardRef<any, IRows<any>>(
             freezedRightSideVisible={freezedRightSideVisible}
             freezedRightSide={freezedRightSide}
             isStickyFirstColumn={isStickyFirstColumn}
-            leftSideIcon={leftSideIcon}
+            RightSideIcon={RightSideIcon}
             leftFreezedColumnWidth={leftFreezedColumnWidth}
             rightFreezedColumnWidth={rightFreezedColumnWidth}
             headerHeight={headerHeight}
-            LeftSideSelfAction={LeftSideSelfAction}
+            RightSideSelfAction={RightSideSelfAction}
             getRowForDropdown={getRowForDropdown}
             dragDropFreezeRow={dragDropFreezeRow}
             unFreezeRow={unFreezeRow}
@@ -103,7 +103,7 @@ const Rows = forwardRef<any, IRows<any>>(
           multipleCheck={multipleCheck}
           columnMinWidth={columnMinWidth}
           rowActions={rowActions}
-          freezeIcon={freezeIcon}
+          FreezeIcon={FreezeIcon}
           links={links}
           checkedLink={checkedLink}
           isHoveredRow={isHoveredRow}
@@ -112,10 +112,10 @@ const Rows = forwardRef<any, IRows<any>>(
           freezedRightSideVisible={freezedRightSideVisible}
           freezedRightSide={freezedRightSide}
           isStickyFirstColumn={isStickyFirstColumn}
-          leftSideIcon={leftSideIcon}
+          RightSideIcon={RightSideIcon}
           leftFreezedColumnWidth={leftFreezedColumnWidth}
           rightFreezedColumnWidth={rightFreezedColumnWidth}
-          LeftSideSelfAction={LeftSideSelfAction}
+          RightSideSelfAction={RightSideSelfAction}
           freezeRow={freezeRow}
           getRowForDropdown={getRowForDropdown}
           isCheckedRows={isCheckedRows}

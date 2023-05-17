@@ -2,15 +2,16 @@ import React from 'react'
 import { Button, Menu } from '@mui/material'
 import { ILinksList } from '../../../../Models/table.models'
 import { useState } from 'react'
-
+import LinkSvgIcon from '../../../../svgIcons/LinkSvgIcon'
 interface IDropDown<T extends Object> {
   item: T
   checkedLink?: T
   links?: ILinksList[]
+  RightSideIcon?: any
   getRowForDropdown?(option: number): void
 }
 
-const DropDown = <T extends Object>({ item, checkedLink, links, getRowForDropdown }: IDropDown<T>) => {
+const DropDown = <T extends Object>({ item, checkedLink, links, RightSideIcon, getRowForDropdown }: IDropDown<T>) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,16 +30,29 @@ const DropDown = <T extends Object>({ item, checkedLink, links, getRowForDropdow
         onClick={handleClick}
         style={{ minWidth: '10px' }}
       >
-        <i
-          //@ts-ignore
-          onClick={() => getRowForDropdown && getRowForDropdown(item.id)}
-          style={{
-            color:
-              //@ts-ignore
-              checkedLink && checkedLink.id === item.id && open ? '#4844c5' : 'black',
-          }}
-          className={'icon-Vector1'}
-        />
+        <div
+          onClick={() =>
+            //@ts-ignore
+            getRowForDropdown && getRowForDropdown(item.id)
+          }
+          style={{ display: 'flex', alignItems: 'center' }}
+        >
+          {!RightSideIcon ? (
+            <LinkSvgIcon
+              fill={
+                //@ts-ignore
+                checkedLink && checkedLink.id === item.id && open ? '#4844c5' : 'black'
+              }
+            />
+          ) : (
+            <RightSideIcon
+              fill={
+                //@ts-ignore
+                checkedLink && checkedLink.id === item.id && open ? '#4844c5' : 'black'
+              }
+            />
+          )}
+        </div>
       </Button>
       <Menu
         id='basic-menu'
@@ -76,8 +90,16 @@ const DropDown = <T extends Object>({ item, checkedLink, links, getRowForDropdow
                     borderBottom: ind !== links.length - 1 ? '1px solid #757575' : '',
                   }}
                 >
-                  <i className={el.icon} style={{ color: '#4844c5' }} />
-                  <div style={{ paddingLeft: '10px', fontSize: '12px' }}>{el.name}</div>
+                  {el.icon ? el.icon() : null}
+                  <div
+                    style={{
+                      paddingLeft: '10px',
+                      fontSize: '12px',
+                      width: '80%',
+                    }}
+                  >
+                    {el.name}
+                  </div>
                 </li>
               )
             })}

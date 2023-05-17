@@ -7,8 +7,8 @@ interface IFreezedRightColumns<T extends Object> {
   checkedLink?: T
   links?: ILinksList[]
   freezedRightSide?: string
-  leftSideIcon?: string
-  LeftSideSelfAction?: (option: number | string) => void
+  RightSideIcon?: any
+  RightSideSelfAction?: (option: number | string) => void
   getRowForDropdown(option: number): void
 }
 const FreezedRightColumns = <T extends Object>({
@@ -16,19 +16,25 @@ const FreezedRightColumns = <T extends Object>({
   checkedLink,
   links,
   freezedRightSide,
-  leftSideIcon,
-  LeftSideSelfAction,
+  RightSideIcon,
+  RightSideSelfAction,
   getRowForDropdown,
 }: IFreezedRightColumns<T>) => {
   return (
     <>
       {freezedRightSide && freezedRightSide === 'dropdown' ? (
-        <DropDown item={item} checkedLink={checkedLink} links={links} getRowForDropdown={getRowForDropdown} />
+        <DropDown
+          item={item}
+          checkedLink={checkedLink}
+          links={links}
+          RightSideIcon={RightSideIcon}
+          getRowForDropdown={getRowForDropdown}
+        />
       ) : (
         <SelfAction
           item={item}
-          leftSideIcon={leftSideIcon}
-          LeftSideSelfAction={LeftSideSelfAction}
+          RightSideIcon={RightSideIcon}
+          RightSideSelfAction={RightSideSelfAction}
           getRowForDropdown={getRowForDropdown}
         />
       )}

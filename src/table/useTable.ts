@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 const useTable = <T extends Object>(
   data: T[],
   allDataFromDb: T[] | undefined,
-  LeftSideSelfAction?: (options: any) => void,
+  freezedRightSide?: string,
+  RightSideSelfAction?: (options: any) => void,
 ) => {
   const [freezedRows, setFreezedRows] = useState<T[]>([])
   const [unFreezedRows, setUnFreezedRows] = useState<any[]>(data)
@@ -37,8 +38,8 @@ const useTable = <T extends Object>(
     allRows.map((item) => {
       //@ts-ignore
       if (item.id === id) {
-        setCheckedLink(item)
-        LeftSideSelfAction && LeftSideSelfAction(item)
+        freezedRightSide && freezedRightSide == 'dropdown' && setCheckedLink(item)
+        RightSideSelfAction && RightSideSelfAction(item)
       }
     })
   }

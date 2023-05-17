@@ -23,7 +23,7 @@ function Table<T extends Object>({
   columnsHeaderStructure = {} as any,
   columnsTotalStructure,
   rowActions,
-  freezeIcon,
+  FreezeIcon,
   isHoveredRow,
   links,
   listForDropdown,
@@ -34,12 +34,12 @@ function Table<T extends Object>({
   draggableColumns,
   freezedRightSideVisible,
   freezedRightSide,
-  leftSideIcon,
+  RightSideIcon,
   footerHeight,
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
   headerHeight,
-  LeftSideSelfAction,
+  RightSideSelfAction,
   setColumnTotalStructures,
   setColumnsConfigStructure,
   setColumnHeaderStructure,
@@ -64,7 +64,7 @@ function Table<T extends Object>({
     isCheckedRows,
     unCheck,
     checkAllDataFromDb,
-  } = useTable(data, allDataFromDb, LeftSideSelfAction)
+  } = useTable(data, allDataFromDb, freezedRightSide, RightSideSelfAction)
 
   return (
     <div>
@@ -118,7 +118,7 @@ function Table<T extends Object>({
               multipleCheck={multipleCheck}
               columnMinWidth={columnMinWidth}
               rowActions={rowActions}
-              freezeIcon={freezeIcon}
+              FreezeIcon={FreezeIcon}
               links={links}
               checkedLink={checkedLink}
               unFreezedRows={unFreezedRows}
@@ -128,11 +128,11 @@ function Table<T extends Object>({
               freezedRightSideVisible={freezedRightSideVisible}
               freezedRightSide={freezedRightSide}
               isStickyFirstColumn={isStickyFirstColumn}
-              leftSideIcon={leftSideIcon}
+              RightSideIcon={RightSideIcon}
               leftFreezedColumnWidth={leftFreezedColumnWidth}
               rightFreezedColumnWidth={rightFreezedColumnWidth}
               headerHeight={headerHeight}
-              LeftSideSelfAction={LeftSideSelfAction}
+              RightSideSelfAction={RightSideSelfAction}
               freezeRow={freezeRow}
               getRowForDropdown={getRowForDropdown}
               isCheckedRows={isCheckedRows}

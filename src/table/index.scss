@@ -174,30 +174,28 @@
       z-index: 13;
       width: 0 !important;
       height: auto;
-      left: calc(100% - 120px) !important;
+      left: calc(100% - 150px) !important;
       display: none;
       .G-icons-group{
         display: flex;
         width: 150px;
         align-items: center;
         backdrop-filter: blur(1px) !important;
-        .icon-material-symbols_edit{
+        .icon-edit{
           cursor: pointer;
           font-size: 24px;
           padding-right: 8px;
         }
-        .icon-material-symbols_delete{
+        .icon-delete{
           cursor: pointer;
-          
           font-size: 24px;
           padding: 0 8px;
          
         }
-        .icon-material-symbols_dashboard-rounded{
+        .G-freeze-Icon{
           cursor: pointer;
-
           font-size: 24px;
-          padding:0 18px 0 8px;
+          padding:0 0 0 8px;
         }
       }
     }

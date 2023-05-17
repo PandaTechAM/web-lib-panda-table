@@ -1,17 +1,17 @@
 import React from 'react'
+import LinkSvgIcon from '../../../../svgIcons/LinkSvgIcon'
+
 interface ISelfAction<T extends Object> {
   item: T
-  leftSideIcon?: string
+  RightSideIcon?: any
   checkedLink?: T
-  LeftSideSelfAction?: (option: any) => void
+  RightSideSelfAction?: (option: any) => void
   getRowForDropdown(option: number): void
 }
-const SelfAction = <T extends Object>({ item, leftSideIcon, getRowForDropdown }: ISelfAction<T>) => {
+const SelfAction = <T extends Object>({ item, RightSideIcon, getRowForDropdown }: ISelfAction<T>) => {
   return (
     //@ts-ignore
-    <div onClick={() => getRowForDropdown(item.id)}>
-      <i className={leftSideIcon ? leftSideIcon : 'icon-Vector1'} style={{ cursor: 'pointer', height: '60px' }} />
-    </div>
+    <div onClick={() => getRowForDropdown(item.id)}>{!RightSideIcon ? <LinkSvgIcon /> : <RightSideIcon />}</div>
   )
 }
 

@@ -16,7 +16,7 @@ export interface IProps<T extends Object> {
   isHoveredRow?: boolean
   draggableColumns?: boolean
   freezedRightSideVisible?: boolean
-  freezeIcon?: string
+  FreezeIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
   headerColor?: string
   footerColor?: string
   freezedLeftSideColor?: string
@@ -27,8 +27,8 @@ export interface IProps<T extends Object> {
   footerHeight?: number
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
-  leftSideIcon?: string
-  LeftSideSelfAction?: (option: any) => void
+  RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
+  RightSideSelfAction?: (option: any) => void
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleEdit?: (option: T) => void
   handleDelete?: (option: T[]) => void
@@ -119,12 +119,12 @@ export interface IColumn {
 }
 
 export interface IrowActions {
-  icon?: string
+  icon?: () => string | number | HTMLElement | React.ReactNode | null | any
   action: (item: Object, index: number) => void
 }
 
 export interface ILinksList {
-  icon: string
+  icon?: () => string | number | HTMLElement | React.ReactNode | null | any
   name: string
   action(option: any, index: number): void
 }

@@ -249,9 +249,9 @@ function ColumnsCustomizer<T extends Object>({
               alignItems: 'center',
             }}
           >
-            <ColumnsSvgIcon />
+            <ColumnsSvgIcon fill={!open ? '#4A4C56' : '#4844C5'} />
           </div>
-          <div style={{ fontWeight: 'bold', color: '#494949' }}>Customize Columns</div>
+          <div style={{ fontWeight: 'bold', color: !open ? '#4A4C56' : '#4844C5' }}>Customize Columns</div>
         </Button>
       </div>
 

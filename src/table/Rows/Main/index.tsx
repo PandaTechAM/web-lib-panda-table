@@ -13,7 +13,7 @@ interface IMainRows<T extends Object> {
   multipleCheck?: boolean
   columnMinWidth?: number
   rowActions?: IrowActions[]
-  freezeIcon?: string
+  FreezeIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
   isStickyFirstColumn?: boolean
   tableWidth?: number
   links?: ILinksList[]
@@ -23,10 +23,10 @@ interface IMainRows<T extends Object> {
   freezedRightSideColor?: string
   freezedRightSide?: string
   freezedRightSideVisible?: boolean
-  leftSideIcon?: string
+  RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
-  LeftSideSelfAction?: (option: number | string) => void
+  RightSideSelfAction?: (option: number | string) => void
   freezeRow(option: number): void
   getRowForDropdown(option: number): void
   isCheckedRows(option: number): boolean
@@ -41,7 +41,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       multipleCheck,
       columnMinWidth,
       rowActions,
-      freezeIcon,
+      FreezeIcon,
       links,
       checkedLink,
       isHoveredRow,
@@ -50,10 +50,10 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       freezedRightSide,
       freezedRightSideVisible,
       isStickyFirstColumn,
-      leftSideIcon,
+      RightSideIcon,
       leftFreezedColumnWidth,
       rightFreezedColumnWidth,
-      LeftSideSelfAction,
+      RightSideSelfAction,
       freezeRow,
       getRowForDropdown,
       isCheckedRows,
@@ -116,7 +116,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                     item={item}
                     index={index}
                     freezedRows={freezedRows}
-                    freezeIcon={freezeIcon}
+                    FreezeIcon={FreezeIcon}
                     freezeRow={freezeRow}
                   />
                 ) : null}
@@ -179,8 +179,8 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                       checkedLink={checkedLink}
                       links={links}
                       freezedRightSide={freezedRightSide}
-                      leftSideIcon={leftSideIcon}
-                      LeftSideSelfAction={LeftSideSelfAction}
+                      RightSideIcon={RightSideIcon}
+                      RightSideSelfAction={RightSideSelfAction}
                       getRowForDropdown={getRowForDropdown}
                     />
                   </li>

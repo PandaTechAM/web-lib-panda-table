@@ -681,15 +681,16 @@ function App() {
         isStickyFirstColumn={true} // Sticky first column
         isHoveredRow={true} // while hover per row will be highlighted actions
         rowActions={rowActions} // Array of actions and theyr's icons / must be active isHoveredRow
-        freezeIcon={"icon-material-symbols_dashboard-rounded"} //Freeze action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
+        // FreezeIcon={FreezeSvgIcon} //Freeze action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
+        // RightSideIcon={ExSvgIcon} // SVG icon for right side action
         freezedRightSideVisible={true} // is Visible Freezed right side
         freezedRightSide={"dropdown"} // is dropdown
         links={links} // Array of links // have to check freezedRightSide - dropdown
         listForDropdown={listForDropdown} // Array of Counters
         headerColor={"#F3F6F8"} // Header color
         footerColor={"#F3F6F8"} // Footer color
-        freezedLeftSideColor={"silver"} // FreezedLeft side color
-        freezedRightSideColor={"silver"} // FreezedRight side color
+        // freezedLeftSideColor={'silver'} // FreezedLeft side color
+        // freezedRightSideColor={'silver'} // FreezedRight side color
         draggableColumns={true} //Is column's draggable
         handleEdit={handleEdit} // will be visible when active multipleCheck
         handleDelete={handleDelete} // will be visible when active multipleCheck
@@ -698,7 +699,7 @@ function App() {
         setColumnTotalStructures={setColumnTotalStructures}
         handleSelectDataSize={handleSelectDataSize} // Select data size per page
         handleChangePage={handleChangePage} // chnage page
-        LeftSideSelfAction={LeftSideSelfAction} // FreezedLeftSideSelfAction
+        RightSideSelfAction={RightSideSelfAction} // FreezedRightSideSelfAction
         storeStructure={storeStructure} // Save columns structure on DB
         setTotalType={setTotalType} // Set total type
       />
@@ -709,9 +710,11 @@ function App() {
 
 export default App;
 ```
+
 # Props
 
 The "Table" component accepts the following props:
+
 ```TS
 data (required): An array of objects representing the table data.
 columnsConfigStructure (required): An object representing the column configuration structure.
@@ -730,7 +733,7 @@ isStickyFirstColumn (optional): Boolean flag to enable sticking the first column
 isHoveredRow (optional): Boolean flag to enable highlighting the hovered row.
 draggableColumns (optional): Boolean flag to enable column reordering.
 freezedRightSideVisible (optional): Boolean flag to make the right side of the table visible even when scrolling horizontally.
-freezeIcon (optional): The icon to display for freezing columns.
+FreezeIcon (optional): The icon to display for freezing columns.
 headerColor (optional): The color of the table header.
 footerColor (optional): The color of the table footer.
 freezedLeftSideColor (optional): The color of the left side of the table when frozen.
@@ -742,7 +745,7 @@ footerHeight (optional): The height of the table footer.
 leftFreezedColumnWidth (optional): The width of the left side column when frozen.
 rightFreezedColumnWidth (optional): The width of the right side column when frozen.
 leftSideIcon (optional): The icon to display for the left side of the table.
-LeftSideSelfAction (optional): A function to handle the self-action on the left side of the table.
+RightSideSelfAction (optional): A function to handle the self-action on the right side of the table.
 setColumnTotalStructures (optional): A function to set the column total structures.
 handleEdit (optional): A function to handle the edit action for a table row.
 handleDelete (optional): A function to handle the delete action for multiple table rows.

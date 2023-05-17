@@ -92,7 +92,7 @@ const CheckRows = <T extends Object>({
           }}
         >
           <div>
-            <DropdownSvgIcon />
+            <DropdownSvgIcon fill={!open ? '#ACBCC3' : '#4844C5'} />
           </div>
         </Button>
         <Menu

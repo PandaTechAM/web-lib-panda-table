@@ -5,14 +5,16 @@ import Checkbox from '../../components/checkbox'
 import FreezedRightColumns from '../FreezedRigthColumns'
 import FreezedLeftColumns from '../FreezedLeftColumns'
 import { StructureConfig } from '../../../Models/table.enum'
-
+import FreezeRowSvgIcon from '../../../svgIcons/FrameSvgIcon'
+import EditSvgIcon from '../../../svgIcons/EditSvgIcon'
+import DeleteSvgIcon from '../../../svgIcons/DeleteSvgIcon'
 interface IFreezedRows<T extends Object> {
   freezedRows: T[]
   columnsConfigStructure: IColumnConfigStructure<T>
   multipleCheck?: boolean
   columnMinWidth?: number
   rowActions?: IrowActions[]
-  freezeIcon?: string
+  FreezeIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
   links?: ILinksList[]
   checkedLink?: T
   freezedLeftSideColor?: string
@@ -20,11 +22,11 @@ interface IFreezedRows<T extends Object> {
   freezedRightSide?: string
   freezedRightSideVisible?: boolean
   isStickyFirstColumn?: boolean
-  leftSideIcon?: string
+  RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   headerHeight?: number
-  LeftSideSelfAction?: (option: number | string) => void
+  RightSideSelfAction?: (option: number | string) => void
   getRowForDropdown(option: number): void
   dragDropFreezeRow(option: T[]): void
   unFreezeRow(option: number): void
@@ -37,7 +39,7 @@ const FreezedRows = <T extends Object>({
   multipleCheck,
   columnMinWidth,
   rowActions,
-  freezeIcon,
+  FreezeIcon,
   links,
   checkedLink,
   freezedLeftSideColor,
@@ -45,11 +47,11 @@ const FreezedRows = <T extends Object>({
   freezedRightSide,
   freezedRightSideVisible,
   isStickyFirstColumn,
-  leftSideIcon,
+  RightSideIcon,
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
   headerHeight,
-  LeftSideSelfAction,
+  RightSideSelfAction,
   getRowForDropdown,
   dragDropFreezeRow,
   unFreezeRow,
@@ -127,24 +129,26 @@ const FreezedRows = <T extends Object>({
                                   rowActions.map((elem, index) => {
                                     if (index < 2)
                                       return (
-                                        <i
+                                        <div
                                           key={index}
-                                          className={
-                                            elem.icon
-                                              ? elem.icon
-                                              : index === 0
-                                              ? 'icon-material-symbols_edit'
-                                              : 'icon-material-symbols_delete'
-                                          }
                                           onClick={() => elem.action(item, index)}
-                                        />
+                                          style={{ cursor: 'pointer' }}
+                                          className={index === 0 ? 'icon-edit' : 'icon-delete'}
+                                        >
+                                          {elem.icon ? (
+                                            <elem.icon />
+                                          ) : index === 0 ? (
+                                            <EditSvgIcon />
+                                          ) : (
+                                            <DeleteSvgIcon />
+                                          )}
+                                        </div>
                                       )
                                   })
                                 : null}
-                              <i
-                                className={freezeIcon ? freezeIcon : 'icon-material-symbols_dashboard-rounded'}
-                                onClick={() => unFreezeRow && unFreezeRow(index)}
-                              />
+                              <div onClick={() => unFreezeRow && unFreezeRow(index)}>
+                                <div>{!FreezeIcon ? <FreezeRowSvgIcon /> : <FreezeIcon />}</div>
+                              </div>
                             </div>
                           </li>
                           {isStickyFirstColumn ? null : (
@@ -204,8 +208,8 @@ const FreezedRows = <T extends Object>({
                                 checkedLink={checkedLink}
                                 links={links}
                                 freezedRightSide={freezedRightSide}
-                                leftSideIcon={leftSideIcon}
-                                LeftSideSelfAction={LeftSideSelfAction}
+                                RightSideIcon={RightSideIcon}
+                                RightSideSelfAction={RightSideSelfAction}
                                 getRowForDropdown={getRowForDropdown}
                               />
                             </li>

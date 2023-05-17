@@ -176,7 +176,7 @@ function Select<T>({
         </p>
         {(!selectedValueName || (selectedValueName && !isClear)) && (
           <div style={{ display: 'flex' }}>
-            <DropdownSvgIcon />
+            <DropdownSvgIcon fill={!isOpenList ? '#ACBCC3' : '#4844C5'} />
           </div>
         )}
         {isClear && selectedValueName && (

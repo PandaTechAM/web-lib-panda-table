@@ -1,13 +1,15 @@
 import React from 'react'
 import { IrowActions } from '../../../Models/table.models'
 import { useRef } from 'react'
-
+import FreezeRowSvgIcon from '../../../svgIcons/FrameSvgIcon'
+import EditSvgIcon from '../../../svgIcons/EditSvgIcon'
+import DeleteSvgIcon from '../../../svgIcons/DeleteSvgIcon'
 interface IHoveredRow<T extends Object> {
   rowActions?: IrowActions[]
   item: T
   index: number
   freezedRows: T[]
-  freezeIcon?: string
+  FreezeIcon?: any
   freezeRow?(option: number): void
 }
 const HoveredRow = <T extends Object>({
@@ -15,7 +17,7 @@ const HoveredRow = <T extends Object>({
   item,
   index,
   freezedRows,
-  freezeIcon,
+  FreezeIcon,
   freezeRow,
 }: IHoveredRow<T>) => {
   const ref = useRef<any>(null)
@@ -28,25 +30,23 @@ const HoveredRow = <T extends Object>({
             rowActions.map((elem, index) => {
               if (index < 2)
                 return (
-                  <i
+                  <div
+                    // style={{ cursor: "pointer", paddingLeft: 8 }}
                     key={index}
-                    className={
-                      elem.icon
-                        ? elem.icon
-                        : index === 0
-                        ? 'icon-material-symbols_edit'
-                        : 'icon-material-symbols_delete'
-                    }
                     onClick={() => elem.action(item, index)}
-                  />
+                    className={index === 0 ? 'icon-edit' : 'icon-delete'}
+                  >
+                    {elem.icon ? <elem.icon /> : index === 0 ? <EditSvgIcon /> : <DeleteSvgIcon />}
+                  </div>
                 )
             })
           : null}
-        {freezedRows.length < 3 && freezeIcon && freezeRow && (
-          <i
-            className={freezeIcon ? freezeIcon : 'icon-material-symbols_dashboard-rounded'}
-            onClick={() => freezeRow(index)}
-          />
+        {freezedRows.length < 3 && freezeRow && (
+          <>
+            <div onClick={() => freezeRow(index)} className='G-freeze-Icon'>
+              {!FreezeIcon ? <FreezeRowSvgIcon /> : <FreezeIcon />}
+            </div>
+          </>
         )}
       </div>
     </li>
