@@ -190,38 +190,33 @@ function App() {
   const [totalCount, setTotalCount] = useState<number>(500);
   const [links] = useState<ILinksList[]>([
     {
-      icon: "icon-Vector1",
       name: "Overpayments",
       action: (option: any, index: number) => {
         console.log(option, "1");
       },
     },
     {
-      icon: "icon-Vector1",
       name: "Estate Owners",
       action: (option: any, index: number) => {
         console.log(option, "2");
       },
     },
     {
-      icon: "icon-Vector1",
       name: "Condominium Association Fee Altering",
       action: (option: any, index: number) => {
         console.log(option, "3");
       },
     },
     {
-      icon: "icon-Vector1",
       name: "Payments",
       action: (option: any, index: number) => {
-        console.log(option, 4);
+        console.log(option, "4");
       },
     },
     {
-      icon: "icon-Vector1",
       name: "Debts",
       action: (option: any, index: number) => {
-        console.log(option, 5);
+        console.log(option, "5");
       },
     },
   ]);

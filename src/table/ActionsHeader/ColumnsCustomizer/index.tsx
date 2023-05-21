@@ -56,15 +56,30 @@ const onDragEnd = <T extends Object>(
     destItems.splice(destination.index, 0, removed)
 
     //Total
-    // @ts-ignore
-    const totalsourceColumn = columnsTotalStructure[source.droppableId]
-    // @ts-ignore
-    const totaldestColumn = columnsTotalStructure[destination.droppableId]
-    const totalsourceItems = [...totalsourceColumn.items]
-    const totaldestItems = [...totaldestColumn.items]
-    const [totalremoved] = totalsourceItems.splice(source.index, 1)
-    totaldestItems.splice(destination.index, 0, totalremoved)
+    if (columnsTotalStructure) {
+      // @ts-ignore
+      const totalsourceColumn = columnsTotalStructure[source.droppableId]
+      // @ts-ignore
+      const totaldestColumn = columnsTotalStructure[destination.droppableId]
+      const totalsourceItems = [...totalsourceColumn.items]
+      const totaldestItems = [...totaldestColumn.items]
+      const [totalremoved] = totalsourceItems.splice(source.index, 1)
+      totaldestItems.splice(destination.index, 0, totalremoved)
 
+      setColumnTotalStructures &&
+        columnsTotalStructure &&
+        setColumnTotalStructures({
+          ...columnsTotalStructure,
+          [source.droppableId]: {
+            ...totalsourceColumn,
+            items: totalsourceItems,
+          },
+          [destination.droppableId]: {
+            ...totaldestColumn,
+            items: totaldestItems,
+          },
+        })
+    }
     setColumnsConfigStructure &&
       setColumnsConfigStructure({
         ...columnsConfigStructure,
@@ -89,19 +104,6 @@ const onDragEnd = <T extends Object>(
           items: headerdestItems,
         },
       })
-    setColumnTotalStructures &&
-      columnsTotalStructure &&
-      setColumnTotalStructures({
-        ...columnsTotalStructure,
-        [source.droppableId]: {
-          ...totalsourceColumn,
-          items: totalsourceItems,
-        },
-        [destination.droppableId]: {
-          ...totaldestColumn,
-          items: totaldestItems,
-        },
-      })
   } else {
     //header
     // @ts-ignore
@@ -115,12 +117,24 @@ const onDragEnd = <T extends Object>(
     const copiedItems = [...column.items]
     const [removed] = copiedItems.splice(source.index, 1)
     copiedItems.splice(destination.index, 0, removed)
-    //total
-    // @ts-ignore
-    const totalcolumn = columnsTotalStructure[source.droppableId]
-    const totalcopiedItems = [...totalcolumn.items]
-    const [totalremoved] = totalcopiedItems.splice(source.index, 1)
-    totalcopiedItems.splice(destination.index, 0, totalremoved)
+    if (columnsTotalStructure) {
+      //total
+      // @ts-ignore
+      const totalcolumn = columnsTotalStructure[source.droppableId]
+      const totalcopiedItems = [...totalcolumn.items]
+      const [totalremoved] = totalcopiedItems.splice(source.index, 1)
+      totalcopiedItems.splice(destination.index, 0, totalremoved)
+
+      setColumnTotalStructures &&
+        columnsTotalStructure &&
+        setColumnTotalStructures({
+          ...columnsTotalStructure,
+          [source.droppableId]: {
+            ...column,
+            items: totalcopiedItems,
+          },
+        })
+    }
     setColumnsConfigStructure &&
       setColumnsConfigStructure({
         ...columnsConfigStructure,
@@ -135,15 +149,6 @@ const onDragEnd = <T extends Object>(
         [source.droppableId]: {
           ...column,
           items: headercopiedItems,
-        },
-      })
-    setColumnTotalStructures &&
-      columnsTotalStructure &&
-      setColumnTotalStructures({
-        ...columnsTotalStructure,
-        [source.droppableId]: {
-          ...column,
-          items: totalcopiedItems,
         },
       })
   }

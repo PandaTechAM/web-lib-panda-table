@@ -4,13 +4,10 @@ import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import dts from "rollup-plugin-dts";
-import sass from "rollup-plugin-sass";
-import scss from "rollup-plugin-scss";
 import postcss from "rollup-plugin-postcss";
 import url from 'rollup-plugin-url';
 import svg from 'rollup-plugin-svg';
 import json from 'rollup-plugin-json';
-import copy from 'rollup-plugin-copy';
 const packageJson = require("./package.json");
 
 export default [
@@ -40,7 +37,7 @@ export default [
         limit: Infinity,
       }),
       svg(),
-      json()
+      json(),
     ],
   },
   {
