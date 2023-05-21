@@ -537,7 +537,28 @@ function App() {
       isVisible: true,
     },
   ]);
-
+  const [rightFreezeConfig] = useState<IColumnConfig<any>[]>([
+    {
+      title: "",
+      setRow: () => (
+        <div className={`G-center G-table-icon`}>
+          <p className="G-row-item">View Details</p>
+        </div>
+      ),
+      isVisible: true,
+      width: 170,
+    },
+    {
+      title: "",
+      setRow: () => (
+        <div className={`G-center G-table-icon`}>
+          <p className="G-row-item">View Details</p>
+        </div>
+      ),
+      isVisible: true,
+      width: 60,
+    },
+  ]);
   const [grandTotals, setGrandTotals] = useState<IColumnTotal[]>([
     { id: 1, title: null },
     { id: 2, title: 40000 },
@@ -663,6 +684,7 @@ function App() {
         columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
         columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
         columnsTotalStructure={columnsTotalStructure}
+        rightFreezeConfig={rightFreezeConfig}
         columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
         headerHeight={64}
         footerHeight={48}

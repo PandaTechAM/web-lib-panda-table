@@ -21,6 +21,7 @@ function Table<T extends Object>({
   columnMinWidth,
   columnsConfigStructure = {} as any,
   columnsHeaderStructure = {} as any,
+  rightFreezeConfig,
   columnsTotalStructure,
   rowActions,
   FreezeIcon,
@@ -101,6 +102,7 @@ function Table<T extends Object>({
             <Header
               columnsConfigStructure={columnsConfigStructure}
               columnsHeaderStructure={columnsHeaderStructure}
+              rightFreezeConfig={rightFreezeConfig}
               headerColor={headerColor}
               multipleCheck={multipleCheck}
               isStickyFirstColumn={isStickyFirstColumn}
@@ -114,6 +116,7 @@ function Table<T extends Object>({
           <div className='G-data-table-body'>
             <Rows
               freezedRows={freezedRows}
+              rightFreezeConfig={rightFreezeConfig}
               columnsConfigStructure={columnsConfigStructure}
               multipleCheck={multipleCheck}
               columnMinWidth={columnMinWidth}
@@ -145,6 +148,7 @@ function Table<T extends Object>({
           {columnsTotalStructure ? (
             <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
               <Footer
+                rightFreezeConfig={rightFreezeConfig}
                 columnsConfigStructure={columnsConfigStructure}
                 columnsTotalStructure={columnsTotalStructure}
                 columnMinWidth={columnMinWidth}

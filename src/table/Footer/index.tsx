@@ -1,11 +1,12 @@
 import React from 'react'
-import { IColumnConfigStructure, IColumnTotalStructure, ITotalList } from '../../Models/table.models'
+import { IColumnConfig, IColumnConfigStructure, IColumnTotalStructure, ITotalList } from '../../Models/table.models'
 import FooterFreezedLeft from './FreezedLeft'
 import FooterFreezedRight from './FreezedRight'
 import FooterMain from './Main'
 interface IFooter<T extends Object> {
   columnsTotalStructure: IColumnTotalStructure
   columnsConfigStructure: IColumnConfigStructure<T>
+  rightFreezeConfig?: IColumnConfig<T>[]
   columnMinWidth?: number
   footerColor?: string
   freezedRightSideVisible?: boolean
@@ -18,6 +19,7 @@ interface IFooter<T extends Object> {
 const Footer = <T extends Object>({
   columnsTotalStructure,
   columnsConfigStructure,
+  rightFreezeConfig,
   columnMinWidth,
   footerColor,
   freezedRightSideVisible,
@@ -49,7 +51,11 @@ const Footer = <T extends Object>({
         setTotalType={setTotalType}
       />
       {freezedRightSideVisible ? (
-        <FooterFreezedRight footerColor={footerColor} rightFreezedColumnWidth={rightFreezedColumnWidth} />
+        <FooterFreezedRight
+          footerColor={footerColor}
+          rightFreezedColumnWidth={rightFreezedColumnWidth}
+          rightFreezeConfig={rightFreezeConfig}
+        />
       ) : null}
     </>
   )

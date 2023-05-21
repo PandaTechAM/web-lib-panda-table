@@ -1,10 +1,13 @@
 import React from 'react'
-const FooterFreezedRight = ({
+import { IColumnConfig } from '../../../Models/table.models'
+const FooterFreezedRight = <T extends Object>({
   footerColor,
   rightFreezedColumnWidth,
+  rightFreezeConfig,
 }: {
   footerColor: string | undefined
   rightFreezedColumnWidth: number | undefined
+  rightFreezeConfig: IColumnConfig<T>[] | undefined
 }) => {
   return (
     <ul
@@ -15,13 +18,20 @@ const FooterFreezedRight = ({
         boxShadow: '-6px 0px 8px 0px rgba(0,0,0,0.08)',
       }}
     >
-      <li
-        style={{
-          backgroundColor: footerColor && footerColor,
-          maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : 60,
-          minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : 60,
-        }}
-      />
+      {rightFreezeConfig
+        ? rightFreezeConfig.map((item, i) => {
+            if (i < 4)
+              return (
+                <li
+                  style={{
+                    backgroundColor: footerColor && footerColor,
+                    maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                    minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                  }}
+                />
+              )
+          })
+        : null}
     </ul>
   )
 }

@@ -1,10 +1,13 @@
 import React from 'react'
-const FreezedHeaderRight = ({
+import { IColumnConfig } from '../../../Models/table.models'
+const FreezedHeaderRight = <T extends Object>({
   headerColor,
   rightFreezedColumnWidth,
+  rightFreezeConfig,
 }: {
   headerColor: string | undefined
   rightFreezedColumnWidth: number | undefined
+  rightFreezeConfig?: IColumnConfig<T>[]
 }) => {
   return (
     <ul
@@ -15,13 +18,20 @@ const FreezedHeaderRight = ({
         boxShadow: '-6px 0px 8px 0px rgba(0,0,0,0.08)',
       }}
     >
-      <li
-        style={{
-          maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : '60px',
-          minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : '60px',
-          backgroundColor: headerColor && headerColor,
-        }}
-      />
+      {rightFreezeConfig
+        ? rightFreezeConfig.map((item, i) => {
+            if (i < 4)
+              return (
+                <li
+                  style={{
+                    maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                    minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                    backgroundColor: headerColor && headerColor,
+                  }}
+                />
+              )
+          })
+        : null}
     </ul>
   )
 }

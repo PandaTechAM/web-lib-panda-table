@@ -65,6 +65,7 @@ const FooterFreezedLeft = <T extends Object>({
               margin: 0,
               padding: '3px',
               minWidth: 15,
+              border: 'none',
             }}
           >
             <div

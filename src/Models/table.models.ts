@@ -3,6 +3,7 @@ export interface IProps<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
   columnsHeaderStructure: IColumnHeaderStructure
   columnsTotalStructure?: IColumnTotalStructure
+  rightFreezeConfig?: IColumnConfig<T>[]
   allDataFromDb?: T[]
   pageSize?: IPageSizes[]
   links?: ILinksList[]
@@ -84,10 +85,10 @@ export interface IFreezeProps<T extends Object> {
 }
 
 export interface IColumnConfig<T extends Object> {
-  id: string | number
-  columnName: number | string
+  id?: string | number
+  columnName?: number | string
   title: any
-  setRow: (data: T) => string | number | HTMLElement | React.ReactNode | null | any
+  setRow: (data?: T) => string | number | HTMLElement | React.ReactNode | null | any
   isVisible: boolean
   customStyle?: Object
   totalObject?: {
@@ -95,6 +96,7 @@ export interface IColumnConfig<T extends Object> {
     isPrice: boolean
     title?: string
   }
+  width?: number
 }
 export interface IPageSizes {
   id: number

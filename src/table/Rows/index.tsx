@@ -1,11 +1,12 @@
 import React from 'react'
-import { IColumnConfigStructure, ILinksList, IrowActions } from '../../Models/table.models'
+import { IColumnConfig, IColumnConfigStructure, ILinksList, IrowActions } from '../../Models/table.models'
 import FreezedRows from './FreezedTop'
 import MainRows from './Main'
 import { forwardRef } from 'react'
 
 interface IRows<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
+  rightFreezeConfig?: IColumnConfig<T>[]
   unFreezedRows: T[]
   freezedRows: T[]
   rowActions?: IrowActions[]
@@ -39,6 +40,7 @@ const Rows = forwardRef<any, IRows<any>>(
     {
       freezedRows,
       columnsConfigStructure,
+      rightFreezeConfig,
       multipleCheck,
       columnMinWidth,
       rowActions,
@@ -72,6 +74,7 @@ const Rows = forwardRef<any, IRows<any>>(
           <FreezedRows
             freezedRows={freezedRows}
             columnsConfigStructure={columnsConfigStructure}
+            rightFreezeConfig={rightFreezeConfig}
             multipleCheck={multipleCheck}
             columnMinWidth={columnMinWidth}
             rowActions={rowActions}
@@ -98,6 +101,7 @@ const Rows = forwardRef<any, IRows<any>>(
         <MainRows
           ref={ref}
           unFreezedRows={unFreezedRows}
+          rightFreezeConfig={rightFreezeConfig}
           freezedRows={freezedRows}
           columnsConfigStructure={columnsConfigStructure}
           multipleCheck={multipleCheck}

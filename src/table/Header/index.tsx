@@ -1,11 +1,12 @@
 import React from 'react'
-import { IColumnConfigStructure, IColumnHeaderStructure } from '../../Models/table.models'
+import { IColumnConfig, IColumnConfigStructure, IColumnHeaderStructure } from '../../Models/table.models'
 import FreezedHeaderLeft from './freezedLeft'
 import HeaderMain from './main'
 import FreezedHeaderRight from './freezedRigth'
 
 interface IHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
+  rightFreezeConfig?: IColumnConfig<T>[]
   columnsHeaderStructure: IColumnHeaderStructure
   multipleCheck?: boolean
   isStickyFirstColumn?: boolean
@@ -17,6 +18,7 @@ interface IHeader<T extends Object> {
 }
 const Header = <T extends Object>({
   columnsConfigStructure,
+  rightFreezeConfig,
   columnsHeaderStructure,
   multipleCheck,
   isStickyFirstColumn,
@@ -47,7 +49,11 @@ const Header = <T extends Object>({
         leftFreezedColumnWidth={leftFreezedColumnWidth}
       />
       {freezedRightSideVisible ? (
-        <FreezedHeaderRight headerColor={headerColor} rightFreezedColumnWidth={rightFreezedColumnWidth} />
+        <FreezedHeaderRight
+          headerColor={headerColor}
+          rightFreezedColumnWidth={rightFreezedColumnWidth}
+          rightFreezeConfig={rightFreezeConfig}
+        />
       ) : null}
     </>
   )

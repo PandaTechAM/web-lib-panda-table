@@ -9,6 +9,7 @@ import HoveredRow from '../HoveredRow'
 interface IMainRows<T extends Object> {
   unFreezedRows: T[]
   freezedRows: T[]
+  rightFreezeConfig?: IColumnConfig<T>[]
   columnsConfigStructure: IColumnConfigStructure<T>
   multipleCheck?: boolean
   columnMinWidth?: number
@@ -38,6 +39,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       unFreezedRows,
       freezedRows,
       columnsConfigStructure,
+      rightFreezeConfig,
       multipleCheck,
       columnMinWidth,
       rowActions,
@@ -167,14 +169,19 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                     boxShadow: '-6px 0px 8px 0px rgba(0,0,0,0.08)',
                   }}
                 >
-                  <li
-                    style={{
-                      maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : '60px',
-                      minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : '60px',
-                      backgroundColor: freezedRightSideColor && freezedRightSideColor,
-                    }}
-                  >
-                    <FreezedRightColumns
+                  {rightFreezeConfig
+                    ? rightFreezeConfig.map((item, i) => {
+                        if (i < 4)
+                          return (
+                            <li
+                              style={{
+                                maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                                minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                                backgroundColor: freezedRightSideColor && freezedRightSideColor,
+                              }}
+                            >
+                              {item.setRow()}
+                              {/* <FreezedRightColumns
                       item={item}
                       checkedLink={checkedLink}
                       links={links}
@@ -182,8 +189,11 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                       RightSideIcon={RightSideIcon}
                       RightSideSelfAction={RightSideSelfAction}
                       getRowForDropdown={getRowForDropdown}
-                    />
-                  </li>
+                    /> */}
+                            </li>
+                          )
+                      })
+                    : null}
                 </ul>
               ) : null}
             </div>

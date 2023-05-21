@@ -89,6 +89,7 @@ const CheckRows = <T extends Object>({
             translate: -10,
             backgroundColor: 'white',
             minWidth: 10,
+            border: 'none',
           }}
         >
           <div>

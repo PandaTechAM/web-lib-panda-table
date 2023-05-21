@@ -1,5 +1,5 @@
 import React from 'react'
-import { IColumnConfigStructure, ILinksList, IrowActions } from '../../../Models/table.models'
+import { IColumnConfig, IColumnConfigStructure, ILinksList, IrowActions } from '../../../Models/table.models'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import Checkbox from '../../components/checkbox'
 import FreezedRightColumns from '../FreezedRigthColumns'
@@ -11,6 +11,7 @@ import DeleteSvgIcon from '../../../svgIcons/DeleteSvgIcon'
 interface IFreezedRows<T extends Object> {
   freezedRows: T[]
   columnsConfigStructure: IColumnConfigStructure<T>
+  rightFreezeConfig?: IColumnConfig<T>[]
   multipleCheck?: boolean
   columnMinWidth?: number
   rowActions?: IrowActions[]
@@ -36,6 +37,7 @@ interface IFreezedRows<T extends Object> {
 const FreezedRows = <T extends Object>({
   freezedRows,
   columnsConfigStructure,
+  rightFreezeConfig,
   multipleCheck,
   columnMinWidth,
   rowActions,
@@ -196,14 +198,23 @@ const FreezedRows = <T extends Object>({
                               boxShadow: '7px 0px 9px -1px rgba(0,0,0,0.08)',
                             }}
                           >
-                            <li
-                              style={{
-                                maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : '60px',
-                                minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : '60px',
-                                backgroundColor: freezedRightSideColor && freezedRightSideColor,
-                              }}
-                            >
-                              <FreezedRightColumns
+                            {rightFreezeConfig
+                              ? rightFreezeConfig.map((item, i) => {
+                                  if (i < 4)
+                                    return (
+                                      <li
+                                        style={{
+                                          maxWidth: rightFreezedColumnWidth
+                                            ? `${rightFreezedColumnWidth}px`
+                                            : `${item.width}px`,
+                                          minWidth: rightFreezedColumnWidth
+                                            ? `${rightFreezedColumnWidth}px`
+                                            : `${item.width}px`,
+                                          backgroundColor: freezedRightSideColor && freezedRightSideColor,
+                                        }}
+                                      >
+                                        {item.setRow()}
+                                        {/* <FreezedRightColumns
                                 item={item}
                                 checkedLink={checkedLink}
                                 links={links}
@@ -211,8 +222,11 @@ const FreezedRows = <T extends Object>({
                                 RightSideIcon={RightSideIcon}
                                 RightSideSelfAction={RightSideSelfAction}
                                 getRowForDropdown={getRowForDropdown}
-                              />
-                            </li>
+                              /> */}
+                                      </li>
+                                    )
+                                })
+                              : null}
                           </ul>
                         ) : null}
                       </div>

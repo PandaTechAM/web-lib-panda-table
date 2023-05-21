@@ -245,6 +245,8 @@ function ColumnsCustomizer<T extends Object>({
           onClick={handleClick}
           style={{
             color: open ? '#4844C5' : 'black',
+            backgroundColor: 'white',
+            border: 'none',
           }}
         >
           <div
