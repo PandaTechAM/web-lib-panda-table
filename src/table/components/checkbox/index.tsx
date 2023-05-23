@@ -32,6 +32,7 @@ const Checkbox = ({
   children,
 }: ICheckbox) => {
   function handleClick(e: React.MouseEvent<HTMLElement>) {
+    e.stopPropagation()
     if (!isDisable) {
       if ((e.target as HTMLInputElement).tagName !== 'A') onClick && onClick()
     }

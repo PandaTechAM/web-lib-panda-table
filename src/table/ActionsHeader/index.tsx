@@ -12,6 +12,7 @@ import {
 import CheckRows from './CheckRows'
 import DeleteSvgIcon from '../../svgIcons/DeleteSvgIcon'
 import EditSvgIcon from '../../svgIcons/EditSvgIcon'
+import { downloadFile } from '../../utils'
 
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -61,6 +62,27 @@ const ActionsHeader = <T extends Object>({
   handleSelectDataSize,
   storeStructure,
 }: IActionsHeader<T>) => {
+  const exportToCsv = (e: any) => {
+    e.preventDefault()
+
+    // Headers for each column
+    let headers = ['Id,Name,Surname,Age']
+
+    // Convert users data to a csv
+    let usersCsv = data.reduce((acc, user) => {
+      const { id, easywalletAgentId, agentCreationDate, agentName } = user as any
+      //@ts-ignore
+      acc.push([id, easywalletAgentId, agentCreationDate, agentName].join(','))
+
+      return acc
+    }, [])
+
+    downloadFile({
+      data: [...headers, ...usersCsv].join('\n'),
+      fileName: 'users.csv',
+      fileType: 'text/csv',
+    })
+  }
   return (
     <div
       className='G-table-actions-header'
@@ -113,10 +135,6 @@ const ActionsHeader = <T extends Object>({
           storeStructure={storeStructure}
         />
       ) : null}
-      {/*<div className="G-center">*/}
-      {/*  <i className="icon-material-symbols_filter-alt" />*/}
-      {/*  <div style={{ fontWeight: 600 }}>Filter by</div>*/}
-      {/*</div>*/}
 
       {handleChangePage && currentPage && totalCount && (
         <>

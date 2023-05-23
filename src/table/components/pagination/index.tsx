@@ -34,9 +34,10 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
   if (currentPage === 0 || totalCount === 1) {
     return null
   }
-
+  // @ts-ignore
+  const lastPage = paginationRange[paginationRange.length - 1]
   const onNext = () => {
-    onPageChange(currentPage + 1)
+    if (currentPage < +lastPage) onPageChange(currentPage + 1)
   }
 
   const onPrevious = () => {
@@ -52,9 +53,6 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
       onPageChange(+ref.current.value)
     }
   }
-
-  // @ts-ignore
-  const lastPage = paginationRange[paginationRange.length - 1]
 
   return (
     <>

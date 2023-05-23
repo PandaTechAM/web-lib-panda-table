@@ -29,6 +29,7 @@ export interface IProps<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
+  getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleEdit?: (option: T) => void
@@ -122,11 +123,17 @@ export interface IColumn {
 
 export interface IrowActions {
   icon?: () => string | number | HTMLElement | React.ReactNode | null | any
-  action: (item: Object, index: number) => void
+  action: (e: any, item: Object, index: number) => void
 }
 
 export interface ILinksList {
   icon?: () => string | number | HTMLElement | React.ReactNode | null | any
   name: string
   action(option: any, index: number): void
+}
+
+export interface IDownloadData {
+  data: any
+  fileName: any
+  fileType: any
 }

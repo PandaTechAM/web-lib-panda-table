@@ -11,7 +11,8 @@ const useTable = <T extends Object>(
   const [checkedRows, setCheckedRows] = useState<T[]>([])
   const [checkedLink, setCheckedLink] = useState<T>()
 
-  const freezeRow = (indexx: number) => {
+  const freezeRow = (e: any, indexx: number) => {
+    e.stopPropagation()
     //@ts-ignore
     data.map((row, index) => {
       if (index === indexx) {
@@ -23,7 +24,9 @@ const useTable = <T extends Object>(
     })
   }
 
-  const unFreezeRow = (index: number) => {
+  const unFreezeRow = (e: any, index: number) => {
+    e.stopPropagation()
+
     const newFreezeRows = freezedRows.splice(index, index === 0 ? 1 : index)
     setFreezedRows(freezedRows)
     setUnFreezedRows((prev) => [newFreezeRows[0], ...prev])

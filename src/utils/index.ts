@@ -1,3 +1,5 @@
+import { IDownloadData } from '../Models/table.models'
+
 export const containsOnlyNumbers = (value: string) => {
   return /^\d+$/.test(value) || value.trim() === ''
 }
@@ -10,11 +12,25 @@ export const formatPrice = (num: number, symbol: string, isPrice = false, fixedC
     p[0]
       .split('')
       .reverse()
-      //@ts-ignore
       .reduce(function (acc, num, i, orig) {
         return num + (num !== '-' && i && !(i % 3) ? ',' : '') + acc
       }, '') +
     (p[1] ? '.' + p[1] : '') +
     symbol
   )
+}
+
+export const downloadFile = ({ data, fileName, fileType }: IDownloadData) => {
+  const blob = new Blob([data], { type: fileType })
+
+  const a = document.createElement('a')
+  a.download = fileName
+  a.href = window.URL.createObjectURL(blob)
+  const clickEvt = new MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true,
+  })
+  a.dispatchEvent(clickEvt)
+  a.remove()
 }

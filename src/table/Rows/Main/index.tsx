@@ -27,8 +27,9 @@ interface IMainRows<T extends Object> {
   RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
+  getRow?(options: any): void
   RightSideSelfAction?: (option: number | string) => void
-  freezeRow(option: number): void
+  freezeRow(e: any, option: number): void
   getRowForDropdown(option: number): void
   isCheckedRows(option: number): boolean
   handleCheck(option: number): void
@@ -55,6 +56,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       RightSideIcon,
       leftFreezedColumnWidth,
       rightFreezedColumnWidth,
+      getRow,
       RightSideSelfAction,
       freezeRow,
       getRowForDropdown,
@@ -67,7 +69,19 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       <>
         {unFreezedRows.map((item, index) => {
           return (
-            <div key={item.id} style={{ display: 'flex' }}>
+            <div key={item.id} style={{ display: 'flex' }} className='G-row' onClick={() => getRow && getRow(item)}>
+              <ul className='G-rows-icons'>
+                {isHoveredRow ? (
+                  <HoveredRow
+                    rowActions={rowActions}
+                    item={item}
+                    index={index}
+                    freezedRows={freezedRows}
+                    FreezeIcon={FreezeIcon}
+                    freezeRow={freezeRow}
+                  />
+                ) : null}
+              </ul>
               {/* FREEZED LEFT */}
               <ul
                 style={{
@@ -112,7 +126,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                   flex: 1,
                 }}
               >
-                {isHoveredRow ? (
+                {/* {isHoveredRow ? (
                   <HoveredRow
                     rowActions={rowActions}
                     item={item}
@@ -121,7 +135,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                     FreezeIcon={FreezeIcon}
                     freezeRow={freezeRow}
                   />
-                ) : null}
+                ) : null} */}
                 {isStickyFirstColumn ? null : (
                   <li
                     style={{
@@ -164,23 +178,23 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                 <ul
                   style={{
                     position: 'sticky',
-                    zIndex: 25,
+                    zIndex: 12,
                     right: 0,
                     boxShadow: '-6px 0px 8px 0px rgba(0,0,0,0.08)',
                   }}
                 >
                   {rightFreezeConfig
-                    ? rightFreezeConfig.map((item, i) => {
+                    ? rightFreezeConfig.map((elem, i) => {
                         if (i < 4)
                           return (
                             <li
                               style={{
-                                maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
-                                minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                                maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${elem.width}px`,
+                                minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${elem.width}px`,
                                 backgroundColor: freezedRightSideColor && freezedRightSideColor,
                               }}
                             >
-                              {item.setRow()}
+                              {elem.setRow(item)}
                               {/* <FreezedRightColumns
                       item={item}
                       checkedLink={checkedLink}

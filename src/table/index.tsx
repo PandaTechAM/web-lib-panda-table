@@ -40,6 +40,7 @@ function Table<T extends Object>({
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
   headerHeight,
+  getRow,
   RightSideSelfAction,
   setColumnTotalStructures,
   setColumnsConfigStructure,
@@ -135,6 +136,7 @@ function Table<T extends Object>({
               leftFreezedColumnWidth={leftFreezedColumnWidth}
               rightFreezedColumnWidth={rightFreezedColumnWidth}
               headerHeight={headerHeight}
+              getRow={getRow}
               RightSideSelfAction={RightSideSelfAction}
               freezeRow={freezeRow}
               getRowForDropdown={getRowForDropdown}

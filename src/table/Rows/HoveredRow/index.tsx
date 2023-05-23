@@ -10,7 +10,7 @@ interface IHoveredRow<T extends Object> {
   index: number
   freezedRows: T[]
   FreezeIcon?: any
-  freezeRow?(option: number): void
+  freezeRow?(e: any, option: number): void
 }
 const HoveredRow = <T extends Object>({
   rowActions,
@@ -28,13 +28,13 @@ const HoveredRow = <T extends Object>({
         {rowActions && rowActions.length
           ? //@ts-ignore
             rowActions.map((elem, index) => {
-              if (index < 2)
+              if (index < 3)
                 return (
                   <div
                     // style={{ cursor: "pointer", paddingLeft: 8 }}
                     key={index}
-                    onClick={() => elem.action(item, index)}
-                    className={index === 0 ? 'icon-edit' : 'icon-delete'}
+                    onClick={(e) => elem.action(e, item, index)}
+                    className={index === 0 ? 'G-first-action' : 'G-action-nth'}
                   >
                     {elem.icon ? <elem.icon /> : index === 0 ? <EditSvgIcon /> : <DeleteSvgIcon />}
                   </div>
@@ -43,7 +43,12 @@ const HoveredRow = <T extends Object>({
           : null}
         {freezedRows.length < 3 && freezeRow && (
           <>
-            <div onClick={() => freezeRow(index)} className='G-freeze-Icon'>
+            <div
+              onClick={(e) => {
+                freezeRow(e, index)
+              }}
+              className='G-freeze-Icon'
+            >
               {!FreezeIcon ? <FreezeRowSvgIcon /> : <FreezeIcon />}
             </div>
           </>

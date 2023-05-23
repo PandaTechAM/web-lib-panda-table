@@ -27,10 +27,11 @@ interface IFreezedRows<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   headerHeight?: number
+  getRow?(options: any): any
   RightSideSelfAction?: (option: number | string) => void
   getRowForDropdown(option: number): void
   dragDropFreezeRow(option: T[]): void
-  unFreezeRow(option: number): void
+  unFreezeRow(e: any, option: number): void
   isCheckedRows(option: number): boolean
   handleCheck(option: number): void
 }
@@ -53,6 +54,7 @@ const FreezedRows = <T extends Object>({
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
   headerHeight,
+  getRow,
   RightSideSelfAction,
   getRowForDropdown,
   dragDropFreezeRow,
@@ -81,8 +83,6 @@ const FreezedRows = <T extends Object>({
             {...provided.droppableProps}
           >
             {freezedRows.map((item: any, index) => {
-              console.log(item)
-
               return (
                 <Draggable
                   draggableId={typeof item.id === 'string' ? item.id : '' + item.id}
@@ -90,9 +90,47 @@ const FreezedRows = <T extends Object>({
                   key={item.id}
                 >
                   {(provided) => (
-                    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                      <div style={{ display: 'flex' }}>
+                    <div
+                      onClick={() => getRow && getRow(item)}
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <div style={{ display: 'flex' }} className='G-row'>
+                        {/* HOVERED ROWS */}
+                        <ul className='G-rows-icons'>
+                          <li className='G-rows-icons' style={{ left: !isStickyFirstColumn ? '50%' : '' }}>
+                            <div className='G-icons-group'>
+                              {rowActions && rowActions.length
+                                ? //@ts-ignore
+                                  rowActions.map((elem, index) => {
+                                    if (index < 3)
+                                      return (
+                                        <div
+                                          key={index}
+                                          onClick={(e) => elem.action(e, item, index)}
+                                          style={{ cursor: 'pointer' }}
+                                          className={index === 0 ? 'G-first-action' : 'G-action-nth'}
+                                        >
+                                          {elem.icon ? (
+                                            <elem.icon />
+                                          ) : index === 0 ? (
+                                            <EditSvgIcon />
+                                          ) : (
+                                            <DeleteSvgIcon />
+                                          )}
+                                        </div>
+                                      )
+                                  })
+                                : null}
+                              <div onClick={(e) => unFreezeRow && unFreezeRow(e, index)} className='G-freeze-Icon'>
+                                {!FreezeIcon ? <FreezeRowSvgIcon /> : <FreezeIcon />}
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
                         {/* FREEZED LEFT */}
+
                         <ul style={{ position: 'sticky', left: 0, zIndex: 45 }}>
                           {isStickyFirstColumn ? (
                             <li
@@ -104,7 +142,6 @@ const FreezedRows = <T extends Object>({
                             >
                               {multipleCheck ? (
                                 <Checkbox
-                                  //@ts-ignore
                                   isCheck={isCheckedRows(item.id)}
                                   //@ts-ignore
                                   onClick={() => handleCheck(item.id)}
@@ -124,35 +161,6 @@ const FreezedRows = <T extends Object>({
                         </ul>
                         {/* MAIN */}
                         <ul style={{ flex: 1 }}>
-                          <li className='G-rows-icons' style={{ left: !isStickyFirstColumn ? '50%' : '' }}>
-                            <div className='G-icons-group'>
-                              {rowActions && rowActions.length
-                                ? //@ts-ignore
-                                  rowActions.map((elem, index) => {
-                                    if (index < 2)
-                                      return (
-                                        <div
-                                          key={index}
-                                          onClick={() => elem.action(item, index)}
-                                          style={{ cursor: 'pointer' }}
-                                          className={index === 0 ? 'icon-edit' : 'icon-delete'}
-                                        >
-                                          {elem.icon ? (
-                                            <elem.icon />
-                                          ) : index === 0 ? (
-                                            <EditSvgIcon />
-                                          ) : (
-                                            <DeleteSvgIcon />
-                                          )}
-                                        </div>
-                                      )
-                                  })
-                                : null}
-                              <div onClick={() => unFreezeRow && unFreezeRow(index)}>
-                                <div>{!FreezeIcon ? <FreezeRowSvgIcon /> : <FreezeIcon />}</div>
-                              </div>
-                            </div>
-                          </li>
                           {isStickyFirstColumn ? null : (
                             <li
                               style={{
@@ -193,27 +201,30 @@ const FreezedRows = <T extends Object>({
                           <ul
                             style={{
                               position: 'sticky',
-                              zIndex: 25,
+                              zIndex: 12,
                               right: 0,
                               boxShadow: '7px 0px 9px -1px rgba(0,0,0,0.08)',
                             }}
                           >
                             {rightFreezeConfig
-                              ? rightFreezeConfig.map((item, i) => {
+                              ? rightFreezeConfig.map((elem, i) => {
                                   if (i < 4)
                                     return (
                                       <li
                                         style={{
                                           maxWidth: rightFreezedColumnWidth
                                             ? `${rightFreezedColumnWidth}px`
-                                            : `${item.width}px`,
+                                            : `${elem.width}px`,
                                           minWidth: rightFreezedColumnWidth
                                             ? `${rightFreezedColumnWidth}px`
-                                            : `${item.width}px`,
+                                            : `${elem.width}px`,
                                           backgroundColor: freezedRightSideColor && freezedRightSideColor,
                                         }}
                                       >
-                                        {item.setRow()}
+                                        {
+                                          //@ts-ignore
+                                          elem.setRow(item)
+                                        }
                                         {/* <FreezedRightColumns
                                 item={item}
                                 checkedLink={checkedLink}

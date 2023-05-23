@@ -26,9 +26,10 @@ interface IRows<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   headerHeight?: number
+  getRow?: (option: any) => void
   RightSideSelfAction?: (option: number | string) => void
-  freezeRow(option: number): void
-  unFreezeRow(option: number): void
+  freezeRow(e: any, option: number): void
+  unFreezeRow(e: any, option: number): void
   handleCheck(option: number): void
   dragDropFreezeRow(option: T[]): void
   isCheckedRows(option: number): boolean
@@ -58,6 +59,7 @@ const Rows = forwardRef<any, IRows<any>>(
       leftFreezedColumnWidth,
       rightFreezedColumnWidth,
       headerHeight,
+      getRow,
       RightSideSelfAction,
       freezeRow,
       getRowForDropdown,
@@ -90,6 +92,7 @@ const Rows = forwardRef<any, IRows<any>>(
             leftFreezedColumnWidth={leftFreezedColumnWidth}
             rightFreezedColumnWidth={rightFreezedColumnWidth}
             headerHeight={headerHeight}
+            getRow={getRow}
             RightSideSelfAction={RightSideSelfAction}
             getRowForDropdown={getRowForDropdown}
             dragDropFreezeRow={dragDropFreezeRow}
@@ -119,6 +122,7 @@ const Rows = forwardRef<any, IRows<any>>(
           RightSideIcon={RightSideIcon}
           leftFreezedColumnWidth={leftFreezedColumnWidth}
           rightFreezedColumnWidth={rightFreezedColumnWidth}
+          getRow={getRow}
           RightSideSelfAction={RightSideSelfAction}
           freezeRow={freezeRow}
           getRowForDropdown={getRowForDropdown}
