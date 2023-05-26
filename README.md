@@ -20,7 +20,6 @@ import {
   IColumnConfig,
   IColumnHeader,
   IPageSizes,
-  ISelectPage,
   IrowActions,
   IColumnConfigStructure,
   IColumnHeaderStructure,
@@ -28,7 +27,6 @@ import {
   IColumnTotal,
   IColumnTotalStructure,
   ITotalList,
-  StructureConfig,
 } from "beautiful-react-table";
 
 function App() {
@@ -169,12 +167,15 @@ function App() {
   ]);
   const [rowActions] = useState<IrowActions[]>([
     {
-      action: (item, index) => {
+      action: (e, item, index) => {
+        e.stopPropagation();
         console.log(item);
       },
     },
     {
-      action: (item, index) => {
+      action: (e, item, index) => {
+        e.stopPropagation();
+
         console.log(item);
       },
     },
@@ -185,38 +186,40 @@ function App() {
     { id: 3, count: 50 },
     { id: 4, count: 100 },
   ]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [selectedPage, setSelectedPage] = useState<ISelectPage>({ id: 1 });
-  const [totalCount, setTotalCount] = useState<number>(500);
   const [links] = useState<ILinksList[]>([
     {
+      id: 1,
       name: "Overpayments",
-      action: (option: any, index: number) => {
+      action: (option: any) => {
         console.log(option, "1");
       },
     },
     {
+      id: 2,
       name: "Estate Owners",
-      action: (option: any, index: number) => {
+      action: (option: any) => {
         console.log(option, "2");
       },
     },
     {
+      id: 3,
       name: "Condominium Association Fee Altering",
-      action: (option: any, index: number) => {
+      action: (option: any) => {
         console.log(option, "3");
       },
     },
     {
+      id: 4,
       name: "Payments",
-      action: (option: any, index: number) => {
-        console.log(option, "4");
+      action: (option: any) => {
+        console.log(option, 4);
       },
     },
     {
+      id: 5,
       name: "Debts",
-      action: (option: any, index: number) => {
-        console.log(option, "5");
+      action: (option: any) => {
+        console.log(option, 5);
       },
     },
   ]);
@@ -651,21 +654,13 @@ function App() {
     setColumnHeaderStructures(option);
   };
 
-  const handleSelectDataSize = (options: IPageSizes) => {
-    setSelectedPage({ id: options.id });
-    setCurrentPage(1);
-  };
-
-  const handleChangePage = (option: number) => {
-    setCurrentPage(option);
-  };
   const handleEdit = (option: any) => {
     console.log(option);
   };
   const handleDelete = (option: any[]) => {
     console.log(option);
   };
-  const LeftSideSelfAction = (option: number | string) => {
+  const RightSideSelfAction = (option: number | string) => {
     console.log(option);
   };
   const storeStructure = () => {
@@ -676,6 +671,17 @@ function App() {
     setDropdoownSelectedItem(option);
   };
 
+  const getRow = (row: any) => {
+    console.log(row);
+  };
+
+  const getPageRowsCountAndCurrentPage = (
+    pageNumber: number,
+    rowsCount: number
+  ) => {
+    console.log(pageNumber, rowsCount);
+  };
+
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Table
@@ -684,41 +690,39 @@ function App() {
         columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
         columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
         columnsTotalStructure={columnsTotalStructure}
-        rightFreezeConfig={rightFreezeConfig}
-        columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
+        // rightFreezeConfig={rightFreezeConfig} // List for multiple FreezeColumns in the right side of the table
+        // columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
         headerHeight={64}
         footerHeight={48}
         leftFreezedColumnWidth={72}
-        rightFreezedColumnWidth={64}
+        // rightFreezedColumnWidth={200}
         pageSize={pageSize} // Per page data count
-        selectedPage={selectedPage} // Selected page
-        currentPage={currentPage} // Current page
-        totalCount={totalCount} // Page's total count
-        multipleCheck={true} // Multiple check for delete or download
-        isStickyFirstColumn={true} // Sticky first column
-        isHoveredRow={true} // while hover per row will be highlighted actions
+        pagesTotalCount={500} // Page's total count
+        multipleCheck // Multiple check for delete or download
+        isStickyFirstColumn // Sticky first column
+        isHoveredRow // while hover per row will be highlighted actions
         rowActions={rowActions} // Array of actions and theyr's icons / must be active isHoveredRow
-        // FreezeIcon={FreezeSvgIcon} //Freeze action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
+        // FreezeIcon={FreezeSvgIcon} //Freeze row action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
         // RightSideIcon={ExSvgIcon} // SVG icon for right side action
-        freezedRightSideVisible={true} // is Visible Freezed right side
+        freezedRightSideVisible // is Visible Freezed right side
         freezedRightSide={"dropdown"} // is dropdown
         links={links} // Array of links // have to check freezedRightSide - dropdown
-        listForDropdown={listForDropdown} // Array of Counters
+        listForDropdown={listForDropdown} // Array of Counters in Footer
         headerColor={"#F3F6F8"} // Header color
         footerColor={"#F3F6F8"} // Footer color
         // freezedLeftSideColor={'silver'} // FreezedLeft side color
         // freezedRightSideColor={'silver'} // FreezedRight side color
-        draggableColumns={true} //Is column's draggable
+        draggableColumns //Is column's draggable
+        getRow={getRow} // Get row data
         handleEdit={handleEdit} // will be visible when active multipleCheck
         handleDelete={handleDelete} // will be visible when active multipleCheck
         setColumnsConfigStructure={setColumnsConfigStructure} // set changed config structure - pin/hide/drag-drop
         setColumnHeaderStructure={setColumnHeaderStructure} // set changed header structure - pin/hide/drag-drop
-        setColumnTotalStructures={setColumnTotalStructures}
-        handleSelectDataSize={handleSelectDataSize} // Select data size per page
-        handleChangePage={handleChangePage} // chnage page
-        RightSideSelfAction={RightSideSelfAction} // FreezedRightSideSelfAction
+        setColumnTotalStructures={setColumnTotalStructures} // set changed FooterTotal structure - pin/hide/drag-drop
+        getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
         storeStructure={storeStructure} // Save columns structure on DB
         setTotalType={setTotalType} // Set total type
+        // RightSideSelfAction={RightSideSelfAction} // FreezedRightSideSelfAction
       />
     </div>
   );

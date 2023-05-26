@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IColumnConfig, IColumnConfigStructure, ILinksList, IrowActions } from '../../../Models/table.models'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import Checkbox from '../../components/checkbox'
@@ -8,6 +8,7 @@ import { StructureConfig } from '../../../Models/table.enum'
 import FreezeRowSvgIcon from '../../../svgIcons/FrameSvgIcon'
 import EditSvgIcon from '../../../svgIcons/EditSvgIcon'
 import DeleteSvgIcon from '../../../svgIcons/DeleteSvgIcon'
+import Select from '../../components/select/select'
 interface IFreezedRows<T extends Object> {
   freezedRows: T[]
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -71,7 +72,16 @@ const FreezedRows = <T extends Object>({
 
     dragDropFreezeRow(items)
   }
-
+  function pickBackGroundColor(option: number) {
+    if (option % 2 == 0) {
+      return 'G-dark-background'
+    }
+    return 'G-light-background'
+  }
+  const [isOpenList, setOpen] = useState<boolean>(false)
+  const setIsOpenList = () => {
+    setOpen((prev) => !prev)
+  }
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId='characters'>
@@ -99,7 +109,11 @@ const FreezedRows = <T extends Object>({
                       <div style={{ display: 'flex' }} className='G-row'>
                         {/* HOVERED ROWS */}
                         <ul className='G-rows-icons'>
-                          <li className='G-rows-icons' style={{ left: !isStickyFirstColumn ? '50%' : '' }}>
+                          <li
+                            onMouseLeave={() => setOpen(false)}
+                            className='G-rows-icons'
+                            style={{ left: !isStickyFirstColumn ? '50%' : '' }}
+                          >
                             <div className='G-icons-group'>
                               {rowActions && rowActions.length
                                 ? //@ts-ignore
@@ -123,6 +137,21 @@ const FreezedRows = <T extends Object>({
                                       )
                                   })
                                 : null}
+                              {/* {links && (
+                                <div className="G-modal-Icon">
+                                  <Select
+                                    optionsList={links}
+                                    value={""}
+                                    selectedNameKey={"name"}
+                                    selectedValueKey={"id"}
+                                    isOpenList={isOpenList}
+                                    setIsOpenList={setIsOpenList}
+                                    customClass={"G-drop"}
+                                    rowItem={item}
+                                    haveIcon
+                                  />
+                                </div>
+                              )} */}
                               <div onClick={(e) => unFreezeRow && unFreezeRow(e, index)} className='G-freeze-Icon'>
                                 {!FreezeIcon ? <FreezeRowSvgIcon /> : <FreezeIcon />}
                               </div>
@@ -131,7 +160,7 @@ const FreezedRows = <T extends Object>({
                         </ul>
                         {/* FREEZED LEFT */}
 
-                        <ul style={{ position: 'sticky', left: 0, zIndex: 45 }}>
+                        <ul style={{ position: 'sticky', left: 0, zIndex: 45 }} className={pickBackGroundColor(index)}>
                           {isStickyFirstColumn ? (
                             <li
                               style={{
@@ -160,7 +189,7 @@ const FreezedRows = <T extends Object>({
                           />
                         </ul>
                         {/* MAIN */}
-                        <ul style={{ flex: 1 }}>
+                        <ul style={{ flex: 1 }} className={pickBackGroundColor(index)}>
                           {isStickyFirstColumn ? null : (
                             <li
                               style={{
@@ -199,6 +228,7 @@ const FreezedRows = <T extends Object>({
                         {/* FREEZED RIGHT */}
                         {freezedRightSideVisible ? (
                           <ul
+                            className={pickBackGroundColor(index)}
                             style={{
                               position: 'sticky',
                               zIndex: 12,
@@ -206,26 +236,26 @@ const FreezedRows = <T extends Object>({
                               boxShadow: '7px 0px 9px -1px rgba(0,0,0,0.08)',
                             }}
                           >
-                            {rightFreezeConfig
-                              ? rightFreezeConfig.map((elem, i) => {
-                                  if (i < 4)
-                                    return (
-                                      <li
-                                        style={{
-                                          maxWidth: rightFreezedColumnWidth
-                                            ? `${rightFreezedColumnWidth}px`
-                                            : `${elem.width}px`,
-                                          minWidth: rightFreezedColumnWidth
-                                            ? `${rightFreezedColumnWidth}px`
-                                            : `${elem.width}px`,
-                                          backgroundColor: freezedRightSideColor && freezedRightSideColor,
-                                        }}
-                                      >
-                                        {
-                                          //@ts-ignore
-                                          elem.setRow(item)
-                                        }
-                                        {/* <FreezedRightColumns
+                            {rightFreezeConfig ? (
+                              rightFreezeConfig.map((elem, i) => {
+                                if (i < 4)
+                                  return (
+                                    <li
+                                      style={{
+                                        maxWidth: rightFreezedColumnWidth
+                                          ? `${rightFreezedColumnWidth}px`
+                                          : `${elem.width}px`,
+                                        minWidth: rightFreezedColumnWidth
+                                          ? `${rightFreezedColumnWidth}px`
+                                          : `${elem.width}px`,
+                                        backgroundColor: freezedRightSideColor && freezedRightSideColor,
+                                      }}
+                                    >
+                                      {
+                                        //@ts-ignore
+                                        elem.setRow(item)
+                                      }
+                                      {/* <FreezedRightColumns
                                 item={item}
                                 checkedLink={checkedLink}
                                 links={links}
@@ -234,10 +264,29 @@ const FreezedRows = <T extends Object>({
                                 RightSideSelfAction={RightSideSelfAction}
                                 getRowForDropdown={getRowForDropdown}
                               /> */}
-                                      </li>
-                                    )
-                                })
-                              : null}
+                                    </li>
+                                  )
+                              })
+                            ) : (
+                              <li
+                                style={{
+                                  maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+                                  minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+                                  backgroundColor: freezedRightSideColor && freezedRightSideColor,
+                                }}
+                              >
+                                {/* {elem.setRow(item)} */}
+                                <FreezedRightColumns
+                                  item={item}
+                                  checkedLink={checkedLink}
+                                  links={links}
+                                  freezedRightSide={freezedRightSide}
+                                  RightSideIcon={RightSideIcon}
+                                  RightSideSelfAction={RightSideSelfAction}
+                                  getRowForDropdown={getRowForDropdown}
+                                />
+                              </li>
+                            )}
                           </ul>
                         ) : null}
                       </div>

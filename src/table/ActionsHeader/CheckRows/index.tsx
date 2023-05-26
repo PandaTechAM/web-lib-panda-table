@@ -111,7 +111,10 @@ const CheckRows = <T extends Object>({
               return (
                 <li
                   key={item.id}
-                  onClick={item.action}
+                  onClick={() => {
+                    item.action()
+                    handleClose()
+                  }}
                   style={{
                     color: index === selectedItem ? '#4844C5' : 'black',
                   }}

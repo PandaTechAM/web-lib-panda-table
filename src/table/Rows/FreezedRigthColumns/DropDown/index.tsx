@@ -15,9 +15,11 @@ const DropDown = <T extends Object>({ item, checkedLink, links, RightSideIcon, g
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
     setAnchorEl(event.currentTarget)
   }
-  const handleClose = () => {
+  const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     setAnchorEl(null)
   }
   return (
@@ -31,10 +33,10 @@ const DropDown = <T extends Object>({ item, checkedLink, links, RightSideIcon, g
         style={{ minWidth: '10px' }}
       >
         <div
-          onClick={() =>
+          onClick={(e) => {
             //@ts-ignore
-            getRowForDropdown && getRowForDropdown(item.id)
-          }
+            getRowForDropdown?.(item.id)
+          }}
           style={{ display: 'flex', alignItems: 'center' }}
         >
           {!RightSideIcon ? (
@@ -82,7 +84,10 @@ const DropDown = <T extends Object>({ item, checkedLink, links, RightSideIcon, g
               return (
                 <li
                   key={ind}
-                  onClick={() => el.action(checkedLink, ind)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    el.action(checkedLink, ind)
+                  }}
                   className='G-align-center'
                   style={{
                     cursor: 'pointer',
@@ -90,7 +95,7 @@ const DropDown = <T extends Object>({ item, checkedLink, links, RightSideIcon, g
                     borderBottom: ind !== links.length - 1 ? '1px solid #757575' : '',
                   }}
                 >
-                  {el.icon ? el.icon() : null}
+                  {el.icon ? el.icon() : <LinkSvgIcon fill='#4844c5' />}
                   <div
                     style={{
                       paddingLeft: '10px',

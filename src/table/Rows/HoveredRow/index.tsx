@@ -1,15 +1,17 @@
-import React from 'react'
-import { IrowActions } from '../../../Models/table.models'
+import React, { useState } from 'react'
+import { ILinksList, IrowActions } from '../../../Models/table.models'
 import { useRef } from 'react'
 import FreezeRowSvgIcon from '../../../svgIcons/FrameSvgIcon'
 import EditSvgIcon from '../../../svgIcons/EditSvgIcon'
 import DeleteSvgIcon from '../../../svgIcons/DeleteSvgIcon'
+import Select from '../../components/select/select'
 interface IHoveredRow<T extends Object> {
   rowActions?: IrowActions[]
   item: T
   index: number
   freezedRows: T[]
   FreezeIcon?: any
+  links?: ILinksList[]
   freezeRow?(e: any, option: number): void
 }
 const HoveredRow = <T extends Object>({
@@ -18,12 +20,17 @@ const HoveredRow = <T extends Object>({
   index,
   freezedRows,
   FreezeIcon,
+  links,
   freezeRow,
 }: IHoveredRow<T>) => {
   const ref = useRef<any>(null)
+  const [isOpenList, setOpen] = useState<boolean>(false)
+  const setIsOpenList = () => {
+    setOpen((prev) => !prev)
+  }
 
   return (
-    <li className='G-rows-icons'>
+    <li className='G-rows-icons' onMouseLeave={() => setOpen(false)}>
       <div className='G-icons-group' ref={ref}>
         {rowActions && rowActions.length
           ? //@ts-ignore
@@ -41,6 +48,21 @@ const HoveredRow = <T extends Object>({
                 )
             })
           : null}
+        {/* {links && (
+          <div className="G-modal-Icon">
+            <Select
+              optionsList={links}
+              value={""}
+              selectedNameKey={"name"}
+              selectedValueKey={"id"}
+              isOpenList={isOpenList}
+              setIsOpenList={setIsOpenList}
+              customClass={"G-drop"}
+              rowItem={item}
+              haveIcon
+            />
+          </div>
+        )} */}
         {freezedRows.length < 3 && freezeRow && (
           <>
             <div

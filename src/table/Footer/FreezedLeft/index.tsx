@@ -102,8 +102,9 @@ const FooterFreezedLeft = <T extends Object>({
                     <li
                       key={item.id}
                       onClick={() => {
-                        setTotalType && selectedItem !== index && setTotalType(item.title)
+                        selectedItem !== index && setTotalType?.(item.title)
                         setSelectedItem(index)
+                        handleClose()
                       }}
                       style={{
                         color: index === selectedItem ? '#4844C5' : 'black',

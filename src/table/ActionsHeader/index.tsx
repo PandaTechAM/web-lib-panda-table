@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ColumnsCustomizer from './ColumnsCustomizer'
 import Pagination from '../components/pagination'
 import Select from '../components/select/select'
@@ -12,7 +12,8 @@ import {
 import CheckRows from './CheckRows'
 import DeleteSvgIcon from '../../svgIcons/DeleteSvgIcon'
 import EditSvgIcon from '../../svgIcons/EditSvgIcon'
-import { downloadFile } from '../../utils'
+// import Filter from "./Filter";
+import DropdownSvgIcon from '../../svgIcons/DropdownSvgIcon'
 
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -21,7 +22,7 @@ interface IActionsHeader<T extends Object> {
   selectedPage?: ISelectPage
   multipleCheck?: boolean
   currentPage?: number
-  totalCount?: number
+  pagesTotalCount?: number
   data: T[]
   checkedRows: T[]
   columnsTotalStructure?: IColumnTotalStructure
@@ -33,6 +34,7 @@ interface IActionsHeader<T extends Object> {
   handleChangePage?(option: number): void
   handleEdit?(option: T): void
   handleDelete?(option: T[]): void
+  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
   handleSelectDataSize?(options: IPageSizes): void
   storeStructure?(): void
   unCheck(): void
@@ -42,10 +44,8 @@ const ActionsHeader = <T extends Object>({
   columnsConfigStructure,
   columnsHeaderStructure,
   pageSize,
-  selectedPage,
   multipleCheck,
-  currentPage,
-  totalCount,
+  pagesTotalCount = 0,
   data,
   checkedRows,
   columnsTotalStructure,
@@ -56,33 +56,32 @@ const ActionsHeader = <T extends Object>({
   handleCheckAll,
   setColumnsConfigStructure,
   setColumnHeaderStructure,
-  handleChangePage,
   handleEdit,
   handleDelete,
-  handleSelectDataSize,
+  getPageRowsCountAndCurrentPage,
   storeStructure,
 }: IActionsHeader<T>) => {
-  const exportToCsv = (e: any) => {
-    e.preventDefault()
-
-    // Headers for each column
-    let headers = ['Id,Name,Surname,Age']
-
-    // Convert users data to a csv
-    let usersCsv = data.reduce((acc, user) => {
-      const { id, easywalletAgentId, agentCreationDate, agentName } = user as any
-      //@ts-ignore
-      acc.push([id, easywalletAgentId, agentCreationDate, agentName].join(','))
-
-      return acc
-    }, [])
-
-    downloadFile({
-      data: [...headers, ...usersCsv].join('\n'),
-      fileName: 'users.csv',
-      fileType: 'text/csv',
-    })
+  const [isOpenList, setOpen] = useState<boolean>(false)
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [selectedPage, setSelectedPage] = useState<ISelectPage>({ id: 1 })
+  const [totalCount, setTotalCount] = useState<number>(pagesTotalCount)
+  const setIsOpenList = () => {
+    setOpen((prev) => !prev)
   }
+  const handleSelectDataSize = (options: IPageSizes) => {
+    setSelectedPage({ id: options.id })
+    setCurrentPage(1)
+  }
+  const handleChangePage = (option: number) => {
+    setCurrentPage(option)
+  }
+
+  useEffect(() => {
+    if (pageSize && selectedPage && getPageRowsCountAndCurrentPage) {
+      getPageRowsCountAndCurrentPage(currentPage, pageSize[selectedPage.id - 1].count)
+    }
+  }, [currentPage, selectedPage, getPageRowsCountAndCurrentPage, pageSize])
+
   return (
     <div
       className='G-table-actions-header'
@@ -135,6 +134,7 @@ const ActionsHeader = <T extends Object>({
           storeStructure={storeStructure}
         />
       ) : null}
+      {/* <div><Filter /></div> */}
 
       {handleChangePage && currentPage && totalCount && (
         <>
@@ -153,6 +153,9 @@ const ActionsHeader = <T extends Object>({
                 selectedValueKey={'id'}
                 onChange={handleSelectDataSize}
                 customClass='G-Select-container'
+                isOpenList={isOpenList}
+                setIsOpenList={setIsOpenList}
+                ButtonSvg={DropdownSvgIcon}
               />
               <div>Rows</div>
             </div>

@@ -102,8 +102,8 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
             border: '1px solid #ACBCC3',
             outline: 'none',
             margin: '0 15px',
-            paddingLeft: '3px',
-            fontSize: '12px',
+            padding: '0 3px',
+            fontSize: '10px',
           }}
         />
       </div>

@@ -13,9 +13,7 @@ function Table<T extends Object>({
   data = [],
   allDataFromDb,
   pageSize,
-  currentPage,
-  selectedPage,
-  totalCount,
+  pagesTotalCount,
   multipleCheck,
   isStickyFirstColumn,
   columnMinWidth,
@@ -47,8 +45,7 @@ function Table<T extends Object>({
   setColumnHeaderStructure,
   handleEdit,
   handleDelete,
-  handleSelectDataSize,
-  handleChangePage,
+  getPageRowsCountAndCurrentPage,
   storeStructure,
   setTotalType,
 }: IProps<T>) {
@@ -70,14 +67,12 @@ function Table<T extends Object>({
 
   return (
     <div>
-      {(pageSize && currentPage && selectedPage && totalCount) || multipleCheck || draggableColumns ? (
+      {(pageSize && pagesTotalCount) || multipleCheck || draggableColumns ? (
         <ActionsHeader
           columnsConfigStructure={columnsConfigStructure}
           columnsHeaderStructure={columnsHeaderStructure}
           pageSize={pageSize}
-          selectedPage={selectedPage}
-          currentPage={currentPage}
-          totalCount={totalCount}
+          pagesTotalCount={pagesTotalCount}
           multipleCheck={multipleCheck}
           data={data}
           checkedRows={checkedRows}
@@ -89,11 +84,10 @@ function Table<T extends Object>({
           handleDelete={handleDelete}
           setColumnsConfigStructure={setColumnsConfigStructure}
           setColumnHeaderStructure={setColumnHeaderStructure}
-          handleSelectDataSize={handleSelectDataSize}
-          handleChangePage={handleChangePage}
           storeStructure={storeStructure}
           unCheck={unCheck}
           checkAllDataFromDb={checkAllDataFromDb}
+          getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
         />
       ) : null}
 

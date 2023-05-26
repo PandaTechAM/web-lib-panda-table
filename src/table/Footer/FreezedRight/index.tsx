@@ -18,20 +18,28 @@ const FooterFreezedRight = <T extends Object>({
         boxShadow: '-6px 0px 8px 0px rgba(0,0,0,0.08)',
       }}
     >
-      {rightFreezeConfig
-        ? rightFreezeConfig.map((item, i) => {
-            if (i < 4)
-              return (
-                <li
-                  style={{
-                    backgroundColor: footerColor && footerColor,
-                    maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
-                    minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
-                  }}
-                />
-              )
-          })
-        : null}
+      {rightFreezeConfig ? (
+        rightFreezeConfig.map((item, i) => {
+          if (i < 4)
+            return (
+              <li
+                style={{
+                  backgroundColor: footerColor && footerColor,
+                  maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                  minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                }}
+              />
+            )
+        })
+      ) : (
+        <li
+          style={{
+            backgroundColor: footerColor && footerColor,
+            maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+            minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+          }}
+        />
+      )}
     </ul>
   )
 }

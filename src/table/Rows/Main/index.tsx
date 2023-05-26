@@ -65,6 +65,12 @@ const MainRows = forwardRef<any, IMainRows<any>>(
     },
     ref,
   ) => {
+    function pickBackGroundColor(option: number) {
+      if (option % 2 == 0) {
+        return 'G-dark-background'
+      }
+      return 'G-light-background'
+    }
     return (
       <>
         {unFreezedRows.map((item, index) => {
@@ -79,11 +85,13 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                     freezedRows={freezedRows}
                     FreezeIcon={FreezeIcon}
                     freezeRow={freezeRow}
+                    links={links}
                   />
                 ) : null}
               </ul>
               {/* FREEZED LEFT */}
               <ul
+                className={pickBackGroundColor(index)}
                 style={{
                   position: 'sticky',
                   left: 0,
@@ -125,17 +133,8 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                 style={{
                   flex: 1,
                 }}
+                className={pickBackGroundColor(index)}
               >
-                {/* {isHoveredRow ? (
-                  <HoveredRow
-                    rowActions={rowActions}
-                    item={item}
-                    index={index}
-                    freezedRows={freezedRows}
-                    FreezeIcon={FreezeIcon}
-                    freezeRow={freezeRow}
-                  />
-                ) : null} */}
                 {isStickyFirstColumn ? null : (
                   <li
                     style={{
@@ -182,32 +181,52 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                     right: 0,
                     boxShadow: '-6px 0px 8px 0px rgba(0,0,0,0.08)',
                   }}
+                  className={pickBackGroundColor(index)}
                 >
-                  {rightFreezeConfig
-                    ? rightFreezeConfig.map((elem, i) => {
-                        if (i < 4)
-                          return (
-                            <li
-                              style={{
-                                maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${elem.width}px`,
-                                minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${elem.width}px`,
-                                backgroundColor: freezedRightSideColor && freezedRightSideColor,
-                              }}
-                            >
-                              {elem.setRow(item)}
-                              {/* <FreezedRightColumns
-                      item={item}
-                      checkedLink={checkedLink}
-                      links={links}
-                      freezedRightSide={freezedRightSide}
-                      RightSideIcon={RightSideIcon}
-                      RightSideSelfAction={RightSideSelfAction}
-                      getRowForDropdown={getRowForDropdown}
-                    /> */}
-                            </li>
-                          )
-                      })
-                    : null}
+                  {rightFreezeConfig ? (
+                    rightFreezeConfig.map((elem, i) => {
+                      if (i < 4)
+                        return (
+                          <li
+                            style={{
+                              maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${elem.width}px`,
+                              minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${elem.width}px`,
+                              backgroundColor: freezedRightSideColor && freezedRightSideColor,
+                            }}
+                          >
+                            {elem.setRow(item)}
+                            {/* <FreezedRightColumns
+                                item={item}
+                                checkedLink={checkedLink}
+                                links={links}
+                                freezedRightSide={freezedRightSide}
+                                RightSideIcon={RightSideIcon}
+                                RightSideSelfAction={RightSideSelfAction}
+                                getRowForDropdown={getRowForDropdown}
+                              /> */}
+                          </li>
+                        )
+                    })
+                  ) : (
+                    <li
+                      style={{
+                        maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+                        minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+                        backgroundColor: freezedRightSideColor && freezedRightSideColor,
+                      }}
+                    >
+                      {/* {elem.setRow(item)} */}
+                      <FreezedRightColumns
+                        item={item}
+                        checkedLink={checkedLink}
+                        links={links}
+                        freezedRightSide={freezedRightSide}
+                        RightSideIcon={RightSideIcon}
+                        RightSideSelfAction={RightSideSelfAction}
+                        getRowForDropdown={getRowForDropdown}
+                      />
+                    </li>
+                  )}
                 </ul>
               ) : null}
             </div>

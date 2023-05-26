@@ -18,20 +18,28 @@ const FreezedHeaderRight = <T extends Object>({
         boxShadow: '-6px 0px 8px 0px rgba(0,0,0,0.08)',
       }}
     >
-      {rightFreezeConfig
-        ? rightFreezeConfig.map((item, i) => {
-            if (i < 4)
-              return (
-                <li
-                  style={{
-                    maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
-                    minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
-                    backgroundColor: headerColor && headerColor,
-                  }}
-                />
-              )
-          })
-        : null}
+      {rightFreezeConfig ? (
+        rightFreezeConfig.map((item, i) => {
+          if (i < 4)
+            return (
+              <li
+                style={{
+                  maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                  minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                  backgroundColor: headerColor && headerColor,
+                }}
+              />
+            )
+        })
+      ) : (
+        <li
+          style={{
+            maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+            minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+            backgroundColor: headerColor && headerColor,
+          }}
+        />
+      )}
     </ul>
   )
 }

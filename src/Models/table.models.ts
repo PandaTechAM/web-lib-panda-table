@@ -9,9 +9,7 @@ export interface IProps<T extends Object> {
   links?: ILinksList[]
   listForDropdown?: ITotalList[]
   rowActions?: IrowActions[]
-  selectedPage?: ISelectPage
-  currentPage?: number
-  totalCount?: number
+  pagesTotalCount?: number
   multipleCheck?: boolean
   isStickyFirstColumn?: boolean
   isHoveredRow?: boolean
@@ -36,10 +34,9 @@ export interface IProps<T extends Object> {
   handleDelete?: (option: T[]) => void
   setColumnsConfigStructure?(option: IColumnConfigStructure<T>): void
   setColumnHeaderStructure?(options: IColumnHeaderStructure): void
-  handleSelectDataSize?(option: IPageSizes): void
   setSortedData?(option: any): void
-  handleChangePage?(option: number | string): void
   storeStructure?(): void
+  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
   setTotalType?(option: number | string): void
 }
 export interface IColumnTotal {
@@ -127,13 +124,8 @@ export interface IrowActions {
 }
 
 export interface ILinksList {
+  id: number
   icon?: () => string | number | HTMLElement | React.ReactNode | null | any
   name: string
   action(option: any, index: number): void
-}
-
-export interface IDownloadData {
-  data: any
-  fileName: any
-  fileType: any
 }
