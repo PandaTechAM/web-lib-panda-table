@@ -80,7 +80,6 @@
   color         : #161515;
   overflow-y    : auto;
   overflow-x    : auto;
-  min-height:   500px;
   max-height    : calc(100vh - 320px);
   border-radius : 5px;
   margin        : 0;
@@ -139,9 +138,7 @@
 }
 
 .G-data-table-body {
-  // div {
-    
-  // }
+ 
   .G-dropdown-link{
     border: 1px solid #CED8DD;
   }
