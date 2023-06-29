@@ -6,27 +6,34 @@ import {
   IColumnConfigStructure,
   IColumnHeaderStructure,
   IColumnTotalStructure,
+  IComparisonType,
   IPageSizes,
   ISelectPage,
+  ItemFields,
 } from '../../Models/table.models'
 import CheckRows from './CheckRows'
 import DeleteSvgIcon from '../../svgIcons/DeleteSvgIcon'
 import EditSvgIcon from '../../svgIcons/EditSvgIcon'
-// import Filter from "./Filter";
 import DropdownSvgIcon from '../../svgIcons/DropdownSvgIcon'
+import Filter from './Filter'
 
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
   columnsHeaderStructure: IColumnHeaderStructure
-  pageSize?: IPageSizes[]
-  selectedPage?: ISelectPage
-  multipleCheck?: boolean
-  currentPage?: number
+  pageSizeStructure?: IPageSizes[]
+  selectedPageCount?: ISelectPage
+  currPage?: number
   pagesTotalCount?: number
+  multipleCheck?: boolean
   data: T[]
   checkedRows: T[]
   columnsTotalStructure?: IColumnTotalStructure
   draggableColumns?: boolean
+  comporisionTypes?: IComparisonType[]
+  perColumnListForFilters?: string[]
+  filterDataForRequest?: ItemFields[]
+  isLoadingFilters?: boolean
+  getColumnName?(columnName: string): void
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleCheckAll(): void
   setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
@@ -39,17 +46,27 @@ interface IActionsHeader<T extends Object> {
   storeStructure?(): void
   unCheck(): void
   checkAllDataFromDb(): void
+  getFilteredData?(options: any): void
+  getFilteredDataForTable?(): void
+  handleChangePagePerFilterField?(): void
 }
 const ActionsHeader = <T extends Object>({
   columnsConfigStructure,
   columnsHeaderStructure,
-  pageSize,
+  pageSizeStructure,
   multipleCheck,
   pagesTotalCount = 0,
+  currPage = 1,
   data,
   checkedRows,
   columnsTotalStructure,
   draggableColumns,
+  comporisionTypes,
+  perColumnListForFilters,
+  filterDataForRequest,
+  isLoadingFilters,
+  handleChangePagePerFilterField,
+  getColumnName,
   unCheck,
   checkAllDataFromDb,
   setColumnTotalStructures,
@@ -60,27 +77,31 @@ const ActionsHeader = <T extends Object>({
   handleDelete,
   getPageRowsCountAndCurrentPage,
   storeStructure,
+  getFilteredData,
+  getFilteredDataForTable,
 }: IActionsHeader<T>) => {
   const [isOpenList, setOpen] = useState<boolean>(false)
-  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [currentPage, setCurrentPage] = useState<number>(currPage)
   const [selectedPage, setSelectedPage] = useState<ISelectPage>({ id: 1 })
   const [totalCount, setTotalCount] = useState<number>(pagesTotalCount)
+
   const setIsOpenList = () => {
     setOpen((prev) => !prev)
   }
+
   const handleSelectDataSize = (options: IPageSizes) => {
     setSelectedPage({ id: options.id })
     setCurrentPage(1)
+    if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
+      getPageRowsCountAndCurrentPage(1, pageSizeStructure[options.id - 1].count)
+    }
   }
   const handleChangePage = (option: number) => {
     setCurrentPage(option)
-  }
-
-  useEffect(() => {
-    if (pageSize && selectedPage && getPageRowsCountAndCurrentPage) {
-      getPageRowsCountAndCurrentPage(currentPage, pageSize[selectedPage.id - 1].count)
+    if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
+      getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1].count)
     }
-  }, [currentPage, selectedPage, getPageRowsCountAndCurrentPage, pageSize])
+  }
 
   return (
     <div
@@ -134,25 +155,40 @@ const ActionsHeader = <T extends Object>({
           storeStructure={storeStructure}
         />
       ) : null}
-      {/* <div><Filter /></div> */}
+      <div>
+        <Filter
+          data={data}
+          comporisionTypes={comporisionTypes}
+          perColumnListForFilters={perColumnListForFilters}
+          filterDataForRequest={filterDataForRequest}
+          isLoadingFilters={isLoadingFilters}
+          getFilter={getFilteredData}
+          getFilteredDataForTable={getFilteredDataForTable}
+          getColumnName={getColumnName}
+          handleChangePagePerFilterField={handleChangePagePerFilterField}
+        />
+      </div>
 
-      {handleChangePage && currentPage && totalCount && (
+      {/* {handleChangePage && currentPage && totalCount && (
         <>
-          {pageSize && selectedPage && (
-            <div className='G-justify-between G-align-center' style={{ width: '138px' }}>
+          {pageSizeStructure && selectedPage && (
+            <div
+              className="G-justify-between G-align-center"
+              style={{ width: "138px" }}
+            >
               <div>Show</div>
               <div
                 style={{
-                  fontSize: '16px',
+                  fontSize: "16px",
                 }}
               ></div>
               <Select
-                optionsList={pageSize}
+                optionsList={pageSizeStructure}
                 value={selectedPage.id}
-                selectedNameKey={'count'}
-                selectedValueKey={'id'}
+                selectedNameKey={"count"}
+                selectedValueKey={"id"}
                 onChange={handleSelectDataSize}
-                customClass='G-Select-container'
+                customClass="G-Select-container"
                 isOpenList={isOpenList}
                 setIsOpenList={setIsOpenList}
                 ButtonSvg={DropdownSvgIcon}
@@ -164,11 +200,15 @@ const ActionsHeader = <T extends Object>({
             onPageChange={handleChangePage}
             totalCount={totalCount}
             currentPage={currentPage}
-            pageSize={pageSize && selectedPage ? pageSize[selectedPage.id - 1].count : 15}
-            className={'G-pagionation'}
+            pageSizeStructure={
+              pageSizeStructure && selectedPage
+                ? pageSizeStructure[selectedPage.id - 1].count
+                : 15
+            }
+            className={"G-pagionation"}
           />
         </>
-      )}
+      )} */}
     </div>
   )
 }

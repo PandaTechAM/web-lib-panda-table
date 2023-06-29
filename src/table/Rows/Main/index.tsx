@@ -188,6 +188,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                       if (i < 4)
                         return (
                           <li
+                            key={elem.id}
                             style={{
                               maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${elem.width}px`,
                               minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${elem.width}px`,

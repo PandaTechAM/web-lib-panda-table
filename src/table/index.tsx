@@ -8,12 +8,15 @@ import Footer from './Footer'
 import './index.scss'
 import '../index.scss'
 import '../assets/style/index.scss'
+import FooterPagination from './FooterPagination'
 
 function Table<T extends Object>({
   data = [],
   allDataFromDb,
-  pageSize,
+  pageSizeStructure,
   pagesTotalCount,
+  currentPage,
+  selectedPageCount,
   multipleCheck,
   isStickyFirstColumn,
   columnMinWidth,
@@ -38,6 +41,12 @@ function Table<T extends Object>({
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
   headerHeight,
+  comporisionTypes,
+  perColumnListForFilters,
+  filterDataForRequest,
+  isLoadingFilters,
+  handleChangePagePerFilterField,
+  getColumnName,
   getRow,
   RightSideSelfAction,
   setColumnTotalStructures,
@@ -48,6 +57,8 @@ function Table<T extends Object>({
   getPageRowsCountAndCurrentPage,
   storeStructure,
   setTotalType,
+  getFilteredData,
+  getFilteredDataForTable,
 }: IProps<T>) {
   const {
     freezedRows,
@@ -67,17 +78,24 @@ function Table<T extends Object>({
 
   return (
     <div>
-      {(pageSize && pagesTotalCount) || multipleCheck || draggableColumns ? (
+      {(pageSizeStructure && pagesTotalCount) || multipleCheck || draggableColumns ? (
         <ActionsHeader
           columnsConfigStructure={columnsConfigStructure}
           columnsHeaderStructure={columnsHeaderStructure}
-          pageSize={pageSize}
+          pageSizeStructure={pageSizeStructure}
+          perColumnListForFilters={perColumnListForFilters}
+          currPage={currentPage}
+          selectedPageCount={selectedPageCount}
           pagesTotalCount={pagesTotalCount}
           multipleCheck={multipleCheck}
           data={data}
           checkedRows={checkedRows}
           columnsTotalStructure={columnsTotalStructure}
           draggableColumns={draggableColumns}
+          comporisionTypes={comporisionTypes}
+          filterDataForRequest={filterDataForRequest}
+          isLoadingFilters={isLoadingFilters}
+          getColumnName={getColumnName}
           setColumnTotalStructures={setColumnTotalStructures}
           handleCheckAll={handleCheckAll}
           handleEdit={handleEdit}
@@ -88,6 +106,9 @@ function Table<T extends Object>({
           unCheck={unCheck}
           checkAllDataFromDb={checkAllDataFromDb}
           getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
+          getFilteredData={getFilteredData}
+          getFilteredDataForTable={getFilteredDataForTable}
+          handleChangePagePerFilterField={handleChangePagePerFilterField}
         />
       ) : null}
 
@@ -159,6 +180,16 @@ function Table<T extends Object>({
             </div>
           ) : null}
         </div>
+      </div>
+      <div className='G-justify-end G-align-center' style={{ padding: 10 }}>
+        {currentPage && pagesTotalCount && (
+          <FooterPagination
+            pageSizeStructure={pageSizeStructure}
+            currPage={currentPage}
+            pagesTotalCount={pagesTotalCount}
+            getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
+          />
+        )}
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 {
   "name": "beautiful-react-table",
-  "version": "4.8.0",
+  "version": "5.0.0",
   "description": "My first react typescript package",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -17,12 +17,6 @@
   },
   "keywords": [
     "demo",
-    "library",
-    "tutorial",
-    "learning",
-    "educational",
-    "example",
-    "practice",
     "react",
     "typescript",
     "awesome-project",
@@ -88,7 +82,9 @@
     ]
   },
   "dependencies": {
+    "@mui/x-date-pickers": "^6.9.0",
     "beautiful-react-table": "^1.1.0",
+    "dayjs": "^1.11.8",
     "rollup-plugin-dts": "^5.3.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-url": "^3.0.1",

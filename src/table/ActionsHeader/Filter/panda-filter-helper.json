@@ -1,0 +1,101 @@
+{"FilteringTypes":[
+  {   
+      "ColumnType":"NumericText",
+      "AggregateTypes": ["Average", "Min", "Max"],
+      "FilterTypes": [
+        "Equal"
+      ],
+      "DefaultSearchType": "Equal"
+  },
+  {   
+      "ColumnType":"Number",
+      "AggregateTypes": ["Average", "Min", "Max"],
+      "FilterTypes": [
+        "Equal",
+        "NotEqual",
+        "GreaterThan",
+        "GreaterThanOrEqual",
+        "LessThan",
+        "LessThanOrEqual",
+        "Between"
+      ],
+      "DefaultSearchType": "Equal"
+  },
+  {
+      "ColumnType":"Text",
+      "AggregateTypes": ["UniqueCount"],
+      "FilterTypes": [
+        "Equal",
+        "StartsWith",
+        "EndsWith",
+        "Contains",
+        "NotContaining",
+        "IsEmpty",
+        "IsNotEmpty"
+      ],
+      "DefaultSearchType": "Equal"
+  },
+  {
+      "ColumnType":"Currency",
+      "AggregateTypes": ["Sum", "Average", "Min", "Max"],
+      "FilterTypes": [
+        "Equal",
+        "NotEqual",
+        "GreaterThan",
+        "GreaterThanOrEqual",
+        "LessThan",
+        "LessThanOrEqual",
+        "Between",
+        "IsEmpty",
+        "IsNotEmpty"
+      ],
+      "DefaultSearchType": "Equal"
+  },
+  {
+      "ColumnType":"Date",
+      "AggregateTypes": ["Min", "Max"],
+      "FilterTypes": [
+        "GreaterThan",
+        "GreaterThanOrEqual",
+        "LessThan",
+        "LessThanOrEqual",
+        "Between"
+      ],
+      "DefaultSearchType": "Between"
+  },
+  {
+      "ColumnType":"Boolean",
+      "AggregateTypes": [""],
+      "FilterTypes": ["IsTrue", "IsFalse", "IsEmpty", "IsNotEmpty"],
+      "DefaultSearchType": "IsNotEmpty"
+  },
+  {
+      "ColumnType":"Percentage",
+      "AggregateTypes": ["Average", "Min", "Max"],
+      "FilterTypes": [
+        "Equal",
+        "NotEqual",
+        "GreaterThan",
+        "GreaterThanOrEqual",
+        "LessThan",
+        "LessThanOrEqual",
+        "Between",
+        "IsEmpty",
+        "IsNotEmpty"
+      ],
+      "DefaultSearchType": "Equal"
+  },
+  {
+      "ColumnType":"Link",
+      "AggregateTypes": [""],
+      "FilterTypes": ["IsEmpty", "IsNotEmpty"],
+      "DefaultSearchType": "None"
+  },
+  {
+      "ColumnType":"Enum",
+      "AggregateTypes": [""],
+      "FilterTypes": ["Equal", "NotEqual", "IsEmpty", "IsNotEmpty"],
+      "DefaultSearchType": "None"
+  }
+]
+}

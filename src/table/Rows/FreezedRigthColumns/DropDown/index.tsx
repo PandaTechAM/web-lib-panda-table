@@ -30,7 +30,13 @@ const DropDown = <T extends Object>({ item, checkedLink, links, RightSideIcon, g
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        style={{ minWidth: '10px', backgroundColor: 'rgba(0,0,0,0)' }}
+        style={{
+          minWidth: '10px',
+          backgroundColor: 'rgba(0,0,0,0)',
+          border: 'none',
+          padding: 0,
+          margin: 0,
+        }}
       >
         <div
           onClick={(e) => {
@@ -71,7 +77,6 @@ const DropDown = <T extends Object>({ item, checkedLink, links, RightSideIcon, g
             border: '1px solid #CED8DD',
             padding: '0 26px',
             width: 240,
-            height: 260,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',

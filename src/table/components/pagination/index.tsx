@@ -10,22 +10,29 @@ interface IPagination {
   totalCount: number
   siblingCount?: number
   currentPage: number
-  pageSize: number
+  pageSizeStructure: number
   className?: string
 }
 
-const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className }: IPagination) => {
+const Pagination = ({
+  onPageChange,
+  totalCount,
+  siblingCount = 1,
+  currentPage,
+  pageSizeStructure,
+  className,
+}: IPagination) => {
   const paginationRange = usePagination({
     currentPage,
     totalCount,
     siblingCount,
-    pageSize,
+    pageSizeStructure,
   })
   const ref = useRef<any>(null)
   const [val, setVal] = useState('')
   useEffect(() => {
     setVal('')
-  }, [totalCount, pageSize, currentPage])
+  }, [totalCount, pageSizeStructure, currentPage])
   // @ts-ignore
 
   if (currentPage === 0 || paginationRange.length === 1) {
@@ -45,7 +52,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
   }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    if (ref.current && containsOnlyNumbers(value) && +value <= totalCount / pageSize) setVal(value)
+    if (ref.current && containsOnlyNumbers(value) && +value <= totalCount / pageSizeStructure) setVal(value)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

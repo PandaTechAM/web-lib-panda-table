@@ -86,6 +86,7 @@ const CheckRows = <T extends Object>({
             display: 'flex',
             justifyContent: 'start',
             padding: 0,
+            margin: 0,
             translate: -10,
             backgroundColor: 'white',
             minWidth: 10,

@@ -4,12 +4,15 @@ export interface IProps<T extends Object> {
   columnsHeaderStructure: IColumnHeaderStructure
   columnsTotalStructure?: IColumnTotalStructure
   rightFreezeConfig?: IColumnConfig<T>[]
+  perColumnListForFilters?: string[]
   allDataFromDb?: T[]
-  pageSize?: IPageSizes[]
   links?: ILinksList[]
   listForDropdown?: ITotalList[]
   rowActions?: IrowActions[]
+  pageSizeStructure?: IPageSizes[]
   pagesTotalCount?: number
+  currentPage?: number
+  selectedPageCount?: ISelectPage
   multipleCheck?: boolean
   isStickyFirstColumn?: boolean
   isHoveredRow?: boolean
@@ -27,6 +30,10 @@ export interface IProps<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
+  comporisionTypes?: IComparisonType[]
+  filterDataForRequest?: ItemFields[]
+  isLoadingFilters?: boolean
+  getColumnName?(columnName: string): void
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   setColumnTotalStructures?(option: IColumnTotalStructure): void
@@ -38,7 +45,25 @@ export interface IProps<T extends Object> {
   storeStructure?(): void
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
   setTotalType?(option: number | string): void
+  getFilteredData?(option: any): void
+  getFilteredDataForTable?(): void
+  handleChangePagePerFilterField?(): void
 }
+
+export interface ItemFields {
+  PropertyName: any
+  Values: any[]
+  ComparisonType: string
+  TypeForUi: string
+  Search: string | number
+  CheckedItems: any[]
+}
+
+export interface IFilterDataForRequest {
+  Filters: ItemFields[]
+  Aggregates: any[]
+}
+
 export interface IColumnTotal {
   id: string | number
   title: number | null
@@ -80,6 +105,12 @@ export interface IFreezeProps<T extends Object> {
   columnMinWidth?: number
   item: T
   freezedLeftSideColor?: string
+}
+
+export interface IComparisonType {
+  ColumnName: string
+  ColumnType: string
+  IsBold?: boolean
 }
 
 export interface IColumnConfig<T extends Object> {

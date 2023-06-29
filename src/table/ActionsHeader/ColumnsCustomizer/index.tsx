@@ -244,21 +244,20 @@ function ColumnsCustomizer<T extends Object>({
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
           style={{
-            color: open ? '#4844C5' : 'black',
+            display: 'flex',
+            justifyContent: 'start',
             backgroundColor: 'white',
             border: 'none',
+            padding: 0,
+            margin: 0,
           }}
         >
-          <div
-            style={{
-              marginRight: 10,
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <ColumnsSvgIcon fill={!open ? '#4A4C56' : '#4844C5'} />
+          <div className='G-align-center'>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <ColumnsSvgIcon fill={!open ? '#4A4C56' : '#4844C5'} />
+            </div>
+            <div style={{ color: !open ? '#4A4C56' : '#4844C5' }}>Customize Columns</div>
           </div>
-          <div style={{ fontWeight: 'bold', color: !open ? '#4A4C56' : '#4844C5' }}>Customize Columns</div>
         </Button>
       </div>
 

@@ -9,15 +9,15 @@ const range = (start: number, end: number) => {
 
 interface IUsePagination {
   totalCount: number
-  pageSize: number
+  pageSizeStructure: number
   siblingCount: number
   currentPage: number
 }
 
-export const usePagination = ({ totalCount, pageSize, siblingCount = 1, currentPage }: IUsePagination) => {
+export const usePagination = ({ totalCount, pageSizeStructure, siblingCount = 1, currentPage }: IUsePagination) => {
   //@ts-ignore
   return useMemo(() => {
-    const totalPageCount = Math.ceil(totalCount / pageSize)
+    const totalPageCount = Math.ceil(totalCount / pageSizeStructure)
 
     // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
     const totalPageNumbers = siblingCount + 5
@@ -62,5 +62,5 @@ export const usePagination = ({ totalCount, pageSize, siblingCount = 1, currentP
       const middleRange = range(leftSiblingIndex, rightSiblingIndex)
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
     }
-  }, [totalCount, pageSize, siblingCount, currentPage])
+  }, [totalCount, pageSizeStructure, siblingCount, currentPage])
 }
