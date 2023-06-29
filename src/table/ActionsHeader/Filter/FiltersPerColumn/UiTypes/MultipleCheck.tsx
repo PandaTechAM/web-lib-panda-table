@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
 import { Autocomplete, Button, CircularProgress, TextField } from '@mui/material'
 import Checkbox from '../../../../components/checkbox'
-import { SyntheticEvent, memo, useEffect, useState } from 'react'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
 import { ICoulmnError } from '../apiFilter'

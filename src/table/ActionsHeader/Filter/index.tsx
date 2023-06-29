@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { Autocomplete, Button, Menu, TextField } from '@mui/material'
+import { Button, Menu } from '@mui/material'
+import React, { useState } from 'react'
 import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
-import { IComparisonType, ItemFields } from '../../../Models/table.models'
+import { IComparisonType, IFiltersTypes, ItemFields } from '../../../Models/table.models'
 import APIFilter from './FiltersPerColumn/apiFilter'
 import LocalFilter from './FiltersPerColumn/localFiltering'
-import FiltersTypes from './panda-filter-helper.json'
 import AdvancedFilerEnabled from '../../../svgIcons/AdvancedFilerEnabledSvgIcon'
 import AdvancedFilerDisabled from '../../../svgIcons/AdvancedFilerDisabledSvgIcon'
+
 interface IFilter {
   data: any
-  comporisionTypes?: IComparisonType[]
+  filterColumns?: IComparisonType[]
   perColumnListForFilters?: string[]
   filterDataForRequest?: ItemFields[]
   isLocalFilter?: boolean
   isLoadingFilters?: boolean
+  filtersTypes?: IFiltersTypes[]
   getFilter?(option: ItemFields[], ColumnName?: string): void
   getFilteredDataForTable?(): void
   getColumnName?(columnName: string): void
@@ -29,11 +30,12 @@ const filtersButton = {
 }
 const Filter = ({
   data,
-  comporisionTypes,
+  filterColumns,
   perColumnListForFilters,
   filterDataForRequest,
   isLocalFilter = true,
   isLoadingFilters,
+  filtersTypes,
   handleChangePagePerFilterField,
   getFilter,
   getColumnName,
@@ -119,33 +121,34 @@ const Filter = ({
           </div>
           <ul className='G-dropdown-list' style={{ border: 'none', padding: 0 }}>
             {isLocalFilter ? (
-              comporisionTypes ? (
-                comporisionTypes.map((item: IComparisonType) => {
+              filterColumns?.length ? (
+                filterColumns.map((item: IComparisonType) => {
                   return (
                     <>
-                      {FiltersTypes.FilteringTypes.map((type: any) => {
-                        if (item.ColumnType === type.ColumnType)
-                          return (
-                            <>
-                              <APIFilter
-                                isLoadingFilters={isLoadingFilters}
-                                advancedSettings={advancedSettings}
-                                key={item.ColumnName}
-                                item={item}
-                                data={data}
-                                typeElem={type}
-                                isDisabled={isDisabled}
-                                handleChangePagePerFilterField={handleChangePagePerFilterField}
-                                checkIsDisabled={checkIsDisabled}
-                                // selectedItem={selectedItem}
-                                filteredColumn={filterDataForRequest}
-                                perColumnListForFilters={perColumnListForFilters}
-                                getFilteredData={getFilteredData}
-                                getColumnName={getColumnName}
-                              />
-                            </>
-                          )
-                      })}
+                      {filtersTypes?.length &&
+                        filtersTypes.map((type: any) => {
+                          if (item.ColumnType === type.ColumnType)
+                            return (
+                              <>
+                                <APIFilter
+                                  isLoadingFilters={isLoadingFilters}
+                                  advancedSettings={advancedSettings}
+                                  key={item.ColumnName}
+                                  item={item}
+                                  data={data}
+                                  typeElem={type}
+                                  isDisabled={isDisabled}
+                                  handleChangePagePerFilterField={handleChangePagePerFilterField}
+                                  checkIsDisabled={checkIsDisabled}
+                                  // selectedItem={selectedItem}
+                                  filteredColumn={filterDataForRequest}
+                                  perColumnListForFilters={perColumnListForFilters}
+                                  getFilteredData={getFilteredData}
+                                  getColumnName={getColumnName}
+                                />
+                              </>
+                            )
+                        })}
                     </>
                   )
                 })

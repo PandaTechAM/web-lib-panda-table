@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ColumnsCustomizer from './ColumnsCustomizer'
-import Pagination from '../components/pagination'
-import Select from '../components/select/select'
 import {
   IColumnConfigStructure,
   IColumnHeaderStructure,
   IColumnTotalStructure,
   IComparisonType,
+  IFiltersTypes,
   IPageSizes,
   ISelectPage,
   ItemFields,
@@ -14,7 +13,6 @@ import {
 import CheckRows from './CheckRows'
 import DeleteSvgIcon from '../../svgIcons/DeleteSvgIcon'
 import EditSvgIcon from '../../svgIcons/EditSvgIcon'
-import DropdownSvgIcon from '../../svgIcons/DropdownSvgIcon'
 import Filter from './Filter'
 
 interface IActionsHeader<T extends Object> {
@@ -29,10 +27,11 @@ interface IActionsHeader<T extends Object> {
   checkedRows: T[]
   columnsTotalStructure?: IColumnTotalStructure
   draggableColumns?: boolean
-  comporisionTypes?: IComparisonType[]
+  filterColumns?: IComparisonType[]
   perColumnListForFilters?: string[]
   filterDataForRequest?: ItemFields[]
   isLoadingFilters?: boolean
+  filtersTypes?: IFiltersTypes[]
   getColumnName?(columnName: string): void
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleCheckAll(): void
@@ -61,10 +60,11 @@ const ActionsHeader = <T extends Object>({
   checkedRows,
   columnsTotalStructure,
   draggableColumns,
-  comporisionTypes,
+  filterColumns,
   perColumnListForFilters,
   filterDataForRequest,
   isLoadingFilters,
+  filtersTypes,
   handleChangePagePerFilterField,
   getColumnName,
   unCheck,
@@ -80,29 +80,6 @@ const ActionsHeader = <T extends Object>({
   getFilteredData,
   getFilteredDataForTable,
 }: IActionsHeader<T>) => {
-  const [isOpenList, setOpen] = useState<boolean>(false)
-  const [currentPage, setCurrentPage] = useState<number>(currPage)
-  const [selectedPage, setSelectedPage] = useState<ISelectPage>({ id: 1 })
-  const [totalCount, setTotalCount] = useState<number>(pagesTotalCount)
-
-  const setIsOpenList = () => {
-    setOpen((prev) => !prev)
-  }
-
-  const handleSelectDataSize = (options: IPageSizes) => {
-    setSelectedPage({ id: options.id })
-    setCurrentPage(1)
-    if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
-      getPageRowsCountAndCurrentPage(1, pageSizeStructure[options.id - 1].count)
-    }
-  }
-  const handleChangePage = (option: number) => {
-    setCurrentPage(option)
-    if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
-      getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1].count)
-    }
-  }
-
   return (
     <div
       className='G-table-actions-header'
@@ -121,20 +98,16 @@ const ActionsHeader = <T extends Object>({
             checkAllDataFromDb={checkAllDataFromDb}
           />
           <div className='G-flex' style={{ marginRight: '27px' }}>
-            {checkedRows.length !== 1 ? null : (
-              <div
-                className='G-flex G-edit'
-                style={{ marginRight: '20px' }}
-                onClick={() => handleEdit && handleEdit(checkedRows[0])}
-              >
+            {checkedRows.length && handleEdit ? (
+              <div className='G-flex G-edit' style={{ marginRight: '20px' }} onClick={() => handleEdit(checkedRows[0])}>
                 <div>
                   <EditSvgIcon />
                 </div>
                 <span>Edit</span>
               </div>
-            )}
-            {checkedRows.length ? (
-              <div className='G-flex G-delete' onClick={() => handleDelete && handleDelete(checkedRows)}>
+            ) : null}
+            {checkedRows.length && handleDelete ? (
+              <div className='G-flex G-delete' onClick={() => handleDelete(checkedRows)}>
                 <div>
                   <DeleteSvgIcon />
                 </div>
@@ -158,57 +131,17 @@ const ActionsHeader = <T extends Object>({
       <div>
         <Filter
           data={data}
-          comporisionTypes={comporisionTypes}
+          filterColumns={filterColumns}
           perColumnListForFilters={perColumnListForFilters}
           filterDataForRequest={filterDataForRequest}
           isLoadingFilters={isLoadingFilters}
+          filtersTypes={filtersTypes}
           getFilter={getFilteredData}
           getFilteredDataForTable={getFilteredDataForTable}
           getColumnName={getColumnName}
           handleChangePagePerFilterField={handleChangePagePerFilterField}
         />
       </div>
-
-      {/* {handleChangePage && currentPage && totalCount && (
-        <>
-          {pageSizeStructure && selectedPage && (
-            <div
-              className="G-justify-between G-align-center"
-              style={{ width: "138px" }}
-            >
-              <div>Show</div>
-              <div
-                style={{
-                  fontSize: "16px",
-                }}
-              ></div>
-              <Select
-                optionsList={pageSizeStructure}
-                value={selectedPage.id}
-                selectedNameKey={"count"}
-                selectedValueKey={"id"}
-                onChange={handleSelectDataSize}
-                customClass="G-Select-container"
-                isOpenList={isOpenList}
-                setIsOpenList={setIsOpenList}
-                ButtonSvg={DropdownSvgIcon}
-              />
-              <div>Rows</div>
-            </div>
-          )}
-          <Pagination
-            onPageChange={handleChangePage}
-            totalCount={totalCount}
-            currentPage={currentPage}
-            pageSizeStructure={
-              pageSizeStructure && selectedPage
-                ? pageSizeStructure[selectedPage.id - 1].count
-                : 15
-            }
-            className={"G-pagionation"}
-          />
-        </>
-      )} */}
     </div>
   )
 }

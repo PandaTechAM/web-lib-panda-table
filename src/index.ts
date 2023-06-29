@@ -16,6 +16,8 @@ import {
   IColumn,
   IrowActions,
   ILinksList,
+  ItemFields,
+  IFilterDataForRequest,
 } from './Models/table.models'
 import { StructureConfig } from './Models/table.enum'
 import Table from './table'
@@ -40,4 +42,6 @@ export {
   IrowActions,
   ILinksList,
   StructureConfig,
+  ItemFields,
+  IFilterDataForRequest,
 }

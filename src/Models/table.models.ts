@@ -30,7 +30,8 @@ export interface IProps<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
-  comporisionTypes?: IComparisonType[]
+  filterColumns?: IComparisonType[]
+  filtersTypes?: IFiltersTypes[]
   filterDataForRequest?: ItemFields[]
   isLoadingFilters?: boolean
   getColumnName?(columnName: string): void
@@ -62,6 +63,13 @@ export interface ItemFields {
 export interface IFilterDataForRequest {
   Filters: ItemFields[]
   Aggregates: any[]
+}
+
+export interface IFiltersTypes {
+  ColumnType: string
+  AggregateTypes: string[]
+  FilterTypes: string[]
+  DefaultSearchType: string
 }
 
 export interface IColumnTotal {

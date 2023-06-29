@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextField } from '@mui/material'
-import { useEffect, useState } from 'react'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { validateRangeColumns } from '../../../../../utils'
 interface IBetweenNumbers {

@@ -41,10 +41,11 @@ function Table<T extends Object>({
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
   headerHeight,
-  comporisionTypes,
   perColumnListForFilters,
   filterDataForRequest,
   isLoadingFilters,
+  filterColumns,
+  filtersTypes,
   handleChangePagePerFilterField,
   getColumnName,
   getRow,
@@ -92,9 +93,10 @@ function Table<T extends Object>({
           checkedRows={checkedRows}
           columnsTotalStructure={columnsTotalStructure}
           draggableColumns={draggableColumns}
-          comporisionTypes={comporisionTypes}
+          filterColumns={filterColumns}
           filterDataForRequest={filterDataForRequest}
           isLoadingFilters={isLoadingFilters}
+          filtersTypes={filtersTypes}
           getColumnName={getColumnName}
           setColumnTotalStructures={setColumnTotalStructures}
           handleCheckAll={handleCheckAll}
