@@ -1,4 +1,5 @@
-import React, { Button } from '@mui/material'
+import React from 'react'
+import { Button } from '@mui/material'
 interface IAcceptCancel {
   errMessage: string
   checkedItems: string[]
