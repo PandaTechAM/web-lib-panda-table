@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
-import { Autocomplete, Button, CircularProgress, TextField } from '@mui/material'
-import Checkbox from '../../../../components/checkbox'
+import { Autocomplete, Button, CircularProgress, TextField, Checkbox } from '@mui/material'
+// import Checkbox from "../../../../components/checkbox";
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
 import { ICoulmnError } from '../apiFilter'
@@ -55,6 +55,8 @@ const MultipleCheck = ({
     setVal(newInputValue)
   }
   const selectValue = (event: SyntheticEvent<Element, Event>, value: any[]) => {
+    console.log(value)
+
     setcheckedItems(value)
     if (item.ColumnType !== 'Text') {
       let newValues: number[] = []
@@ -100,6 +102,27 @@ const MultipleCheck = ({
     }
     return false
   }
+  const isEmpty = () => {
+    if (item.ColumnType !== 'Text') {
+      if (
+        containsOnlyNumbers(val) &&
+        item.ColumnName === columnName &&
+        !isLoadingFilters &&
+        !perColumnListForFilters?.length
+        // val.length
+      )
+        return true
+    } else {
+      if (
+        item.ColumnName === columnName &&
+        !isLoadingFilters &&
+        !perColumnListForFilters?.length
+        // val.length
+      )
+        return true
+    }
+    return false
+  }
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
       let newValues: string[] = filterTypeing.CheckedItems
@@ -121,6 +144,7 @@ const MultipleCheck = ({
         multiple
         limitTags={advancedSettings ? 1 : 2}
         id='multiple-limit-tags'
+        // sx={{ height: 56 }}
         options={
           item.ColumnName === columnName && perColumnListForFilters && errMessage === '' ? perColumnListForFilters : []
         }
@@ -137,6 +161,7 @@ const MultipleCheck = ({
         inputValue={val}
         isOptionEqualToValue={isEqual}
         freeSolo
+        size='medium'
         filterOptions={(options, state) => options}
         renderOption={(props, option, { selected }) => {
           return (
@@ -147,14 +172,21 @@ const MultipleCheck = ({
                   marginLeft: 5,
                   display: 'flex',
                   justifyContent: 'space-between',
-                  height: 40,
+                  minHeight: 40,
                   // borderBottom: "1px solid #DCDCDC",
                 }}
               >
                 {option}
-                <Checkbox isCheck={selected} />
+                <Checkbox
+                  // icon={icon}
+                  // checkedIcon={checkedIcon}
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                />
               </li>
-              {perColumnListForFilters && option === perColumnListForFilters[perColumnListForFilters.length - 1] ? (
+              {perColumnListForFilters &&
+              option === perColumnListForFilters[perColumnListForFilters.length - 1] &&
+              filterTypeing.PropertyName !== 'Gender' ? (
                 <Button
                   size='large'
                   style={{
@@ -195,7 +227,7 @@ const MultipleCheck = ({
           />
         )}
       />
-      {item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length && val.length ? (
+      {isEmpty() ? (
         <div
           className='G-align-center G-shadow-around'
           style={{

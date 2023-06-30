@@ -1,0 +1,22 @@
+{
+  "TableName": "Counterparty",
+  "Columns": [
+    { "ColumnName": "RegistrationDate", "ColumnType": "Date"},
+    { "ColumnName": "CounterpartyId", "ColumnType": "Number"},
+    { "ColumnName": "FirstName", "ColumnType": "Text"},
+    { "ColumnName": "LastName", "ColumnType": "Text" },
+    { "ColumnName": "Age", "ColumnType": "Number" },
+    { "ColumnName": "Gender", "ColumnType": "Text" },
+    { "ColumnName": "Address", "ColumnType": "Text" },
+    { "ColumnName": "ZipCodeId", "ColumnType": "Number"},
+    { "ColumnName": "Email", "ColumnType": "Text" },
+    { "ColumnName": "PhoneNumber", "ColumnType": "Text" },
+    { "ColumnName": "Comment", "ColumnType": "Text" },
+    { "ColumnName": "IsEnabled", "ColumnType": "Boolean" },
+    { "ColumnName": "Weight", "ColumnType": "Number"},
+    { "ColumnName": "Weight", "ColumnType": "Number"},
+    { "ColumnName": "Accounts", "ColumnType": "Text" },
+    { "ColumnName": "CounterpartyTags", "ColumnType": "Text" },
+    { "ColumnName": "PaymentOrders", "ColumnType": "Text" }
+  ]
+}

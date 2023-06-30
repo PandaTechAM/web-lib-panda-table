@@ -1,11 +1,10 @@
-.G-table-icon {
-  width: 100%;
+.G-table-icon{
+  width : 100%;
   height: 100%;
-}
-
-.G-table-icon .G-row-item {
-  max-width: 170px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  .G-row-item{
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

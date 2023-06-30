@@ -1,5 +1,5 @@
-import { Button, Menu } from '@mui/material'
 import React, { useState } from 'react'
+import { Button, Menu } from '@mui/material'
 import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
 import { IComparisonType, IFiltersTypes, ItemFields } from '../../../Models/table.models'
 import APIFilter from './FiltersPerColumn/apiFilter'
@@ -51,6 +51,10 @@ const Filter = ({
   }
   const handleClose = () => {
     setAnchorEl(null)
+  }
+  const handleCancel = () => {
+    setAnchorEl(null)
+    getFilter?.([], '')
   }
   const checkIsDisabled = (option: boolean) => {
     setIsDisabled(option)
@@ -119,7 +123,7 @@ const Filter = ({
               {advancedSettings ? <AdvancedFilerDisabled /> : <AdvancedFilerEnabled />}
             </Button>
           </div>
-          <ul className='G-dropdown-list' style={{ border: 'none', padding: 0 }}>
+          <ul className='G-dropdown-list P-Filters' style={{ border: 'none', padding: 0 }}>
             {isLocalFilter ? (
               filterColumns?.length ? (
                 filterColumns.map((item: IComparisonType) => {
@@ -131,9 +135,9 @@ const Filter = ({
                             return (
                               <>
                                 <APIFilter
+                                  key={item.ColumnName}
                                   isLoadingFilters={isLoadingFilters}
                                   advancedSettings={advancedSettings}
-                                  key={item.ColumnName}
                                   item={item}
                                   data={data}
                                   typeElem={type}
@@ -192,7 +196,7 @@ const Filter = ({
                 size='large'
                 fullWidth
                 style={{ color: 'black', border: '1px solid #FB9C59' }}
-                onClick={handleClose}
+                onClick={handleCancel}
               >
                 Clear All Filters
               </Button>

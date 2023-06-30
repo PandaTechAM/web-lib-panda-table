@@ -1,6 +1,6 @@
 {
   "name": "beautiful-react-table",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "My first react typescript package",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

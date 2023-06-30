@@ -58,7 +58,7 @@ const ModalForSingleField = ({
     setVal('')
     setIsLoadedMoreData(false)
   }
-  const selectValue = (event: React.SyntheticEvent<Element, Event>, value: any[]) => {
+  const selectValue = (event: any, value: any[]) => {
     setIsLoadedMoreData(false)
 
     if (!value.length) {
@@ -126,7 +126,7 @@ const ModalForSingleField = ({
       if (!isLoadedMoreData) {
         perColumnListForFilters?.unshift(val)
       }
-      if (perColumnListForFilters.length === 2 && perColumnListForFilters[0] === perColumnListForFilters[1]) {
+      if (perColumnListForFilters.length === 2) {
         return [perColumnListForFilters[1]]
       } else {
         return perColumnListForFilters
@@ -138,8 +138,6 @@ const ModalForSingleField = ({
 
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
-      console.log(item.ColumnName === columnName, !isLoadingFilters, !perColumnListForFilters?.length)
-
       let newValues: string[] = filterTypeing.CheckedItems
       if (item.ColumnType !== 'Text') {
         newValues = filterTypeing.CheckedItems.map((item: number) => item + '')
@@ -188,7 +186,6 @@ const ModalForSingleField = ({
                       }}
                     >
                       {option}
-                      <Checkbox isCheck={checkedItems.includes(option)} />
                     </li>
                     {perColumnListForFilters &&
                     option === perColumnListForFilters[perColumnListForFilters.length - 1] ? (

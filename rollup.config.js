@@ -37,6 +37,7 @@ export default [
         limit: Infinity,
       }),
       svg(),
+      json(),
       terser()
     ],
   },

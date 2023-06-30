@@ -1,0 +1,12 @@
+{
+  "TableName": "PaymentOrder",
+  "Columns": [
+    { "ColumnName": "OrderDate", "ColumnType": "Date" },
+    { "ColumnName": "PaymentOrderId", "ColumnType": "Number" },
+    { "ColumnName": "ProcessingGatewayId", "ColumnType": "Number"},
+    { "ColumnName": "PaymentServiceId", "ColumnType": "Number" },
+    { "ColumnName": "InvoiceId", "ColumnType": "Number" },
+    { "ColumnName": "CounterpartyId", "ColumnType": "Number" },
+    { "ColumnName": "Comment", "ColumnType": "Text"}
+  ]
+}
