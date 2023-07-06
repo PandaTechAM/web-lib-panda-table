@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "strict": true,
     "skipLibCheck": true,
 
@@ -12,7 +12,7 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true,
-    "forceConsistentCasingInFileNames": true,
+    "emitDeclarationOnly": false,
+    "forceConsistentCasingInFileNames": false,
   },
 }

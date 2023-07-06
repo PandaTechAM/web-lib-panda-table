@@ -1,7 +1,5 @@
 import React from 'react'
 import { IProps } from '../Models/table.models'
-import ActionsHeader from './header'
-import FooterPagination from './footer'
 import Header from './main/Header'
 import Rows from './main/Rows'
 import Footer from './main/Footer'
@@ -9,6 +7,8 @@ import useTable from './useTable'
 import './index.scss'
 import '../index.scss'
 import '../assets/style/index.scss'
+import ActionsHeader from './header'
+import FooterPagination from './footer'
 
 function Table<T extends Object>({
   data = [],
