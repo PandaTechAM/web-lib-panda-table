@@ -2,7 +2,6 @@ export interface IProps<T extends Object> {
   data: T[]
   columnsConfigStructure: IColumnConfigStructure<T>
   columnsHeaderStructure: IColumnHeaderStructure
-  columnsTotalStructure?: IColumnTotalStructure
   rightFreezeConfig?: IColumnConfig<T>[]
   perColumnListForFilters?: string[]
   allDataFromDb?: T[]
@@ -12,7 +11,7 @@ export interface IProps<T extends Object> {
   pageSizeStructure?: IPageSizes[]
   pagesTotalCount?: number
   currentPage?: number
-  selectedPageCount?: ISelectPage
+  selectedPageCount?: ISelected
   multipleCheck?: boolean
   isStickyFirstColumn?: boolean
   isHoveredRow?: boolean
@@ -34,10 +33,10 @@ export interface IProps<T extends Object> {
   filtersTypes?: IFiltersTypes[]
   filterDataForRequest?: ItemFields[]
   isLoadingFilters?: boolean
-  getColumnName?(columnName: string): void
+  rowsFreezeAction?: boolean
+  aggregates?: boolean
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
-  setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleEdit?: (option: T) => void
   handleDelete?: (option: T[]) => void
   setColumnsConfigStructure?(option: IColumnConfigStructure<T>): void
@@ -45,10 +44,10 @@ export interface IProps<T extends Object> {
   setSortedData?(option: any): void
   storeStructure?(): void
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
-  setTotalType?(option: number | string): void
   getFilteredData?(option: any): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
+  getDownloadType?(option: string): void
 }
 
 export interface ItemFields {
@@ -125,7 +124,8 @@ export interface IColumnConfig<T extends Object> {
   id?: string | number
   columnName?: number | string
   title: any
-  setRow: (data?: T) => string | number | HTMLElement | React.ReactNode | null | any
+  setRow: (data?: T) => any
+  footer?: (data?: T) => any
   isVisible: boolean
   customStyle?: Object
   totalObject?: {
@@ -140,7 +140,7 @@ export interface IPageSizes {
   count: number
 }
 
-export interface ISelectPage {
+export interface ISelected {
   id: number
 }
 
@@ -149,6 +149,8 @@ export interface IColumnHeader {
   order: number
   title: string
   icon?: string
+  aggregate?: string | number
+  aggregateType?: string
 }
 
 export interface IColumn {

@@ -1,0 +1,23 @@
+.G-Select-container{
+  min-width: 56px;
+  height: 32px;
+  border:1px solid black ;
+  margin: 0 5px;
+   .G-select-header{
+     padding: 0;
+     box-shadow:none;
+     display: flex;
+     justify-content: center;
+     height: 32px;
+     p{
+       width: 50%;
+     }
+     span{
+       font-size: 12px;
+     }
+   }
+ }
+ .G-pagionation{
+   margin: 0 10px;
+   height: 24px;
+ }

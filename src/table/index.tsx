@@ -1,14 +1,14 @@
 import React from 'react'
 import { IProps } from '../Models/table.models'
-import ActionsHeader from './ActionsHeader'
-import Header from './Header'
-import Rows from './Rows'
+import ActionsHeader from './header'
+import Header from './main/Header'
+import Rows from './main/Rows'
 import useTable from './useTable'
-import Footer from './Footer'
+import Footer from './main/Footer'
 import './index.scss'
 import '../index.scss'
 import '../assets/style/index.scss'
-import FooterPagination from './FooterPagination'
+import FooterPagination from './footer'
 
 function Table<T extends Object>({
   data = [],
@@ -23,7 +23,6 @@ function Table<T extends Object>({
   columnsConfigStructure = {} as any,
   columnsHeaderStructure = {} as any,
   rightFreezeConfig,
-  columnsTotalStructure,
   rowActions,
   FreezeIcon,
   isHoveredRow,
@@ -46,20 +45,20 @@ function Table<T extends Object>({
   isLoadingFilters,
   filterColumns,
   filtersTypes,
+  rowsFreezeAction,
+  aggregates,
   handleChangePagePerFilterField,
-  getColumnName,
   getRow,
   RightSideSelfAction,
-  setColumnTotalStructures,
   setColumnsConfigStructure,
   setColumnHeaderStructure,
   handleEdit,
   handleDelete,
   getPageRowsCountAndCurrentPage,
   storeStructure,
-  setTotalType,
   getFilteredData,
   getFilteredDataForTable,
+  getDownloadType,
 }: IProps<T>) {
   const {
     freezedRows,
@@ -91,14 +90,11 @@ function Table<T extends Object>({
           multipleCheck={multipleCheck}
           data={data}
           checkedRows={checkedRows}
-          columnsTotalStructure={columnsTotalStructure}
           draggableColumns={draggableColumns}
           filterColumns={filterColumns}
           filterDataForRequest={filterDataForRequest}
           isLoadingFilters={isLoadingFilters}
           filtersTypes={filtersTypes}
-          getColumnName={getColumnName}
-          setColumnTotalStructures={setColumnTotalStructures}
           handleCheckAll={handleCheckAll}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
@@ -111,6 +107,7 @@ function Table<T extends Object>({
           getFilteredData={getFilteredData}
           getFilteredDataForTable={getFilteredDataForTable}
           handleChangePagePerFilterField={handleChangePagePerFilterField}
+          getDownloadType={getDownloadType}
         />
       ) : null}
 
@@ -153,6 +150,7 @@ function Table<T extends Object>({
               leftFreezedColumnWidth={leftFreezedColumnWidth}
               rightFreezedColumnWidth={rightFreezedColumnWidth}
               headerHeight={headerHeight}
+              rowsFreezeAction={rowsFreezeAction}
               getRow={getRow}
               RightSideSelfAction={RightSideSelfAction}
               freezeRow={freezeRow}
@@ -164,12 +162,12 @@ function Table<T extends Object>({
             />
           </div>
 
-          {columnsTotalStructure ? (
+          {aggregates ? (
             <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
               <Footer
                 rightFreezeConfig={rightFreezeConfig}
+                columnsHeaderStructure={columnsHeaderStructure}
                 columnsConfigStructure={columnsConfigStructure}
-                columnsTotalStructure={columnsTotalStructure}
                 columnMinWidth={columnMinWidth}
                 footerColor={footerColor}
                 freezedRightSideVisible={freezedRightSideVisible}
@@ -177,7 +175,6 @@ function Table<T extends Object>({
                 leftFreezedColumnWidth={leftFreezedColumnWidth}
                 rightFreezedColumnWidth={rightFreezedColumnWidth}
                 listForDropdown={listForDropdown}
-                setTotalType={setTotalType}
               />
             </div>
           ) : null}

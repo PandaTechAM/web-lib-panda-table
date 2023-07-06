@@ -38,6 +38,8 @@ const useTable = <T extends Object>(
 
   const getRowForDropdown = (id: number) => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
+    console.log(allRows)
+
     allRows.map((item) => {
       //@ts-ignore
       if (item.id === id) {

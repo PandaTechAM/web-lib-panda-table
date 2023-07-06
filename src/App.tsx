@@ -644,7 +644,6 @@ function App() {
         allDataFromDb={allDataFromDb}
         columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
         columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
-        columnsTotalStructure={columnsTotalStructure}
         perColumnListForFilters={perColumnListForFilters}
         // rightFreezeConfig={rightFreezeConfig} // List for multiple FreezeColumns in the right side of the table
         // columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
@@ -674,16 +673,13 @@ function App() {
         filtersTypes={FiltersTypes.FilteringTypes}
         filterDataForRequest={filterDataForRequest}
         isLoadingFilters={isLoadingFilters}
-        getColumnName={getColumnName}
         getRow={getRow} // Get row data
         handleEdit={handleEdit} // will be visible when active multipleCheck
         handleDelete={handleDelete} // will be visible when active multipleCheck
         setColumnsConfigStructure={setColumnsConfigStructure} // set changed config structure - pin/hide/drag-drop
         setColumnHeaderStructure={setColumnHeaderStructure} // set changed header structure - pin/hide/drag-drop
-        setColumnTotalStructures={setColumnTotalStructures} // set changed FooterTotal structure - pin/hide/drag-drop
         getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
         storeStructure={storeStructure} // Save columns structure on DB
-        setTotalType={setTotalType} // Set total type
         getFilteredData={getFilteredData}
         getFilteredDataForTable={getFilteredDataForTable}
         // RightSideSelfAction={RightSideSelfAction} // FreezedRightSideSelfAction

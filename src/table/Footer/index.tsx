@@ -1,64 +1,76 @@
-import React from 'react'
-import { IColumnConfig, IColumnConfigStructure, IColumnTotalStructure, ITotalList } from '../../Models/table.models'
-import FooterFreezedLeft from './FreezedLeft'
-import FooterFreezedRight from './FreezedRight'
-import FooterMain from './Main'
-interface IFooter<T extends Object> {
-  columnsTotalStructure: IColumnTotalStructure
-  columnsConfigStructure: IColumnConfigStructure<T>
-  rightFreezeConfig?: IColumnConfig<T>[]
-  columnMinWidth?: number
-  footerColor?: string
-  freezedRightSideVisible?: boolean
-  isStickyFirstColumn?: boolean
-  leftFreezedColumnWidth?: number
-  rightFreezedColumnWidth?: number
-  listForDropdown?: ITotalList[]
-  setTotalType?(option: number | string): void
+import React, { useState } from 'react'
+import Pagination from '../../components/pagination'
+import Select from '../../components/select/select'
+import { IPageSizes, ISelected } from '../../Models/table.models'
+import DropdownSvgIcon from '../../svgIcons/DropdownSvgIcon'
+import './index.scss'
+interface IFooterPagination {
+  pageSizeStructure?: IPageSizes[]
+  pagesTotalCount?: number
+  currPage?: number
+  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
 }
-const Footer = <T extends Object>({
-  columnsTotalStructure,
-  columnsConfigStructure,
-  rightFreezeConfig,
-  columnMinWidth,
-  footerColor,
-  freezedRightSideVisible,
-  isStickyFirstColumn,
-  leftFreezedColumnWidth,
-  rightFreezedColumnWidth,
-  listForDropdown,
-  setTotalType,
-}: IFooter<T>) => {
+const FooterPagination = ({
+  pageSizeStructure,
+  pagesTotalCount = 0,
+  currPage = 1,
+  getPageRowsCountAndCurrentPage,
+}: IFooterPagination) => {
+  const [isOpenList, setOpen] = useState<boolean>(false)
+  const [currentPage, setCurrentPage] = useState<number>(currPage)
+  const [selectedPage, setSelectedPage] = useState<ISelected>({ id: 1 })
+  const [totalCount, setTotalCount] = useState<number>(pagesTotalCount)
+
+  const setIsOpenList = () => {
+    setOpen((prev) => !prev)
+  }
+
+  const handleSelectItem = (options: IPageSizes) => {
+    setSelectedPage({ id: options.id })
+    setCurrentPage(1)
+    if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
+      getPageRowsCountAndCurrentPage(1, pageSizeStructure[options.id - 1].count)
+    }
+  }
+  const handleChangePage = (option: number) => {
+    setCurrentPage(option)
+    if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
+      getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1].count)
+    }
+  }
   return (
     <>
-      <FooterFreezedLeft
-        columnsConfigStructure={columnsConfigStructure}
-        columnsTotalStructure={columnsTotalStructure}
-        columnMinWidth={columnMinWidth}
-        footerColor={footerColor}
-        isStickyFirstColumn={isStickyFirstColumn}
-        leftFreezedColumnWidth={leftFreezedColumnWidth}
-        listForDropdown={listForDropdown}
-        setTotalType={setTotalType}
+      {pageSizeStructure && selectedPage && (
+        <div className='G-justify-between G-align-center' style={{ width: '138px' }}>
+          <div>Show</div>
+          <div
+            style={{
+              fontSize: '16px',
+            }}
+          ></div>
+          <Select
+            optionsList={pageSizeStructure}
+            value={selectedPage.id}
+            selectedNameKey={'count'}
+            selectedValueKey={'id'}
+            onChange={handleSelectItem}
+            isOpenList={isOpenList}
+            setIsOpenList={setIsOpenList}
+            customClass='G-Select-container'
+            ButtonSvg={DropdownSvgIcon}
+          />
+          <div>Rows</div>
+        </div>
+      )}
+      <Pagination
+        onPageChange={handleChangePage}
+        totalCount={totalCount}
+        currentPage={currentPage}
+        pageSizeStructure={pageSizeStructure && selectedPage ? pageSizeStructure[selectedPage.id - 1].count : 15}
+        className={'G-pagionation'}
       />
-      <FooterMain
-        columnsConfigStructure={columnsConfigStructure}
-        columnsTotalStructure={columnsTotalStructure}
-        columnMinWidth={columnMinWidth}
-        footerColor={footerColor}
-        isStickyFirstColumn={isStickyFirstColumn}
-        leftFreezedColumnWidth={leftFreezedColumnWidth}
-        setTotalType={setTotalType}
-      />
-      {freezedRightSideVisible ? (
-        <FooterFreezedRight
-          footerColor={footerColor}
-          rightFreezedColumnWidth={rightFreezedColumnWidth}
-          rightFreezeConfig={rightFreezeConfig}
-        />
-      ) : null}
     </>
   )
 }
 
-export default Footer
+export default FooterPagination
