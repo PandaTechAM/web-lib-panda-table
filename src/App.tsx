@@ -9,11 +9,9 @@ import {
   IColumnHeaderStructure,
   ILinksList,
   IColumnTotal,
-  IColumnTotalStructure,
   ITotalList,
   ItemFields,
   IFilterDataForRequest,
-  IComparisonType,
 } from './Models/table.models'
 import { StructureConfig } from './Models/table.enum'
 import Table from './table'
@@ -503,20 +501,6 @@ function App() {
       isVisible: true,
     },
   ])
-  const [grandTotals, setGrandTotals] = useState<IColumnTotal[]>([
-    { id: 1, title: null },
-    { id: 2, title: 40000 },
-    { id: 3, title: 35000 },
-    { id: 4, title: 150000 },
-    { id: 5, title: null },
-    { id: 6, title: 50 },
-    { id: 7, title: 100 },
-    { id: 8, title: 5000000 },
-    { id: 9, title: 9960 },
-    { id: 10, title: 9960 },
-    { id: 11, title: 99060 },
-    { id: 12, title: 90960 },
-  ])
   const [columnsConfigStructure, setColumnsConfigStructures] = useState<IColumnConfigStructure<any>>({
     [StructureConfig.BB55]: {
       name: 'Columns',
@@ -531,16 +515,6 @@ function App() {
     [StructureConfig.BB55]: {
       name: 'Columns',
       items: columnHeader,
-    },
-    [StructureConfig.BB33]: {
-      name: 'Freezed',
-      items: [],
-    },
-  })
-  const [columnsTotalStructure, setColumnTotalStructures] = useState<IColumnTotalStructure>({
-    [StructureConfig.BB55]: {
-      name: 'Columns',
-      items: grandTotals,
     },
     [StructureConfig.BB33]: {
       name: 'Freezed',
@@ -605,10 +579,6 @@ function App() {
   const storeStructure = () => {
     console.log(12)
   }
-  const setTotalType = (option: string) => {
-    console.log(option)
-    setDropdoownSelectedItem(option)
-  }
   const getRow = (row: any) => {
     console.log(row)
   }
@@ -622,20 +592,6 @@ function App() {
       return { ...prev, Filters: filterDataForRequest }
     })
   }
-  const getColumnName = (columnName: string) => {}
-
-  const getTablesurl = 'https://localhost:7080/api/v1/filters'
-  const url = `https://localhost:7080/api/v1/counterparties-pool/1/10?filterString=${JSON.stringify({
-    Filters: [],
-    Aggregates: [],
-  })}`
-
-  // useEffect(() => {
-  //   axios.get(getTablesurl).then((res: any) => {
-  //     axios.get(url).then((res: any) => setData(res?.data?.responseData?.data))
-  //   })
-  //   getFiltersJson()
-  // }, [])
 
   return (
     <div style={{ width: '80%', margin: '0 auto' }}>
