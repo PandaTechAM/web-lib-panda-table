@@ -38,6 +38,7 @@ export default [
       }),
       svg(),
       json(),
+      terser()
     ],
   },
   {

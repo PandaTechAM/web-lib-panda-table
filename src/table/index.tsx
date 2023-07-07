@@ -1,14 +1,14 @@
 import React from 'react'
 import { IProps } from '../Models/table.models'
-import ActionsHeader from './header'
-import Header from './main/Header'
-import Rows from './main/Rows'
+import MainHeader from './MainHeader'
+import Header from './Layout/Header'
+import Rows from './Layout/Rows'
 import useTable from './useTable'
-import Footer from './main/Footer'
+import Footer from './Layout/Footer'
 import './index.scss'
 import '../index.scss'
 import '../assets/style/index.scss'
-import FooterPagination from './footer'
+import MainFooter from './MainFooter'
 
 function Table<T extends Object>({
   data = [],
@@ -79,7 +79,7 @@ function Table<T extends Object>({
   return (
     <div>
       {(pageSizeStructure && pagesTotalCount) || multipleCheck || draggableColumns ? (
-        <ActionsHeader
+        <MainHeader
           columnsConfigStructure={columnsConfigStructure}
           columnsHeaderStructure={columnsHeaderStructure}
           pageSizeStructure={pageSizeStructure}
@@ -182,7 +182,7 @@ function Table<T extends Object>({
       </div>
       <div className='G-justify-end G-align-center' style={{ padding: 10 }}>
         {currentPage && pagesTotalCount && (
-          <FooterPagination
+          <MainFooter
             pageSizeStructure={pageSizeStructure}
             currPage={currentPage}
             pagesTotalCount={pagesTotalCount}

@@ -50,7 +50,7 @@ interface IActionsHeader<T extends Object> {
   handleChangePagePerFilterField?(): void
   getDownloadType?(option: string): void
 }
-const ActionsHeader = <T extends Object>({
+const MainHeader = <T extends Object>({
   columnsConfigStructure,
   columnsHeaderStructure,
   multipleCheck,
@@ -148,4 +148,4 @@ const ActionsHeader = <T extends Object>({
   )
 }
 
-export default ActionsHeader
+export default MainHeader
