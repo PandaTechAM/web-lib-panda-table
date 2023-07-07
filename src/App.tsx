@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-
+import React from 'react'
 import {
   IColumnConfig,
   IColumnHeader,
@@ -9,10 +8,13 @@ import {
   IColumnHeaderStructure,
   ILinksList,
   IColumnTotal,
+  IColumnTotalStructure,
   ITotalList,
   ItemFields,
   IFilterDataForRequest,
+  IComparisonType,
 } from './Models/table.models'
+import { useEffect, useState } from 'react'
 import { StructureConfig } from './Models/table.enum'
 import Table from './table'
 import LinkSvgIcon from './svgIcons/LinkSvgIcon'
@@ -20,6 +22,8 @@ import ExSvgIcon from './svgIcons/ExSvgIcon'
 import FreezeSvgIcon from './svgIcons/Frame73SvgIcon'
 import tableColumns from './Example.json'
 import FiltersTypes from './panda-filter-helper.json'
+import PopUp from './components/popUp'
+import { formatPrice } from './utils'
 
 function App() {
   const [filteredTableData, setFilteredTableData] = useState<IFilterDataForRequest>({
@@ -27,141 +31,7 @@ function App() {
     Aggregates: [],
   })
   const [filterDataForRequest, setFilterDataForRequest] = useState<ItemFields[]>([])
-
-  const [data, setData] = useState<any[]>([
-    {
-      id: 1,
-      easywalletAgentId: 179136,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Armen Virabyan test Armen Virabyan test Armen Virabyan test Armen Virabyan test',
-    },
-    {
-      id: 2,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Armen Virabyan test Ar',
-    },
-    {
-      id: 3,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhaaaannisyan Hovik test',
-    },
-    {
-      id: 4,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Armen Vsairabyan test Armen Viraby',
-    },
-    {
-      id: 5,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Saroyan',
-    },
-    {
-      id: 6,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hayroyan',
-    },
-    {
-      id: 7,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhanncsaisyan Hovik test',
-    },
-    {
-      id: 8,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhanncx c isyan Hovik test',
-    },
-    {
-      id: 9,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhqwqasannisyan Hovik test',
-    },
-    {
-      id: 10,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovzxczxczxchannisyan Hovik test',
-    },
-    {
-      id: 11,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhannisyan vfveHovik test',
-    },
-    {
-      id: 12,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhannisyan Ho  wwvik test',
-    },
-    {
-      id: 13,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhwwwwannisyan Hovik test',
-    },
-    {
-      id: 14,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhannisyan Hovik testtjnty',
-    },
-    {
-      id: 15,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhannisyan Hovik testcvbcv ',
-    },
-    {
-      id: 16,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhannisyan Hcccc',
-    },
-    {
-      id: 17,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hovhannisyan Hovik kjnvkj',
-    },
-    {
-      id: 18,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'sjkdvn Hovik test',
-    },
-    {
-      id: 19,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Hakobyan Gago',
-    },
-    {
-      id: 20,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Frangulyan Rshtun',
-    },
-    {
-      id: 21,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'ssssssvik test',
-    },
-    {
-      id: 22,
-      easywalletAgentId: 494845,
-      agentCreationDate: '2023-03-22T00:00:00',
-      agentName: 'Mxitaryan Ara',
-    },
-  ])
+  const [data, setData] = useState<any[]>([])
   const [rowActions] = useState<IrowActions[]>([
     {
       action: (e, item, index) => {
@@ -226,74 +96,106 @@ function App() {
       order: 1,
       title: 'Id',
       icon: 'icon-Frame-73',
+      aggregate: 5000,
+      aggregateType: 'AMD',
     },
     {
       id: 2,
       order: 2,
       title: 'Name',
       icon: 'icon-Frame-73',
+      aggregate: '',
+      aggregateType: 'AMD',
     },
     {
       id: 3,
       order: 3,
       title: 'Surename',
       icon: 'icon-Frame-73',
+      aggregate: 35000,
+      aggregateType: 'AMD',
     },
     {
       id: 4,
       order: 4,
       title: 'Email',
       icon: 'icon-Frame-73',
+      aggregate: 150000,
+      aggregateType: 'AMD',
     },
     {
       id: 5,
       order: 5,
       title: 'Age',
       icon: 'icon-Frame-73',
+      aggregate: '',
+      aggregateType: '',
     },
     {
       id: 6,
       order: 6,
       title: 'Address',
       icon: 'icon-Frame-73',
+      aggregate: '',
+      aggregateType: '',
     },
     {
       id: 7,
       order: 7,
       title: 'Phone',
       icon: 'icon-Frame-73',
+      aggregate: 50,
+      aggregateType: 'AMD',
     },
     {
       id: 8,
       order: 8,
       title: 'Money',
       icon: 'icon-Frame-73',
+      aggregate: 100,
+      aggregateType: 'AMD',
     },
     {
       id: 9,
       order: 9,
       title: 'BirthDate',
       icon: 'icon-Frame-73',
+      aggregate: 5000000,
+      aggregateType: 'AMD',
     },
     {
       id: 10,
       order: 9,
       title: 'isMarried',
       icon: 'icon-Frame-73',
+      aggregate: 9960,
+      aggregateType: 'AMD',
     },
     {
       id: 11,
       order: 9,
       title: 'isWorking',
       icon: 'icon-Frame-73',
+      aggregate: 150000,
+      aggregateType: 'AMD',
     },
     {
       id: 12,
       order: 9,
       title: 'isHappy',
       icon: 'icon-Frame-73',
+      aggregate: 150000,
+      aggregateType: 'AMD',
     },
   ])
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
   const [columnConfig] = useState<IColumnConfig<any>[]>([
     {
       id: 1,
@@ -309,6 +211,21 @@ function App() {
         <div className={`G-center G-table-icon`}>
           <div className='G-row-item'>{row.counterpartyId}</div>
         </div>
+      ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.title ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
       ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
@@ -327,6 +244,21 @@ function App() {
           <div className='G-row-item'>{row.firstName}</div>
         </div>
       ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
+      ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
     },
@@ -343,6 +275,21 @@ function App() {
         <div className={`G-center G-table-icon`}>
           <div className='G-row-item'>{row.lastName}</div>
         </div>
+      ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
       ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
@@ -361,6 +308,21 @@ function App() {
           <div className='G-row-item'>{row.age}</div>
         </div>
       ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
+      ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
     },
@@ -377,6 +339,21 @@ function App() {
         <div className={`G-center G-table-icon`}>
           <div className='G-row-item'>{row.gender}</div>
         </div>
+      ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
       ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
@@ -395,6 +372,21 @@ function App() {
           <div className='G-row-item'>{row.phoneNumber}</div>
         </div>
       ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
+      ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
     },
@@ -411,6 +403,21 @@ function App() {
         <div className={`G-center G-table-icon`}>
           <div className='G-row-item'>{new Date(row.registrationDate).toLocaleString()}</div>
         </div>
+      ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
       ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
@@ -429,6 +436,21 @@ function App() {
           <div className='G-row-item'>{row.email}</div>
         </div>
       ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
+      ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
     },
@@ -445,6 +467,21 @@ function App() {
         <div className={`G-center G-table-icon`}>
           <div className='G-row-item'>{row.phoneNumber}</div>
         </div>
+      ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
       ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
@@ -463,6 +500,21 @@ function App() {
           <div className='G-row-item'>{row.comment}</div>
         </div>
       ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
+      ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
     },
@@ -480,6 +532,21 @@ function App() {
           <div className='G-row-item'>{row.isEnabled}</div>
         </div>
       ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
+      ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
     },
@@ -496,6 +563,21 @@ function App() {
         <div className={`G-center G-table-icon`}>
           <div className='G-row-item'>{row.weight}</div>
         </div>
+      ),
+      footer: (row: any) => (
+        <PopUp
+          open={open}
+          handleClick={handleClick}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          modalName={row.aggregate ? `Total ${formatPrice(row.aggregate, row.aggregateType)}` : ''}
+        >
+          <ul className='G-list'>
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>
+            })}
+          </ul>
+        </PopUp>
       ),
       // customStyle: { backgroundColor: "white" },
       isVisible: true,
@@ -553,14 +635,15 @@ function App() {
       title: 'SUM',
     },
   ])
-  const [dropdoownSelectedItem, setDropdoownSelectedItem] = useState<String>(listForDropdown[0].title)
-  const [pageOptions, setPageOptions] = useState<number[]>([])
   const [selectedColumnName, setSelectedColumnName] = useState<string>('')
   const [pagePerFilterField, setPagePerFilterField] = useState<number>(1)
   const [isLoadingFilters, setIsLoading] = useState<boolean>(false)
   const [perColumnListForFilters, setPerColumnListForFilters] = useState<string[]>()
 
-  const handleChangePagePerFilterField = () => {}
+  const handleChangePagePerFilterField = () => {
+    setIsLoading(true)
+    setPagePerFilterField((prev) => prev + 1)
+  }
   const setColumnsConfigStructure = (option: IColumnConfigStructure<any>) => {
     setColumnsConfigStructures(option)
   }
@@ -585,12 +668,16 @@ function App() {
   const getPageRowsCountAndCurrentPage = (pageNumber: number, rowsCount: number) => {
     console.log(pageNumber, rowsCount)
   }
-
-  const getFilteredData = (option: ItemFields[], ColumnName?: string) => {}
+  const getFilteredData = (option: ItemFields[], ColumnName?: string) => {
+    setFilterDataForRequest(option)
+  }
   const getFilteredDataForTable = () => {
     setFilteredTableData((prev) => {
       return { ...prev, Filters: filterDataForRequest }
     })
+  }
+  const getDownloadType = (option: string) => {
+    console.log(option)
   }
 
   return (
@@ -602,7 +689,7 @@ function App() {
         columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
         perColumnListForFilters={perColumnListForFilters}
         // rightFreezeConfig={rightFreezeConfig} // List for multiple FreezeColumns in the right side of the table
-        // columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
+        columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
         headerHeight={64}
         footerHeight={48}
         leftFreezedColumnWidth={72}
@@ -612,34 +699,37 @@ function App() {
         currentPage={1} // Current Page
         multipleCheck // Multiple check for delete or download
         isStickyFirstColumn // Sticky first column
+        rowsFreezeAction={false} // is active freeze fnction for rows
         isHoveredRow // while hover per row will be highlighted actions
         rowActions={rowActions} // Array of actions and theyr's icons / must be active isHoveredRow
-        // FreezeIcon={FreezeSvgIcon} //Freeze row action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
+        // FreezeIcon={FreezeSvgIcon} //freeze row action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
         // RightSideIcon={ExSvgIcon} // SVG icon for right side action
-        freezedRightSideVisible // is Visible Freezed right side
+        freezedRightSideVisible // is visible Freezed right side
         freezedRightSide={'dropdown'} // is dropdown
         links={links} // Array of links // have to check freezedRightSide - dropdown
         listForDropdown={listForDropdown} // Array of Counters in Footer
         headerColor={'#F3F6F8'} // Header color
         footerColor={'#F3F6F8'} // Footer color
-        // freezedLeftSideColor={'silver'} // FreezedLeft side color
-        // freezedRightSideColor={'silver'} // FreezedRight side color
+        aggregates
+        // freezedLeftSideColor={'silver'} // freezedLeft side color
+        // freezedRightSideColor={'silver'} // freezedRight side color
         draggableColumns //Is column's draggable
-        filterColumns={tableColumns.Columns}
-        filtersTypes={FiltersTypes.FilteringTypes}
+        filterColumns={tableColumns.Columns} // filter columns
+        filtersTypes={FiltersTypes.FilteringTypes} // filter types
         filterDataForRequest={filterDataForRequest}
         isLoadingFilters={isLoadingFilters}
-        getRow={getRow} // Get row data
-        handleEdit={handleEdit} // will be visible when active multipleCheck
-        handleDelete={handleDelete} // will be visible when active multipleCheck
         setColumnsConfigStructure={setColumnsConfigStructure} // set changed config structure - pin/hide/drag-drop
         setColumnHeaderStructure={setColumnHeaderStructure} // set changed header structure - pin/hide/drag-drop
-        getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
-        storeStructure={storeStructure} // Save columns structure on DB
-        getFilteredData={getFilteredData}
+        getRow={getRow} // get row data
+        handleEdit={handleEdit} // will be visible when active multipleCheck
+        handleDelete={handleDelete} // will be visible when active multipleCheck
+        getFilteredData={getFilteredData} // get filtered data
         getFilteredDataForTable={getFilteredDataForTable}
+        handleChangePagePerFilterField={handleChangePagePerFilterField} // activating load more data for filter fields
+        getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage} // page count and current page
+        storeStructure={storeStructure} // Save columns structure on DB
+        getDownloadType={getDownloadType} // get download type CSV OR XLSX
         // RightSideSelfAction={RightSideSelfAction} // FreezedRightSideSelfAction
-        handleChangePagePerFilterField={handleChangePagePerFilterField}
       />
     </div>
   )
