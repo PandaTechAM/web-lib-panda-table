@@ -129,7 +129,6 @@ const APIFilter = ({
   const selectComparisonType = (event: any) => {
     const { value } = event.target
     if (filterUiHelper(typeElem.ColumnType, value) === 2) {
-      console.log('rtrtrrtrtrt')
     }
     let columnFilter: ItemFields = {
       PropertyName: item.ColumnName,
@@ -313,7 +312,6 @@ const APIFilter = ({
     if (filteredColumn?.length)
       filteredColumn?.map((column) => {
         if (column.PropertyName === item.ColumnName) {
-          console.log(column)
           setfilterTypeing(column)
         }
       })

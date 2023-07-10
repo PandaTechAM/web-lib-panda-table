@@ -62,8 +62,6 @@ export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {
 
 export const validateRangeColumns = (from: any, to: any, item: any, setErrorMessage: (option: any) => void) => {
   let isValid = false
-  console.log(from, to)
-
   const columnError = { from: '', to: '' }
   if (from == undefined && to !== undefined && item.ColumnType === 'Date') {
     columnError.from = 'is empty'
@@ -83,11 +81,11 @@ export const validateRangeColumns = (from: any, to: any, item: any, setErrorMess
     isValid = true
   }
 
-  if (from !== undefined && isNaN(from.valueOf() as number) && item.ColumnType === 'Date') {
+  if (from !== null && isNaN(from.valueOf() as number) && item.ColumnType === 'Date') {
     columnError.from = 'invalid'
     isValid = true
   }
-  if (to !== undefined && isNaN(to.valueOf() as number) && item.ColumnType === 'Date') {
+  if (to !== null && isNaN(to.valueOf() as number) && item.ColumnType === 'Date') {
     columnError.to = 'invalid'
     isValid = true
   }

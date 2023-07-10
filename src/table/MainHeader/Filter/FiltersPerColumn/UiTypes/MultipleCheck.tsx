@@ -53,13 +53,10 @@ const MultipleCheck = ({
     setVal(newInputValue)
   }
   const selectValue = (event: SyntheticEvent<Element, Event>, value: any[]) => {
-    console.log(value)
-
     setcheckedItems(value)
     if (item.ColumnType !== 'Text') {
       let newValues: number[] = []
       newValues = value.map((item: string) => +item)
-      console.log(newValues)
       if (!isOpened) {
         handleSelectItems(newValues, false)
       }

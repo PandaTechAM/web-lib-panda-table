@@ -44,8 +44,15 @@
         line-height: none !important;
         margin-top: 0;
     }
+    
 }
 .MuiPaper-root .css-1g7nc1s-MuiPickersLayout-root{
     display: flex;
     flex-direction: column-reverse;
+}
+
+.date-picker {
+    .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+        border-color: red !important;
+    }
 }

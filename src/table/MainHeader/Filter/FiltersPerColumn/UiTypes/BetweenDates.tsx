@@ -6,6 +6,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import './style.scss'
 import { validateRangeColumns } from '../../../../../utils'
+import ActionList from '../../../../../components/datePickerActionList/ActionList'
 interface IPickDate {
   columnsSizes: string
   item: IComparisonType
@@ -18,8 +19,8 @@ interface IPickDate {
   handleChangeRange(from: any, to: any): void
 }
 interface IDateValues {
-  from: null | Date | string
-  to: null | Date | string
+  from: undefined | null | Date | string
+  to: undefined | null | Date | string
 }
 const BetweenDates = ({
   columnsSizes,
@@ -37,14 +38,16 @@ const BetweenDates = ({
     to: null,
   })
   const [errMessage, setErrMessage] = useState({ from: '', to: '' })
-  const [isFocused, setIsFocused] = useState({ from: false, to: false })
   const [isOpenedModal, setIsOpenedModal] = useState({
     from: false,
     to: false,
   })
 
   const handleChangeInputValue = (value: any, name: string) => {
+    setCoulmnName(item.ColumnName)
+
     let stateValues = { from: val.from, to: val.to }
+
     if (value === null) {
       value = ''
     } else {
@@ -57,6 +60,7 @@ const BetweenDates = ({
       stateValues.from = ''
     }
     setErrMessage({ from: '', to: '' })
+
     if (name === 'to') {
       if (!validateRangeColumns(stateValues.from, value, item, setErrMessage)) {
         handleChangeRange(stateValues.from, value)
@@ -79,27 +83,17 @@ const BetweenDates = ({
       }
     } else {
       if (name === 'from') {
-        stateValues = { from: null, to: val.to }
+        stateValues = { from: undefined, to: val.to }
       } else {
-        stateValues = { from: val.from, to: null }
+        stateValues = { from: val.from, to: undefined }
       }
     }
+    console.log(stateValues)
     setVal(stateValues)
   }
-
-  const unFocused = (type: string) => {
-    let focus = isFocused
-    if (type === 'from') {
-      setIsFocused((prev) => {
-        return { ...prev, from: false }
-      })
-    } else {
-      setIsFocused((prev) => {
-        return { ...prev, to: false }
-      })
-    }
+  const unFocused = () => {
+    !isDisabled && setCoulmnName('')
   }
-
   const handleOpenModal = (type: string) => {
     setCoulmnName(item.ColumnName)
     if (type === 'from') {
@@ -111,10 +105,9 @@ const BetweenDates = ({
         return { ...prev, to: true }
       })
     }
-    unFocused(type)
   }
-
   const handleClose = (type: string) => {
+    !isDisabled && setCoulmnName('')
     if (type === 'from') {
       setIsOpenedModal((prev) => {
         return { ...prev, from: false }
@@ -122,18 +115,6 @@ const BetweenDates = ({
     } else {
       setIsOpenedModal((prev) => {
         return { ...prev, to: false }
-      })
-    }
-    unFocused(type)
-  }
-  const focused = (type: string) => {
-    if (type === 'from') {
-      setIsFocused((prev) => {
-        return { ...prev, from: true }
-      })
-    } else {
-      setIsFocused((prev) => {
-        return { ...prev, to: true }
       })
     }
   }
@@ -144,18 +125,7 @@ const BetweenDates = ({
       setVal({ from: newValues[0], to: newValues[1] })
     }
   }, [filterTypeing])
-  // useEffect(() => {
-  //   if (
-  //     isOpenedModal.from === false &&
-  //     isOpenedModal.to === false &&
-  //     isFocused.from === false &&
-  //     isFocused.to === false &&
-  //     errMessage.from === "" &&
-  //     errMessage.to === ""
-  //   ) {
-  //     setCoulmnName("");
-  //   }
-  // }, [isOpenedModal, isFocused]);
+
   return (
     <div
       className={`G-justify-between ${item.IsBold ? 'IsBold' : ''}`}
@@ -165,18 +135,15 @@ const BetweenDates = ({
         <div
           style={{ width: '48%', position: 'relative' }}
           tabIndex={0}
-          // onBlur={() => unFocused("from")}
-          // onFocus={() => focused("from")}
+          onBlur={unFocused}
+          className={errMessage.from ? 'date-picker' : ''}
         >
           <DateTimePicker
-            sx={{
-              border: errMessage.from.length ? '1px solid red' : 'none',
-              borderRadius: 1,
-            }}
             ampm={false}
             label='From'
+            open={isOpenedModal.from}
             onOpen={() => handleOpenModal('from')}
-            // onClose={() => handleClose("from")}
+            onClose={() => handleClose('from')}
             format={!advancedSettings ? 'LLL' : 'YYYY-MM-DD'}
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
             maxDateTime={dayjs(filterTypeing.Values[1])}
@@ -189,26 +156,21 @@ const BetweenDates = ({
                 : null
             }
             onChange={(newValue: any) => handleChangeInputValue(newValue, 'from')}
+            slots={{
+              actionBar: ActionList,
+            }}
           />
           {errMessage.from.length ? <div style={{ color: 'red', fontSize: 12 }}>{errMessage.from}</div> : null}
         </div>
       </LocalizationProvider>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <div
-          style={{ width: '48%' }}
-          tabIndex={1}
-          // onBlur={() => unFocused("to")}
-          // onFocus={() => focused("to")}
-        >
+        <div style={{ width: '48%' }} tabIndex={1} onBlur={unFocused} className={errMessage.to ? 'date-picker' : ''}>
           <DateTimePicker
             ampm={false}
             label='To'
-            sx={{
-              border: errMessage.to.length ? '1px solid red' : 'none',
-              borderRadius: 1,
-            }}
             onOpen={() => handleOpenModal('to')}
-            // onClose={() => handleClose("to")}
+            onClose={() => handleClose('to')}
+            open={isOpenedModal.to}
             format={!advancedSettings ? 'LLL' : 'YYYY-MM-DD'}
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
             minDateTime={dayjs(filterTypeing.Values[0])}
@@ -217,6 +179,9 @@ const BetweenDates = ({
               filterTypeing.Values.length ? dayjs(filterTypeing.Values[1]) : val.to !== undefined ? dayjs(val.to) : null
             }
             onChange={(newValue: any) => handleChangeInputValue(newValue, 'to')}
+            slots={{
+              actionBar: ActionList,
+            }}
           />
           {errMessage.to.length ? <div style={{ color: 'red', fontSize: 12 }}>{errMessage.to}</div> : null}
         </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -25,38 +25,60 @@ const PickDate = ({
   setCoulmnName,
   handleChangeValue,
 }: IPickDate) => {
+  const [errMessage, setErrMessage] = useState('')
   const handlePick = (newValue: any) => {
-    handleChangeValue(
-      newValue
-        ? isNaN(newValue.valueOf() as number)
-          ? 'invalid'
-          : new Date(newValue.valueOf() as number | string)
-        : '',
-    )
+    if (newValue !== null && isNaN(newValue.valueOf() as number)) {
+      setErrMessage('invalid')
+    } else {
+      setErrMessage('')
+
+      setCoulmnName(item.ColumnName)
+      handleChangeValue(
+        newValue
+          ? isNaN(newValue.valueOf() as number)
+            ? 'invalid'
+            : new Date(newValue.valueOf() as number | string)
+          : '',
+      )
+    }
   }
   const handleOpenList = () => {
     setCoulmnName(item.ColumnName)
   }
-
+  const handleClose = () => {
+    !isDisabled && setCoulmnName('')
+  }
+  const unFocused = () => {
+    !isDisabled && setCoulmnName('')
+  }
   return (
     <div className={item.IsBold ? 'IsBold' : ''} style={{ width: advancedSettings ? columnsSizes : '100%' }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateTimePicker
-          minutesStep={1}
-          ampm={false}
-          label={item.ColumnName}
-          disabled={isDisabled && item.ColumnName !== columnName}
-          displayWeekNumber
-          onOpen={handleOpenList}
-          value={filterTypeing.Values.length ? dayjs(filterTypeing.Values[0]) : null}
-          format='YYYY-MM-DD hh:mm:ss'
-          onChange={handlePick}
-          views={['year', 'day', 'hours', 'minutes', 'seconds']}
-          sx={{ width: '100%' }}
-          slots={{
-            actionBar: ActionList,
-          }}
-        />
+        <div
+          style={{ width: '100%', position: 'relative' }}
+          tabIndex={0}
+          onBlur={unFocused}
+          className={errMessage ? 'date-picker' : ''}
+        >
+          <DateTimePicker
+            minutesStep={1}
+            ampm={false}
+            label={item.ColumnName}
+            disabled={isDisabled && item.ColumnName !== columnName}
+            displayWeekNumber
+            onOpen={handleOpenList}
+            onClose={handleClose}
+            value={filterTypeing.Values.length ? dayjs(filterTypeing.Values[0]) : null}
+            format='YYYY-MM-DD hh:mm:ss'
+            onChange={handlePick}
+            views={['year', 'day', 'hours', 'minutes', 'seconds']}
+            sx={{ width: '100%' }}
+            slots={{
+              actionBar: ActionList,
+            }}
+          />
+          {errMessage.length ? <div style={{ color: 'red', fontSize: 12 }}>{errMessage}</div> : null}
+        </div>
       </LocalizationProvider>
     </div>
   )

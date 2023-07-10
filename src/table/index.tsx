@@ -47,6 +47,7 @@ function Table<T extends Object>({
   filtersTypes,
   rowsFreezeAction,
   aggregates,
+  EmptyDataIcon,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -111,74 +112,78 @@ function Table<T extends Object>({
         />
       ) : null}
 
-      <div className='G-data-table'>
-        <div className='G-data-scroll'>
-          <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
-            <Header
-              columnsConfigStructure={columnsConfigStructure}
-              columnsHeaderStructure={columnsHeaderStructure}
-              rightFreezeConfig={rightFreezeConfig}
-              headerColor={headerColor}
-              multipleCheck={multipleCheck}
-              isStickyFirstColumn={isStickyFirstColumn}
-              columnMinWidth={columnMinWidth}
-              freezedRightSideVisible={freezedRightSideVisible}
-              leftFreezedColumnWidth={leftFreezedColumnWidth}
-              rightFreezedColumnWidth={rightFreezedColumnWidth}
-            />
-          </div>
-
-          <div className='G-data-table-body'>
-            <Rows
-              freezedRows={freezedRows}
-              rightFreezeConfig={rightFreezeConfig}
-              columnsConfigStructure={columnsConfigStructure}
-              multipleCheck={multipleCheck}
-              columnMinWidth={columnMinWidth}
-              rowActions={rowActions}
-              FreezeIcon={FreezeIcon}
-              links={links}
-              checkedLink={checkedLink}
-              unFreezedRows={unFreezedRows}
-              isHoveredRow={isHoveredRow}
-              freezedLeftSideColor={freezedLeftSideColor}
-              freezedRightSideColor={freezedRightSideColor}
-              freezedRightSideVisible={freezedRightSideVisible}
-              freezedRightSide={freezedRightSide}
-              isStickyFirstColumn={isStickyFirstColumn}
-              RightSideIcon={RightSideIcon}
-              leftFreezedColumnWidth={leftFreezedColumnWidth}
-              rightFreezedColumnWidth={rightFreezedColumnWidth}
-              headerHeight={headerHeight}
-              rowsFreezeAction={rowsFreezeAction}
-              getRow={getRow}
-              RightSideSelfAction={RightSideSelfAction}
-              freezeRow={freezeRow}
-              getRowForDropdown={getRowForDropdown}
-              isCheckedRows={isCheckedRows}
-              handleCheck={handleCheck}
-              dragDropFreezeRow={dragDropFreezeRow}
-              unFreezeRow={unFreezeRow}
-            />
-          </div>
-
-          {aggregates ? (
-            <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
-              <Footer
-                rightFreezeConfig={rightFreezeConfig}
-                columnsHeaderStructure={columnsHeaderStructure}
+      <div className='G-data-table G-data-scroll'>
+        {data.length ? (
+          <>
+            <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
+              <Header
                 columnsConfigStructure={columnsConfigStructure}
-                columnMinWidth={columnMinWidth}
-                footerColor={footerColor}
-                freezedRightSideVisible={freezedRightSideVisible}
+                columnsHeaderStructure={columnsHeaderStructure}
+                rightFreezeConfig={rightFreezeConfig}
+                headerColor={headerColor}
+                multipleCheck={multipleCheck}
                 isStickyFirstColumn={isStickyFirstColumn}
+                columnMinWidth={columnMinWidth}
+                freezedRightSideVisible={freezedRightSideVisible}
                 leftFreezedColumnWidth={leftFreezedColumnWidth}
                 rightFreezedColumnWidth={rightFreezedColumnWidth}
-                listForDropdown={listForDropdown}
               />
             </div>
-          ) : null}
-        </div>
+
+            <div className='G-data-table-body'>
+              <Rows
+                freezedRows={freezedRows}
+                rightFreezeConfig={rightFreezeConfig}
+                columnsConfigStructure={columnsConfigStructure}
+                multipleCheck={multipleCheck}
+                columnMinWidth={columnMinWidth}
+                rowActions={rowActions}
+                FreezeIcon={FreezeIcon}
+                links={links}
+                checkedLink={checkedLink}
+                unFreezedRows={unFreezedRows}
+                isHoveredRow={isHoveredRow}
+                freezedLeftSideColor={freezedLeftSideColor}
+                freezedRightSideColor={freezedRightSideColor}
+                freezedRightSideVisible={freezedRightSideVisible}
+                freezedRightSide={freezedRightSide}
+                isStickyFirstColumn={isStickyFirstColumn}
+                RightSideIcon={RightSideIcon}
+                leftFreezedColumnWidth={leftFreezedColumnWidth}
+                rightFreezedColumnWidth={rightFreezedColumnWidth}
+                headerHeight={headerHeight}
+                rowsFreezeAction={rowsFreezeAction}
+                getRow={getRow}
+                RightSideSelfAction={RightSideSelfAction}
+                freezeRow={freezeRow}
+                getRowForDropdown={getRowForDropdown}
+                isCheckedRows={isCheckedRows}
+                handleCheck={handleCheck}
+                dragDropFreezeRow={dragDropFreezeRow}
+                unFreezeRow={unFreezeRow}
+              />
+            </div>
+
+            {aggregates ? (
+              <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
+                <Footer
+                  rightFreezeConfig={rightFreezeConfig}
+                  columnsHeaderStructure={columnsHeaderStructure}
+                  columnsConfigStructure={columnsConfigStructure}
+                  columnMinWidth={columnMinWidth}
+                  footerColor={footerColor}
+                  freezedRightSideVisible={freezedRightSideVisible}
+                  isStickyFirstColumn={isStickyFirstColumn}
+                  leftFreezedColumnWidth={leftFreezedColumnWidth}
+                  rightFreezedColumnWidth={rightFreezedColumnWidth}
+                  listForDropdown={listForDropdown}
+                />
+              </div>
+            ) : null}
+          </>
+        ) : (
+          <EmptyDataIcon />
+        )}
       </div>
       <div className='G-justify-end G-align-center' style={{ padding: 10 }}>
         {currentPage && pagesTotalCount && (
