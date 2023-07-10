@@ -2,22 +2,40 @@
 .P-date-actions-component{
     width: 100%;
     .P-actions-component{
+        margin: 12px 0 0 10px;
         div{
             width: 80px;
             border-radius: 4px;
             background-color: orange;
-            color: white;
             margin: 4px;
-          
+            padding: 4px 0;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.16);
+            cursor: pointer;
+            &:first-child{
+                background-color: white;
+                color: black;
+                border: 1px solid orange;
+                border-radius: 4px;
+                padding: 4px 0;
+            }
         }
+        
     }
     .P-time-component{
+        background-color: #F4F4F4;
+        margin-top: 6px;
+        border-radius: 4px;
         div{
             width: 48px;
-            padding: 8px;
+            padding: 6px 8px 0 8px;
             margin: 4px;
-            background-color: #4844C5;
-            color: white;
+            font-weight: 600;
+            color: #2B2976;
+            // border-right: 1px solid #E0E0E0;
         }
     }
+}
+.css-1bcmzxa-MuiMultiSectionDigitalClock-root{
+    background-color: #F4F4F4;
+
 }

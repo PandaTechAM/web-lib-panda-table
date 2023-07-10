@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Select from '../../../components/select/select'
-import ArrowDown from '../../../svgIcons/DropdownSvgIcon'
+import ArrowDown from '../../../svgIcons/ArrowBottomSvgIcon'
+import ArrowUp from '../../../svgIcons/ArrowtopSvgIcon'
 import './style.scss'
 import { ISelected } from '../../../Models/table.models'
 interface IDownload {
@@ -31,7 +32,7 @@ const Download = ({ getDownloadType }: { getDownloadType: (option: string) => vo
       setIsOpenList={setIsOpenList}
       customClass='P-download'
       label='Download report'
-      ButtonSvg={ArrowDown}
+      ButtonSvg={isOpenList ? ArrowUp : ArrowDown}
     />
   )
 }

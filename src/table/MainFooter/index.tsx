@@ -19,7 +19,7 @@ const FooterPagination = ({
   const [isOpenList, setOpen] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(currPage)
   const [selectedPage, setSelectedPage] = useState<ISelected>({ id: 1 })
-  const [totalCount, setTotalCount] = useState<number>(pagesTotalCount)
+  // const [totalCount, setTotalCount] = useState<number>(pagesTotalCount);
 
   const setIsOpenList = () => {
     setOpen((prev) => !prev)
@@ -64,7 +64,7 @@ const FooterPagination = ({
       )}
       <Pagination
         onPageChange={handleChangePage}
-        totalCount={totalCount}
+        totalCount={pagesTotalCount}
         currentPage={currentPage}
         pageSizeStructure={pageSizeStructure && selectedPage ? pageSizeStructure[selectedPage.id - 1].count : 15}
         className={'G-pagionation'}

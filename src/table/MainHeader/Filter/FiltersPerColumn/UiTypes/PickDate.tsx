@@ -2,9 +2,8 @@ import React from 'react'
 import dayjs from 'dayjs'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider, PickersActionBarProps } from '@mui/x-date-pickers'
+import { LocalizationProvider } from '@mui/x-date-pickers'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import ActionList from '../../../../../components/datePickerActionList/ActionList'
 interface IPickDate {
   columnsSizes: string
@@ -63,23 +62,3 @@ const PickDate = ({
   )
 }
 export default PickDate
-
-// function ActionList(props: PickersActionBarProps) {
-//   const { onClear, onSetToday, className } = props;
-//   const actions = [
-//     { text: "Clear", method: onClear },
-//     { text: "Today", method: onSetToday },
-//   ];
-
-//   return (
-//     <List className={className}>
-//       {actions.map(({ text, method }) => (
-//         <ListItem key={text} disablePadding>
-//           <ListItemButton onClick={method}>
-//             <ListItemText primary={text} />
-//           </ListItemButton>
-//         </ListItem>
-//       ))}
-//     </List>
-//   );
-// }
