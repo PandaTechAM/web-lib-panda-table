@@ -27,7 +27,6 @@ function Table<T extends Object>({
   FreezeIcon,
   isHoveredRow,
   links,
-  listForDropdown,
   headerColor,
   footerColor,
   freezedLeftSideColor,
@@ -176,7 +175,6 @@ function Table<T extends Object>({
                   isStickyFirstColumn={isStickyFirstColumn}
                   leftFreezedColumnWidth={leftFreezedColumnWidth}
                   rightFreezedColumnWidth={rightFreezedColumnWidth}
-                  listForDropdown={listForDropdown}
                 />
               </div>
             ) : null}

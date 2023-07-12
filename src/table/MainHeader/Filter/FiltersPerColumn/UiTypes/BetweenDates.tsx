@@ -88,7 +88,6 @@ const BetweenDates = ({
         stateValues = { from: val.from, to: undefined }
       }
     }
-    console.log(stateValues)
     setVal(stateValues)
   }
   const unFocused = () => {

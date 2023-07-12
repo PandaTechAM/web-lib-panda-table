@@ -18,7 +18,6 @@ interface IFooterFreezedLeft<T extends Object> {
   footerColor?: string
   isStickyFirstColumn?: boolean
   leftFreezedColumnWidth?: number
-  listForDropdown?: ITotalList[]
 }
 
 const FooterFreezedLeft = <T extends Object>({

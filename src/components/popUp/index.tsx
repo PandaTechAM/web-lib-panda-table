@@ -49,7 +49,7 @@ const PopUp = ({
         }
       >
         <div
-          className='G-align-center'
+          className='G-center'
           onClick={(e) => {
             getRowForDropdown?.(item?.id)
           }}
@@ -65,13 +65,13 @@ const PopUp = ({
               <ActiveIcon fill={!open ? '#4A4C56' : '#4844C5'} />
             )
           ) : null}
-        </div>
-        <div
-          style={{
-            color: open ? '#4844c5' : 'black',
-          }}
-        >
-          {modalName}
+          <div
+            style={{
+              color: open ? '#4844c5' : 'black',
+            }}
+          >
+            {modalName}
+          </div>
         </div>
       </Button>
       <Menu

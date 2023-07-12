@@ -329,7 +329,7 @@ const APIFilter = ({
           value={filterTypeing.TypeForUi}
         >
           {typeElem.FilterTypes.map((types: string) => (
-            <MenuItem key={types} value={types}>
+            <MenuItem key={types} value={types} sx={{ padding: '6px 16px' }}>
               {types}
             </MenuItem>
           ))}

@@ -75,9 +75,11 @@ const MainRows = forwardRef<any, IMainRows<any>>(
     }
     return (
       <>
-        {unFreezedRows.map((item, index) => {
+        {unFreezedRows.map((item: any, index: number) => {
+          // console.log(item.id);
+
           return (
-            <div key={item?.id} className='G-flex G-row' onClick={() => getRow?.(item)}>
+            <div key={item.id} className='G-flex G-row' onClick={() => getRow?.(item)}>
               <ul className='G-rows-icons'>
                 {isHoveredRow ? (
                   <HoveredRow

@@ -78,10 +78,7 @@ const FreezedRows = <T extends Object>({
     }
     return 'G-light-background'
   }
-  const [isOpenList, setOpen] = useState<boolean>(false)
-  const setIsOpenList = () => {
-    setOpen((prev) => !prev)
-  }
+
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId='characters'>
@@ -109,11 +106,7 @@ const FreezedRows = <T extends Object>({
                       <div style={{ display: 'flex' }} className='G-row'>
                         {/* HOVERED ROWS */}
                         <ul className='G-rows-icons'>
-                          <li
-                            onMouseLeave={() => setOpen(false)}
-                            className='G-rows-icons'
-                            style={{ left: !isStickyFirstColumn ? '50%' : '' }}
-                          >
+                          <li className='G-rows-icons' style={{ left: !isStickyFirstColumn ? '50%' : '' }}>
                             <div className='G-icons-group'>
                               {rowActions && rowActions.length
                                 ? //@ts-ignore

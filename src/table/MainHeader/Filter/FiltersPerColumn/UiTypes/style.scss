@@ -1,29 +1,4 @@
 .P-Filters{
-    .IsBold {
-        .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root{
-            height: 80px;
-            font-size:16px !important;
-            font-weight: bold !important;
-            justify-content: center !important;
-        }
-        .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{
-            width: auto !important;
-        }
-        .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{
-            padding-left: 5px !important;
-            font-size: 20px !important;
-        }
-        .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root{
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            &:hover{
-                background-color: White !important;
-            }
-        }
-        .css-1laqsz7-MuiInputAdornment-root{
-            margin-left: 0 !important;
-        }
-    }
     .ForModal{
         .MuiSvgIcon-root{
             path{

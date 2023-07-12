@@ -31,7 +31,6 @@ const Footer = <T extends Object>({
   isStickyFirstColumn,
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
-  listForDropdown,
 }: IFooter<T>) => {
   return (
     <>
@@ -42,7 +41,6 @@ const Footer = <T extends Object>({
         footerColor={footerColor}
         isStickyFirstColumn={isStickyFirstColumn}
         leftFreezedColumnWidth={leftFreezedColumnWidth}
-        listForDropdown={listForDropdown}
       />
       <FooterMain
         columnsConfigStructure={columnsConfigStructure}

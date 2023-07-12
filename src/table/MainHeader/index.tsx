@@ -80,13 +80,7 @@ const MainHeader = <T extends Object>({
   getDownloadType,
 }: IActionsHeader<T>) => {
   return (
-    <div
-      className='G-table-actions-header'
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
+    <div className='G-center G-table-actions-header'>
       {multipleCheck ? (
         <>
           <CheckRows
@@ -96,7 +90,7 @@ const MainHeader = <T extends Object>({
             unCheck={unCheck}
             checkAllDataFromDb={checkAllDataFromDb}
           />
-          <div className='G-flex' style={{ marginRight: '27px' }}>
+          <div className='G-center' style={{ marginRight: '27px' }}>
             {checkedRows.length && handleEdit ? (
               <div className='G-flex G-edit' style={{ marginRight: '20px' }} onClick={() => handleEdit(checkedRows[0])}>
                 <div>

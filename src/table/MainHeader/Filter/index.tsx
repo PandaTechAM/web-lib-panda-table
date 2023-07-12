@@ -52,7 +52,6 @@ const Filter = ({
   }
   const handleCancel = () => {
     getFilter?.([], '')
-    // handleClose();
   }
   const checkIsDisabled = (option: boolean) => {
     setIsDisabled(option)
@@ -88,16 +87,17 @@ const Filter = ({
       >
         <div style={{ padding: '48px 32px', width: 553 }}>
           <div style={{ width: '100%' }} className='G-justify-end'>
-            <Button
+            <div
               onClick={() => setAdvancedSettings((prev) => !prev)}
               style={{
                 backgroundColor: 'white',
                 width: 'auto',
                 color: advancedSettings ? '#4844C5' : 'black',
+                cursor: 'pointer',
               }}
             >
               {advancedSettings ? <AdvancedFilerDisabled /> : <AdvancedFilerEnabled />}
-            </Button>
+            </div>
           </div>
           <ul className='G-dropdown-list P-Filters' style={{ border: 'none', padding: 0 }}>
             {isLocalFilter ? (
@@ -119,7 +119,6 @@ const Filter = ({
                                   isDisabled={isDisabled}
                                   handleChangePagePerFilterField={handleChangePagePerFilterField}
                                   checkIsDisabled={checkIsDisabled}
-                                  // selectedItem={selectedItem}
                                   filteredColumn={filterDataForRequest}
                                   perColumnListForFilters={perColumnListForFilters}
                                   getFilteredData={getFilteredData}
@@ -152,11 +151,6 @@ const Filter = ({
               <Button
                 size='large'
                 fullWidth
-                style={{
-                  marginBottom: '10px',
-                  backgroundColor: isDisabled ? 'silver' : '#FB9C59',
-                  color: isDisabled ? 'white' : 'black',
-                }}
                 disabled={isDisabled}
                 onClick={(e) => {
                   getFilteredDataForTable?.()
@@ -165,12 +159,7 @@ const Filter = ({
               >
                 Submit
               </Button>
-              <Button
-                size='large'
-                fullWidth
-                style={{ color: 'black', border: '1px solid #FB9C59' }}
-                onClick={handleCancel}
-              >
+              <Button size='large' variant='outlined' fullWidth onClick={handleCancel}>
                 Clear All Filters
               </Button>
             </li>
