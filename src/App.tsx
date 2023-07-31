@@ -707,7 +707,6 @@ function App() {
         freezedRightSideVisible // is visible Freezed right side
         freezedRightSide={'dropdown'} // is dropdown
         links={links} // Array of links // have to check freezedRightSide - dropdown
-        listForDropdown={listForDropdown} // Array of Counters in Footer
         headerColor={'#F3F6F8'} // Header color
         footerColor={'#F3F6F8'} // Footer color
         aggregates

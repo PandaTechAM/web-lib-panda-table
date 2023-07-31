@@ -54,25 +54,29 @@ const PopUp = ({
             getRowForDropdown?.(item?.id)
           }}
         >
-          {ActiveIcon ? (
-            DisabledIcon ? (
-              open ? (
-                <ActiveIcon />
+          <div className='G-center'>
+            {ActiveIcon ? (
+              DisabledIcon ? (
+                open ? (
+                  <ActiveIcon />
+                ) : (
+                  <DisabledIcon />
+                )
               ) : (
-                <DisabledIcon />
+                <ActiveIcon fill={!open ? '#4A4C56' : '#4844C5'} />
               )
-            ) : (
-              <ActiveIcon fill={!open ? '#4A4C56' : '#4844C5'} />
-            )
-          ) : null}
-          <div
-            style={{
-              marginLeft: 8,
-              color: open ? '#4844c5' : 'black',
-            }}
-          >
-            {modalName}
+            ) : null}
           </div>
+          {modalName ? (
+            <div
+              style={{
+                marginLeft: 8,
+                color: open ? '#4844c5' : 'black',
+              }}
+            >
+              {modalName}
+            </div>
+          ) : null}
         </div>
       </Button>
       <Menu
