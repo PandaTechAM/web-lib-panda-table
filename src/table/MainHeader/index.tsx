@@ -91,7 +91,7 @@ const MainHeader = <T extends Object>({
             checkAllDataFromDb={checkAllDataFromDb}
           />
           <div className='G-center' style={{ marginRight: '27px' }}>
-            {checkedRows.length && handleEdit ? (
+            {checkedRows.length == 1 && handleEdit ? (
               <div className='G-flex G-edit' style={{ marginRight: '20px' }} onClick={() => handleEdit(checkedRows[0])}>
                 <div>
                   <EditSvgIcon />

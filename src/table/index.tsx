@@ -180,18 +180,20 @@ function Table<T extends Object>({
             ) : null}
           </>
         ) : (
-          <EmptyDataIcon />
+          <div className='G-center'>
+            <EmptyDataIcon />
+          </div>
         )}
       </div>
       <div className='G-justify-end G-align-center' style={{ padding: 10 }}>
-        {currentPage && pagesTotalCount && (
+        {currentPage && pagesTotalCount ? (
           <MainFooter
             pageSizeStructure={pageSizeStructure}
             currPage={currentPage}
             pagesTotalCount={pagesTotalCount}
             getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
           />
-        )}
+        ) : null}
       </div>
     </div>
   )

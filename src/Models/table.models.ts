@@ -6,7 +6,6 @@ export interface IProps<T extends Object> {
   perColumnListForFilters?: string[]
   allDataFromDb?: T[]
   links?: ILinksList[]
-  listForDropdown?: ITotalList[]
   rowActions?: IrowActions[]
   pageSizeStructure?: IPageSizes[]
   pagesTotalCount?: number

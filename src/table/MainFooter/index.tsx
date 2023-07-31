@@ -19,7 +19,6 @@ const FooterPagination = ({
   const [isOpenList, setOpen] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(currPage)
   const [selectedPage, setSelectedPage] = useState<ISelected>({ id: 1 })
-  // const [totalCount, setTotalCount] = useState<number>(pagesTotalCount);
 
   const setIsOpenList = () => {
     setOpen((prev) => !prev)
@@ -38,9 +37,10 @@ const FooterPagination = ({
       getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1].count)
     }
   }
+
   return (
     <>
-      {pageSizeStructure && selectedPage && (
+      {pageSizeStructure && selectedPage ? (
         <div className='G-justify-between G-align-center' style={{ width: '138px' }}>
           <div>Show</div>
           <div
@@ -60,15 +60,15 @@ const FooterPagination = ({
             ButtonSvg={DropdownSvgIcon}
           />
           <div>Rows</div>
+          <Pagination
+            onPageChange={handleChangePage}
+            totalCount={pagesTotalCount}
+            currentPage={currentPage}
+            pageSizeStructure={pageSizeStructure && selectedPage ? pageSizeStructure[selectedPage.id - 1].count : 15}
+            className={'G-pagionation'}
+          />
         </div>
-      )}
-      <Pagination
-        onPageChange={handleChangePage}
-        totalCount={pagesTotalCount}
-        currentPage={currentPage}
-        pageSizeStructure={pageSizeStructure && selectedPage ? pageSizeStructure[selectedPage.id - 1].count : 15}
-        className={'G-pagionation'}
-      />
+      ) : null}
     </>
   )
 }

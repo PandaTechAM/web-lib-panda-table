@@ -25,7 +25,7 @@ const filtersButton = {
   justifyContent: 'start',
   backgroundColor: 'white',
   border: 'none',
-  margin: 0,
+  margin: '0 30px',
   padding: '0px 10px',
 }
 const Filter = ({
@@ -152,6 +152,10 @@ const Filter = ({
                 size='large'
                 fullWidth
                 disabled={isDisabled}
+                style={{
+                  marginBottom: 16,
+                  boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.16)',
+                }}
                 onClick={(e) => {
                   getFilteredDataForTable?.()
                   handleClose()
@@ -159,7 +163,13 @@ const Filter = ({
               >
                 Submit
               </Button>
-              <Button size='large' variant='outlined' fullWidth onClick={handleCancel}>
+              <Button
+                size='large'
+                variant='outlined'
+                fullWidth
+                style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.04)' }}
+                onClick={handleCancel}
+              >
                 Clear All Filters
               </Button>
             </li>

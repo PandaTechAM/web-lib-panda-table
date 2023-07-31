@@ -67,6 +67,7 @@ const PopUp = ({
           ) : null}
           <div
             style={{
+              marginLeft: 8,
               color: open ? '#4844c5' : 'black',
             }}
           >

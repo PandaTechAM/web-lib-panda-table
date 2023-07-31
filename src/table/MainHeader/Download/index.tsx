@@ -3,7 +3,6 @@ import Select from '../../../components/select/select'
 import ArrowDown from '../../../svgIcons/ArrowBottomSvgIcon'
 import ArrowUp from '../../../svgIcons/ArrowtopSvgIcon'
 import './style.scss'
-import { ISelected } from '../../../Models/table.models'
 interface IDownload {
   id: number
   type: string
@@ -12,6 +11,7 @@ const Download = ({ getDownloadType }: { getDownloadType: (option: string) => vo
   const [fileType] = useState<IDownload[]>([
     { id: 1, type: 'XLSX' },
     { id: 2, type: 'CSV' },
+    { id: 3, type: 'PDF' },
   ])
   const [isOpenList, setOpen] = useState<boolean>(false)
 

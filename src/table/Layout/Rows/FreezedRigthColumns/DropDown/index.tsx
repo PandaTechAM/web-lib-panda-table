@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button, Menu } from '@mui/material'
 import { ILinksList } from '../../../../../Models/table.models'
 import { useState } from 'react'
 import LinkSvgIcon from '../../../../../svgIcons/LinkSvgIcon'
@@ -12,10 +11,11 @@ interface IDropDown<T extends Object> {
   getRowForDropdown?(option: any): void
 }
 
-const DropDown = <T extends Object>({ item, checkedLink, links, RightSideIcon, getRowForDropdown }: IDropDown<T>) => {
+const DropDown = <T extends Object>({ checkedLink, links, getRowForDropdown }: IDropDown<T>) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
