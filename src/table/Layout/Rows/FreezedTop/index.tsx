@@ -4,7 +4,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import Checkbox from '../../../../components/checkbox'
 import FreezedRightColumns from '../FreezedRigthColumns'
 import FreezedLeftColumns from '../FreezedLeftColumns'
-import { StructureConfig } from '../../../../Models/table.enum'
+import { CheckedItems, StructureConfig } from '../../../../Models/table.enum'
 import FreezeRowSvgIcon from '../../../../svgIcons/FrameSvgIcon'
 import EditSvgIcon from '../../../../svgIcons/EditSvgIcon'
 import DeleteSvgIcon from '../../../../svgIcons/DeleteSvgIcon'
@@ -28,6 +28,7 @@ interface IFreezedRows<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   headerHeight?: number
+  selectedType: string
   getRow?(options: any): any
   RightSideSelfAction?: (option: number | string) => void
   getRowForDropdown(option: number): void
@@ -55,6 +56,7 @@ const FreezedRows = <T extends Object>({
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
   headerHeight,
+  selectedType,
   getRow,
   RightSideSelfAction,
   getRowForDropdown,
@@ -164,6 +166,7 @@ const FreezedRows = <T extends Object>({
                             >
                               {multipleCheck ? (
                                 <Checkbox
+                                  isDisable={selectedType === CheckedItems.SELECTED_ALL}
                                   isCheck={isCheckedRows(item.id)}
                                   //@ts-ignore
                                   onClick={() => handleCheck(item.id)}
@@ -193,6 +196,7 @@ const FreezedRows = <T extends Object>({
                             >
                               {multipleCheck ? (
                                 <Checkbox
+                                  isDisable={selectedType === CheckedItems.SELECTED_ALL}
                                   isCheck={isCheckedRows(item.id)}
                                   onClick={() => handleCheck(item.id)}
                                   customClass='G-checkbox'

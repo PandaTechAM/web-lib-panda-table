@@ -4,7 +4,7 @@ import { forwardRef } from 'react'
 import FreezedRightColumns from '../FreezedRigthColumns'
 import Checkbox from '../../../../components/checkbox'
 import FreezedLeftColumns from '../FreezedLeftColumns'
-import { StructureConfig } from '../../../../Models/table.enum'
+import { CheckedItems, StructureConfig } from '../../../../Models/table.enum'
 import HoveredRow from '../HoveredRow'
 interface IMainRows<T extends Object> {
   unFreezedRows: T[]
@@ -28,6 +28,7 @@ interface IMainRows<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   rowsFreezeAction?: boolean
+  selectedType: string
   getRow?(options: any): void
   RightSideSelfAction?: (option: number | string) => void
   freezeRow(e: any, option: number): void
@@ -58,6 +59,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       leftFreezedColumnWidth,
       rightFreezedColumnWidth,
       rowsFreezeAction,
+      selectedType,
       getRow,
       RightSideSelfAction,
       freezeRow,
@@ -114,9 +116,10 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                   >
                     {multipleCheck ? (
                       <Checkbox
+                        isDisable={selectedType === CheckedItems.SELECTED_ALL}
                         isCheck={isCheckedRows(item.id)}
                         onClick={() => handleCheck(item.id)}
-                        customClass='G-checkbox'
+                        customClass={'G-checkbox'}
                       />
                     ) : (
                       <p>{freezedRows.length + index + 1}</p>
@@ -137,6 +140,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
               <ul
                 style={{
                   flex: 1,
+                  cursor: 'pointer',
                 }}
                 className={pickBackGroundColor(index)}
               >
@@ -150,6 +154,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                   >
                     {multipleCheck ? (
                       <Checkbox
+                        isDisable={selectedType === CheckedItems.SELECTED_ALL}
                         isCheck={isCheckedRows(item.id)}
                         onClick={() => handleCheck(item.id)}
                         customClass='G-checkbox'

@@ -20,6 +20,12 @@
     height: 24px;
     display: block;
   }
+  .G-disbled-checkbox{
+    cursor:cell;
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
   .G-edit{
     padding: 6px 8px;
     border-radius: 4px;
@@ -130,6 +136,7 @@
     height: 24px;
     display: block;
   }
+  
   .G-FreezedRow{
     position: sticky;
     top: 48px;
@@ -144,7 +151,7 @@
     // &:nth-child(odd) {
     //   background-color: #FCFDFD !important;
     // }
-    cursor: pointer;
+    // cursor: pointer;
     &:hover {
       .G-rows-icons {
         display: flex;
@@ -275,17 +282,12 @@
         
       }
     }
-    // &:nth-child(even) {
-    //   background-color: white !important;
-    // }
-    // &:nth-child(odd) {
-    //   background-color: #FCFDFD !important;
-    // }
     .G-dark-background{
       background-color: #FCFDFD !important;
     }
     .G-light-background{
-      background-color: white !important
+      background-color: white !important;
+
     }
     ul {
       color           : #000;

@@ -653,7 +653,7 @@ function App() {
   const handleEdit = (option: any) => {
     console.log(option)
   }
-  const handleDelete = (option: any[]) => {
+  const handleDelete = (option: any[] | string) => {
     console.log(option)
   }
   const RightSideSelfAction = (option: number | string) => {
@@ -676,8 +676,8 @@ function App() {
       return { ...prev, Filters: filterDataForRequest }
     })
   }
-  const getDownloadType = (option: string) => {
-    console.log(option)
+  const getDownloadType = (option: string, checkedRows: any[] | string) => {
+    console.log(option, checkedRows)
   }
 
   return (

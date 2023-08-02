@@ -177,19 +177,22 @@ const MultipleCheck = ({
               {perColumnListForFilters &&
               option === perColumnListForFilters[perColumnListForFilters.length - 1] &&
               filterTypeing.PropertyName !== 'Gender' ? (
-                <Button
-                  className='G-center'
-                  size='large'
-                  style={{
-                    margin: '0 16px',
-                    width: 'auto',
-                    backgroundColor: 'white',
-                    color: 'black',
-                  }}
-                  onClick={handleChangePagePerFilterField}
-                >
-                  Load more
-                </Button>
+                <div className='G-center' style={{ width: '100%' }}>
+                  <Button
+                    className='G-center'
+                    size='large'
+                    style={{
+                      margin: '0 16px',
+                      width: 'auto',
+                      backgroundColor: 'white',
+                      color: 'black',
+                      border: 'none',
+                    }}
+                    onClick={handleChangePagePerFilterField}
+                  >
+                    Load more
+                  </Button>
+                </div>
               ) : null}
             </div>
           )

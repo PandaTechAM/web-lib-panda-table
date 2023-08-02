@@ -41,9 +41,7 @@ const Checkbox = ({
   return (
     <div
       onClick={handleClick}
-      className={`G-checkbox-component G-cursor-pointer G-inline-flex G-align-center G-justify-start ${
-        customClass ? customClass : ''
-      }`}
+      className={`G-checkbox-component G-inline-flex G-align-center G-justify-start ${customClass ? customClass : ''}`}
     >
       <div
         className={`G-checkbox G-flex G-flex-column ${isCheck ? 'G-active-checkbox' : ''} ${

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { CheckedItems } from '../Models/table.enum'
 
 const useTable = <T extends Object>(
   data: T[],
@@ -10,7 +11,7 @@ const useTable = <T extends Object>(
   const [unFreezedRows, setUnFreezedRows] = useState<any[]>(data)
   const [checkedRows, setCheckedRows] = useState<T[]>([])
   const [checkedLink, setCheckedLink] = useState<T>()
-
+  const [selectedType, setSelectedType] = useState<string>('none')
   const freezeRow = (e: any, indexx: number) => {
     e.stopPropagation()
     //@ts-ignore
@@ -38,6 +39,7 @@ const useTable = <T extends Object>(
 
   const getRowForDropdown = (id: number) => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
+
     allRows.map((item) => {
       //@ts-ignore
       if (item.id === id) {
@@ -50,12 +52,17 @@ const useTable = <T extends Object>(
   const handleCheckAll = () => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
     setCheckedRows(allRows)
+    setSelectedType(CheckedItems.SELECTED_VISIBLE)
   }
   const unCheck = () => {
     setCheckedRows([])
+    setSelectedType(CheckedItems.NONE)
   }
   const checkAllDataFromDb = () => {
-    allDataFromDb && setCheckedRows(allDataFromDb)
+    // allDataFromDb && setCheckedRows(allDataFromDb)
+    const allRows: T[] = freezedRows.concat(unFreezedRows)
+    setCheckedRows(allRows)
+    setSelectedType(CheckedItems.SELECTED_ALL)
   }
 
   const handleCheck = (id: number) => {
@@ -98,6 +105,7 @@ const useTable = <T extends Object>(
     unFreezedRows,
     checkedRows,
     checkedLink,
+    selectedType,
     freezeRow,
     unFreezeRow,
     dragDropFreezeRow,

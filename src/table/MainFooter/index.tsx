@@ -41,7 +41,10 @@ const FooterPagination = ({
   return (
     <>
       {pageSizeStructure && selectedPage ? (
-        <div className='G-justify-between G-align-center' style={{ width: '138px' }}>
+        <div
+          className='G-justify-between G-align-center'
+          // style={{ width: "138px" }}
+        >
           <div>Show</div>
           <div
             style={{

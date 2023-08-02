@@ -16,6 +16,7 @@ import EditSvgIcon from '../../svgIcons/EditSvgIcon'
 import Filter from './Filter'
 import Select from '../../components/select/select'
 import Download from './Download'
+import { CheckedItems } from '../../Models/table.enum'
 
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -33,13 +34,14 @@ interface IActionsHeader<T extends Object> {
   filterDataForRequest?: ItemFields[]
   isLoadingFilters?: boolean
   filtersTypes?: IFiltersTypes[]
+  selectedType: string
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleCheckAll(): void
   setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
   setColumnHeaderStructure?: (options: IColumnHeaderStructure) => void
   handleChangePage?(option: number): void
   handleEdit?(option: T): void
-  handleDelete?(option: T[]): void
+  handleDelete?(option: T[] | string): void
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
   handleSelectDataSize?(options: IPageSizes): void
   storeStructure?(): void
@@ -48,7 +50,7 @@ interface IActionsHeader<T extends Object> {
   getFilteredData?(options: any): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
-  getDownloadType?(option: string): void
+  getDownloadType: (option: string, checkedRows: T[] | string) => void
 }
 const MainHeader = <T extends Object>({
   columnsConfigStructure,
@@ -64,6 +66,7 @@ const MainHeader = <T extends Object>({
   filterDataForRequest,
   isLoadingFilters,
   filtersTypes,
+  selectedType,
   handleChangePagePerFilterField,
   unCheck,
   checkAllDataFromDb,
@@ -100,7 +103,10 @@ const MainHeader = <T extends Object>({
               </div>
             ) : null}
             {checkedRows.length && handleDelete ? (
-              <div className='G-flex G-delete' onClick={() => handleDelete(checkedRows)}>
+              <div
+                className='G-flex G-delete'
+                onClick={() => handleDelete(selectedType === CheckedItems.SELECTED_ALL ? 'All' : checkedRows)}
+              >
                 <div>
                   <DeleteSvgIcon />
                 </div>
@@ -135,7 +141,7 @@ const MainHeader = <T extends Object>({
       </div>
       {getDownloadType && (
         <div className='G-center'>
-          <Download getDownloadType={getDownloadType} />
+          <Download selectedType={selectedType} getDownloadType={getDownloadType} checkedRows={checkedRows} />
         </div>
       )}
     </div>

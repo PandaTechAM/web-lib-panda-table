@@ -10,7 +10,7 @@ interface IPopUp {
   item?: any
   open: boolean
   anchorEl: any
-  handleClose: () => void
+  handleClose: (e: React.MouseEvent<HTMLButtonElement>) => void
   handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   getRowForDropdown?: (option: any) => void
 }

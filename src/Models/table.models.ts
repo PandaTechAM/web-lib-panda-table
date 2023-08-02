@@ -38,7 +38,7 @@ export interface IProps<T extends Object> {
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void
-  handleDelete?: (option: T[]) => void
+  handleDelete?: (option: T[] | string) => void
   setColumnsConfigStructure?(option: IColumnConfigStructure<T>): void
   setColumnHeaderStructure?(options: IColumnHeaderStructure): void
   setSortedData?(option: any): void
@@ -47,7 +47,7 @@ export interface IProps<T extends Object> {
   getFilteredData?(option: any): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
-  getDownloadType?(option: string): void
+  getDownloadType: (option: string, checkedRows: T[] | string) => void
 }
 
 export interface ItemFields {

@@ -65,6 +65,7 @@ function Table<T extends Object>({
     unFreezedRows,
     checkedRows,
     checkedLink,
+    selectedType,
     freezeRow,
     unFreezeRow,
     dragDropFreezeRow,
@@ -95,6 +96,7 @@ function Table<T extends Object>({
           filterDataForRequest={filterDataForRequest}
           isLoadingFilters={isLoadingFilters}
           filtersTypes={filtersTypes}
+          selectedType={selectedType}
           handleCheckAll={handleCheckAll}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
@@ -152,6 +154,7 @@ function Table<T extends Object>({
                 rightFreezedColumnWidth={rightFreezedColumnWidth}
                 headerHeight={headerHeight}
                 rowsFreezeAction={rowsFreezeAction}
+                selectedType={selectedType}
                 getRow={getRow}
                 RightSideSelfAction={RightSideSelfAction}
                 freezeRow={freezeRow}
