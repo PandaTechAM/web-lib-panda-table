@@ -3,14 +3,14 @@ export interface IProps<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
   columnsHeaderStructure: IColumnHeaderStructure
   rightFreezeConfig?: IColumnConfig<T>[]
-  perColumnListForFilters?: string[]
+  perColumnListForFilters?:string[]
   allDataFromDb?: T[]
   links?: ILinksList[]
   rowActions?: IrowActions[]
   pageSizeStructure?: IPageSizes[]
   pagesTotalCount?: number
   currentPage?: number
-  selectedPageCount?: ISelected
+  selectedPageCount?:ISelected
   multipleCheck?: boolean
   isStickyFirstColumn?: boolean
   isHoveredRow?: boolean
@@ -28,16 +28,16 @@ export interface IProps<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
-  filterColumns?: IComparisonType[]
-  filtersTypes?: IFiltersTypes[]
-  filterDataForRequest?: ItemFields[]
+  filterColumns?:IComparisonType[]
+  filtersTypes?:IFiltersTypes[]
+  filterDataForRequest?:ItemFields[]
   isLoadingFilters?: boolean
-  rowsFreezeAction?: boolean
-  aggregates?: boolean
-  EmptyDataIcon?: any
-  perColumnTotalCount?: number
-  hoverdRowPosition?: number
-  getRow?(option: any): void
+  rowsFreezeAction?:boolean
+  aggregates?:boolean
+  EmptyDataIcon?:any
+  perColumnTotalCount?:number
+  hoverdRowPosition?:number
+  getRow?(option:any):void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void
   handleDelete?: (option: T[] | string) => void
@@ -45,32 +45,32 @@ export interface IProps<T extends Object> {
   setColumnHeaderStructure?(options: IColumnHeaderStructure): void
   setSortedData?(option: any): void
   storeStructure?(): void
-  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
+  getPageRowsCountAndCurrentPage?(pageNumber:number, rowsCount:number):void
   getFilteredData?(option: any): void
-  getFilteredDataForTable?(): void
+  getFilteredDataForTable?(): void,
   handleChangePagePerFilterField?(): void
-  getDownloadType: (option: string, checkedRows: T[] | string) => void
+  getDownloadType: (option: string, checkedRows: T[] | string) => void;
 }
 
 export interface ItemFields {
-  PropertyName: any
-  Values: any[]
-  ComparisonType: string
-  TypeForUi: string
-  Search: string | number
-  CheckedItems: any[]
+  PropertyName:any
+  Values:any[] 
+  ComparisonType:string
+  TypeForUi:string
+  Search:string | number
+  CheckedItems:any[]
 }
 
 export interface IFilterDataForRequest {
-  Filters: ItemFields[]
-  Aggregates: any[]
+  Filters: ItemFields[];
+  Aggregates: any[];
 }
 
-export interface IFiltersTypes {
-  ColumnType: string
-  AggregateTypes: string[]
-  FilterTypes: string[]
-  DefaultSearchType: string
+export interface IFiltersTypes{
+  ColumnType:string,
+  AggregateTypes:string[]
+  FilterTypes:string[]
+  DefaultSearchType:string
 }
 
 export interface IColumnTotal {
@@ -116,10 +116,10 @@ export interface IFreezeProps<T extends Object> {
   freezedLeftSideColor?: string
 }
 
-export interface IComparisonType {
-  ColumnName: string
-  ColumnType: string
-  IsBold?: boolean
+export interface IComparisonType{
+  ColumnName: string,
+  ColumnType:string,
+  IsBold?:boolean
 }
 
 export interface IColumnConfig<T extends Object> {
@@ -127,7 +127,7 @@ export interface IColumnConfig<T extends Object> {
   columnName?: number | string
   title: any
   setRow: (data?: T) => any
-  footer?: (data?: T) => any
+  footer?:(data?: T) => any
   isVisible: boolean
   customStyle?: Object
   totalObject?: {
@@ -163,7 +163,7 @@ export interface IColumn {
 
 export interface IrowActions {
   icon?: () => string | number | HTMLElement | React.ReactNode | null | any
-  action: (e: any, item: Object, index: number) => void
+  action: (e:any,item: Object, index: number) => void
 }
 
 export interface ILinksList {

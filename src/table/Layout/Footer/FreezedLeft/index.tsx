@@ -1,23 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   IColumnConfigStructure,
   IColumnHeaderStructure,
   IColumnTotalStructure,
   ITotalList,
-} from '../../../../Models/table.models'
-import { Button, Menu } from '@mui/material'
-import FreezedItems from './FreezedItems'
-import './style.scss'
-import { StructureConfig } from '../../../../Models/table.enum'
-import ArrowTopSvgIcon from '../../../../svgIcons/ArrowtopSvgIcon'
-import ArrowBottomSvgIcon from '../../../../svgIcons/ArrowBottomSvgIcon'
+} from "../../../../Models/table.models";
+import { Button, Menu } from "@mui/material";
+import FreezedItems from "./FreezedItems";
+import "./style.scss";
+import { StructureConfig } from "../../../../Models/table.enum";
+import ArrowTopSvgIcon from "../../../../svgIcons/ArrowtopSvgIcon";
+import ArrowBottomSvgIcon from "../../../../svgIcons/ArrowBottomSvgIcon";
 interface IFooterFreezedLeft<T extends Object> {
-  columnsHeaderStructure: IColumnHeaderStructure
-  columnsConfigStructure: IColumnConfigStructure<T>
-  columnMinWidth?: number
-  footerColor?: string
-  isStickyFirstColumn?: boolean
-  leftFreezedColumnWidth?: number
+  columnsHeaderStructure: IColumnHeaderStructure;
+  columnsConfigStructure: IColumnConfigStructure<T>;
+  columnMinWidth?: number;
+  footerColor?: string;
+  isStickyFirstColumn?: boolean;
+  leftFreezedColumnWidth?: number;
 }
 
 const FooterFreezedLeft = <T extends Object>({
@@ -30,19 +30,21 @@ const FooterFreezedLeft = <T extends Object>({
 }: IFooterFreezedLeft<T>) => {
   return (
     <ul
-      className='G-data-table-footer'
+      className="G-data-table-footer"
       style={{
         left: 0,
         zIndex: 1000,
-        boxShadow: '7px 0px 9px -1px rgba(0,0,0,0.02)',
+        boxShadow: "7px 0px 9px -1px rgba(0,0,0,0.02)",
       }}
     >
       {isStickyFirstColumn ? (
         <li
-          className='G-dropdown'
+          className="G-dropdown"
           style={{
             backgroundColor: footerColor && footerColor,
-            minWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : 60,
+            minWidth: leftFreezedColumnWidth
+              ? `${leftFreezedColumnWidth}px`
+              : 60,
           }}
         ></li>
       ) : null}
@@ -55,7 +57,7 @@ const FooterFreezedLeft = <T extends Object>({
         />
       ) : null}
     </ul>
-  )
-}
+  );
+};
 
-export default FooterFreezedLeft
+export default FooterFreezedLeft;

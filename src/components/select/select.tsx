@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import './style.scss'
-import ClickOutside from '../click-outside'
-import DropdownSvgIcon from '../../svgIcons/DropdownSvgIcon'
-import LinkSvgIcon from '../../svgIcons/LinkSvgIcon'
+import React, { useEffect, useState } from "react";
+import "./style.scss";
+import ClickOutside from "../click-outside";
+import DropdownSvgIcon from "../../svgIcons/DropdownSvgIcon";
+import LinkSvgIcon from "../../svgIcons/LinkSvgIcon";
 /**
  * Main  props  for select component
  * T is  the main type for  component
  * **/
 interface IObjectKey {
-  [key: string]: any
+  [key: string]: any;
 }
 
 interface ISelect<T> {
-  optionsList: Array<T>
-  value: string | number | null
-  selectedNameKey: string
-  selectedValueKey: string
-  customClass?: string
-  placeholder?: string
-  selectedIconKey?: string
-  maxHeight?: number
-  isClear?: boolean
-  label?: string
-  isImage?: boolean
-  isOpenList?: boolean
-  setIsOpenList?(): void
-  onChange?(value: T | null): void
-  ListItemSvg?: any
-  haveIcon?: boolean
-  ButtonSvg?: any
-  rowItem?: any
+  optionsList: Array<T>;
+  value: string | number | null;
+  selectedNameKey: string;
+  selectedValueKey: string;
+  customClass?: string;
+  placeholder?: string;
+  selectedIconKey?: string;
+  maxHeight?: number;
+  isClear?: boolean;
+  label?: string;
+  isImage?: boolean;
+  isOpenList?: boolean;
+  setIsOpenList?(): void;
+  onChange?(value: T | null): void;
+  ListItemSvg?: any;
+  haveIcon?: boolean;
+  ButtonSvg?: any;
+  rowItem?: any;
 }
 
 function Select<T>({
@@ -49,13 +49,15 @@ function Select<T>({
   selectedIconKey,
   haveIcon,
   rowItem,
-  customClass = '',
+  customClass = "",
   isImage = false,
 }: ISelect<T>) {
-  const [selectedValue, setValue] = useState<T | null>(null)
-  const [selectedValueName, setSelectedValueName] = useState<string | null>(null)
-  const [listPosition, setListPosition] = useState<'bottom' | 'top'>('bottom')
-  const [selectedIcon, setSelectedIcon] = useState<string | null>(null)
+  const [selectedValue, setValue] = useState<T | null>(null);
+  const [selectedValueName, setSelectedValueName] = useState<string | null>(
+    null
+  );
+  const [listPosition, setListPosition] = useState<"bottom" | "top">("bottom");
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
   // const [isOpenList, setIsOpenList] = useState<boolean>(false);
 
   /**
@@ -67,14 +69,14 @@ function Select<T>({
       optionsList?.map((item: T) => {
         Object.entries(item as IObjectKey).forEach(([key, keyValue]) => {
           if (keyValue === value && key === selectedValueKey) {
-            setValue(item)
+            setValue(item);
           }
-        })
-      })
+        });
+      });
     } else {
-      setValue(null)
+      setValue(null);
     }
-  }, [value, optionsList, selectedValueKey])
+  }, [value, optionsList, selectedValueKey]);
 
   /**
    *  selected data name from
@@ -86,37 +88,37 @@ function Select<T>({
     if (selectedValue) {
       Object.entries(selectedValue as IObjectKey).forEach(([key, value]) => {
         if (key === selectedNameKey) {
-          setSelectedValueName(value)
+          setSelectedValueName(value);
         }
         if (key === selectedIconKey) {
-          setSelectedIcon(value)
+          setSelectedIcon(value);
         }
-      })
+      });
     } else {
-      setSelectedValueName(null)
+      setSelectedValueName(null);
     }
-  }, [selectedValue, selectedIconKey, selectedNameKey])
+  }, [selectedValue, selectedIconKey, selectedNameKey]);
 
   function getItemName(item: T) {
-    let name = ''
-    let isSelected = false
-    let icon = ''
+    let name = "";
+    let isSelected = false;
+    let icon = "";
     Object.entries(item as IObjectKey).forEach(([key, itemValue]) => {
       if (key === selectedNameKey) {
-        name = itemValue
+        name = itemValue;
       }
       if (key === selectedValueKey && value === itemValue) {
-        isSelected = true
+        isSelected = true;
       }
       if (key === selectedIconKey) {
-        icon = itemValue
+        icon = itemValue;
       }
-    })
+    });
     return {
       name,
       isSelected,
       icon,
-    }
+    };
   }
   // useEffect(() => {
   //   const dropdownListElement = document.querySelector(".G-select-list");
@@ -139,43 +141,47 @@ function Select<T>({
     return (
       <li
         onClick={(e) => {
-          e.stopPropagation()
-          changeData(item)
+          e.stopPropagation();
+          changeData(item);
           //@ts-ignore
-          item.action?.(rowItem)
+          item.action?.(rowItem);
         }}
         key={index}
-        className={`G-flex G-align-center ${getItemName(item).isSelected ? 'G-selected-item' : ''}`}
+        className={`G-flex G-align-center ${
+          getItemName(item).isSelected ? "G-selected-item" : ""
+        }`}
       >
         {selectedIconKey && isImage && (
           <span
-            className='G-select-image'
+            className="G-select-image"
             style={{
               backgroundImage: `url('${getItemName(item).icon}')`,
             }}
           />
         )}
-        {selectedIconKey && !isImage && <span className={`G-select-status ${getItemName(item).icon}`} />}
+        {selectedIconKey && !isImage && (
+          <span className={`G-select-status ${getItemName(item).icon}`} />
+        )}
         {haveIcon ? (
           !ListItemSvg ? (
             <div
               style={{
-                marginRight: '10px',
-                display: 'flex',
-                alignItems: 'center',
+                marginRight: "10px",
+                display: "flex",
+                alignItems: "center",
               }}
             >
-              <LinkSvgIcon fill={'#4844C5'} />
+              <LinkSvgIcon fill={"#4844C5"} />
             </div>
           ) : (
             <div>
-              <ListItemSvg fill={'#4844C5'} />
+              <ListItemSvg fill={"#4844C5"} />
             </div>
           )
         ) : null}
         <p>{getItemName(item).name}</p>
       </li>
-    )
+    );
   }
 
   /**
@@ -186,8 +192,8 @@ function Select<T>({
    * **/
 
   function changeData(data: T | null) {
-    onChange && onChange(data)
-    setIsOpenList?.()
+    onChange && onChange(data);
+    setIsOpenList?.();
   }
 
   /**
@@ -196,60 +202,73 @@ function Select<T>({
    * @onChange
    * **/
   function resetData(e: React.MouseEvent<HTMLDivElement>) {
-    e.stopPropagation()
-    onChange && onChange(null)
+    e.stopPropagation();
+    onChange && onChange(null);
   }
 
   const handleChange = (e: any) => {
-    e.stopPropagation()
-    setIsOpenList?.()
-  }
+    e.stopPropagation();
+    setIsOpenList?.();
+  };
   const handleClose = (e: MouseEvent) => {
-    setIsOpenList?.()
-    e.stopPropagation()
-  }
+    setIsOpenList?.();
+    e.stopPropagation();
+  };
   return (
     <div className={`G-select ${customClass}`}>
-      <div className={`G-select-header ${selectedIconKey ? 'G-with-icon' : ''}`} onClick={(e) => handleChange(e)}>
+      <div
+        className={`G-select-header ${selectedIconKey ? "G-with-icon" : ""}`}
+        onClick={(e) => handleChange(e)}
+      >
         {selectedIconKey && selectedValueName && isImage && (
-          <span className={`G-select-image`} style={{ backgroundImage: `url('${selectedIcon}')` }} />
+          <span
+            className={`G-select-image`}
+            style={{ backgroundImage: `url('${selectedIcon}')` }}
+          />
         )}
-        {selectedIconKey && selectedValueName && !isImage && <span className={`G-select-status ${selectedIcon}`} />}
-        {label && <span className='G-select-label'>{label}</span>}
-        <p className={`${!selectedValueName ? 'G-opacity-placeholder' : ''}`}>
+        {selectedIconKey && selectedValueName && !isImage && (
+          <span className={`G-select-status ${selectedIcon}`} />
+        )}
+        {label && <span className="G-select-label">{label}</span>}
+        <p className={`${!selectedValueName ? "G-opacity-placeholder" : ""}`}>
           {selectedValueName ? selectedValueName : placeholder}
         </p>
         {(!selectedValueName || (selectedValueName && !isClear)) && (
-          <div className='G-center'>
+          <div className="G-center">
             {!ButtonSvg ? (
-              <LinkSvgIcon fill={!isOpenList ? 'black' : '#4844C5'} />
+              <LinkSvgIcon fill={!isOpenList ? "black" : "#4844C5"} />
             ) : (
-              <ButtonSvg fill={!isOpenList ? 'black' : '#4844C5'} />
+              <ButtonSvg fill={!isOpenList ? "black" : "#4844C5"} />
             )}
           </div>
         )}
         {isClear && selectedValueName && (
-          <i onClick={resetData} className={`G-select-icon icon-close G-cursor-pointer`} />
+          <i
+            onClick={resetData}
+            className={`G-select-icon icon-close G-cursor-pointer`}
+          />
         )}
       </div>
       {isOpenList && (
         <ClickOutside onClickOutside={(e: MouseEvent) => handleClose(e)}>
           <div
-            className={`G-select-list ${listPosition === 'top' ? 'G-select-list-top' : ''}`}
+            className={`G-select-list ${
+              listPosition === "top" ? "G-select-list-top" : ""
+            }`}
             style={{
-              maxHeight: maxHeight + 'px',
+              maxHeight: maxHeight + "px",
             }}
           >
             <ul>
               {optionsList.map((item, index) => {
-                return selectListItem(item, index)
+                return selectListItem(item, index);
               })}
             </ul>
           </div>
         </ClickOutside>
       )}
     </div>
-  )
+  );
 }
 
-export default Select
+export default Select;
