@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   IColumnConfig,
   IColumnConfigStructure,
@@ -79,13 +79,19 @@ const MainRows = forwardRef<any, IMainRows<any>>(
     ref
   ) => {
     const myRef = useRef<any>(null);
-
+    const [width, setWidth] = useState<number>(0);
     function pickBackGroundColor(option: number) {
       if (option % 2 == 0) {
         return "G-dark-background";
       }
       return "G-light-background";
     }
+
+    useEffect(() => {
+      if (myRef?.current) {
+        setWidth(myRef?.current.offsetWidth);
+      }
+    }, []);
     return (
       <>
         {unFreezedRows.map((item: any, index: number) => {
@@ -98,9 +104,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
               <ul
                 className="G-rows-icons"
                 style={{
-                  left: `calc(100% - ${
-                    (myRef?.current ? myRef?.current.offsetWidth : 60) + 120
-                  }px)`,
+                  left: `calc(100% - ${(width || 60) + 120}px)`,
                 }}
               >
                 {isHoveredRow ? (

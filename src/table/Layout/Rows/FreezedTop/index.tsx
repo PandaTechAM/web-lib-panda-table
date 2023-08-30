@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   IColumnConfig,
   IColumnConfigStructure,
@@ -83,6 +83,7 @@ const FreezedRows = <T extends Object>({
 
     dragDropFreezeRow(items);
   };
+  const [width, setWidth] = useState<number>(0);
   function pickBackGroundColor(option: number) {
     if (option % 2 == 0) {
       return "G-dark-background";
@@ -90,6 +91,11 @@ const FreezedRows = <T extends Object>({
     return "G-light-background";
   }
   const myRef = useRef<any>(null);
+  useEffect(() => {
+    if (myRef?.current) {
+      setWidth(myRef?.current.offsetWidth);
+    }
+  }, []);
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="characters">
@@ -121,11 +127,7 @@ const FreezedRows = <T extends Object>({
                         <ul
                           className="G-rows-icons"
                           style={{
-                            left: `calc(100% - ${
-                              (myRef?.current
-                                ? myRef?.current.offsetWidth
-                                : 60) + 120
-                            }px)`,
+                            left: `calc(100% - ${(width || 60) + 120}px)`,
                           }}
                         >
                           <li
