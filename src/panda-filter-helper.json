@@ -96,6 +96,12 @@
       "AggregateTypes": [""],
       "FilterTypes": ["Equal", "NotEqual", "IsEmpty", "IsNotEmpty"],
       "DefaultSearchType": "None"
-  }
+  },
+  {
+    "ColumnType":"Tags",
+    "AggregateTypes": [""],
+    "FilterTypes": ["Contains"],
+    "DefaultSearchType": "Contains"
+}
 ]
 }

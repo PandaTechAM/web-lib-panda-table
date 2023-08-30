@@ -1,8 +1,8 @@
 {
-  "TableName": "Counterparty",
+  "TableName": "GetCounterpartyDto",
   "Columns": [
     { "ColumnName": "RegistrationDate", "ColumnType": "Date"},
-    { "ColumnName": "CounterpartyId", "ColumnType": "Number"},
+    { "ColumnName": "CounterpartyId", "ColumnType": "NumericText"},
     { "ColumnName": "FirstName", "ColumnType": "Text"},
     { "ColumnName": "LastName", "ColumnType": "Text" },
     { "ColumnName": "Age", "ColumnType": "Number" },
@@ -14,9 +14,7 @@
     { "ColumnName": "Comment", "ColumnType": "Text" },
     { "ColumnName": "IsEnabled", "ColumnType": "Boolean" },
     { "ColumnName": "Weight", "ColumnType": "Number"},
-    { "ColumnName": "Weight", "ColumnType": "Number"},
-    { "ColumnName": "Accounts", "ColumnType": "Text" },
-    { "ColumnName": "CounterpartyTags", "ColumnType": "Text" },
-    { "ColumnName": "PaymentOrders", "ColumnType": "Text" }
+    { "ColumnName": "Height", "ColumnType": "Number"},
+    { "ColumnName": "Tags", "ColumnType": "Tags" }
   ]
 }

@@ -35,6 +35,8 @@ export interface IProps<T extends Object> {
   rowsFreezeAction?: boolean
   aggregates?: boolean
   EmptyDataIcon?: any
+  perColumnTotalCount?: number
+  hoverdRowPosition?: number
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void

@@ -29,6 +29,7 @@ interface IFreezedRows<T extends Object> {
   rightFreezedColumnWidth?: number
   headerHeight?: number
   selectedType: string
+  hoverdRowPosition?: number
   getRow?(options: any): any
   RightSideSelfAction?: (option: number | string) => void
   getRowForDropdown(option: number): void
@@ -57,6 +58,7 @@ const FreezedRows = <T extends Object>({
   rightFreezedColumnWidth,
   headerHeight,
   selectedType,
+  hoverdRowPosition,
   getRow,
   RightSideSelfAction,
   getRowForDropdown,
@@ -107,7 +109,12 @@ const FreezedRows = <T extends Object>({
                     >
                       <div style={{ display: 'flex' }} className='G-row'>
                         {/* HOVERED ROWS */}
-                        <ul className='G-rows-icons'>
+                        <ul
+                          className='G-rows-icons'
+                          style={{
+                            left: `${hoverdRowPosition ? hoverdRowPosition : 80}%`,
+                          }}
+                        >
                           <li className='G-rows-icons' style={{ left: !isStickyFirstColumn ? '50%' : '' }}>
                             <div className='G-icons-group'>
                               {rowActions && rowActions.length

@@ -29,6 +29,7 @@ interface IMainRows<T extends Object> {
   rightFreezedColumnWidth?: number
   rowsFreezeAction?: boolean
   selectedType: string
+  hoverdRowPosition?: number
   getRow?(options: any): void
   RightSideSelfAction?: (option: number | string) => void
   freezeRow(e: any, option: number): void
@@ -60,6 +61,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       rightFreezedColumnWidth,
       rowsFreezeAction,
       selectedType,
+      hoverdRowPosition,
       getRow,
       RightSideSelfAction,
       freezeRow,
@@ -78,11 +80,14 @@ const MainRows = forwardRef<any, IMainRows<any>>(
     return (
       <>
         {unFreezedRows.map((item: any, index: number) => {
-          // console.log(item.id);
-
           return (
             <div key={item.id} className='G-flex G-row' onClick={() => getRow?.(item)}>
-              <ul className='G-rows-icons'>
+              <ul
+                className='G-rows-icons'
+                style={{
+                  left: `${hoverdRowPosition ? hoverdRowPosition : 80}%`,
+                }}
+              >
                 {isHoveredRow ? (
                   <HoveredRow
                     rowActions={rowActions}

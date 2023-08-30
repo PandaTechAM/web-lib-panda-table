@@ -35,6 +35,7 @@ interface IActionsHeader<T extends Object> {
   isLoadingFilters?: boolean
   filtersTypes?: IFiltersTypes[]
   selectedType: string
+  perColumnTotalCount?: number
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleCheckAll(): void
   setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
@@ -67,6 +68,7 @@ const MainHeader = <T extends Object>({
   isLoadingFilters,
   filtersTypes,
   selectedType,
+  perColumnTotalCount,
   handleChangePagePerFilterField,
   unCheck,
   checkAllDataFromDb,
@@ -134,6 +136,7 @@ const MainHeader = <T extends Object>({
           filterDataForRequest={filterDataForRequest}
           isLoadingFilters={isLoadingFilters}
           filtersTypes={filtersTypes}
+          perColumnTotalCount={perColumnTotalCount}
           getFilter={getFilteredData}
           getFilteredDataForTable={getFilteredDataForTable}
           handleChangePagePerFilterField={handleChangePagePerFilterField}

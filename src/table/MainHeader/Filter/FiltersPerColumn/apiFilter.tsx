@@ -19,6 +19,7 @@ interface IPerField {
   isLoadingFilters?: boolean
   isDisabled: boolean
   selectedItem?: ItemFields
+  perColumnTotalCount?: number
   getFilteredData?(option: ItemFields, ColumnName?: string): void
   checkIsDisabled(option: boolean): void
   handleChangePagePerFilterField?(): void
@@ -41,6 +42,7 @@ const APIFilter = ({
   isLoadingFilters,
   isDisabled,
   selectedItem,
+  perColumnTotalCount,
   checkIsDisabled,
   handleChangePagePerFilterField,
 }: IPerField) => {
@@ -161,7 +163,10 @@ const APIFilter = ({
   const selectedColumnName = (options: string) => {
     setCoulmnName(options)
   }
+
   const handleSelectItems = (checkedItems: any[], isOpened: boolean) => {
+    console.log(checkedItems)
+
     if (isOpened) {
       getFilteredData?.(
         {
@@ -174,6 +179,7 @@ const APIFilter = ({
         },
         filterTypeing.PropertyName,
       )
+
       setfilterTypeing((prev) => {
         return { ...prev, ComparisonType: filterTypeing.TypeForUi }
       })
@@ -187,7 +193,12 @@ const APIFilter = ({
         TypeForUi: filterTypeing.TypeForUi,
       }
       if (filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) !== 2) {
-        filteredData.ComparisonType = checkedItems.length > 1 ? 'In' : 'Equal'
+        filteredData.ComparisonType =
+          item.ColumnType === 'Tags' && filteredData.ComparisonType === 'Contains'
+            ? filteredData.ComparisonType
+            : checkedItems.length > 1
+            ? 'In'
+            : 'Equal'
       }
 
       getFilteredData?.(filteredData, '')
@@ -223,6 +234,7 @@ const APIFilter = ({
             filterTypeing={filterTypeing}
             isLoadingFilters={isLoadingFilters}
             isDisabled={isDisabled}
+            perColumnTotalCount={perColumnTotalCount}
             setCheckedItemsLocaly={setCheckedItemsLocaly}
             getFilteredData={getFilteredData}
             handleChangePagePerFilterField={handleChangePagePerFilterField}

@@ -47,6 +47,8 @@ function Table<T extends Object>({
   rowsFreezeAction,
   aggregates,
   EmptyDataIcon,
+  perColumnTotalCount,
+  hoverdRowPosition,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -97,6 +99,7 @@ function Table<T extends Object>({
           isLoadingFilters={isLoadingFilters}
           filtersTypes={filtersTypes}
           selectedType={selectedType}
+          perColumnTotalCount={perColumnTotalCount}
           handleCheckAll={handleCheckAll}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
@@ -155,6 +158,7 @@ function Table<T extends Object>({
                 headerHeight={headerHeight}
                 rowsFreezeAction={rowsFreezeAction}
                 selectedType={selectedType}
+                hoverdRowPosition={hoverdRowPosition}
                 getRow={getRow}
                 RightSideSelfAction={RightSideSelfAction}
                 freezeRow={freezeRow}

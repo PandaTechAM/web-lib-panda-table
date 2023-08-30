@@ -16,6 +16,7 @@ interface IFilter {
   isLocalFilter?: boolean
   isLoadingFilters?: boolean
   filtersTypes?: IFiltersTypes[]
+  perColumnTotalCount?: number
   getFilter?(option: ItemFields[], ColumnName?: string): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
@@ -36,6 +37,7 @@ const Filter = ({
   isLocalFilter = true,
   isLoadingFilters,
   filtersTypes,
+  perColumnTotalCount,
   handleChangePagePerFilterField,
   getFilter,
   getFilteredDataForTable,
@@ -117,6 +119,7 @@ const Filter = ({
                                   data={data}
                                   typeElem={type}
                                   isDisabled={isDisabled}
+                                  perColumnTotalCount={perColumnTotalCount}
                                   handleChangePagePerFilterField={handleChangePagePerFilterField}
                                   checkIsDisabled={checkIsDisabled}
                                   filteredColumn={filterDataForRequest}

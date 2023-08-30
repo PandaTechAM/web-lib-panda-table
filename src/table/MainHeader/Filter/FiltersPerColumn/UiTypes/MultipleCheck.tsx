@@ -13,6 +13,7 @@ interface IMultipleCHeck {
   filterTypeing: ItemFields
   isLoadingFilters?: boolean
   isDisabled: boolean
+  perColumnTotalCount?: number
   setCheckedItemsLocaly(options: any[]): void
   handleSelectItems: (option: any[], isClosed: boolean) => void
   setCoulmnName: (name: string) => void
@@ -29,6 +30,7 @@ const MultipleCheck = ({
   filterTypeing,
   isLoadingFilters,
   isDisabled,
+  perColumnTotalCount,
   setCheckedItemsLocaly,
   getFilteredData,
   handleSelectItems,
@@ -53,8 +55,12 @@ const MultipleCheck = ({
     setVal(newInputValue)
   }
   const selectValue = (event: SyntheticEvent<Element, Event>, value: any[]) => {
+    console.log(value)
+
     setcheckedItems(value)
-    if (item.ColumnType !== 'Text') {
+    if (item.ColumnType === 'Number' || item.ColumnType === 'Currency' || item.ColumnType === 'Percentage') {
+      console.log('sxal')
+
       let newValues: number[] = []
       newValues = value.map((item: string) => +item)
       if (!isOpened) {
@@ -62,6 +68,8 @@ const MultipleCheck = ({
       }
       setCheckedItemsLocaly(newValues)
     } else {
+      console.log('chisht')
+
       if (!isOpened) {
         handleSelectItems(value, false)
       }
@@ -80,7 +88,7 @@ const MultipleCheck = ({
     setVal('')
     setIsOpened(false)
 
-    if (item.ColumnType !== 'Text') {
+    if (item.ColumnType === 'Number' || item.ColumnType === 'Currency' || item.ColumnType === 'Percentage') {
       let newValues: number[] = []
       newValues = checkedItems.map((item: string) => +item)
       handleSelectItems(newValues, false)
@@ -174,24 +182,27 @@ const MultipleCheck = ({
                 {option}
                 <Checkbox style={{ marginRight: 8 }} checked={selected} />
               </li>
+
               {perColumnListForFilters &&
               option === perColumnListForFilters[perColumnListForFilters.length - 1] &&
               filterTypeing.PropertyName !== 'Gender' ? (
                 <div className='G-center' style={{ width: '100%' }}>
-                  <Button
-                    className='G-center'
-                    size='large'
-                    style={{
-                      margin: '0 16px',
-                      width: 'auto',
-                      backgroundColor: 'white',
-                      color: 'black',
-                      border: 'none',
-                    }}
-                    onClick={handleChangePagePerFilterField}
-                  >
-                    Load more
-                  </Button>
+                  {perColumnTotalCount && perColumnListForFilters.length < perColumnTotalCount ? (
+                    <Button
+                      className='G-center'
+                      size='large'
+                      style={{
+                        margin: '0 16px',
+                        width: 'auto',
+                        backgroundColor: 'white',
+                        color: 'black',
+                        border: 'none',
+                      }}
+                      onClick={handleChangePagePerFilterField}
+                    >
+                      Load more
+                    </Button>
+                  ) : null}
                 </div>
               ) : null}
             </div>

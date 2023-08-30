@@ -687,7 +687,7 @@ function App() {
         allDataFromDb={allDataFromDb}
         columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
         columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
-        perColumnListForFilters={perColumnListForFilters}
+        perColumnListForFilters={perColumnListForFilters} // per column list for filters
         // rightFreezeConfig={rightFreezeConfig} // List for multiple FreezeColumns in the right side of the table
         columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
         headerHeight={64}
