@@ -1,43 +1,34 @@
-import React, { useState, useEffect } from "react";
-import {
-  Autocomplete,
-  TextField,
-  Box,
-  CircularProgress,
-  Button,
-} from "@mui/material";
-import {
-  IComparisonType,
-  ItemFields,
-} from "../../../../../Models/table.models";
-import "./style.scss";
-import { containsOnlyNumbers } from "../../../../../utils";
-import AcceptCancel from "../../../../../components/acceptCancel";
+import React, { useState, useEffect } from 'react'
+import { Autocomplete, TextField, Box, CircularProgress, Button } from '@mui/material'
+import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
+import './style.scss'
+import { containsOnlyNumbers } from '../../../../../utils'
+import AcceptCancel from '../../../../../components/acceptCancel'
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "100%",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '100%',
   minHeight: 200,
-  bgcolor: "background.paper",
+  bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
   borderRadius: 1,
-};
+}
 interface IModalForSingleField {
-  item: IComparisonType;
-  filterTypeing: ItemFields;
-  columnName: string;
-  perColumnListForFilters?: string[];
-  isLoadingFilters?: boolean;
-  handleSelectItems: (option: any[], isClosed: boolean) => void;
-  setCoulmnName: (name: string) => void;
-  handleChangeValue: (value: string) => void;
-  setCheckedItemsLocaly(options: any[]): void;
-  handleChangePagePerFilterField?(): void;
-  handleClose?: () => void;
+  item: IComparisonType
+  filterTypeing: ItemFields
+  columnName: string
+  perColumnListForFilters?: string[]
+  isLoadingFilters?: boolean
+  handleSelectItems: (option: any[], isClosed: boolean) => void
+  setCoulmnName: (name: string) => void
+  handleChangeValue: (value: string) => void
+  setCheckedItemsLocaly(options: any[]): void
+  handleChangePagePerFilterField?(): void
+  handleClose?: () => void
 }
 
 const ModalForSingleField = ({
@@ -53,63 +44,63 @@ const ModalForSingleField = ({
   handleClose,
   handleChangePagePerFilterField,
 }: IModalForSingleField) => {
-  const [checkedItems, setcheckedItems] = useState<string[]>([]);
-  const [fakeItems] = useState<string[]>([]);
-  const [val, setVal] = useState<string>("");
-  const [errMessage, setErrMessage] = useState<string>("");
-  const [isLoadedMoreData, setIsLoadedMoreData] = useState<boolean>(false);
+  const [checkedItems, setcheckedItems] = useState<string[]>([])
+  const [fakeItems] = useState<string[]>([])
+  const [val, setVal] = useState<string>('')
+  const [errMessage, setErrMessage] = useState<string>('')
+  const [isLoadedMoreData, setIsLoadedMoreData] = useState<boolean>(false)
   const handleOpenList = () => {
-    setCoulmnName(item.ColumnName);
+    setCoulmnName(item.ColumnName)
     // handleSelectItems([], true);
-  };
+  }
   const handleCloseList = () => {
-    setVal("");
-    setIsLoadedMoreData(false);
-  };
+    setVal('')
+    setIsLoadedMoreData(false)
+  }
   const selectValue = (event: any, value: any[]) => {
-    setIsLoadedMoreData(false);
+    setIsLoadedMoreData(false)
 
     if (!value.length) {
-      setcheckedItems(value);
-      return;
+      setcheckedItems(value)
+      return
     }
     if (checkedItems.includes(value[0])) {
-      let newItems = checkedItems.filter((elem) => elem !== value[0]);
-      setcheckedItems(newItems);
-      return;
+      let newItems = checkedItems.filter((elem) => elem !== value[0])
+      setcheckedItems(newItems)
+      return
     }
-    setcheckedItems((prev) => [...prev, value[0]]);
-  };
+    setcheckedItems((prev) => [...prev, value[0]])
+  }
   const onChnage = (newInputValue: string) => {
-    if (item.ColumnType !== "Text" && !containsOnlyNumbers(newInputValue)) {
-      setErrMessage("only numbers");
-      setVal(newInputValue);
-      return;
+    if (item.ColumnType !== 'Text' && !containsOnlyNumbers(newInputValue)) {
+      setErrMessage('only numbers')
+      setVal(newInputValue)
+      return
     }
-    setIsLoadedMoreData(false);
-    setErrMessage("");
-    handleChangeValue(newInputValue);
-    setVal(newInputValue);
-  };
+    setIsLoadedMoreData(false)
+    setErrMessage('')
+    handleChangeValue(newInputValue)
+    setVal(newInputValue)
+  }
   const onAccept = () => {
-    if (item.ColumnType !== "Text") {
-      let newValues: number[] = [];
-      checkedItems.map((item) => newValues.push(+item));
-      handleSelectItems(newValues, false);
-      setCheckedItemsLocaly(newValues);
+    if (item.ColumnType !== 'Text') {
+      let newValues: number[] = []
+      checkedItems.map((item) => newValues.push(+item))
+      handleSelectItems(newValues, false)
+      setCheckedItemsLocaly(newValues)
     } else {
-      handleSelectItems(checkedItems, false);
-      setCheckedItemsLocaly(checkedItems);
+      handleSelectItems(checkedItems, false)
+      setCheckedItemsLocaly(checkedItems)
     }
-    handleClose?.();
-  };
+    handleClose?.()
+  }
   const onCancel = () => {
-    handleSelectItems(filterTypeing.CheckedItems, false);
-    setcheckedItems(filterTypeing.CheckedItems);
-    handleClose?.();
-  };
+    handleSelectItems(filterTypeing.CheckedItems, false)
+    setcheckedItems(filterTypeing.CheckedItems)
+    handleClose?.()
+  }
   const isEmpty = () => {
-    if (item.ColumnType !== "Text") {
+    if (item.ColumnType !== 'Text') {
       if (
         containsOnlyNumbers(val) &&
         item.ColumnName === columnName &&
@@ -117,55 +108,50 @@ const ModalForSingleField = ({
         !perColumnListForFilters?.length &&
         val.length
       )
-        return true;
+        return true
     } else {
-      if (
-        item.ColumnName === columnName &&
-        !isLoadingFilters &&
-        !perColumnListForFilters?.length &&
-        val.length
-      )
-        return true;
+      if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length && val.length)
+        return true
     }
-    return false;
-  };
+    return false
+  }
   const rendData = () => {
     if (
       filterTypeing.PropertyName === columnName &&
-      errMessage === "" &&
+      errMessage === '' &&
       val.length &&
       perColumnListForFilters?.length
     ) {
       if (!isLoadedMoreData) {
-        perColumnListForFilters?.unshift(val);
+        perColumnListForFilters?.unshift(val)
       }
       if (perColumnListForFilters.length === 2) {
-        return [perColumnListForFilters[1]];
+        return [perColumnListForFilters[1]]
       } else {
-        return perColumnListForFilters;
+        return perColumnListForFilters
       }
     } else {
-      return [];
+      return []
     }
-  };
+  }
 
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
-      let newValues: string[] = filterTypeing.CheckedItems;
-      if (item.ColumnType !== "Text") {
-        newValues = filterTypeing.CheckedItems.map((item: number) => item + "");
+      let newValues: string[] = filterTypeing.CheckedItems
+      if (item.ColumnType !== 'Text') {
+        newValues = filterTypeing.CheckedItems.map((item: number) => item + '')
       }
-      setcheckedItems(newValues);
+      setcheckedItems(newValues)
     }
-  }, []);
+  }, [])
   return (
     <Box sx={style}>
-      <div className="G-justify-between" style={{ marginBottom: 32 }}>
-        <div style={{ width: "48%", position: "relative" }}>
+      <div className='G-justify-between' style={{ marginBottom: 32 }}>
+        <div style={{ width: '48%', position: 'relative' }}>
           <Autocomplete
             multiple
-            id="multiple-limit-tags"
-            noOptionsText={"Empty Data"}
+            id='multiple-limit-tags'
+            noOptionsText={'Empty Data'}
             options={rendData()}
             value={fakeItems}
             inputValue={val}
@@ -180,55 +166,50 @@ const ModalForSingleField = ({
             fullWidth
             freeSolo
             filterOptions={(options, state) => options}
-            sx={{ height: "max-content" }}
+            sx={{ height: 'max-content' }}
             renderOption={(props, option, { selected }) => {
-              if (option !== "")
+              if (option !== '')
                 return (
-                  <div key={props.id} style={{ textAlign: "center" }}>
+                  <div key={props.id} style={{ textAlign: 'center' }}>
                     <li
                       {...props}
                       style={{
                         marginLeft: 5,
-                        display: "flex",
-                        justifyContent: "space-between",
+                        display: 'flex',
+                        justifyContent: 'space-between',
                         minHeight: 40,
                         borderBottom:
                           //@ts-ignore
-                          props["data-option-index"] === 0
-                            ? "1px solid #DCDCDC"
-                            : "none",
+                          props['data-option-index'] === 0 ? '1px solid #DCDCDC' : 'none',
                       }}
                     >
                       {option}
                     </li>
                     {perColumnListForFilters &&
-                    option ===
-                      perColumnListForFilters[
-                        perColumnListForFilters.length - 1
-                      ] ? (
+                    option === perColumnListForFilters[perColumnListForFilters.length - 1] ? (
                       <Button
-                        size="large"
+                        size='large'
                         style={{
-                          margin: "10px",
-                          width: "90%",
-                          backgroundColor: "#FB9C59",
-                          color: "black",
+                          margin: '10px',
+                          width: '90%',
+                          backgroundColor: '#FB9C59',
+                          color: 'black',
                         }}
                         onClick={() => {
-                          handleChangePagePerFilterField?.();
-                          setIsLoadedMoreData(true);
+                          handleChangePagePerFilterField?.()
+                          setIsLoadedMoreData(true)
                         }}
                       >
                         load more
                       </Button>
                     ) : null}
                   </div>
-                );
+                )
             }}
             renderInput={(params) => (
               <TextField
-                onFocus={() => setErrMessage("")}
-                onBlur={() => setErrMessage("")}
+                onFocus={() => setErrMessage('')}
+                onBlur={() => setErrMessage('')}
                 error={!!errMessage}
                 helperText={errMessage}
                 {...params}
@@ -237,12 +218,10 @@ const ModalForSingleField = ({
                   ...params.InputProps,
                   endAdornment: (
                     <>
-                      {item.ColumnName !==
-                      columnName ? null : (perColumnListForFilters &&
+                      {item.ColumnName !== columnName ? null : (perColumnListForFilters &&
                           perColumnListForFilters?.length > 0) ||
-                        (perColumnListForFilters?.length === 0 &&
-                          !isLoadingFilters) ? null : (
-                        <CircularProgress color="inherit" size={20} />
+                        (perColumnListForFilters?.length === 0 && !isLoadingFilters) ? null : (
+                        <CircularProgress color='inherit' size={20} />
                       )}
                       {params.InputProps.endAdornment}
                     </>
@@ -253,18 +232,18 @@ const ModalForSingleField = ({
           />
           {isEmpty() ? (
             <div
-              className="G-align-center G-shadow-around"
+              className='G-align-center G-shadow-around'
               style={{
                 borderRadius: 4,
                 height: 56,
                 padding: 15,
-                color: "silver",
-                position: "absolute",
-                backgroundColor: "white",
+                color: 'silver',
+                position: 'absolute',
+                backgroundColor: 'white',
                 opacity: 1,
                 top: 58,
                 zIndex: 888888,
-                width: "100%",
+                width: '100%',
               }}
             >
               empty data
@@ -274,37 +253,27 @@ const ModalForSingleField = ({
         <Autocomplete
           limitTags={1}
           multiple
-          id="checkboxes-tag"
+          id='checkboxes-tag'
           options={[]}
           autoFocus={false}
           value={checkedItems}
           onChange={selectValue}
           fullWidth
-          popupIcon={""}
-          inputValue=""
+          popupIcon={''}
+          inputValue=''
           renderInput={(params) => (
-            <TextField
-              key={params.id}
-              {...params}
-              label={filterTypeing.PropertyName}
-              value=""
-            />
+            <TextField key={params.id} {...params} label={filterTypeing.PropertyName} value='' />
           )}
           open={false}
-          sx={{ width: "48%", height: "max-content" }}
+          sx={{ width: '48%', height: 'max-content' }}
         />
         {/* {checkedItems?.map((item) => {
           return <div>{item}</div>;
         })} */}
       </div>
-      <AcceptCancel
-        errMessage={errMessage}
-        checkedItems={checkedItems}
-        handleClose={onCancel}
-        onAccept={onAccept}
-      />
+      <AcceptCancel errMessage={errMessage} checkedItems={checkedItems} handleClose={onCancel} onAccept={onAccept} />
     </Box>
-  );
-};
+  )
+}
 
-export default ModalForSingleField;
+export default ModalForSingleField
