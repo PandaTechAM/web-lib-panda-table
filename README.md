@@ -689,40 +689,48 @@ function App() {
         allDataFromDb={allDataFromDb}
         columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
         columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
-        columnsTotalStructure={columnsTotalStructure}
-        // rightFreezeConfig={rightFreezeConfig} // List for multiple FreezeColumns in the right side of the table
-        // columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
+        perColumnListForFilters={perColumnListForFilters} // per column list for filters
+        rightFreezeConfig={rightFreezeConfig} // List for multiple FreezeColumns in the right side of the table
+        columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
         headerHeight={64}
         footerHeight={48}
         leftFreezedColumnWidth={72}
-        // rightFreezedColumnWidth={200}
-        pageSize={pageSize} // Per page data count
-        pagesTotalCount={500} // Page's total count
+        rightFreezedColumnWidth={64}
+        pageSizeStructure={pageSize} // Per page data count
+        pagesTotalCount={total} // Page's total count
+        currentPage={1} // Current Page
         multipleCheck // Multiple check for delete or download
         isStickyFirstColumn // Sticky first column
+        rowsFreezeAction={false} // is active freeze fnction for rows
         isHoveredRow // while hover per row will be highlighted actions
         rowActions={rowActions} // Array of actions and theyr's icons / must be active isHoveredRow
-        // FreezeIcon={FreezeSvgIcon} //Freeze row action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
-        // RightSideIcon={ExSvgIcon} // SVG icon for right side action
-        freezedRightSideVisible // is Visible Freezed right side
-        freezedRightSide={"dropdown"} // is dropdown
+        FreezeIcon={FreezeSvgIcon} //freeze row action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
+        RightSideIcon={ExSvgIcon} // SVG icon for right side action
+        freezedRightSideVisible // is visible Freezed right side
+        freezedRightSide={'dropdown'} // is dropdown
         links={links} // Array of links // have to check freezedRightSide - dropdown
-        listForDropdown={listForDropdown} // Array of Counters in Footer
-        headerColor={"#F3F6F8"} // Header color
-        footerColor={"#F3F6F8"} // Footer color
-        // freezedLeftSideColor={'silver'} // FreezedLeft side color
-        // freezedRightSideColor={'silver'} // FreezedRight side color
+        headerColor={'#F3F6F8'} // Header color
+        footerColor={'#F3F6F8'} // Footer color
+        aggregates
+        freezedLeftSideColor={'silver'} // freezedLeft side color
+        freezedRightSideColor={'silver'} // freezedRight side color
         draggableColumns //Is column's draggable
-        getRow={getRow} // Get row data
-        handleEdit={handleEdit} // will be visible when active multipleCheck
-        handleDelete={handleDelete} // will be visible when active multipleCheck
+        filterColumns={tableColumns.Columns} // filter columns
+        filtersTypes={FiltersTypes.FilteringTypes} // filter types
+        filterDataForRequest={filterDataForRequest}
+        isLoadingFilters={isLoadingFilters}
         setColumnsConfigStructure={setColumnsConfigStructure} // set changed config structure - pin/hide/drag-drop
         setColumnHeaderStructure={setColumnHeaderStructure} // set changed header structure - pin/hide/drag-drop
-        setColumnTotalStructures={setColumnTotalStructures} // set changed FooterTotal structure - pin/hide/drag-drop
-        getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
+        getRow={getRow} // get row data
+        handleEdit={handleEdit} // will be visible when active multipleCheck
+        handleDelete={handleDelete} // will be visible when active multipleCheck
+        getFilteredData={getFilteredData} // get filtered data
+        getFilteredDataForTable={getFilteredDataForTable}
+        handleChangePagePerFilterField={handleChangePagePerFilterField} // activating load more data for filter fields
+        getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage} // page count and current page
         storeStructure={storeStructure} // Save columns structure on DB
-        setTotalType={setTotalType} // Set total type
-        // RightSideSelfAction={RightSideSelfAction} // FreezedRightSideSelfAction
+        getDownloadType={getDownloadType} // get download type CSV OR XLSX
+        RightSideSelfAction={RightSideSelfAction} // FreezedRightSideSelfAction
       />
     </div>
   );
