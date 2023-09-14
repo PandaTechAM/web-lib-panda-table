@@ -7,19 +7,13 @@ import {
   IColumnConfigStructure,
   IColumnHeaderStructure,
   ILinksList,
-  IColumnTotal,
-  IColumnTotalStructure,
   ITotalList,
   ItemFields,
   IFilterDataForRequest,
-  IComparisonType,
 } from './Models/table.models'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { StructureConfig } from './Models/table.enum'
 import Table from './table'
-import LinkSvgIcon from './svgIcons/LinkSvgIcon'
-import ExSvgIcon from './svgIcons/ExSvgIcon'
-import FreezeSvgIcon from './svgIcons/Frame73SvgIcon'
 import tableColumns from './Example.json'
 import FiltersTypes from './panda-filter-helper.json'
 import PopUp from './components/popUp'
@@ -635,7 +629,6 @@ function App() {
       title: 'SUM',
     },
   ])
-  const [selectedColumnName, setSelectedColumnName] = useState<string>('')
   const [pagePerFilterField, setPagePerFilterField] = useState<number>(1)
   const [isLoadingFilters, setIsLoading] = useState<boolean>(false)
   const [perColumnListForFilters, setPerColumnListForFilters] = useState<string[]>()
