@@ -50,6 +50,7 @@ export interface IProps<T extends Object> {
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
   getDownloadType: (option: string, checkedRows: T[] | string) => void
+  customHeaderAction?(option: T[] | string): JSX.Element
 }
 
 export interface ItemFields {

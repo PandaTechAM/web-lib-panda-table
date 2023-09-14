@@ -60,6 +60,7 @@ function Table<T extends Object>({
   getFilteredData,
   getFilteredDataForTable,
   getDownloadType,
+  customHeaderAction,
 }: IProps<T>) {
   const {
     freezedRows,
@@ -112,6 +113,7 @@ function Table<T extends Object>({
           getFilteredDataForTable={getFilteredDataForTable}
           handleChangePagePerFilterField={handleChangePagePerFilterField}
           getDownloadType={getDownloadType}
+          customHeaderAction={customHeaderAction}
         />
       ) : null}
 

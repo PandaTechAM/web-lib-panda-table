@@ -52,6 +52,7 @@ interface IActionsHeader<T extends Object> {
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
   getDownloadType: (option: string, checkedRows: T[] | string) => void
+  customHeaderAction?(option: T[] | string): JSX.Element
 }
 const MainHeader = <T extends Object>({
   columnsConfigStructure,
@@ -83,6 +84,7 @@ const MainHeader = <T extends Object>({
   getFilteredData,
   getFilteredDataForTable,
   getDownloadType,
+  customHeaderAction,
 }: IActionsHeader<T>) => {
   return (
     <div className='G-center G-table-actions-header'>
@@ -115,6 +117,9 @@ const MainHeader = <T extends Object>({
                 <span>Delete</span>
               </div>
             ) : null}
+            {checkedRows.length
+              ? customHeaderAction?.(selectedType === CheckedItems.SELECTED_ALL ? 'All' : checkedRows)
+              : null}
           </div>
         </>
       ) : null}
