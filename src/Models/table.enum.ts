@@ -1,6 +1,6 @@
 export enum StructureConfig {
-  BB55 = 'Main',
-  BB33 = 'Freezed',
+  Main = 'Main',
+  Freezed = 'Freezed',
 }
 
 export enum CheckedItems {

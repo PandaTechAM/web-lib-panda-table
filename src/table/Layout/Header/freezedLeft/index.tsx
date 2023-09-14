@@ -41,7 +41,7 @@ const FreezedHeaderLeft = <T extends Object>({
           {multipleCheck ? '' : 'N'}
         </li>
       ) : null}
-      {columnsHeaderStructure[StructureConfig.BB33].items.length ? (
+      {columnsHeaderStructure[StructureConfig.Freezed].items.length ? (
         <FreezedItem
           columnsHeaderStructure={columnsHeaderStructure}
           columnsConfigStructure={columnsConfigStructure}

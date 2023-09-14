@@ -46,7 +46,7 @@ const FooterFreezedLeft = <T extends Object>({
           }}
         ></li>
       ) : null}
-      {columnsHeaderStructure[StructureConfig.BB33].items.length ? (
+      {columnsHeaderStructure[StructureConfig.Freezed].items.length ? (
         <FreezedItems
           columnsHeaderStructure={columnsHeaderStructure}
           columnsConfigStructure={columnsConfigStructure}

@@ -202,7 +202,7 @@ const FreezedRows = <T extends Object>({
                               )}
                             </li>
                           )}
-                          {columnsConfigStructure[StructureConfig.BB55].items.map((column) => {
+                          {columnsConfigStructure[StructureConfig.Main].items.map((column) => {
                             return (
                               column.isVisible && (
                                 <li

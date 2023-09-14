@@ -137,7 +137,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                     )}
                   </li>
                 ) : null}
-                {columnsConfigStructure[StructureConfig.BB33].items.length ? (
+                {columnsConfigStructure[StructureConfig.Freezed].items.length ? (
                   <FreezedLeftColumns
                     ref={ref}
                     columnsConfigStructure={columnsConfigStructure}
@@ -177,7 +177,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                 )}
 
                 {/* Columns */}
-                {columnsConfigStructure[StructureConfig.BB55].items.map((column: IColumnConfig<any>) => {
+                {columnsConfigStructure[StructureConfig.Main].items.map((column: IColumnConfig<any>) => {
                   return (
                     column.isVisible && (
                       <li

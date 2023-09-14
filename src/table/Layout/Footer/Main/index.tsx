@@ -38,9 +38,9 @@ const FooterMain = <T extends Object>({
           }}
         ></li>
       ) : null}
-      {columnsHeaderStructure[StructureConfig.BB55].items.map((item: IColumnHeader, index: number) =>
+      {columnsHeaderStructure[StructureConfig.Main].items.map((item: IColumnHeader, index: number) =>
         //@ts-ignore
-        columnsConfigStructure[StructureConfig.BB55].items.map((column: IColumnConfig<T>, indexx: number) => {
+        columnsConfigStructure[StructureConfig.Main].items.map((column: IColumnConfig<T>, indexx: number) => {
           if (index === indexx) {
             return (
               column.isVisible && (
@@ -54,7 +54,7 @@ const FooterMain = <T extends Object>({
                   key={column.id}
                   className='G-column-item'
                 >
-                  {column.footer?.(columnsHeaderStructure[StructureConfig.BB55].items[index] as any)}
+                  {column.footer?.(columnsHeaderStructure[StructureConfig.Main].items[index] as any)}
                 </li>
               )
             )

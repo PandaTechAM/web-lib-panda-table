@@ -579,33 +579,33 @@ function App() {
   const [columnsConfigStructure, setColumnsConfigStructures] = useState<
     IColumnConfigStructure<any>
   >({
-    [StructureConfig.BB55]: {
+    [StructureConfig.Main]: {
       name: "Columns",
       items: columnConfig,
     },
-    [StructureConfig.BB33]: {
+    [StructureConfig.Freezed]: {
       name: "Freezed",
       items: [],
     },
   });
   const [columnsHeaderStructure, setColumnHeaderStructures] =
     useState<IColumnHeaderStructure>({
-      [StructureConfig.BB55]: {
+      [StructureConfig.Main]: {
         name: "Columns",
         items: columnHeader,
       },
-      [StructureConfig.BB33]: {
+      [StructureConfig.Freezed]: {
         name: "Freezed",
         items: [],
       },
     });
   const [columnsTotalStructure, setColumnTotalStructures] =
     useState<IColumnTotalStructure>({
-      [StructureConfig.BB55]: {
+      [StructureConfig.Main]: {
         name: "Columns",
         items: grandTotals,
       },
-      [StructureConfig.BB33]: {
+      [StructureConfig.Freezed]: {
         name: "Freezed",
         items: [],
       },

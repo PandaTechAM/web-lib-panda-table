@@ -21,9 +21,9 @@ const FreezedItem = <T extends Object>({
 }: IFreezedHeader<T>) => {
   return (
     <>
-      {columnsHeaderStructure[StructureConfig.BB33].items.map((item, index) =>
+      {columnsHeaderStructure[StructureConfig.Freezed].items.map((item, index) =>
         //@ts-ignore
-        columnsConfigStructure[StructureConfig.BB33].items.map((column, indexx) => {
+        columnsConfigStructure[StructureConfig.Freezed].items.map((column, indexx) => {
           if (index === indexx) {
             return (
               column.isVisible && (
@@ -36,7 +36,7 @@ const FreezedItem = <T extends Object>({
                   }}
                   key={column.id}
                 >
-                  {column.title(columnsHeaderStructure[StructureConfig.BB33].items[index] as any, item.title)}
+                  {column.title(columnsHeaderStructure[StructureConfig.Freezed].items[index] as any, item.title)}
                 </li>
               )
             )

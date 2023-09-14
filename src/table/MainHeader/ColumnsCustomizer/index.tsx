@@ -22,8 +22,8 @@ const onDragEnd = <T extends Object>(
 
   if (source.droppableId !== destination.droppableId) {
     if (
-      columnsConfigStructure[StructureConfig.BB33].items.length === 3 &&
-      source.droppableId !== StructureConfig.BB33
+      columnsConfigStructure[StructureConfig.Freezed].items.length === 3 &&
+      source.droppableId !== StructureConfig.Freezed
     ) {
       setFreezeValidation && setFreezeValidation(true)
       return
@@ -138,9 +138,9 @@ function ColumnsCustomizer<T extends Object>({
       setColumnsConfigStructure &&
         setColumnsConfigStructure({
           ...columnsConfigStructure,
-          [StructureConfig.BB55]: {
-            ...columnsConfigStructure[StructureConfig.BB55],
-            items: columnsConfigStructure[StructureConfig.BB55].items.map((item, indexx) => {
+          [StructureConfig.Main]: {
+            ...columnsConfigStructure[StructureConfig.Main],
+            items: columnsConfigStructure[StructureConfig.Main].items.map((item, indexx) => {
               if (index === indexx) {
                 return { ...item, isVisible: !item.isVisible }
               }
@@ -155,9 +155,9 @@ function ColumnsCustomizer<T extends Object>({
       setColumnsConfigStructure &&
         setColumnsConfigStructure({
           ...columnsConfigStructure,
-          [StructureConfig.BB33]: {
-            ...columnsConfigStructure[StructureConfig.BB33],
-            items: columnsConfigStructure[StructureConfig.BB33].items.map((item, indexx) => {
+          [StructureConfig.Freezed]: {
+            ...columnsConfigStructure[StructureConfig.Freezed],
+            items: columnsConfigStructure[StructureConfig.Freezed].items.map((item, indexx) => {
               if (index === indexx) {
                 return { ...item, isVisible: !item.isVisible }
               }
@@ -168,8 +168,8 @@ function ColumnsCustomizer<T extends Object>({
     }
   }
 
-  const allColumns = columnsConfigStructure[StructureConfig.BB55].items.concat(
-    columnsConfigStructure[StructureConfig.BB33].items,
+  const allColumns = columnsConfigStructure[StructureConfig.Main].items.concat(
+    columnsConfigStructure[StructureConfig.Freezed].items,
   )
 
   useEffect(() => {
@@ -338,16 +338,18 @@ function ColumnsCustomizer<T extends Object>({
               })}
             </DragDropContext>
           </div>
-          <div className='G-confirm-button'>
-            <button
-              onClick={() => {
-                storeStructure && storeStructure()
-                handleClose?.()
-              }}
-            >
-              Save
-            </button>
-          </div>
+          {storeStructure && (
+            <div className='G-confirm-button'>
+              <button
+                onClick={() => {
+                  storeStructure()
+                  handleClose?.()
+                }}
+              >
+                Save
+              </button>
+            </div>
+          )}
         </div>
       </PopUp>
     </div>

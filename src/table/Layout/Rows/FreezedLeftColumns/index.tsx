@@ -7,7 +7,7 @@ const FreezedLeftColumns = forwardRef<any, IFreezeProps<any>>(
   ({ columnsConfigStructure, columnMinWidth, item, freezedLeftSideColor }, ref) => {
     return (
       <>
-        {columnsConfigStructure[StructureConfig.BB33].items.map((column) => {
+        {columnsConfigStructure[StructureConfig.Freezed].items.map((column) => {
           return (
             column.isVisible && (
               <li

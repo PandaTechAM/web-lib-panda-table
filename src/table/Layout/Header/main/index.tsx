@@ -38,9 +38,9 @@ const HeaderMain = <T extends Object>({
           {multipleCheck ? '' : 'N'}
         </li>
       )}
-      {columnsHeaderStructure[StructureConfig.BB55].items.map((item: IColumnHeader, index: number) =>
+      {columnsHeaderStructure[StructureConfig.Main].items.map((item: IColumnHeader, index: number) =>
         //@ts-ignore
-        columnsConfigStructure[StructureConfig.BB55].items.map((column: IColumnConfig<T>, indexx: number) => {
+        columnsConfigStructure[StructureConfig.Main].items.map((column: IColumnConfig<T>, indexx: number) => {
           if (index === indexx) {
             return (
               column.isVisible && (
@@ -54,7 +54,7 @@ const HeaderMain = <T extends Object>({
                   key={column.id}
                   className='G-column-item'
                 >
-                  {column.title(columnsHeaderStructure[StructureConfig.BB55].items[index] as any, item.title)}
+                  {column.title(columnsHeaderStructure[StructureConfig.Main].items[index] as any, item.title)}
                 </li>
               )
             )
