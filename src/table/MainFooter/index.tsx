@@ -8,17 +8,19 @@ interface IFooterPagination {
   pageSizeStructure?: IPageSizes[]
   pagesTotalCount?: number
   currPage?: number
-  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
+  selectedPageSizeId: ISelected
+  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
 }
 const FooterPagination = ({
   pageSizeStructure,
   pagesTotalCount = 0,
   currPage = 1,
+  selectedPageSizeId,
   getPageRowsCountAndCurrentPage,
 }: IFooterPagination) => {
   const [isOpenList, setOpen] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(currPage)
-  const [selectedPage, setSelectedPage] = useState<ISelected>({ id: 1 })
+  const [selectedPage, setSelectedPage] = useState<ISelected>(selectedPageSizeId)
 
   const setIsOpenList = () => {
     setOpen((prev) => !prev)
@@ -28,13 +30,13 @@ const FooterPagination = ({
     setSelectedPage({ id: options.id })
     setCurrentPage(1)
     if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
-      getPageRowsCountAndCurrentPage(1, pageSizeStructure[options.id - 1].count)
+      getPageRowsCountAndCurrentPage(1, pageSizeStructure[options.id - 1])
     }
   }
   const handleChangePage = (option: number) => {
     setCurrentPage(option)
     if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
-      getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1].count)
+      getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1])
     }
   }
 

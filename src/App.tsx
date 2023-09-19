@@ -658,7 +658,7 @@ function App() {
   const getRow = (row: any) => {
     console.log(row)
   }
-  const getPageRowsCountAndCurrentPage = (pageNumber: number, rowsCount: number) => {
+  const getPageRowsCountAndCurrentPage = (pageNumber: number, rowsCount: IPageSizes) => {
     console.log(pageNumber, rowsCount)
   }
   const getFilteredData = (option: ItemFields[], ColumnName?: string) => {

@@ -23,8 +23,6 @@ interface IActionsHeader<T extends Object> {
   columnsHeaderStructure: IColumnHeaderStructure
   pageSizeStructure?: IPageSizes[]
   selectedPageCount?: ISelected
-  currPage?: number
-  pagesTotalCount?: number
   multipleCheck?: boolean
   data: T[]
   checkedRows: T[]
@@ -43,7 +41,6 @@ interface IActionsHeader<T extends Object> {
   handleChangePage?(option: number): void
   handleEdit?(option: T): void
   handleDelete?(option: T[] | string): void
-  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
   handleSelectDataSize?(options: IPageSizes): void
   storeStructure?(): void
   unCheck(): void
@@ -58,8 +55,6 @@ const MainHeader = <T extends Object>({
   columnsConfigStructure,
   columnsHeaderStructure,
   multipleCheck,
-  pagesTotalCount = 0,
-  currPage = 1,
   data,
   checkedRows,
   draggableColumns,
@@ -73,13 +68,11 @@ const MainHeader = <T extends Object>({
   handleChangePagePerFilterField,
   unCheck,
   checkAllDataFromDb,
-  setColumnTotalStructures,
   handleCheckAll,
   setColumnsConfigStructure,
   setColumnHeaderStructure,
   handleEdit,
   handleDelete,
-  getPageRowsCountAndCurrentPage,
   storeStructure,
   getFilteredData,
   getFilteredDataForTable,

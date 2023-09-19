@@ -48,6 +48,7 @@ function Table<T extends Object>({
   aggregates,
   EmptyDataIcon,
   perColumnTotalCount,
+  selectedPageSizeId,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -87,9 +88,7 @@ function Table<T extends Object>({
           columnsHeaderStructure={columnsHeaderStructure}
           pageSizeStructure={pageSizeStructure}
           perColumnListForFilters={perColumnListForFilters}
-          currPage={currentPage}
           selectedPageCount={selectedPageCount}
-          pagesTotalCount={pagesTotalCount}
           multipleCheck={multipleCheck}
           data={data}
           checkedRows={checkedRows}
@@ -108,7 +107,6 @@ function Table<T extends Object>({
           storeStructure={storeStructure}
           unCheck={unCheck}
           checkAllDataFromDb={checkAllDataFromDb}
-          getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
           getFilteredData={getFilteredData}
           getFilteredDataForTable={getFilteredDataForTable}
           handleChangePagePerFilterField={handleChangePagePerFilterField}
@@ -193,11 +191,12 @@ function Table<T extends Object>({
         )}
       </div>
       <div className='G-justify-end G-align-center' style={{ padding: 10 }}>
-        {currentPage && pagesTotalCount ? (
+        {currentPage && pagesTotalCount && selectedPageSizeId ? (
           <MainFooter
             pageSizeStructure={pageSizeStructure}
             currPage={currentPage}
             pagesTotalCount={pagesTotalCount}
+            selectedPageSizeId={selectedPageSizeId}
             getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
           />
         ) : null}

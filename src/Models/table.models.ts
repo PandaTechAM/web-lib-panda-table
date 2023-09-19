@@ -37,6 +37,7 @@ export interface IProps<T extends Object> {
   EmptyDataIcon?: any
   perColumnTotalCount?: number
   hoverdRowPosition?: number
+  selectedPageSizeId?: ISelected
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void
@@ -45,7 +46,7 @@ export interface IProps<T extends Object> {
   setColumnHeaderStructure?(options: IColumnHeaderStructure): void
   setSortedData?(option: any): void
   storeStructure?(): void
-  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: number): void
+  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
   getFilteredData?(option: any): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
