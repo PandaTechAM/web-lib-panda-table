@@ -28,7 +28,9 @@ const FreezedHeaderRight = <T extends Object>({
                   minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
                   backgroundColor: headerColor && headerColor,
                 }}
-              />
+              >
+                {item.title(item)}
+              </li>
             )
         })
       ) : (

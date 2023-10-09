@@ -38,6 +38,7 @@ export interface IProps<T extends Object> {
   perColumnTotalCount?: number
   hoverdRowPosition?: number
   selectedPageSizeId?: ISelected
+  haveFilters?: boolean
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void

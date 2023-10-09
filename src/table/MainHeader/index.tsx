@@ -34,6 +34,7 @@ interface IActionsHeader<T extends Object> {
   filtersTypes?: IFiltersTypes[]
   selectedType: string
   perColumnTotalCount?: number
+  haveFilters?: boolean
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleCheckAll(): void
   setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
@@ -65,6 +66,7 @@ const MainHeader = <T extends Object>({
   filtersTypes,
   selectedType,
   perColumnTotalCount,
+  haveFilters,
   handleChangePagePerFilterField,
   unCheck,
   checkAllDataFromDb,
@@ -126,7 +128,7 @@ const MainHeader = <T extends Object>({
         />
       ) : null}
 
-      <div>
+      {haveFilters ? (
         <Filter
           data={data}
           filterColumns={filterColumns}
@@ -139,7 +141,7 @@ const MainHeader = <T extends Object>({
           getFilteredDataForTable={getFilteredDataForTable}
           handleChangePagePerFilterField={handleChangePagePerFilterField}
         />
-      </div>
+      ) : null}
       {getDownloadType && (
         <div className='G-center'>
           <Download selectedType={selectedType} getDownloadType={getDownloadType} checkedRows={checkedRows} />

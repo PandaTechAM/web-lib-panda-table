@@ -49,6 +49,7 @@ function Table<T extends Object>({
   EmptyDataIcon,
   perColumnTotalCount,
   selectedPageSizeId,
+  haveFilters,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -99,6 +100,7 @@ function Table<T extends Object>({
           filtersTypes={filtersTypes}
           selectedType={selectedType}
           perColumnTotalCount={perColumnTotalCount}
+          haveFilters={haveFilters}
           handleCheckAll={handleCheckAll}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
