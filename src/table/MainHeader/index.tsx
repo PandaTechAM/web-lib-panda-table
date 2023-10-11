@@ -1,5 +1,5 @@
-import React from 'react'
-import ColumnsCustomizer from './ColumnsCustomizer'
+import React from "react";
+import ColumnsCustomizer from "./ColumnsCustomizer";
 import {
   IColumnConfigStructure,
   IColumnHeaderStructure,
@@ -9,48 +9,48 @@ import {
   IPageSizes,
   ISelected,
   ItemFields,
-} from '../../Models/table.models'
-import CheckRows from './CheckRows'
-import DeleteSvgIcon from '../../svgIcons/DeleteSvgIcon'
-import EditSvgIcon from '../../svgIcons/EditSvgIcon'
-import Filter from './Filter'
-import Select from '../../components/select/select'
-import Download from './Download'
-import { CheckedItems } from '../../Models/table.enum'
+} from "../../Models/table.models";
+import CheckRows from "./CheckRows";
+import DeleteSvgIcon from "../../svgIcons/DeleteSvgIcon";
+import EditSvgIcon from "../../svgIcons/EditSvgIcon";
+import Filter from "./Filter";
+import Select from "../../components/select/select";
+import Download from "./Download";
+import { CheckedItems } from "../../Models/table.enum";
 
 interface IActionsHeader<T extends Object> {
-  columnsConfigStructure: IColumnConfigStructure<T>
-  columnsHeaderStructure: IColumnHeaderStructure
-  pageSizeStructure?: IPageSizes[]
-  selectedPageCount?: ISelected
-  multipleCheck?: boolean
-  data: T[]
-  checkedRows: T[]
-  draggableColumns?: boolean
-  filterColumns?: IComparisonType[]
-  perColumnListForFilters?: string[]
-  filterDataForRequest?: ItemFields[]
-  isLoadingFilters?: boolean
-  filtersTypes?: IFiltersTypes[]
-  selectedType: string
-  perColumnTotalCount?: number
-  haveFilters?: boolean
-  setColumnTotalStructures?(option: IColumnTotalStructure): void
-  handleCheckAll(): void
-  setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
-  setColumnHeaderStructure?: (options: IColumnHeaderStructure) => void
-  handleChangePage?(option: number): void
-  handleEdit?(option: T): void
-  handleDelete?(option: T[] | string): void
-  handleSelectDataSize?(options: IPageSizes): void
-  storeStructure?(): void
-  unCheck(): void
-  checkAllDataFromDb(): void
-  getFilteredData?(options: any): void
-  getFilteredDataForTable?(): void
-  handleChangePagePerFilterField?(): void
-  getDownloadType: (option: string, checkedRows: T[] | string) => void
-  customHeaderAction?(option: T[] | string): JSX.Element
+  columnsConfigStructure: IColumnConfigStructure<T>;
+  columnsHeaderStructure: IColumnHeaderStructure;
+  pageSizeStructure?: IPageSizes[];
+  selectedPageCount?: ISelected;
+  multipleCheck?: boolean;
+  data: T[];
+  checkedRows: T[];
+  draggableColumns?: boolean;
+  filterColumns?: IComparisonType[];
+  perColumnListForFilters?: string[];
+  filterDataForRequest?: ItemFields[];
+  isLoadingFilters?: boolean;
+  filtersTypes?: IFiltersTypes[];
+  selectedType: string;
+  perColumnTotalCount?: number;
+  haveFilters?: boolean;
+  setColumnTotalStructures?(option: IColumnTotalStructure): void;
+  handleCheckAll(): void;
+  setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void;
+  setColumnHeaderStructure?: (options: IColumnHeaderStructure) => void;
+  handleChangePage?(option: number): void;
+  handleEdit?(option: T): void;
+  handleDelete?(option: T[] | string): void;
+  handleSelectDataSize?(options: IPageSizes): void;
+  storeStructure?(): void;
+  unCheck(): void;
+  checkAllDataFromDb(): void;
+  getFilteredData?(options: any): void;
+  getFilteredDataForTable?(): void;
+  handleChangePagePerFilterField?(): void;
+  getDownloadType: (option: string, checkedRows: T[] | string) => void;
+  customHeaderAction?(option: T[] | string): JSX.Element;
 }
 const MainHeader = <T extends Object>({
   columnsConfigStructure,
@@ -82,7 +82,7 @@ const MainHeader = <T extends Object>({
   customHeaderAction,
 }: IActionsHeader<T>) => {
   return (
-    <div className='G-center G-table-actions-header'>
+    <div className="G-center G-table-actions-header">
       {multipleCheck ? (
         <>
           <CheckRows
@@ -92,9 +92,13 @@ const MainHeader = <T extends Object>({
             unCheck={unCheck}
             checkAllDataFromDb={checkAllDataFromDb}
           />
-          <div className='G-center' style={{ marginRight: '27px' }}>
+          <div className="G-center" style={{ marginRight: "27px" }}>
             {checkedRows.length == 1 && handleEdit ? (
-              <div className='G-flex G-edit' style={{ marginRight: '20px' }} onClick={() => handleEdit(checkedRows[0])}>
+              <div
+                className="G-flex G-edit"
+                style={{ marginRight: "20px" }}
+                onClick={() => handleEdit(checkedRows[0])}
+              >
                 <div>
                   <EditSvgIcon />
                 </div>
@@ -103,8 +107,14 @@ const MainHeader = <T extends Object>({
             ) : null}
             {checkedRows.length && handleDelete ? (
               <div
-                className='G-flex G-delete'
-                onClick={() => handleDelete(selectedType === CheckedItems.SELECTED_ALL ? 'All' : checkedRows)}
+                className="G-flex G-delete"
+                onClick={() =>
+                  handleDelete(
+                    selectedType === CheckedItems.SELECTED_ALL
+                      ? "All"
+                      : checkedRows
+                  )
+                }
               >
                 <div>
                   <DeleteSvgIcon />
@@ -113,7 +123,11 @@ const MainHeader = <T extends Object>({
               </div>
             ) : null}
             {checkedRows.length
-              ? customHeaderAction?.(selectedType === CheckedItems.SELECTED_ALL ? 'All' : checkedRows)
+              ? customHeaderAction?.(
+                  selectedType === CheckedItems.SELECTED_ALL
+                    ? "All"
+                    : checkedRows
+                )
               : null}
           </div>
         </>
@@ -143,12 +157,16 @@ const MainHeader = <T extends Object>({
         />
       ) : null}
       {getDownloadType && (
-        <div className='G-center'>
-          <Download selectedType={selectedType} getDownloadType={getDownloadType} checkedRows={checkedRows} />
+        <div className="G-center">
+          <Download
+            selectedType={selectedType}
+            getDownloadType={getDownloadType}
+            checkedRows={checkedRows}
+          />
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MainHeader
+export default MainHeader;

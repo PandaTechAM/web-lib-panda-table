@@ -4,7 +4,7 @@ import { CheckedItems } from '../Models/table.enum'
 const useTable = <T extends Object>(
   data: T[],
   allDataFromDb: T[] | undefined,
-  freezedRightSide?: string,
+  freezedRightSide?:string,
   RightSideSelfAction?: (options: any) => void,
 ) => {
   const [freezedRows, setFreezedRows] = useState<T[]>([])
@@ -12,7 +12,7 @@ const useTable = <T extends Object>(
   const [checkedRows, setCheckedRows] = useState<T[]>([])
   const [checkedLink, setCheckedLink] = useState<T>()
   const [selectedType, setSelectedType] = useState<string>('none')
-  const freezeRow = (e: any, indexx: number) => {
+  const freezeRow = (e:any, indexx: number) => {
     e.stopPropagation()
     //@ts-ignore
     data.map((row, index) => {
@@ -25,7 +25,7 @@ const useTable = <T extends Object>(
     })
   }
 
-  const unFreezeRow = (e: any, index: number) => {
+  const unFreezeRow = (e:any, index: number) => {
     e.stopPropagation()
 
     const newFreezeRows = freezedRows.splice(index, index === 0 ? 1 : index)
@@ -39,14 +39,16 @@ const useTable = <T extends Object>(
 
   const getRowForDropdown = (id: number) => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
-
+    
     allRows.map((item) => {
       //@ts-ignore
       if (item.id === id) {
+        
         freezedRightSide && freezedRightSide == 'dropdown' && setCheckedLink(item)
         RightSideSelfAction && RightSideSelfAction(item)
       }
     })
+    
   }
 
   const handleCheckAll = () => {
@@ -65,7 +67,7 @@ const useTable = <T extends Object>(
     setSelectedType(CheckedItems.SELECTED_ALL)
   }
 
-  const handleCheck = (id: number) => {
+  const handleCheck = ( id: number) => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
     let unchecked = false
     let arr = checkedRows

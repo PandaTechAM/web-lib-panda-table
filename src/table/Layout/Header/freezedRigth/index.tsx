@@ -1,21 +1,21 @@
-import React from 'react'
-import { IColumnConfig } from '../../../../Models/table.models'
+import React from "react";
+import { IColumnConfig } from "../../../../Models/table.models";
 const FreezedHeaderRight = <T extends Object>({
   headerColor,
   rightFreezedColumnWidth,
   rightFreezeConfig,
 }: {
-  headerColor: string | undefined
-  rightFreezedColumnWidth: number | undefined
-  rightFreezeConfig?: IColumnConfig<T>[]
+  headerColor: string | undefined;
+  rightFreezedColumnWidth: number | undefined;
+  rightFreezeConfig?: IColumnConfig<T>[];
 }) => {
   return (
     <ul
-      className='G-data-table-header'
+      className="G-data-table-header"
       style={{
         right: 0,
         zIndex: 1000,
-        boxShadow: '-6px 0px 8px 0px rgba(0,0,0,0.02)',
+        boxShadow: "-6px 0px 8px 0px rgba(0,0,0,0.02)",
       }}
     >
       {rightFreezeConfig ? (
@@ -24,26 +24,34 @@ const FreezedHeaderRight = <T extends Object>({
             return (
               <li
                 style={{
-                  maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
-                  minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
+                  maxWidth: rightFreezedColumnWidth
+                    ? `${rightFreezedColumnWidth}px`
+                    : `${item.width}px`,
+                  minWidth: rightFreezedColumnWidth
+                    ? `${rightFreezedColumnWidth}px`
+                    : `${item.width}px`,
                   backgroundColor: headerColor && headerColor,
                 }}
               >
                 {item.title(item)}
               </li>
-            )
+            );
         })
       ) : (
         <li
           style={{
-            maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
-            minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `60px`,
+            maxWidth: rightFreezedColumnWidth
+              ? `${rightFreezedColumnWidth}px`
+              : `60px`,
+            minWidth: rightFreezedColumnWidth
+              ? `${rightFreezedColumnWidth}px`
+              : `60px`,
             backgroundColor: headerColor && headerColor,
           }}
         />
       )}
     </ul>
-  )
-}
+  );
+};
 
-export default FreezedHeaderRight
+export default FreezedHeaderRight;

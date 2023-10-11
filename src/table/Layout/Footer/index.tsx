@@ -1,25 +1,25 @@
-import React from 'react'
+import React from "react";
 import {
   IColumnConfig,
   IColumnConfigStructure,
   IColumnHeaderStructure,
   IColumnTotalStructure,
   ITotalList,
-} from '../../../Models/table.models'
-import FooterFreezedLeft from './FreezedLeft'
-import FooterFreezedRight from './FreezedRight'
-import FooterMain from './Main'
+} from "../../../Models/table.models";
+import FooterFreezedLeft from "./FreezedLeft";
+import FooterFreezedRight from "./FreezedRight";
+import FooterMain from "./Main";
 interface IFooter<T extends Object> {
-  columnsHeaderStructure: IColumnHeaderStructure
-  columnsConfigStructure: IColumnConfigStructure<T>
-  rightFreezeConfig?: IColumnConfig<T>[]
-  columnMinWidth?: number
-  footerColor?: string
-  freezedRightSideVisible?: boolean
-  isStickyFirstColumn?: boolean
-  leftFreezedColumnWidth?: number
-  rightFreezedColumnWidth?: number
-  listForDropdown?: ITotalList[]
+  columnsHeaderStructure: IColumnHeaderStructure;
+  columnsConfigStructure: IColumnConfigStructure<T>;
+  rightFreezeConfig?: IColumnConfig<T>[];
+  columnMinWidth?: number;
+  footerColor?: string;
+  freezedRightSideVisible?: boolean;
+  isStickyFirstColumn?: boolean;
+  leftFreezedColumnWidth?: number;
+  rightFreezedColumnWidth?: number;
+  listForDropdown?: ITotalList[];
 }
 const Footer = <T extends Object>({
   columnsConfigStructure,
@@ -58,7 +58,7 @@ const Footer = <T extends Object>({
         />
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

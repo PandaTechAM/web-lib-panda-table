@@ -1,20 +1,24 @@
-import React from 'react'
-import { IColumnConfig, IColumnConfigStructure, IColumnHeaderStructure } from '../../../Models/table.models'
-import FreezedHeaderLeft from './freezedLeft'
-import HeaderMain from './main'
-import FreezedHeaderRight from './freezedRigth'
+import React from "react";
+import {
+  IColumnConfig,
+  IColumnConfigStructure,
+  IColumnHeaderStructure,
+} from "../../../Models/table.models";
+import FreezedHeaderLeft from "./freezedLeft";
+import HeaderMain from "./main";
+import FreezedHeaderRight from "./freezedRigth";
 
 interface IHeader<T extends Object> {
-  columnsConfigStructure: IColumnConfigStructure<T>
-  rightFreezeConfig?: IColumnConfig<T>[]
-  columnsHeaderStructure: IColumnHeaderStructure
-  multipleCheck?: boolean
-  isStickyFirstColumn?: boolean
-  columnMinWidth?: number
-  headerColor?: string
-  freezedRightSideVisible?: boolean
-  leftFreezedColumnWidth?: number
-  rightFreezedColumnWidth?: number
+  columnsConfigStructure: IColumnConfigStructure<T>;
+  rightFreezeConfig?: IColumnConfig<T>[];
+  columnsHeaderStructure: IColumnHeaderStructure;
+  multipleCheck?: boolean;
+  isStickyFirstColumn?: boolean;
+  columnMinWidth?: number;
+  headerColor?: string;
+  freezedRightSideVisible?: boolean;
+  leftFreezedColumnWidth?: number;
+  rightFreezedColumnWidth?: number;
 }
 const Header = <T extends Object>({
   columnsConfigStructure,
@@ -56,6 +60,6 @@ const Header = <T extends Object>({
         />
       ) : null}
     </>
-  )
-}
-export default Header
+  );
+};
+export default Header;
