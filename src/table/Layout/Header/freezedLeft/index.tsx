@@ -1,18 +1,15 @@
-import React from "react";
-import { StructureConfig } from "../../../../Models/table.enum";
-import {
-  IColumnConfigStructure,
-  IColumnHeaderStructure,
-} from "../../../../Models/table.models";
-import FreezedItem from "./FreezedItem";
+import React from 'react'
+import { StructureConfig } from '../../../../Models/table.enum'
+import { IColumnConfigStructure, IColumnHeaderStructure } from '../../../../Models/table.models'
+import FreezedItem from './FreezedItem'
 interface IFreezedTopLeft<T extends Object> {
-  columnsHeaderStructure: IColumnHeaderStructure;
-  columnsConfigStructure: IColumnConfigStructure<T>;
-  multipleCheck?: boolean;
-  isStickyFirstColumn?: boolean;
-  columnMinWidth?: number;
-  headerColor?: string;
-  leftFreezedColumnWidth?: number;
+  columnsHeaderStructure: IColumnHeaderStructure
+  columnsConfigStructure: IColumnConfigStructure<T>
+  multipleCheck?: boolean
+  isStickyFirstColumn?: boolean
+  columnMinWidth?: number
+  headerColor?: string
+  leftFreezedColumnWidth?: number
 }
 const FreezedHeaderLeft = <T extends Object>({
   columnsHeaderStructure,
@@ -25,27 +22,23 @@ const FreezedHeaderLeft = <T extends Object>({
 }: IFreezedTopLeft<T>) => {
   return (
     <ul
-      className="G-data-table-header"
+      className='G-data-table-header'
       style={{
         left: 0,
         zIndex: 1000,
-        boxShadow: "7px 0px 9px -1px rgba(0,0,0,0.02)",
+        boxShadow: '7px 0px 9px -1px rgba(0,0,0,0.02)',
       }}
     >
       {isStickyFirstColumn ? (
         <li
           style={{
-            minWidth: leftFreezedColumnWidth
-              ? `${leftFreezedColumnWidth}px`
-              : "60px",
-            maxWidth: leftFreezedColumnWidth
-              ? `${leftFreezedColumnWidth}px`
-              : "60px",
+            minWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
+            maxWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
 
             backgroundColor: headerColor && headerColor,
           }}
         >
-          {multipleCheck ? "" : "N"}
+          {multipleCheck ? '' : 'N'}
         </li>
       ) : null}
       {columnsHeaderStructure[StructureConfig.Freezed].items.length ? (
@@ -57,7 +50,7 @@ const FreezedHeaderLeft = <T extends Object>({
         />
       ) : null}
     </ul>
-  );
-};
+  )
+}
 
-export default FreezedHeaderLeft;
+export default FreezedHeaderLeft

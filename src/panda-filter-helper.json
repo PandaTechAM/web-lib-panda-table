@@ -66,8 +66,8 @@
   {
       "ColumnType":"Boolean",
       "AggregateTypes": [""],
-      "FilterTypes": ["IsTrue", "IsFalse", "IsEmpty", "IsNotEmpty"],
-      "DefaultSearchType": "IsNotEmpty"
+      "FilterTypes": ["Equal", "NotEqual"],
+      "DefaultSearchType": "Equal"
   },
   {
       "ColumnType":"Percentage",

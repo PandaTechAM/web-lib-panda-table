@@ -1,15 +1,15 @@
-import React from "react";
-import { ILinksList } from "../../../../Models/table.models";
-import DropDown from "./DropDown";
-import SelfAction from "./SelfAction";
+import React from 'react'
+import { ILinksList } from '../../../../Models/table.models'
+import DropDown from './DropDown'
+import SelfAction from './SelfAction'
 interface IFreezedRightColumns<T extends Object> {
-  item: T;
-  checkedLink?: T;
-  links?: ILinksList[];
-  freezedRightSide?: string;
-  RightSideIcon?: any;
-  RightSideSelfAction?: (option: number | string) => void;
-  getRowForDropdown(option: number): void;
+  item: T
+  checkedLink?: T
+  links?: ILinksList[]
+  freezedRightSide?: string
+  RightSideIcon?: any
+  RightSideSelfAction?: (option: number | string) => void
+  getRowForDropdown(option: number): void
 }
 const FreezedRightColumns = <T extends Object>({
   item,
@@ -22,7 +22,7 @@ const FreezedRightColumns = <T extends Object>({
 }: IFreezedRightColumns<T>) => {
   return (
     <>
-      {freezedRightSide && freezedRightSide === "dropdown" ? (
+      {freezedRightSide && freezedRightSide === 'dropdown' ? (
         <DropDown
           item={item}
           checkedLink={checkedLink}
@@ -39,7 +39,7 @@ const FreezedRightColumns = <T extends Object>({
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default FreezedRightColumns;
+export default FreezedRightColumns

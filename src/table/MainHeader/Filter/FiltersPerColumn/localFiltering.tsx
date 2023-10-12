@@ -1,16 +1,16 @@
-import React, { useState, useEffect, SyntheticEvent } from "react";
-import Checkbox from "../../../../components/checkbox";
-import { Autocomplete, TextField } from "@mui/material";
-import { IComparisonType, ItemFields } from "../../../../Models/table.models";
+import React, { useState, useEffect, SyntheticEvent } from 'react'
+import Checkbox from '../../../../components/checkbox'
+import { Autocomplete, TextField } from '@mui/material'
+import { IComparisonType, ItemFields } from '../../../../Models/table.models'
 
 interface IPerField {
-  item: IComparisonType;
-  data: any;
-  advancedSettings: boolean;
-  getFilteredData: any;
-  perColumnListForFilters?: string[];
-  filteredColumn?: ItemFields[];
-  getColumnName?(columnName: string): void;
+  item: IComparisonType
+  data: any
+  advancedSettings: boolean
+  getFilteredData: any
+  perColumnListForFilters?: string[]
+  filteredColumn?: ItemFields[]
+  getColumnName?(columnName: string): void
 }
 
 const LocalFilter = ({
@@ -24,68 +24,64 @@ const LocalFilter = ({
   const [filter, setFilter] = useState<ItemFields>({
     PropertyName: item.ColumnName,
     Values: [],
-    ComparisonType: "In",
+    ComparisonType: 'In',
     TypeForUi: item.ColumnType,
-    Search: "",
+    Search: '',
 
     CheckedItems: [],
-  });
-  const [columnName, setCoulmnName] = useState<string>("");
+  })
+  const [columnName, setCoulmnName] = useState<string>('')
 
   const selectComparisonType = (event: any) => {
     setFilter((prev) => {
-      return { ...prev, ComparisonType: event.target.value as string };
-    });
-  };
+      return { ...prev, ComparisonType: event.target.value as string }
+    })
+  }
   const selectValue = (event: SyntheticEvent<Element, Event>, value: any[]) => {
     setFilter((prev: any) => {
-      return { ...prev, Values: value };
-    });
-  };
+      return { ...prev, Values: value }
+    })
+  }
   const isEqual = (option: any, value: any) => {
     if (option === value) {
-      return true;
+      return true
     }
-    return false;
-  };
+    return false
+  }
   const getLabel = (options: any) => {
-    return options;
-  };
+    return options
+  }
   const handleChangeInputValue = (value: string) => {
     setFilter((prev) => {
-      return { ...prev, Search: value };
-    });
-  };
+      return { ...prev, Search: value }
+    })
+  }
 
   useEffect(() => {
-    getFilteredData(filter);
-  }, [filter]);
+    getFilteredData(filter)
+  }, [filter])
 
   return (
-    <div className="G-justify-between" style={{ marginTop: 16 }}>
+    <div className='G-justify-between' style={{ marginTop: 16 }}>
       <Autocomplete
         multiple
         limitTags={advancedSettings ? 1 : 2}
-        id="multiple-limit-tags"
-        options={
-          item.ColumnName === columnName && perColumnListForFilters
-            ? perColumnListForFilters
-            : []
-        }
+        id='multiple-limit-tags'
+        options={item.ColumnName === columnName && perColumnListForFilters ? perColumnListForFilters : []}
         disableCloseOnSelect
         onOpen={() => {
-          getColumnName?.(item.ColumnName);
-          setCoulmnName(item.ColumnName);
+          getColumnName?.(item.ColumnName)
+          setCoulmnName(item.ColumnName)
         }}
         onClose={() => {
-          setCoulmnName("");
-          getColumnName?.("");
+          setCoulmnName('')
+          getColumnName?.('')
         }}
         onInputChange={(event, newInputValue) => {
-          handleChangeInputValue(newInputValue);
+          handleChangeInputValue(newInputValue)
         }}
         onChange={selectValue}
-        noOptionsText="Waiting..."
+        noOptionsText='Waiting...'
         getOptionLabel={getLabel}
         // includeInputInList
         clearOnEscape
@@ -96,10 +92,10 @@ const LocalFilter = ({
           <li
             {...props}
             style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-              borderBottom: "1px solid #DCDCDC",
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'space-between',
+              borderBottom: '1px solid #DCDCDC',
             }}
           >
             {option}
@@ -115,10 +111,10 @@ const LocalFilter = ({
             }}
           />
         )}
-        sx={{ width: "100%" }}
+        sx={{ width: '100%' }}
       />
     </div>
-  );
-};
+  )
+}
 
-export default LocalFilter;
+export default LocalFilter

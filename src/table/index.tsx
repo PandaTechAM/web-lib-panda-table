@@ -1,14 +1,14 @@
-import React from "react";
-import { IProps } from "../Models/table.models";
-import MainHeader from "./MainHeader";
-import Header from "./Layout/Header";
-import Rows from "./Layout/Rows";
-import useTable from "./useTable";
-import Footer from "./Layout/Footer";
-import "./index.scss";
-import "../index.scss";
-import "../assets/style/index.scss";
-import MainFooter from "./MainFooter";
+import React from 'react'
+import { IProps } from '../Models/table.models'
+import MainHeader from './MainHeader'
+import Header from './Layout/Header'
+import Rows from './Layout/Rows'
+import useTable from './useTable'
+import Footer from './Layout/Footer'
+import './index.scss'
+import '../index.scss'
+import '../assets/style/index.scss'
+import MainFooter from './MainFooter'
 
 function Table<T extends Object>({
   data = [],
@@ -79,13 +79,11 @@ function Table<T extends Object>({
     isCheckedRows,
     unCheck,
     checkAllDataFromDb,
-  } = useTable(data, allDataFromDb, freezedRightSide, RightSideSelfAction);
+  } = useTable(data, allDataFromDb, freezedRightSide, RightSideSelfAction)
 
   return (
     <div>
-      {(pageSizeStructure && pagesTotalCount) ||
-      multipleCheck ||
-      draggableColumns ? (
+      {(pageSizeStructure && pagesTotalCount) || multipleCheck || draggableColumns ? (
         <MainHeader
           columnsConfigStructure={columnsConfigStructure}
           columnsHeaderStructure={columnsHeaderStructure}
@@ -119,13 +117,10 @@ function Table<T extends Object>({
         />
       ) : null}
 
-      <div className="G-data-table G-data-scroll">
+      <div className='G-data-table G-data-scroll'>
         {data.length ? (
           <>
-            <div
-              className="G-header"
-              style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}
-            >
+            <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
               <Header
                 columnsConfigStructure={columnsConfigStructure}
                 columnsHeaderStructure={columnsHeaderStructure}
@@ -140,7 +135,7 @@ function Table<T extends Object>({
               />
             </div>
 
-            <div className="G-data-table-body">
+            <div className='G-data-table-body'>
               <Rows
                 freezedRows={freezedRows}
                 rightFreezeConfig={rightFreezeConfig}
@@ -176,10 +171,7 @@ function Table<T extends Object>({
             </div>
 
             {aggregates ? (
-              <div
-                className="G-total-footer"
-                style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}
-              >
+              <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
                 <Footer
                   rightFreezeConfig={rightFreezeConfig}
                   columnsHeaderStructure={columnsHeaderStructure}
@@ -195,12 +187,12 @@ function Table<T extends Object>({
             ) : null}
           </>
         ) : (
-          <div className="G-center">
+          <div className='G-center'>
             <EmptyDataIcon />
           </div>
         )}
       </div>
-      <div className="G-justify-end G-align-center" style={{ padding: 10 }}>
+      <div className='G-justify-end G-align-center' style={{ padding: 10 }}>
         {currentPage && pagesTotalCount && selectedPageSizeId ? (
           <MainFooter
             pageSizeStructure={pageSizeStructure}
@@ -212,7 +204,7 @@ function Table<T extends Object>({
         ) : null}
       </div>
     </div>
-  );
+  )
 }
 
-export default Table;
+export default Table

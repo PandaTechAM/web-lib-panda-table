@@ -1,49 +1,42 @@
-import React from "react";
-import {
-  IColumnConfig,
-  IColumnConfigStructure,
-  ILinksList,
-  IrowActions,
-} from "../../../Models/table.models";
-import FreezedRows from "./FreezedTop";
-import MainRows from "./Main";
-import { forwardRef } from "react";
+import React from 'react'
+import { IColumnConfig, IColumnConfigStructure, ILinksList, IrowActions } from '../../../Models/table.models'
+import FreezedRows from './FreezedTop'
+import MainRows from './Main'
+import { forwardRef } from 'react'
 
 interface IRows<T extends Object> {
-  columnsConfigStructure: IColumnConfigStructure<T>;
-  rightFreezeConfig?: IColumnConfig<T>[];
-  unFreezedRows: T[];
-  freezedRows: T[];
-  rowActions?: IrowActions[];
-  links?: ILinksList[];
-  checkedLink?: T;
-  tableWidth?: number;
-  columnMinWidth?: number;
-  FreezeIcon?: any;
-  multipleCheck?: boolean;
-  isStickyFirstColumn?: boolean;
-  isHoveredRow?: boolean;
-  freezedRightSideVisible?: boolean;
-  freezedLeftSideColor?: string;
-  freezedRightSideColor?: string;
-  freezedRightSide?: string;
-  RightSideIcon?: React.MemoExoticComponent<
-    (props: React.SVGProps<SVGSVGElement>) => JSX.Element
-  >;
-  leftFreezedColumnWidth?: number;
-  rightFreezedColumnWidth?: number;
-  headerHeight?: number;
-  rowsFreezeAction?: boolean;
-  selectedType: string;
-  getRow?: (option: any) => void;
-  RightSideSelfAction?: (option: number | string) => void;
-  freezeRow(e: any, option: number): void;
-  unFreezeRow(e: any, option: number): void;
-  handleCheck(option: number): void;
-  dragDropFreezeRow(option: T[]): void;
-  isCheckedRows(option: number): boolean;
-  isCheckedRows(option: number): boolean;
-  getRowForDropdown(option: number): void;
+  columnsConfigStructure: IColumnConfigStructure<T>
+  rightFreezeConfig?: IColumnConfig<T>[]
+  unFreezedRows: T[]
+  freezedRows: T[]
+  rowActions?: IrowActions[]
+  links?: ILinksList[]
+  checkedLink?: T
+  tableWidth?: number
+  columnMinWidth?: number
+  FreezeIcon?: any
+  multipleCheck?: boolean
+  isStickyFirstColumn?: boolean
+  isHoveredRow?: boolean
+  freezedRightSideVisible?: boolean
+  freezedLeftSideColor?: string
+  freezedRightSideColor?: string
+  freezedRightSide?: string
+  RightSideIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
+  leftFreezedColumnWidth?: number
+  rightFreezedColumnWidth?: number
+  headerHeight?: number
+  rowsFreezeAction?: boolean
+  selectedType: string
+  getRow?: (option: any) => void
+  RightSideSelfAction?: (option: number | string) => void
+  freezeRow(e: any, option: number): void
+  unFreezeRow(e: any, option: number): void
+  handleCheck(option: number): void
+  dragDropFreezeRow(option: T[]): void
+  isCheckedRows(option: number): boolean
+  isCheckedRows(option: number): boolean
+  getRowForDropdown(option: number): void
 }
 const Rows = forwardRef<any, IRows<any>>(
   (
@@ -79,7 +72,7 @@ const Rows = forwardRef<any, IRows<any>>(
       dragDropFreezeRow,
       unFreezeRow,
     },
-    ref
+    ref,
   ) => {
     return (
       <>
@@ -144,8 +137,8 @@ const Rows = forwardRef<any, IRows<any>>(
           handleCheck={handleCheck}
         />
       </>
-    );
-  }
-);
+    )
+  },
+)
 
-export default Rows;
+export default Rows

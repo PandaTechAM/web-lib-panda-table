@@ -1,18 +1,15 @@
-import React, { useState } from "react";
-import Pagination from "../../components/pagination";
-import Select from "../../components/select/select";
-import { IPageSizes, ISelected } from "../../Models/table.models";
-import DropdownSvgIcon from "../../svgIcons/DropdownSvgIcon";
-import "./index.scss";
+import React, { useState } from 'react'
+import Pagination from '../../components/pagination'
+import Select from '../../components/select/select'
+import { IPageSizes, ISelected } from '../../Models/table.models'
+import DropdownSvgIcon from '../../svgIcons/DropdownSvgIcon'
+import './index.scss'
 interface IFooterPagination {
-  pageSizeStructure?: IPageSizes[];
-  pagesTotalCount?: number;
-  currPage?: number;
-  selectedPageSizeId: ISelected;
-  getPageRowsCountAndCurrentPage?(
-    pageNumber: number,
-    rowsCount: IPageSizes
-  ): void;
+  pageSizeStructure?: IPageSizes[]
+  pagesTotalCount?: number
+  currPage?: number
+  selectedPageSizeId: ISelected
+  getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
 }
 const FooterPagination = ({
   pageSizeStructure,
@@ -21,54 +18,50 @@ const FooterPagination = ({
   selectedPageSizeId,
   getPageRowsCountAndCurrentPage,
 }: IFooterPagination) => {
-  const [isOpenList, setOpen] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<number>(currPage);
-  const [selectedPage, setSelectedPage] =
-    useState<ISelected>(selectedPageSizeId);
+  const [isOpenList, setOpen] = useState<boolean>(false)
+  const [currentPage, setCurrentPage] = useState<number>(currPage)
+  const [selectedPage, setSelectedPage] = useState<ISelected>(selectedPageSizeId)
 
   const setIsOpenList = () => {
-    setOpen((prev) => !prev);
-  };
+    setOpen((prev) => !prev)
+  }
 
   const handleSelectItem = (options: IPageSizes) => {
-    setSelectedPage({ id: options.id });
-    setCurrentPage(1);
+    setSelectedPage({ id: options.id })
+    setCurrentPage(1)
     if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
-      getPageRowsCountAndCurrentPage(1, pageSizeStructure[options.id - 1]);
+      getPageRowsCountAndCurrentPage(1, pageSizeStructure[options.id - 1])
     }
-  };
+  }
   const handleChangePage = (option: number) => {
-    setCurrentPage(option);
+    setCurrentPage(option)
     if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
-      getPageRowsCountAndCurrentPage(
-        option,
-        pageSizeStructure[selectedPage.id - 1]
-      );
+      getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1])
     }
-  };
+  }
 
   return (
     <>
       {pageSizeStructure && selectedPage ? (
         <div
-          className="G-justify-between G-align-center"
+          className='G-justify-between G-align-center'
           // style={{ width: "138px" }}
         >
           <div>Show</div>
           <div
             style={{
-              fontSize: "16px",
+              fontSize: '16px',
             }}
           ></div>
           <Select
             optionsList={pageSizeStructure}
             value={selectedPage.id}
-            selectedNameKey={"count"}
-            selectedValueKey={"id"}
+            selectedNameKey={'count'}
+            selectedValueKey={'id'}
             onChange={handleSelectItem}
             isOpenList={isOpenList}
             setIsOpenList={setIsOpenList}
-            customClass="G-Select-container"
+            customClass='G-Select-container'
             ButtonSvg={DropdownSvgIcon}
           />
           <div>Rows</div>
@@ -76,17 +69,13 @@ const FooterPagination = ({
             onPageChange={handleChangePage}
             totalCount={pagesTotalCount}
             currentPage={currentPage}
-            pageSizeStructure={
-              pageSizeStructure && selectedPage
-                ? pageSizeStructure[selectedPage.id - 1].count
-                : 15
-            }
-            className={"G-pagionation"}
+            pageSizeStructure={pageSizeStructure && selectedPage ? pageSizeStructure[selectedPage.id - 1].count : 15}
+            className={'G-pagionation'}
           />
         </div>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default FooterPagination;
+export default FooterPagination
