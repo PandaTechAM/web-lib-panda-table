@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { TextField } from '@mui/material'
-import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
-import { validateRangeColumns } from '../../../../../utils'
+import React, { useEffect, useState } from "react";
+import { TextField } from "@mui/material";
+import {
+  IComparisonType,
+  ItemFields,
+} from "../../../../../Models/table.models";
+import { validateRangeColumns } from "../../../../../utils";
 interface IBetweenNumbers {
-  columnsSizes: string
-  item: IComparisonType
-  advancedSettings: boolean
-  filterTypeing: ItemFields
-  isDisabled: boolean
-  columnName: string
-  checkIsDisabled: (option: boolean) => void
-  setCoulmnName: (name: string) => void
-  handleChangeRange(value: string, type: string): void
+  columnsSizes: string;
+  item: IComparisonType;
+  advancedSettings: boolean;
+  filterTypeing: ItemFields;
+  isDisabled: boolean;
+  columnName: string;
+  checkIsDisabled: (option: boolean) => void;
+  setCoulmnName: (name: string) => void;
+  handleChangeRange(value: string, type: string): void;
 }
 const BetweenNumbers = ({
   columnsSizes,
@@ -24,124 +27,138 @@ const BetweenNumbers = ({
   handleChangeRange,
   checkIsDisabled,
 }: IBetweenNumbers) => {
-  const [val, setVal] = useState({ from: '', to: '' })
-  const [errMessage, setErrMessage] = useState({ from: '', to: '' })
+  const [val, setVal] = useState({ from: "", to: "" });
+  const [errMessage, setErrMessage] = useState({ from: "", to: "" });
   const [isEnabled, setIsEnabled] = useState({
     isEnabledFrom: false,
     isEnabledTo: false,
-  })
+  });
 
-  const handleChangeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const stateValues = val
-    const { value, name } = event.target
+  const handleChangeInputValue = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const stateValues = val;
+    const { value, name } = event.target;
     if (stateValues.to === undefined) {
-      stateValues.to = ''
+      stateValues.to = "";
     }
     if (stateValues.from === undefined) {
-      stateValues.from = ''
+      stateValues.from = "";
     }
-    setErrMessage({ from: '', to: '' })
-    if (name === 'to') {
+    setErrMessage({ from: "", to: "" });
+    if (name === "to") {
       if (!validateRangeColumns(stateValues.from, value, item, setErrMessage)) {
-        handleChangeRange(stateValues.from, value)
+        handleChangeRange(stateValues.from, value);
       } else {
-        checkIsDisabled(true)
+        checkIsDisabled(true);
       }
     } else {
       if (!validateRangeColumns(value, stateValues.to, item, setErrMessage)) {
-        handleChangeRange(value, stateValues.to)
+        handleChangeRange(value, stateValues.to);
       } else {
-        checkIsDisabled(true)
+        checkIsDisabled(true);
       }
     }
     setVal((prev) => {
-      return { ...prev, [name]: value }
-    })
-  }
+      return { ...prev, [name]: value };
+    });
+  };
   const handleOpenList = (type: string) => {
-    if (type === 'from') {
+    if (type === "from") {
       setIsEnabled((prev) => {
-        return { ...prev, isEnabledFrom: true }
-      })
+        return { ...prev, isEnabledFrom: true };
+      });
     } else {
       setIsEnabled((prev) => {
-        return { ...prev, isEnabledTo: true }
-      })
+        return { ...prev, isEnabledTo: true };
+      });
     }
-    setCoulmnName(item.ColumnName)
-  }
+    setCoulmnName(item.ColumnName);
+  };
   const getError = (messageLength: number) => {
     if (!isEnabled.isEnabledFrom && !isEnabled.isEnabledTo && messageLength) {
-      return true
+      return true;
     }
 
-    return false
-  }
+    return false;
+  };
 
   const errMessageText = (errMessage: string) => {
-    if (!isEnabled.isEnabledFrom && !isEnabled.isEnabledTo && errMessage.length) {
-      return errMessage
+    if (
+      !isEnabled.isEnabledFrom &&
+      !isEnabled.isEnabledTo &&
+      errMessage.length
+    ) {
+      return errMessage;
     }
-    return ''
-  }
+    return "";
+  };
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
-      let newValues: string[] = filterTypeing.Values
-      if (item.ColumnType !== 'Text') {
-        newValues = filterTypeing.Values.map((item: number) => item + '')
+      let newValues: string[] = filterTypeing.Values;
+      if (item.ColumnType !== "Text") {
+        newValues = filterTypeing.Values.map((item: number) => item + "");
       }
-      setVal({ from: newValues[0], to: newValues[1] })
+      setVal({ from: newValues[0], to: newValues[1] });
     }
-  }, [filterTypeing])
+  }, [filterTypeing]);
 
   useEffect(() => {
-    if (!isEnabled.isEnabledFrom && !isEnabled.isEnabledTo && errMessage.from == '' && errMessage.to == '') {
-      setCoulmnName('')
+    if (
+      !isEnabled.isEnabledFrom &&
+      !isEnabled.isEnabledTo &&
+      errMessage.from == "" &&
+      errMessage.to == ""
+    ) {
+      setCoulmnName("");
     }
-  }, [isEnabled])
+  }, [isEnabled]);
 
   return (
-    <div className='G-justify-between' style={{ width: advancedSettings ? columnsSizes : '100%' }}>
+    <div
+      className="G-justify-between"
+      style={{ width: advancedSettings ? columnsSizes : "100%" }}
+    >
       <TextField
-        id='outlined-basic'
-        label='From'
-        variant='outlined'
-        name='from'
+        id="outlined-basic"
+        label="From"
+        variant="outlined"
+        name="from"
         onBlur={() => {
           setIsEnabled((prev) => {
-            return { ...prev, isEnabledFrom: false }
-          })
+            return { ...prev, isEnabledFrom: false };
+          });
         }}
-        onFocus={() => handleOpenList('from')}
+        onFocus={() => handleOpenList("from")}
         error={getError(errMessage.from.length)}
         helperText={errMessageText(errMessage.from)}
         disabled={columnName !== item.ColumnName && isDisabled}
         sx={{
-          width: '48%',
+          width: "48%",
         }}
         value={val.from}
         onChange={handleChangeInputValue}
       />
       <TextField
-        id='outlined-basic'
-        label='To'
-        variant='outlined'
-        name='to'
+        id="outlined-basic"
+        label="To"
+        variant="outlined"
+        name="to"
         onBlur={() => {
           setIsEnabled((prev) => {
-            return { ...prev, isEnabledTo: false }
-          })
+            return { ...prev, isEnabledTo: false };
+          });
         }}
-        onFocus={() => handleOpenList('to')}
+        onFocus={() => handleOpenList("to")}
         error={getError(errMessage.to.length)}
         helperText={errMessageText(errMessage.to)}
         disabled={columnName !== item.ColumnName && isDisabled}
-        sx={{ width: '48%' }}
+        sx={{ width: "48%" }}
         value={val.to}
         onChange={handleChangeInputValue}
       />
     </div>
-  )
-}
+  );
+};
 
-export default BetweenNumbers
+export default BetweenNumbers;
