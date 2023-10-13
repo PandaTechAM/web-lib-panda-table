@@ -1,38 +1,34 @@
-import React, { useState, Fragment } from "react";
-import { Button, Menu } from "@mui/material";
-import FilterSvgIcon from "../../../svgIcons/FilterSvgIcon";
-import {
-  IComparisonType,
-  IFiltersTypes,
-  ItemFields,
-} from "../../../Models/table.models";
-import APIFilter from "./FiltersPerColumn/apiFilter";
-import LocalFilter from "./FiltersPerColumn/localFiltering";
-import AdvancedFilerEnabled from "../../../svgIcons/AdvancedFilerEnabledSvgIcon";
-import AdvancedFilerDisabled from "../../../svgIcons/AdvancedFilerDisabledSvgIcon";
-import PopUp from "../../../components/popUp";
+import React, { useState, Fragment } from 'react'
+import { Button, Menu } from '@mui/material'
+import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
+import { IComparisonType, IFiltersTypes, ItemFields } from '../../../Models/table.models'
+import APIFilter from './FiltersPerColumn/apiFilter'
+import LocalFilter from './FiltersPerColumn/localFiltering'
+import AdvancedFilerEnabled from '../../../svgIcons/AdvancedFilerEnabledSvgIcon'
+import AdvancedFilerDisabled from '../../../svgIcons/AdvancedFilerDisabledSvgIcon'
+import PopUp from '../../../components/popUp'
 
 interface IFilter {
-  data: any;
-  filterColumns?: IComparisonType[];
-  perColumnListForFilters?: string[];
-  filterDataForRequest?: ItemFields[];
-  isLocalFilter?: boolean;
-  isLoadingFilters?: boolean;
-  filtersTypes?: IFiltersTypes[];
-  perColumnTotalCount?: number;
-  getFilter?(option: ItemFields[], ColumnName?: string): void;
-  getFilteredDataForTable?(): void;
-  handleChangePagePerFilterField?(): void;
+  data: any
+  filterColumns?: IComparisonType[]
+  perColumnListForFilters?: string[]
+  filterDataForRequest?: ItemFields[]
+  isLocalFilter?: boolean
+  isLoadingFilters?: boolean
+  filtersTypes?: IFiltersTypes[]
+  perColumnTotalCount?: number
+  getFilter?(option: ItemFields[], ColumnName?: string): void
+  getFilteredDataForTable?(): void
+  handleChangePagePerFilterField?(): void
 }
 const filtersButton = {
-  display: "flex",
-  justifyContent: "start",
-  backgroundColor: "white",
-  border: "none",
-  margin: "0 30px",
-  padding: "0px 10px",
-};
+  display: 'flex',
+  justifyContent: 'start',
+  backgroundColor: 'white',
+  border: 'none',
+  margin: '0 30px',
+  padding: '0px 10px',
+}
 const Filter = ({
   data,
   filterColumns,
@@ -46,77 +42,66 @@ const Filter = ({
   getFilter,
   getFilteredDataForTable,
 }: IFilter) => {
-  const [advancedSettings, setAdvancedSettings] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const [advancedSettings, setAdvancedSettings] = useState<boolean>(false)
+  const [isDisabled, setIsDisabled] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
   const handleCancel = () => {
-    getFilter?.([], "");
-  };
+    getFilter?.([], '')
+  }
   const checkIsDisabled = (option: boolean) => {
-    setIsDisabled(option);
-  };
+    setIsDisabled(option)
+  }
   const getFilteredData = (option: ItemFields, ColumnName?: string) => {
-    const updatedRow = filterDataForRequest ? [...filterDataForRequest] : [];
+    const updatedRow = filterDataForRequest ? [...filterDataForRequest] : []
     if (option.Values.length === 0) {
-      const indexToRemove = updatedRow.findIndex(
-        (item) => item.PropertyName === option.PropertyName
-      );
+      const indexToRemove = updatedRow.findIndex((item) => item.PropertyName === option.PropertyName)
       if (indexToRemove !== -1) {
-        updatedRow.splice(indexToRemove, 1);
+        updatedRow.splice(indexToRemove, 1)
       }
     } else {
-      const existingItemIndex = updatedRow.findIndex(
-        (item) => item.PropertyName === option.PropertyName
-      );
+      const existingItemIndex = updatedRow.findIndex((item) => item.PropertyName === option.PropertyName)
       if (existingItemIndex !== -1) {
-        updatedRow[existingItemIndex] = option;
+        updatedRow[existingItemIndex] = option
       } else {
-        updatedRow.push(option);
+        updatedRow.push(option)
       }
     }
-    getFilter?.(updatedRow, ColumnName);
-  };
+    getFilter?.(updatedRow, ColumnName)
+  }
 
   return (
     <div>
       <PopUp
         ActiveIcon={FilterSvgIcon}
-        modalName="Filter By"
+        modalName='Filter By'
         style={filtersButton}
         open={open}
         anchorEl={anchorEl}
         handleClick={handleClick}
         handleClose={handleClose}
       >
-        <div style={{ padding: "48px 32px", width: 553 }}>
-          <div style={{ width: "100%" }} className="G-justify-end">
+        <div style={{ padding: '48px 32px', width: 553 }}>
+          <div style={{ width: '100%' }} className='G-justify-end'>
             <div
               onClick={() => setAdvancedSettings((prev) => !prev)}
               style={{
-                backgroundColor: "white",
-                width: "auto",
-                color: advancedSettings ? "#4844C5" : "black",
-                cursor: "pointer",
+                backgroundColor: 'white',
+                width: 'auto',
+                color: advancedSettings ? '#4844C5' : 'black',
+                cursor: 'pointer',
               }}
             >
-              {advancedSettings ? (
-                <AdvancedFilerDisabled />
-              ) : (
-                <AdvancedFilerEnabled />
-              )}
+              {advancedSettings ? <AdvancedFilerDisabled /> : <AdvancedFilerEnabled />}
             </div>
           </div>
-          <ul
-            className="G-dropdown-list P-Filters"
-            style={{ border: "none", padding: 0 }}
-          >
+          <ul className='G-dropdown-list P-Filters' style={{ border: 'none', padding: 0 }}>
             {isLocalFilter ? (
               filterColumns?.length ? (
                 filterColumns.map((item: IComparisonType, index) => {
@@ -135,21 +120,17 @@ const Filter = ({
                                   typeElem={type}
                                   isDisabled={isDisabled}
                                   perColumnTotalCount={perColumnTotalCount}
-                                  handleChangePagePerFilterField={
-                                    handleChangePagePerFilterField
-                                  }
+                                  handleChangePagePerFilterField={handleChangePagePerFilterField}
                                   checkIsDisabled={checkIsDisabled}
                                   filteredColumn={filterDataForRequest}
-                                  perColumnListForFilters={
-                                    perColumnListForFilters
-                                  }
+                                  perColumnListForFilters={perColumnListForFilters}
                                   getFilteredData={getFilteredData}
                                 />
                               </Fragment>
-                            );
+                            )
                         })}
                     </Fragment>
-                  );
+                  )
                 })
               ) : (
                 <div>something went wrong</div>
@@ -166,30 +147,30 @@ const Filter = ({
                     perColumnListForFilters={perColumnListForFilters}
                     getFilteredData={getFilteredData}
                   />
-                );
+                )
               })
             )}
             <li>
               <Button
-                size="large"
+                size='large'
                 fullWidth
                 disabled={isDisabled}
                 style={{
                   marginBottom: 16,
-                  boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.16)",
+                  boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.16)',
                 }}
                 onClick={(e) => {
-                  getFilteredDataForTable?.();
-                  handleClose();
+                  getFilteredDataForTable?.()
+                  handleClose()
                 }}
               >
                 Submit
               </Button>
               <Button
-                size="large"
-                variant="outlined"
+                size='large'
+                variant='outlined'
                 fullWidth
-                style={{ boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.04)" }}
+                style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.04)' }}
                 onClick={handleCancel}
               >
                 Clear All Filters
@@ -199,7 +180,7 @@ const Filter = ({
         </div>
       </PopUp>
     </div>
-  );
-};
+  )
+}
 
-export default Filter;
+export default Filter
