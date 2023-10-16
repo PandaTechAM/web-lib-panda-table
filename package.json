@@ -1,6 +1,6 @@
 {
   "name": "beautiful-react-table",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "description": "My first react typescript package",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -16,13 +16,14 @@
     "prepublishOnly": "npm run prettier && npm run lint"
   },
   "keywords": [
-    "demo",
+    "table",
     "react",
     "typescript",
     "awesome-project",
     "react-beautiful-table",
     "beautiful-react-table",
-    "table"
+    "react-table",
+    "dnd-table"
   ],
   "author": "Samvel Baghdasaryan (samvel97)",
   "license": "MIT",

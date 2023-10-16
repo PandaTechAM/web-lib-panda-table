@@ -7,6 +7,8 @@ beautiful-react-table is a customizable table component for React applications. 
 To install beautiful-react-table, use the following command:
 
 npm install beautiful-react-table
+npm install react-beautiful-dnd
+npm install @mui/material
 
 # Usage
 
@@ -16,211 +18,34 @@ Import the necessary components and interfaces from the "beautiful-react-table" 
 
 import { useState } from "react";
 import {
-  Table,
   IColumnConfig,
   IColumnHeader,
-  IPageSizes,
-  IrowActions,
   IColumnConfigStructure,
   IColumnHeaderStructure,
-  ILinksList,
-  IColumnTotal,
-  IColumnTotalStructure,
-  ITotalList,
+  // ... other imports ...
 } from "beautiful-react-table";
 
 function App() {
+
   const [data, setData] = useState<any[]>([
     {
       id: 1,
-      easywalletAgentId: 179136,
+      agentId: 179136,
       agentCreationDate: "2023-03-22T00:00:00",
       agentName:
-        "Armen Virabyan test Armen Virabyan test Armen Virabyan test Armen Virabyan test",
+        "Lorem Ipsum is simply dummy text of the printing and typesetting",
     },
     {
       id: 2,
-      easywalletAgentId: 494845,
+      agentId: 494845,
       agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Armen Virabyan test Ar",
+      agentName: "There are many variations of passages of Lorem Ipsum available",
     },
     {
       id: 3,
-      easywalletAgentId: 494845,
+      agentId: 494845,
       agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhaaaannisyan Hovik test",
-    },
-    {
-      id: 4,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Armen Vsairabyan test Armen Viraby",
-    },
-    {
-      id: 5,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Saroyan",
-    },
-    {
-      id: 6,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hayroyan",
-    },
-    {
-      id: 7,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhanncsaisyan Hovik test",
-    },
-    {
-      id: 8,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhanncx c isyan Hovik test",
-    },
-    {
-      id: 9,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhqwqasannisyan Hovik test",
-    },
-    {
-      id: 10,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovzxczxczxchannisyan Hovik test",
-    },
-    {
-      id: 11,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhannisyan vfveHovik test",
-    },
-    {
-      id: 12,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhannisyan Ho wwvik test",
-    },
-    {
-      id: 13,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhwwwwannisyan Hovik test",
-    },
-    {
-      id: 14,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhannisyan Hovik testtjnty",
-    },
-    {
-      id: 15,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhannisyan Hovik testcvbcv ",
-    },
-    {
-      id: 16,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhannisyan Hcccc",
-    },
-    {
-      id: 17,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hovhannisyan Hovik kjnvkj",
-    },
-    {
-      id: 18,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "sjkdvn Hovik test",
-    },
-    {
-      id: 19,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Hakobyan Gago",
-    },
-    {
-      id: 20,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Frangulyan Rshtun",
-    },
-    {
-      id: 21,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "ssssssvik test",
-    },
-    {
-      id: 22,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Mxitaryan Ara",
-    },
-  ]);
-  const [rowActions] = useState<IrowActions[]>([
-    {
-      action: (e, item, index) => {
-        e.stopPropagation();
-        console.log(item);
-      },
-    },
-    {
-      action: (e, item, index) => {
-        e.stopPropagation();
-
-        console.log(item);
-      },
-    },
-  ]);
-  const [pageSize] = useState<IPageSizes[]>([
-    { id: 1, count: 10 },
-    { id: 2, count: 25 },
-    { id: 3, count: 50 },
-    { id: 4, count: 100 },
-  ]);
-  const [links] = useState<ILinksList[]>([
-    {
-      id: 1,
-      name: "Overpayments",
-      action: (option: any) => {
-        console.log(option, "1");
-      },
-    },
-    {
-      id: 2,
-      name: "Estate Owners",
-      action: (option: any) => {
-        console.log(option, "2");
-      },
-    },
-    {
-      id: 3,
-      name: "Condominium Association Fee Altering",
-      action: (option: any) => {
-        console.log(option, "3");
-      },
-    },
-    {
-      id: 4,
-      name: "Payments",
-      action: (option: any) => {
-        console.log(option, 4);
-      },
-    },
-    {
-      id: 5,
-      name: "Debts",
-      action: (option: any) => {
-        console.log(option, 5);
-      },
+      agentName: "Contrary to popular belief, Lorem Ipsum is not simply random text",
     },
   ]);
 
@@ -243,60 +68,6 @@ function App() {
       title: "Surename",
       icon: "icon-Frame-73",
     },
-    {
-      id: 4,
-      order: 4,
-      title: "Email",
-      icon: "icon-Frame-73",
-    },
-    {
-      id: 5,
-      order: 5,
-      title: "Age",
-      icon: "icon-Frame-73",
-    },
-    {
-      id: 6,
-      order: 6,
-      title: "Address",
-      icon: "icon-Frame-73",
-    },
-    {
-      id: 7,
-      order: 7,
-      title: "Phone",
-      icon: "icon-Frame-73",
-    },
-    {
-      id: 8,
-      order: 8,
-      title: "Money",
-      icon: "icon-Frame-73",
-    },
-    {
-      id: 9,
-      order: 9,
-      title: "BirthDate",
-      icon: "icon-Frame-73",
-    },
-    {
-      id: 10,
-      order: 9,
-      title: "isMarried",
-      icon: "icon-Frame-73",
-    },
-    {
-      id: 11,
-      order: 9,
-      title: "isWorking",
-      icon: "icon-Frame-73",
-    },
-    {
-      id: 12,
-      order: 9,
-      title: "isHappy",
-      icon: "icon-Frame-73",
-    },
   ]);
   const [columnConfig] = useState<IColumnConfig<any>[]>([
     {
@@ -316,7 +87,25 @@ function App() {
           <div className="G-row-item">{row.easywalletAgentId}</div>
         </div>
       ),
-      customStyle: { backgroundColor: "white" },
+      footer: (row: any) => (
+        <PopUp
+          open={false}
+          handleClick={() => console.log(1)}
+          handleClose={() => console.log(2)}
+          anchorEl={null}
+          modalName={
+            row.aggregate
+              ? `Total ${formatPrice(row.aggregate, row.aggregateType)}`
+              : ""
+          }
+        >
+          <ul className="G-list">
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>;
+            })}
+          </ul>
+        </PopUp>
+      ),
       isVisible: true,
     },
     {
@@ -336,7 +125,25 @@ function App() {
           <div className="G-row-item">{row.agentName}</div>
         </div>
       ),
-      customStyle: { backgroundColor: "white" },
+      footer: (row: any) => (
+        <PopUp
+          open={false}
+          handleClick={() => console.log(1)}
+          handleClose={() => console.log(2)}
+          anchorEl={null}
+          modalName={
+            row.aggregate
+              ? `Total ${formatPrice(row.aggregate, row.aggregateType)}`
+              : ""
+          }
+        >
+          <ul className="G-list">
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>;
+            })}
+          </ul>
+        </PopUp>
+      ),
       isVisible: true,
     },
     {
@@ -356,227 +163,50 @@ function App() {
           <div className="G-row-item">{row.agentCreationDate}</div>
         </div>
       ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 4,
-      columnName: "Email",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
+      footer: (row: any) => (
+        <PopUp
+          open={false}
+          handleClick={() => console.log(1)}
+          handleClose={() => console.log(2)}
+          anchorEl={null}
+          modalName={
+            row.aggregate
+              ? `Total ${formatPrice(row.aggregate, row.aggregateType)}`
+              : ""
+          }
         >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
+          <ul className="G-list">
+            {listForDropdown?.map((item: any, index: any) => {
+              return <li key={item.id}>{item.title}</li>;
+            })}
+          </ul>
+        </PopUp>
       ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 5,
-      columnName: "Age",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
-      ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.gender ? row.gender : "-"}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 6,
-      columnName: "Address",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
-      ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 7,
-      columnName: "Phone",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item"> {row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
-      ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 8,
-      columnName: "Money",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
-      ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 9,
-      columnName: "birthDate",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
-      ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 10,
-      columnName: "isMarried",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
-      ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 11,
-      columnName: "isWorking",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
-      ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
-      isVisible: true,
-    },
-    {
-      id: 12,
-      columnName: "isHappy",
-      title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
-        </div>
-      ),
-      setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
-        </div>
-      ),
-      customStyle: { backgroundColor: "white" },
       isVisible: true,
     },
   ]);
-  const [rightFreezeConfig] = useState<IColumnConfig<any>[]>([
-    {
-      title: "",
-      setRow: () => (
-        <div className={`G-center G-table-icon`}>
-          <p className="G-row-item">View Details</p>
-        </div>
-      ),
-      isVisible: true,
-      width: 170,
-    },
-    {
-      title: "",
-      setRow: () => (
-        <div className={`G-center G-table-icon`}>
-          <p className="G-row-item">View Details</p>
-        </div>
-      ),
-      isVisible: true,
-      width: 60,
-    },
-  ]);
-  const [grandTotals, setGrandTotals] = useState<IColumnTotal[]>([
-    { id: 1, title: null },
-    { id: 2, title: 40000 },
-    { id: 3, title: 35000 },
-    { id: 4, title: 150000 },
-    { id: 5, title: null },
-    { id: 6, title: 50 },
-    { id: 7, title: 100 },
-    { id: 8, title: 5000000 },
-    { id: 9, title: 9960 },
-    { id: 10, title: 9960 },
-    { id: 11, title: 99060 },
-    { id: 12, title: 90960 },
-  ]);
-  const [columnsConfigStructure, setColumnsConfigStructures] = useState<
+
+  return (
+    <div style={{ width: "80%", margin: "0 auto" }}>
+      <Table
+        data={data} // TableData
+        columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
+        columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
+        // ... other props ...
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
+# Table Structure
+
+We can drag/drop, hide and freeze columns vertical and horizontal.
+
+```JSX
+const [columnsConfigStructure, setColumnsConfigStructures] = useState<
     IColumnConfigStructure<any>
   >({
     [StructureConfig.Main]: {
@@ -588,6 +218,7 @@ function App() {
       items: [],
     },
   });
+
   const [columnsHeaderStructure, setColumnHeaderStructures] =
     useState<IColumnHeaderStructure>({
       [StructureConfig.Main]: {
@@ -599,33 +230,114 @@ function App() {
         items: [],
       },
     });
-  const [columnsTotalStructure, setColumnTotalStructures] =
-    useState<IColumnTotalStructure>({
-      [StructureConfig.Main]: {
-        name: "Columns",
-        items: grandTotals,
+```
+
+# Hovered Row Actions
+
+When we use isHoveredRow props, we need to make actions.
+We have default icons, but we can make custom.
+
+```JSX
+const [rowActions] = useState<IrowActions[]>([
+    {
+      action: (e, item, index) => {
+        e.stopPropagation();
       },
-      [StructureConfig.Freezed]: {
-        name: "Freezed",
-        items: [],
+    },
+    {
+      action: (e, item, index) => {
+        e.stopPropagation();
       },
-    });
-  const [allDataFromDb] = useState<any[]>([
+    },
+  ]);
+```
+
+# Page Size Config
+
+```JSX
+const [pageSize] = useState<IPageSizes[]>([
+    { id: 1, count: 10 },
+    { id: 2, count: 25 },
+    { id: 3, count: 50 },
+    { id: 4, count: 100 },
+  ]);
+```
+
+# Dropdown Menu Config
+
+When we use
+
+```JSX
+freezedRightSide={"dropdown"}
+```
+
+, we have to make config for list.
+
+```JSX
+const [links] = useState<ILinksList[]>([
     {
       id: 1,
-      easywalletAgentId: 179136,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName:
-        "Armen Virabyan test Armen Virabyan test Armen Virabyan test Armen Virabyan test",
+      name: "Overpayments",
+      action: (option: any) => {
+      },
     },
     {
       id: 2,
-      easywalletAgentId: 494845,
-      agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Armen Virabyan test Ar",
+      name: "Estate Owners",
+      action: (option: any) => {
+      },
     },
   ]);
-  const [listForDropdown] = useState<ITotalList[]>([
+```
+
+# Right Freezed Column Config
+
+We can create costume freezed columns in right side.
+
+```JSX
+const [rightFreezeConfig] = useState<IColumnConfig<any>[]>([
+    {
+      id: 1,
+      title: (row: IColumnHeader, name: string) => (
+        <div
+          className={`G-center G-table-icon`}
+        >
+          <p className="G-row-item">{row.title}</p>
+        </div>
+      ),
+      setRow: () => (
+        <div className={`G-center G-table-icon`}>
+          <p className="G-row-item">View Details</p>
+        </div>
+      ),
+      isVisible: true,
+    },
+    {
+      id: 2,
+      title: (row: IColumnHeader, name: string) => (
+        <div
+          className={`G-center G-table-icon`}
+        >
+          <p className="G-row-item">{row.title}</p>
+        </div>
+      ),
+      setRow: () => (
+        <div className={`G-center G-table-icon`}>
+          <p className="G-row-item">View Details</p>
+        </div>
+      ),
+      isVisible: true,
+    },
+  ]);
+```
+
+# Aggregates
+
+List for filtering aggregates
+Works with PandaTech.IEnumerableFilters nuget
+
+```JSX
+const [listForDropdown] = useState<ITotalList[]>([
     {
       id: 1,
       title: "AVG",
@@ -643,101 +355,41 @@ function App() {
       title: "SUM",
     },
   ]);
-  const [dropdoownSelectedItem, setDropdoownSelectedItem] = useState<String>(
-    listForDropdown[0].title
-  );
+```
 
-  const setColumnsConfigStructure = (option: IColumnConfigStructure<any>) => {
+# Filters
+
+Filters works with PandaTech.IEnumerableFilters nuget
+
+```JSX
+  const [selectedColumnName, setSelectedColumnName] = useState<string>("");
+  const [pagePerFilterField, setPagePerFilterField] = useState<number>(1);
+  const [perColumnTotalCount, setPerColumnTotalCount] = useState<number>(0);
+  const [filterDataForRequest, setFilterDataForRequest] = useState<ItemFields[]>([]);
+  const [totalPagesCount, setTotalPagesCount] = useState<number>(0);
+  const [isLoadingFilters, setIsLoading] = useState<boolean>(false);
+  const [perColumnListForFilters, setPerColumnListForFilters] = useState<string[]>();
+```
+
+# Functions
+
+```JSX
+const setColumnsConfigStructure = (option: IColumnConfigStructure<any>) => {
     setColumnsConfigStructures(option);
   };
   const setColumnHeaderStructure = (option: IColumnHeaderStructure) => {
     setColumnHeaderStructures(option);
   };
-
-  const handleEdit = (option: any) => {
-    console.log(option);
-  };
-  const handleDelete = (option: any[]) => {
-    console.log(option);
-  };
-  const RightSideSelfAction = (option: number | string) => {
-    console.log(option);
-  };
-  const storeStructure = () => {
-    console.log(12);
-  };
-  const setTotalType = (option: string) => {
-    console.log(option);
-    setDropdoownSelectedItem(option);
-  };
-
-  const getRow = (row: any) => {
-    console.log(row);
-  };
-
-  const getPageRowsCountAndCurrentPage = (
-    pageNumber: number,
-    rowsCount: number
-  ) => {
-    console.log(pageNumber, rowsCount);
-  };
-
-  return (
-    <div style={{ width: "80%", margin: "0 auto" }}>
-      <Table
-        data={data} // TableData
-        allDataFromDb={allDataFromDb}
-        columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
-        columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
-        perColumnListForFilters={perColumnListForFilters} // per column list for filters
-        rightFreezeConfig={rightFreezeConfig} // List for multiple FreezeColumns in the right side of the table
-        columnMinWidth={200} // Column's Width / use when you need to have equal columns - ex. FreezeColumns
-        headerHeight={64}
-        footerHeight={48}
-        leftFreezedColumnWidth={72}
-        rightFreezedColumnWidth={64}
-        pageSizeStructure={pageSize} // Per page data count
-        pagesTotalCount={total} // Page's total count
-        currentPage={1} // Current Page
-        multipleCheck // Multiple check for delete or download
-        isStickyFirstColumn // Sticky first column
-        rowsFreezeAction={false} // is active freeze fnction for rows
-        isHoveredRow // while hover per row will be highlighted actions
-        rowActions={rowActions} // Array of actions and theyr's icons / must be active isHoveredRow
-        FreezeIcon={FreezeSvgIcon} //freeze row action icon / must be added setDataWithPinnedRows function and activate isHoveredRow
-        RightSideIcon={ExSvgIcon} // SVG icon for right side action
-        freezedRightSideVisible // is visible Freezed right side
-        freezedRightSide={'dropdown'} // is dropdown
-        links={links} // Array of links // have to check freezedRightSide - dropdown
-        headerColor={'#F3F6F8'} // Header color
-        footerColor={'#F3F6F8'} // Footer color
-        aggregates
-        freezedLeftSideColor={'silver'} // freezedLeft side color
-        freezedRightSideColor={'silver'} // freezedRight side color
-        draggableColumns //Is column's draggable
-        filterColumns={tableColumns.Columns} // filter columns
-        filtersTypes={FiltersTypes.FilteringTypes} // filter types
-        filterDataForRequest={filterDataForRequest}
-        isLoadingFilters={isLoadingFilters}
-        setColumnsConfigStructure={setColumnsConfigStructure} // set changed config structure - pin/hide/drag-drop
-        setColumnHeaderStructure={setColumnHeaderStructure} // set changed header structure - pin/hide/drag-drop
-        getRow={getRow} // get row data
-        handleEdit={handleEdit} // will be visible when active multipleCheck
-        handleDelete={handleDelete} // will be visible when active multipleCheck
-        getFilteredData={getFilteredData} // get filtered data
-        getFilteredDataForTable={getFilteredDataForTable}
-        handleChangePagePerFilterField={handleChangePagePerFilterField} // activating load more data for filter fields
-        getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage} // page count and current page
-        storeStructure={storeStructure} // Save columns structure on DB
-        getDownloadType={getDownloadType} // get download type CSV OR XLSX
-        RightSideSelfAction={RightSideSelfAction} // FreezedRightSideSelfAction
-      />
-    </div>
-  );
-}
-
-
-export default App;
+  const handleEdit = (option: any) => {};
+  const handleDelete = (option: any[] | string) => {};
+  const RightSideSelfAction = (option: number | string) => {};
+  const storeStructure = () => {};
+  const getRow = (row: any) => {};
+  const getPageRowsCountAndCurrentPage = (pageNumber: number, rowsCount: IPageSizes) => {};
+  const handleChangePagePerFilterField = () => {};
+  const getFilteredDataForTable = (option?: ItemFields[]) => {};
+  const getDownloadType = (option: string, checkedRows: any[] | string) => {};
+  const customHeaderAction = (option: any[] | string) => ReactNode;
 ```
 
 # Props
@@ -752,7 +404,7 @@ allDataFromDb (optional): An array of objects representing the complete data set
 columnsTotalStructure (optional): An object representing the column total structure.
 pageSize (optional): An array of page sizes for pagination.
 links (optional): An array of link items for navigation.
-listForDropdown (optional): An Array for choose footer items type
+listForDropdown (optional): An array for choosing footer items type.
 rowActions (optional): An array of row actions for each table row.
 selectedPage (optional): An object representing the currently selected page.
 currentPage (optional): The current page number.
@@ -761,7 +413,7 @@ multipleCheck (optional): Boolean flag to enable multiple row selection.
 isStickyFirstColumn (optional): Boolean flag to enable sticking the first column.
 isHoveredRow (optional): Boolean flag to enable highlighting the hovered row.
 draggableColumns (optional): Boolean flag to enable column reordering.
-freezedRightSideVisible (optional): Boolean flag to make the right side of the table visible even when scrolling horizontally.
+freezedRightSideVisible (optional): is dropdown.
 FreezeIcon (optional): The icon to display for freezing columns.
 headerColor (optional): The color of the table header.
 footerColor (optional): The color of the table footer.
@@ -780,5 +432,5 @@ handleEdit (optional): A function to handle the edit action for a table row.
 handleDelete (optional): A function to handle the delete action for multiple table rows.
 setColumnsConfigStructure (optional): A function to set the column configuration structure.
 setColumnHeaderStructure (optional): A function to set the column header structure.
-handleSelectDataSize (optional): A function to handle the selection of data size for pagination
+handleSelectDataSize (optional): A function to handle the selection of data size for pagination.
 ```

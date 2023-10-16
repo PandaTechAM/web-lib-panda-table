@@ -3,7 +3,6 @@ import { CheckedItems } from '../Models/table.enum'
 
 const useTable = <T extends Object>(
   data: T[],
-  allDataFromDb: T[] | undefined,
   freezedRightSide?: string,
   RightSideSelfAction?: (options: any) => void,
 ) => {
@@ -59,7 +58,6 @@ const useTable = <T extends Object>(
     setSelectedType(CheckedItems.NONE)
   }
   const checkAllDataFromDb = () => {
-    // allDataFromDb && setCheckedRows(allDataFromDb)
     const allRows: T[] = freezedRows.concat(unFreezedRows)
     setCheckedRows(allRows)
     setSelectedType(CheckedItems.SELECTED_ALL)

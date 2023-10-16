@@ -12,7 +12,6 @@ import MainFooter from './MainFooter'
 
 function Table<T extends Object>({
   data = [],
-  allDataFromDb,
   pageSizeStructure,
   pagesTotalCount,
   currentPage,
@@ -49,7 +48,7 @@ function Table<T extends Object>({
   EmptyDataIcon,
   perColumnTotalCount,
   selectedPageSizeId,
-  haveFilters,
+  hasFilters,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -79,15 +78,14 @@ function Table<T extends Object>({
     isCheckedRows,
     unCheck,
     checkAllDataFromDb,
-  } = useTable(data, allDataFromDb, freezedRightSide, RightSideSelfAction)
+  } = useTable(data, freezedRightSide, RightSideSelfAction)
 
   return (
     <div>
-      {(pageSizeStructure && pagesTotalCount) || multipleCheck || draggableColumns ? (
+      {multipleCheck || draggableColumns || hasFilters || checkedRows ? (
         <MainHeader
           columnsConfigStructure={columnsConfigStructure}
           columnsHeaderStructure={columnsHeaderStructure}
-          pageSizeStructure={pageSizeStructure}
           perColumnListForFilters={perColumnListForFilters}
           selectedPageCount={selectedPageCount}
           multipleCheck={multipleCheck}
@@ -100,7 +98,7 @@ function Table<T extends Object>({
           filtersTypes={filtersTypes}
           selectedType={selectedType}
           perColumnTotalCount={perColumnTotalCount}
-          haveFilters={haveFilters}
+          hasFilters={hasFilters}
           handleCheckAll={handleCheckAll}
           handleEdit={handleEdit}
           handleDelete={handleDelete}

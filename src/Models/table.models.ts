@@ -38,7 +38,7 @@ export interface IProps<T extends Object> {
   perColumnTotalCount?: number
   hoverdRowPosition?: number
   selectedPageSizeId?: ISelected
-  haveFilters?: boolean
+  hasFilters?: boolean
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void
@@ -51,7 +51,7 @@ export interface IProps<T extends Object> {
   getFilteredData?(option: any): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
-  getDownloadType: (option: string, checkedRows: T[] | string) => void
+  getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element
 }
 

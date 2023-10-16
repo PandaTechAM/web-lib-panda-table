@@ -53,7 +53,8 @@ const Filter = ({
     setAnchorEl(null)
   }
   const handleCancel = () => {
-    getFilter?.([], '')
+    getFilter?.([], 'ClearAll')
+    handleClose()
   }
   const checkIsDisabled = (option: boolean) => {
     setIsDisabled(option)

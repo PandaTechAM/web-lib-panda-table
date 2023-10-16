@@ -21,7 +21,6 @@ import { CheckedItems } from '../../Models/table.enum'
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
   columnsHeaderStructure: IColumnHeaderStructure
-  pageSizeStructure?: IPageSizes[]
   selectedPageCount?: ISelected
   multipleCheck?: boolean
   data: T[]
@@ -34,7 +33,7 @@ interface IActionsHeader<T extends Object> {
   filtersTypes?: IFiltersTypes[]
   selectedType: string
   perColumnTotalCount?: number
-  haveFilters?: boolean
+  hasFilters?: boolean
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleCheckAll(): void
   setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
@@ -49,7 +48,7 @@ interface IActionsHeader<T extends Object> {
   getFilteredData?(options: any): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
-  getDownloadType: (option: string, checkedRows: T[] | string) => void
+  getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element
 }
 const MainHeader = <T extends Object>({
@@ -66,7 +65,7 @@ const MainHeader = <T extends Object>({
   filtersTypes,
   selectedType,
   perColumnTotalCount,
-  haveFilters,
+  hasFilters,
   handleChangePagePerFilterField,
   unCheck,
   checkAllDataFromDb,
@@ -128,7 +127,7 @@ const MainHeader = <T extends Object>({
         />
       ) : null}
 
-      {haveFilters ? (
+      {hasFilters ? (
         <Filter
           data={data}
           filterColumns={filterColumns}

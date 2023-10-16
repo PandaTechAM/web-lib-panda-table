@@ -710,7 +710,7 @@ function App() {
         filtersTypes={FiltersTypes.FilteringTypes} // filter types
         filterDataForRequest={filterDataForRequest}
         isLoadingFilters={isLoadingFilters}
-        haveFilters={true}
+        hasFilters={true}
         setColumnsConfigStructure={setColumnsConfigStructure} // set changed config structure - pin/hide/drag-drop
         setColumnHeaderStructure={setColumnHeaderStructure} // set changed header structure - pin/hide/drag-drop
         getRow={getRow} // get row data
