@@ -82,7 +82,7 @@ function Table<T extends Object>({
 
   return (
     <div>
-      {multipleCheck || draggableColumns || hasFilters || checkedRows ? (
+      {multipleCheck || draggableColumns || hasFilters || getDownloadType ? (
         <MainHeader
           columnsConfigStructure={columnsConfigStructure}
           columnsHeaderStructure={columnsHeaderStructure}
