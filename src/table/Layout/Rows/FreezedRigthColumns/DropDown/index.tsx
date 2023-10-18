@@ -36,7 +36,7 @@ const DropDown = <T extends Object>({ checkedLink, links, item, getRowForDropdow
         handleClick={handleClick}
         handleClose={handleClose}
       >
-        <>
+        <div>
           {links &&
             links.length &&
             links.map((el, ind) => {
@@ -68,7 +68,7 @@ const DropDown = <T extends Object>({ checkedLink, links, item, getRowForDropdow
                 </li>
               )
             })}
-        </>
+        </div>
       </PopUp>
     </>
   )

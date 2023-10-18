@@ -23,6 +23,7 @@ const FooterFreezedRight = <T extends Object>({
           if (i < 4)
             return (
               <li
+                key={item.id}
                 style={{
                   backgroundColor: footerColor && footerColor,
                   maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,

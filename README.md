@@ -30,22 +30,21 @@ function App() {
   const [data, setData] = useState<any[]>([
     {
       id: 1,
-      agentId: 179136,
+      agentId: 1,
       agentCreationDate: "2023-03-22T00:00:00",
-      agentName:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting",
+      agentName:"Markos",
     },
     {
       id: 2,
-      agentId: 494845,
+      agentId: 2,
       agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "There are many variations of passages of Lorem Ipsum available",
+      agentName: "Daniel",
     },
     {
       id: 3,
-      agentId: 494845,
+      agentId: 3,
       agentCreationDate: "2023-03-22T00:00:00",
-      agentName: "Contrary to popular belief, Lorem Ipsum is not simply random text",
+      agentName: "Mary",
     },
   ]);
 
@@ -54,159 +53,65 @@ function App() {
       id: 1,
       order: 1,
       title: "Id",
-      icon: "icon-Frame-73",
     },
     {
       id: 2,
       order: 2,
       title: "Name",
-      icon: "icon-Frame-73",
     },
     {
       id: 3,
       order: 3,
-      title: "Surename",
-      icon: "icon-Frame-73",
+      title: "Creation Date",
     },
   ]);
+
   const [columnConfig] = useState<IColumnConfig<any>[]>([
     {
       id: 1,
-      columnName: "Id",
       title: (row: any, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
+        <div>
+          <p>{row.title}</p>
         </div>
       ),
       setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.easywalletAgentId}</div>
+        <div>
+          <div>{row.id}</div>
         </div>
-      ),
-      footer: (row: any) => (
-        <PopUp
-          open={false}
-          handleClick={() => console.log(1)}
-          handleClose={() => console.log(2)}
-          anchorEl={null}
-          modalName={
-            row.aggregate
-              ? `Total ${formatPrice(row.aggregate, row.aggregateType)}`
-              : ""
-          }
-        >
-          <ul className="G-list">
-            {listForDropdown?.map((item: any, index: any) => {
-              return <li key={item.id}>{item.title}</li>;
-            })}
-          </ul>
-        </PopUp>
       ),
       isVisible: true,
     },
     {
       id: 2,
-      columnName: "Name",
       title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
+        <div>
+          <p>{row.title}</p>
         </div>
       ),
       setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.agentName}</div>
+        <div>
+          <div>{row.agentName}</div>
         </div>
-      ),
-      footer: (row: any) => (
-        <PopUp
-          open={false}
-          handleClick={() => console.log(1)}
-          handleClose={() => console.log(2)}
-          anchorEl={null}
-          modalName={
-            row.aggregate
-              ? `Total ${formatPrice(row.aggregate, row.aggregateType)}`
-              : ""
-          }
-        >
-          <ul className="G-list">
-            {listForDropdown?.map((item: any, index: any) => {
-              return <li key={item.id}>{item.title}</li>;
-            })}
-          </ul>
-        </PopUp>
       ),
       isVisible: true,
     },
     {
       id: 3,
-      columnName: "Surname",
       title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-          onClick={() => console.log(name)}
-        >
-          <p className="G-row-item">{row.title}</p>
-          <i className={row.icon} style={{ color: "#757575" }} />
+        <div>
+          <p >{row.title}</p>
         </div>
       ),
       setRow: (row: any) => (
-        <div className={`G-center G-table-icon`}>
-          <div className="G-row-item">{row.agentCreationDate}</div>
+        <div>
+          <div>{row.agentCreationDate}</div>
         </div>
-      ),
-      footer: (row: any) => (
-        <PopUp
-          open={false}
-          handleClick={() => console.log(1)}
-          handleClose={() => console.log(2)}
-          anchorEl={null}
-          modalName={
-            row.aggregate
-              ? `Total ${formatPrice(row.aggregate, row.aggregateType)}`
-              : ""
-          }
-        >
-          <ul className="G-list">
-            {listForDropdown?.map((item: any, index: any) => {
-              return <li key={item.id}>{item.title}</li>;
-            })}
-          </ul>
-        </PopUp>
       ),
       isVisible: true,
     },
   ]);
 
-  return (
-    <div style={{ width: "80%", margin: "0 auto" }}>
-      <Table
-        data={data} // TableData
-        columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
-        columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
-        // ... other props ...
-      />
-    </div>
-  );
-}
-
-export default App;
-```
-
-# Table Structure
-
-We can drag/drop, hide and freeze columns vertical and horizontal.
-
-```JSX
-const [columnsConfigStructure, setColumnsConfigStructures] = useState<
+ const [columnsConfigStructure, setColumnsConfigStructures] = useState<
     IColumnConfigStructure<any>
   >({
     [StructureConfig.Main]: {
@@ -230,7 +135,51 @@ const [columnsConfigStructure, setColumnsConfigStructures] = useState<
         items: [],
       },
     });
+
+  return (
+    <div style={{ width: "80%", margin: "0 auto" }}>
+      <Table
+        data={data} // TableData
+        columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
+        columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
+        // ... other props ...
+      />
+    </div>
+  );
+}
+
+export default App;
 ```
+
+# Table Structure
+
+We can drag/drop, hide and freeze columns vertical and horizontal.
+
+```JSX
+  const setColumnsConfigStructure = (option: IColumnConfigStructure<any>) => {
+    setColumnsConfigStructures(option);
+  };
+
+  const setColumnHeaderStructure = (option: IColumnHeaderStructure) => {
+    setColumnHeaderStructures(option);
+  };
+```
+
+![customizing](https://github.com/PandaTechAM/web-lib-panda-table/assets/69170986/723a5a7d-e2cc-40a6-9930-1e62630f6ae8)
+
+And if we want to get structure we have to use storeStructure function
+
+```JSX
+const storeStructure = () => {};
+```
+
+Let add some with for column lik
+
+```JSX
+columnMinWidth={120}
+```
+
+![freezed_column](https://github.com/PandaTechAM/web-lib-panda-table/assets/69170986/970cd1bc-d752-461c-9147-46a155ce337b)
 
 # Hovered Row Actions
 
@@ -278,14 +227,12 @@ const [links] = useState<ILinksList[]>([
     {
       id: 1,
       name: "Overpayments",
-      action: (option: any) => {
-      },
+      action: (option: any) => {},
     },
     {
       id: 2,
       name: "Estate Owners",
-      action: (option: any) => {
-      },
+      action: (option: any) => {},
     },
   ]);
 ```
@@ -299,15 +246,13 @@ const [rightFreezeConfig] = useState<IColumnConfig<any>[]>([
     {
       id: 1,
       title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-        >
-          <p className="G-row-item">{row.title}</p>
+        <div>
+          <p>{row.title}</p>
         </div>
       ),
       setRow: () => (
-        <div className={`G-center G-table-icon`}>
-          <p className="G-row-item">View Details</p>
+        <div>
+          <p>View Details</p>
         </div>
       ),
       isVisible: true,
@@ -315,15 +260,13 @@ const [rightFreezeConfig] = useState<IColumnConfig<any>[]>([
     {
       id: 2,
       title: (row: IColumnHeader, name: string) => (
-        <div
-          className={`G-center G-table-icon`}
-        >
-          <p className="G-row-item">{row.title}</p>
+        <div>
+          <p>{row.title}</p>
         </div>
       ),
       setRow: () => (
-        <div className={`G-center G-table-icon`}>
-          <p className="G-row-item">View Details</p>
+        <div>
+          <p>View Details</p>
         </div>
       ),
       isVisible: true,

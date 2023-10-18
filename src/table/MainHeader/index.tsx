@@ -81,7 +81,7 @@ const MainHeader = <T extends Object>({
   customHeaderAction,
 }: IActionsHeader<T>) => {
   return (
-    <div className='G-center G-table-actions-header'>
+    <div className='G-justify-start G-table-actions-header'>
       {multipleCheck ? (
         <>
           <CheckRows

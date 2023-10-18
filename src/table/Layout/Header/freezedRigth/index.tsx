@@ -23,6 +23,7 @@ const FreezedHeaderRight = <T extends Object>({
           if (i < 4)
             return (
               <li
+                key={item.id}
                 style={{
                   maxWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,
                   minWidth: rightFreezedColumnWidth ? `${rightFreezedColumnWidth}px` : `${item.width}px`,

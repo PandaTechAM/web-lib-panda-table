@@ -4,7 +4,6 @@ export interface IProps<T extends Object> {
   columnsHeaderStructure: IColumnHeaderStructure
   rightFreezeConfig?: IColumnConfig<T>[]
   perColumnListForFilters?: string[]
-  allDataFromDb?: T[]
   links?: ILinksList[]
   rowActions?: IrowActions[]
   pageSizeStructure?: IPageSizes[]

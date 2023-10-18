@@ -30,8 +30,8 @@ const HeaderMain = <T extends Object>({
       {isStickyFirstColumn ? null : (
         <li
           style={{
-            minWidth: `${leftFreezedColumnWidth}px`,
-            maxWidth: `${leftFreezedColumnWidth}px`,
+            minWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
+            maxWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
             backgroundColor: headerColor && headerColor,
           }}
         >
