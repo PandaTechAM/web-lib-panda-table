@@ -32,7 +32,8 @@ export interface IProps<T extends Object> {
   filterDataForRequest?: ItemFields[]
   isLoadingFilters?: boolean
   rowsFreezeAction?: boolean
-  aggregates?: boolean
+  isEnableAggregates?: boolean
+  aggregates?: any
   EmptyDataIcon?: any
   perColumnTotalCount?: number
   hoverdRowPosition?: number
@@ -52,20 +53,26 @@ export interface IProps<T extends Object> {
   handleChangePagePerFilterField?(): void
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element
+  handleSorting?(option: string): void
+  handleArgChange?(columnName: string, type: string): void
 }
 
 export interface ItemFields {
-  PropertyName: any
+  PropertyName: string
   Values: any[]
   ComparisonType: string
   TypeForUi: string
   Search: string | number
   CheckedItems: any[]
 }
-
+export interface IOrdering {
+  PropertyName: string
+  Descending: boolean
+}
 export interface IFilterDataForRequest {
   Filters: ItemFields[]
   Aggregates: any[]
+  Order: IOrdering
 }
 
 export interface IFiltersTypes {
@@ -129,7 +136,7 @@ export interface IColumnConfig<T extends Object> {
   columnName?: number | string
   title: any
   setRow: (data?: T) => any
-  footer?: (data?: T) => any
+  footer?: any
   isVisible: boolean
   customStyle?: Object
   totalObject?: {

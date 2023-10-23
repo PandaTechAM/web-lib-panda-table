@@ -18,6 +18,8 @@ interface IFooterFreezedLeft<T extends Object> {
   footerColor?: string
   isStickyFirstColumn?: boolean
   leftFreezedColumnWidth?: number
+  aggregates?: any
+  handleArgChange?(columnName: string, type: string): void
 }
 
 const FooterFreezedLeft = <T extends Object>({
@@ -27,6 +29,8 @@ const FooterFreezedLeft = <T extends Object>({
   isStickyFirstColumn,
   leftFreezedColumnWidth,
   columnsHeaderStructure,
+  aggregates,
+  handleArgChange,
 }: IFooterFreezedLeft<T>) => {
   return (
     <ul
@@ -52,6 +56,8 @@ const FooterFreezedLeft = <T extends Object>({
           columnsConfigStructure={columnsConfigStructure}
           columnMinWidth={columnMinWidth}
           footerColor={footerColor}
+          aggregates={aggregates}
+          handleArgChange={handleArgChange}
         />
       ) : null}
     </ul>

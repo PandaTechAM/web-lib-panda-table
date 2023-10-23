@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IColumnConfig, IColumnHeader, IColumnConfigStructure, IColumnHeaderStructure } from './Models/table.models'
-import { useState } from 'react'
 import { StructureConfig } from './Models/table.enum'
 import Table from './table'
 

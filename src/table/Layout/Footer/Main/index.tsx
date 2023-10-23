@@ -11,6 +11,7 @@ import { Button, Menu } from '@mui/material'
 import { useState } from 'react'
 import './style.scss'
 import { StructureConfig } from '../../../../Models/table.enum'
+import { getColumnName } from '../../../../utils'
 interface IFooterMain<T extends Object> {
   columnsHeaderStructure: IColumnHeaderStructure
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -18,6 +19,8 @@ interface IFooterMain<T extends Object> {
   footerColor?: string
   isStickyFirstColumn?: boolean
   leftFreezedColumnWidth?: number
+  aggregates?: any
+  handleArgChange?(columnName: string, type: string): void
 }
 const FooterMain = <T extends Object>({
   columnsConfigStructure,
@@ -26,6 +29,8 @@ const FooterMain = <T extends Object>({
   isStickyFirstColumn,
   leftFreezedColumnWidth,
   columnsHeaderStructure,
+  aggregates,
+  handleArgChange,
 }: IFooterMain<T>) => {
   return (
     <ul className='G-data-table-footer' style={{ flex: 1, backgroundColor: footerColor && footerColor }}>
@@ -54,7 +59,12 @@ const FooterMain = <T extends Object>({
                   key={column.id}
                   className='G-column-item'
                 >
-                  {column.footer?.(columnsHeaderStructure[StructureConfig.Main].items[index] as any)}
+                  {column.footer?.(
+                    columnsHeaderStructure[StructureConfig.Main].items[index] as any,
+                    item.title,
+                    handleArgChange,
+                    aggregates,
+                  )}
                 </li>
               )
             )

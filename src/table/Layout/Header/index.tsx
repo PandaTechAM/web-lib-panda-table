@@ -15,6 +15,7 @@ interface IHeader<T extends Object> {
   freezedRightSideVisible?: boolean
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
+  handleSorting?(option: string): void
 }
 const Header = <T extends Object>({
   columnsConfigStructure,
@@ -27,6 +28,7 @@ const Header = <T extends Object>({
   freezedRightSideVisible,
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
+  handleSorting,
 }: IHeader<T>) => {
   return (
     <>
@@ -38,6 +40,7 @@ const Header = <T extends Object>({
         columnMinWidth={columnMinWidth}
         headerColor={headerColor}
         leftFreezedColumnWidth={leftFreezedColumnWidth}
+        handleSorting={handleSorting}
       />
       <HeaderMain
         columnsConfigStructure={columnsConfigStructure}
@@ -47,6 +50,7 @@ const Header = <T extends Object>({
         isStickyFirstColumn={isStickyFirstColumn}
         multipleCheck={multipleCheck}
         leftFreezedColumnWidth={leftFreezedColumnWidth}
+        handleSorting={handleSorting}
       />
       {freezedRightSideVisible ? (
         <FreezedHeaderRight

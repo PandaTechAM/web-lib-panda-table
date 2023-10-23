@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { Autocomplete, Button, CircularProgress, TextField, Checkbox } from '@mui/material'
 // import Checkbox from "../../../../components/checkbox";
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'

@@ -10,6 +10,7 @@ interface IFreezedTopLeft<T extends Object> {
   columnMinWidth?: number
   headerColor?: string
   leftFreezedColumnWidth?: number
+  handleSorting?(option: string): void
 }
 const FreezedHeaderLeft = <T extends Object>({
   columnsHeaderStructure,
@@ -19,6 +20,7 @@ const FreezedHeaderLeft = <T extends Object>({
   columnMinWidth,
   headerColor,
   leftFreezedColumnWidth,
+  handleSorting,
 }: IFreezedTopLeft<T>) => {
   return (
     <ul
@@ -47,6 +49,7 @@ const FreezedHeaderLeft = <T extends Object>({
           columnsConfigStructure={columnsConfigStructure}
           columnMinWidth={columnMinWidth}
           headerColor={headerColor}
+          handleSorting={handleSorting}
         />
       ) : null}
     </ul>

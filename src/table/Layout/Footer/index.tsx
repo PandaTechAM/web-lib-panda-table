@@ -20,6 +20,8 @@ interface IFooter<T extends Object> {
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
   listForDropdown?: ITotalList[]
+  aggregates?: any
+  handleArgChange?(columnName: string, type: string): void
 }
 const Footer = <T extends Object>({
   columnsConfigStructure,
@@ -31,6 +33,8 @@ const Footer = <T extends Object>({
   isStickyFirstColumn,
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
+  aggregates,
+  handleArgChange,
 }: IFooter<T>) => {
   return (
     <>
@@ -41,6 +45,8 @@ const Footer = <T extends Object>({
         footerColor={footerColor}
         isStickyFirstColumn={isStickyFirstColumn}
         leftFreezedColumnWidth={leftFreezedColumnWidth}
+        aggregates={aggregates}
+        handleArgChange={handleArgChange}
       />
       <FooterMain
         columnsConfigStructure={columnsConfigStructure}
@@ -49,6 +55,8 @@ const Footer = <T extends Object>({
         footerColor={footerColor}
         isStickyFirstColumn={isStickyFirstColumn}
         leftFreezedColumnWidth={leftFreezedColumnWidth}
+        aggregates={aggregates}
+        handleArgChange={handleArgChange}
       />
       {freezedRightSideVisible ? (
         <FooterFreezedRight

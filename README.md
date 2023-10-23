@@ -153,7 +153,8 @@ export default App;
 
 # Table Structure
 
-We can drag/drop, hide and freeze columns vertical and horizontal.
+We can drag, hide and dock columns vertically and horizontally.
+Add the "draggableColumns" details, then create the "setColumnsConfigStructure" and "setColumnHeaderStructure" functions.
 
 ```JSX
   const setColumnsConfigStructure = (option: IColumnConfigStructure<any>) => {
@@ -167,13 +168,13 @@ We can drag/drop, hide and freeze columns vertical and horizontal.
 
 ![customizing](https://github.com/PandaTechAM/web-lib-panda-table/assets/69170986/723a5a7d-e2cc-40a6-9930-1e62630f6ae8)
 
-And if we want to get structure we have to use storeStructure function
+And if we want to add some functionality to the save button, we need to use the "storeStructure" function.
 
 ```JSX
 const storeStructure = () => {};
 ```
 
-Let add some with for column lik
+Let's add width to the column
 
 ```JSX
 columnMinWidth={120}

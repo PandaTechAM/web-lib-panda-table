@@ -17,54 +17,26 @@ export const formatPrice = (num: number, symbol: string, isPrice = false, fixedC
   )
 }
 
-// export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {
-//   if (ColumnType === "Number" || ColumnType === 'NumericText') {
-//     if (ComparisonType === "Equal" || ComparisonType === "NotEqual" || ComparisonType === "In") {
-//       return 1;
-//     } else if (
-//       ComparisonType === "GreaterThan" ||
-//       ComparisonType === "LessThan" ||
-//       ComparisonType === "GreaterThanOrEqual" ||
-//       ComparisonType === "LessThanOrEqual"
-//     ) {
-//       return 2;
-//     } else if (ComparisonType === "Between") {
-//       return 3;
-//     } else {
-//       return 0;
-//     }
-//   } else if (ColumnType === "Text") {
-//     if (ComparisonType === "IsEmpty" || ComparisonType === "IsNotEmpty") {
-//       return 0;
-//     } else if (ComparisonType === "Equal" || ComparisonType === "NotEqual") {
-//       return 1
-//     }
-//     else {
-//       return 2;
-//     }
-//   } else if (ColumnType === "Boolean") {
-//     if (ComparisonType === "IsEmpty" || ComparisonType === "IsNotEmpty") {
-//       return 0;
-//     } else {
-//       return 4;
-//     }
-//   } else if (ColumnType === "Date") {
-//     if (ComparisonType === "IsEmpty" || ComparisonType === "IsNotEmpty") {
-//       return 0;
-//     } else if(ComparisonType === "Equal" || ComparisonType === "NotEqual" || ComparisonType === "In"){
-//       return 1;
-//     }
-//     else if (ComparisonType === "Between"){
-//       return 5;
-//     }
-//     else{
-//       return 6
-//     }
-//   }
-// };
-
 const filterUiHelperMap = {
   Number: {
+    Equal: 1,
+    NotEqual: 1,
+    GreaterThan: 2,
+    LessThan: 2,
+    GreaterThanOrEqual: 2,
+    LessThanOrEqual: 2,
+    Between: 3,
+  },
+  Currency: {
+    Equal: 1,
+    NotEqual: 1,
+    GreaterThan: 2,
+    LessThan: 2,
+    GreaterThanOrEqual: 2,
+    LessThanOrEqual: 2,
+    Between: 3,
+  },
+  Percentage: {
     Equal: 1,
     NotEqual: 1,
     GreaterThan: 2,
@@ -159,4 +131,13 @@ export const validateRangeColumns = (from: any, to: any, item: any, setErrorMess
   setErrorMessage(columnError)
 
   return isValid
+}
+
+export const getColumnName = (inputString: string) => {
+  const underscoreIndex = inputString.indexOf('_')
+
+  if (underscoreIndex !== -1) {
+    const slicedString = inputString.slice(0, underscoreIndex)
+    return slicedString
+  }
 }

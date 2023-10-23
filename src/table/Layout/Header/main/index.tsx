@@ -15,6 +15,7 @@ interface ITopMain<T extends Object> {
   isStickyFirstColumn?: boolean
   multipleCheck?: boolean
   leftFreezedColumnWidth?: number
+  handleSorting?(option: string): void
 }
 const HeaderMain = <T extends Object>({
   columnsHeaderStructure,
@@ -24,6 +25,7 @@ const HeaderMain = <T extends Object>({
   isStickyFirstColumn,
   multipleCheck,
   leftFreezedColumnWidth,
+  handleSorting,
 }: ITopMain<T>) => {
   return (
     <ul className='G-data-table-header' style={{ flex: 1, backgroundColor: headerColor && headerColor }}>
@@ -54,7 +56,11 @@ const HeaderMain = <T extends Object>({
                   key={column.id}
                   className='G-column-item'
                 >
-                  {column.title(columnsHeaderStructure[StructureConfig.Main].items[index] as any, item.title)}
+                  {column.title(
+                    columnsHeaderStructure[StructureConfig.Main].items[index] as any,
+                    item.title,
+                    handleSorting,
+                  )}
                 </li>
               )
             )

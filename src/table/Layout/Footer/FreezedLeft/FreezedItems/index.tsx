@@ -12,12 +12,16 @@ interface IFreezedHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
   columnMinWidth?: number
   footerColor?: string
+  aggregates?: any
+  handleArgChange?(columnName: string, type: string): void
 }
 const FreezedItems = <T extends Object>({
   columnsConfigStructure,
   columnsHeaderStructure,
   columnMinWidth,
   footerColor,
+  aggregates,
+  handleArgChange,
 }: IFreezedHeader<T>) => {
   return (
     <>
@@ -36,7 +40,12 @@ const FreezedItems = <T extends Object>({
                   }}
                   key={column.id}
                 >
-                  {column.footer?.(columnsHeaderStructure[StructureConfig.Freezed].items[index] as any)}
+                  {column.footer?.(
+                    columnsHeaderStructure[StructureConfig.Freezed].items[index] as any,
+                    item.title,
+                    handleArgChange,
+                    aggregates,
+                  )}
                 </li>
               )
             )

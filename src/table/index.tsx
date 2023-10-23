@@ -44,11 +44,12 @@ function Table<T extends Object>({
   filterColumns,
   filtersTypes,
   rowsFreezeAction,
-  aggregates,
   EmptyDataIcon,
   perColumnTotalCount,
   selectedPageSizeId,
   hasFilters,
+  isEnableAggregates,
+  aggregates,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -62,6 +63,8 @@ function Table<T extends Object>({
   getFilteredDataForTable,
   getDownloadType,
   customHeaderAction,
+  handleSorting,
+  handleArgChange,
 }: IProps<T>) {
   const {
     freezedRows,
@@ -79,7 +82,6 @@ function Table<T extends Object>({
     unCheck,
     checkAllDataFromDb,
   } = useTable(data, freezedRightSide, RightSideSelfAction)
-
   return (
     <div>
       {multipleCheck || draggableColumns || hasFilters || getDownloadType ? (
@@ -130,6 +132,7 @@ function Table<T extends Object>({
                 freezedRightSideVisible={freezedRightSideVisible}
                 leftFreezedColumnWidth={leftFreezedColumnWidth}
                 rightFreezedColumnWidth={rightFreezedColumnWidth}
+                handleSorting={handleSorting}
               />
             </div>
 
@@ -168,7 +171,7 @@ function Table<T extends Object>({
               />
             </div>
 
-            {aggregates ? (
+            {isEnableAggregates ? (
               <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
                 <Footer
                   rightFreezeConfig={rightFreezeConfig}
@@ -180,6 +183,8 @@ function Table<T extends Object>({
                   isStickyFirstColumn={isStickyFirstColumn}
                   leftFreezedColumnWidth={leftFreezedColumnWidth}
                   rightFreezedColumnWidth={rightFreezedColumnWidth}
+                  aggregates={aggregates}
+                  handleArgChange={handleArgChange}
                 />
               </div>
             ) : null}

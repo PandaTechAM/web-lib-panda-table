@@ -142,7 +142,7 @@ const MainHeader = <T extends Object>({
         />
       ) : null}
       {getDownloadType && (
-        <div className='G-center'>
+        <div className='G-center G-download'>
           <Download selectedType={selectedType} getDownloadType={getDownloadType} checkedRows={checkedRows} />
         </div>
       )}

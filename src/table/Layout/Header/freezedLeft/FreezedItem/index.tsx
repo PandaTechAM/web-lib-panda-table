@@ -12,12 +12,14 @@ interface IFreezedHeader<T extends Object> {
   columnTotalStructures?: IColumnTotalStructure
   columnMinWidth?: number
   headerColor?: string
+  handleSorting?(option: string): void
 }
 const FreezedItem = <T extends Object>({
   columnsHeaderStructure,
   columnsConfigStructure,
   columnMinWidth,
   headerColor,
+  handleSorting,
 }: IFreezedHeader<T>) => {
   return (
     <>
@@ -36,7 +38,11 @@ const FreezedItem = <T extends Object>({
                   }}
                   key={column.id}
                 >
-                  {column.title(columnsHeaderStructure[StructureConfig.Freezed].items[index] as any, item.title)}
+                  {column.title(
+                    columnsHeaderStructure[StructureConfig.Freezed].items[index] as any,
+                    item.title,
+                    handleSorting,
+                  )}
                 </li>
               )
             )
