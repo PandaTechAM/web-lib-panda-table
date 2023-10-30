@@ -182,3 +182,10 @@ export interface ILinksList {
   icon?: () => string | number | HTMLElement | React.ReactNode | null | any
   action?(option: any, index: number): void
 }
+
+export interface IFiltersFieldsRef {
+  list?: string[]
+  totalCount?: number
+  currentPage?: number
+  columnName?: string
+}

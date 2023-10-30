@@ -54,7 +54,7 @@ function Select<T>({
 }: ISelect<T>) {
   const [selectedValue, setValue] = useState<T | null>(null)
   const [selectedValueName, setSelectedValueName] = useState<string | null>(null)
-  const [listPosition, setListPosition] = useState<'bottom' | 'top'>('bottom')
+  const [listPosition, setListPosition] = useState<'bottom' | 'top'>('top')
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null)
   // const [isOpenList, setIsOpenList] = useState<boolean>(false);
 
@@ -118,18 +118,18 @@ function Select<T>({
       icon,
     }
   }
-  // useEffect(() => {
-  //   const dropdownListElement = document.querySelector(".G-select-list");
-  //   if (dropdownListElement) {
-  //     const { top, bottom } = dropdownListElement.getBoundingClientRect();
-  //     const windowHeight = window.innerHeight;
-  //     if (bottom > 320 && top > 320 / 2) {
-  //       setListPosition("top");
-  //     } else {
-  //       setListPosition("bottom");
-  //     }
-  //   }
-  // }, [isOpenList]);
+  useEffect(() => {
+    const dropdownListElement = document.querySelector('.G-select-list')
+    if (dropdownListElement) {
+      const { top, bottom } = dropdownListElement.getBoundingClientRect()
+      const windowHeight = window.innerHeight
+      if (bottom > 320 && top > 320 / 2) {
+        setListPosition('top')
+      } else {
+        setListPosition('bottom')
+      }
+    }
+  }, [isOpenList])
   /**
    * Select  list item props
    * @item  T

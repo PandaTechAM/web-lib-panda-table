@@ -44,8 +44,6 @@ const BetweenDates = ({
   })
 
   const handleChangeInputValue = (value: any, name: string) => {
-    setCoulmnName(item.ColumnName)
-
     let stateValues = { from: val.from, to: val.to }
 
     if (value === null) {
@@ -119,6 +117,9 @@ const BetweenDates = ({
   }
 
   useEffect(() => {
+    setCoulmnName(item.ColumnName)
+  }, [val])
+  useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
       let newValues: string[] = filterTypeing.CheckedItems
       setVal({ from: newValues[0], to: newValues[1] })
@@ -145,7 +146,9 @@ const BetweenDates = ({
             onClose={() => handleClose('from')}
             format={!advancedSettings ? 'LLL' : 'YYYY-MM-DD'}
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
-            maxDateTime={dayjs(filterTypeing.Values[1])}
+            maxDateTime={
+              filterTypeing.Values.length ? dayjs(filterTypeing.Values[1]) : val.to !== undefined ? dayjs(val.to) : null
+            }
             disabled={isDisabled && item.ColumnName !== columnName}
             value={
               filterTypeing.Values.length
@@ -172,7 +175,13 @@ const BetweenDates = ({
             open={isOpenedModal.to}
             format={!advancedSettings ? 'LLL' : 'YYYY-MM-DD'}
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
-            minDateTime={dayjs(filterTypeing.Values[0])}
+            minDateTime={
+              filterTypeing.Values.length
+                ? dayjs(filterTypeing.Values[0])
+                : val.from !== undefined
+                ? dayjs(val.from)
+                : null
+            }
             disabled={isDisabled && item.ColumnName !== columnName}
             value={
               filterTypeing.Values.length ? dayjs(filterTypeing.Values[1]) : val.to !== undefined ? dayjs(val.to) : null

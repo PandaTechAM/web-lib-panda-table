@@ -93,7 +93,6 @@ export const validateRangeColumns = (from: any, to: any, item: any, setErrorMess
     columnError.to = 'is empty'
     isValid = true
   }
-
   if (item.ColumnType !== 'Date' && !containsOnlyNumbers(from) && from !== '') {
     columnError.from = 'only numbers'
     isValid = true
@@ -102,7 +101,6 @@ export const validateRangeColumns = (from: any, to: any, item: any, setErrorMess
     columnError.to = 'only numbers'
     isValid = true
   }
-
   if (from !== null && isNaN(from.valueOf() as number) && item.ColumnType === 'Date') {
     columnError.from = 'invalid'
     isValid = true
@@ -137,7 +135,8 @@ export const getColumnName = (inputString: string) => {
   const underscoreIndex = inputString.indexOf('_')
 
   if (underscoreIndex !== -1) {
-    const slicedString = inputString.slice(0, underscoreIndex)
-    return slicedString
+    const columnNam = inputString.slice(0, underscoreIndex)
+    const type = inputString.slice(underscoreIndex + 1)
+    return { columnNam, type }
   }
 }

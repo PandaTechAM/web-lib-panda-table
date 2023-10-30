@@ -11,7 +11,7 @@ interface IDropDown<T extends Object> {
   getRowForDropdown?(option: any): void
 }
 
-const DropDown = <T extends Object>({ checkedLink, links, item, getRowForDropdown }: IDropDown<T>) => {
+const DropDown = <T extends Object>({ checkedLink, links, item, RightSideIcon, getRowForDropdown }: IDropDown<T>) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,7 +27,7 @@ const DropDown = <T extends Object>({ checkedLink, links, item, getRowForDropdow
   return (
     <>
       <PopUp
-        ActiveIcon={LinkSvgIcon}
+        ActiveIcon={RightSideIcon || LinkSvgIcon}
         checkedLink={checkedLink}
         item={item}
         getRowForDropdown={getRowForDropdown}

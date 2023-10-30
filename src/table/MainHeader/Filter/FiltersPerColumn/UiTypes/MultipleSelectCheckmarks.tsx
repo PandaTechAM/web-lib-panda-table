@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -99,4 +99,4 @@ const MultipleSelectCheckmarks = ({
   )
 }
 
-export default MultipleSelectCheckmarks
+export default memo(MultipleSelectCheckmarks)

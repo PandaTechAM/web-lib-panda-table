@@ -91,7 +91,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
               <ul
                 className='G-rows-icons'
                 style={{
-                  left: `calc(100% - ${(width || 60) + 120}px)`,
+                  left: `calc(100% - ${(width || 60) + 50}px)`,
                 }}
               >
                 {isHoveredRow ? (

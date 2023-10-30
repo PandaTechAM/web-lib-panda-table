@@ -107,13 +107,11 @@ function App() {
   })
 
   return (
-    <div style={{ width: '80%', margin: '0 auto' }}>
-      <Table
-        data={data} // TableData
-        columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
-        columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
-      />
-    </div>
+    <Table
+      data={data} // TableData
+      columnsConfigStructure={columnsConfigStructure} // Structure to store in the database - pin/hide/drag-drop
+      columnsHeaderStructure={columnsHeaderStructure} // headerStructure will automatically work with configStructure
+    />
   )
 }
 

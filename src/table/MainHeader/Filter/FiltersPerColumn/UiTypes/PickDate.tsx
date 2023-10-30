@@ -51,6 +51,7 @@ const PickDate = ({
   const unFocused = () => {
     !isDisabled && setCoulmnName('')
   }
+
   return (
     <div className={item.IsBold ? 'IsBold' : ''} style={{ width: advancedSettings ? columnsSizes : '100%' }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>

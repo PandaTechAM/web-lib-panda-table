@@ -116,7 +116,7 @@ const FreezedRows = <T extends Object>({
                         <ul
                           className='G-rows-icons'
                           style={{
-                            left: `calc(100% - ${(width || 60) + 120}px)`,
+                            left: `calc(100% - ${(width || 60) + 50}px)`,
                           }}
                         >
                           <li className='G-rows-icons' style={{ left: !isStickyFirstColumn ? '50%' : '' }}>

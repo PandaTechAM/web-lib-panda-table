@@ -6,7 +6,6 @@ import Rows from './Layout/Rows'
 import useTable from './useTable'
 import Footer from './Layout/Footer'
 import './index.scss'
-import '../index.scss'
 import '../assets/style/index.scss'
 import MainFooter from './MainFooter'
 
