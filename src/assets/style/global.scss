@@ -8,8 +8,8 @@
 }
 
 ::-webkit-scrollbar {
-  width            : 6px;
-  height           : 6px;
+  width            : 8px;
+  height           : 8px;
   background-color : rgba(0, 0, 0, 0);
   
 }
@@ -18,9 +18,9 @@
 ::-webkit-scrollbar-thumb {
   background-color    : rgba(206, 216, 221, 0.5);;
   border-radius : 20px;
-  // &:hover{
-  //   background-color:red
-  // }
+  &:hover{
+    background-color:#ACBCC3
+  }
 }
 
 .G-hidden {

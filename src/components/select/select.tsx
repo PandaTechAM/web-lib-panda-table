@@ -224,7 +224,7 @@ function Select<T>({
             {!ButtonSvg ? (
               <LinkSvgIcon fill={!isOpenList ? 'black' : '#4844C5'} />
             ) : (
-              <ButtonSvg fill={!isOpenList ? 'black' : '#4844C5'} />
+              <ButtonSvg fill={!isOpenList ? '#ACBCC3' : '#4844C5'} />
             )}
           </div>
         )}
