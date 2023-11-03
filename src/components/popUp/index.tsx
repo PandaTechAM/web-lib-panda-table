@@ -1,5 +1,6 @@
 import React, { useState, ReactElement } from 'react'
 import { Button, Menu } from '@mui/material'
+import './style.scss'
 interface IPopUp {
   children: ReactElement
   ActiveIcon?: any
@@ -54,7 +55,7 @@ const PopUp = ({
             getRowForDropdown?.(item?.id)
           }}
         >
-          <div className='G-center'>
+          <div className='G-center G-popUp-icon'>
             {ActiveIcon ? (
               DisabledIcon ? (
                 open ? (
@@ -72,6 +73,8 @@ const PopUp = ({
               style={{
                 marginLeft: 8,
                 color: open ? '#4844c5' : 'black',
+                fontSize: 14,
+                fontWeight: 400,
               }}
             >
               {modalName}

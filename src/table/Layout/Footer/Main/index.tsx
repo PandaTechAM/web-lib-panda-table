@@ -11,7 +11,7 @@ import { Button, Menu } from '@mui/material'
 import { useState } from 'react'
 import './style.scss'
 import { StructureConfig } from '../../../../Models/table.enum'
-import { getColumnName } from '../../../../utils'
+
 interface IFooterMain<T extends Object> {
   columnsHeaderStructure: IColumnHeaderStructure
   columnsConfigStructure: IColumnConfigStructure<T>

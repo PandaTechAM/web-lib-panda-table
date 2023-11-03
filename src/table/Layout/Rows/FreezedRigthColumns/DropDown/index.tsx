@@ -36,7 +36,7 @@ const DropDown = <T extends Object>({ checkedLink, links, item, RightSideIcon, g
         handleClick={handleClick}
         handleClose={handleClose}
       >
-        <div>
+        <div style={{ padding: '12px 24px', maxWidth: 240 }}>
           {links &&
             links.length &&
             links.map((el, ind) => {
@@ -50,18 +50,20 @@ const DropDown = <T extends Object>({ checkedLink, links, item, RightSideIcon, g
                   className='G-align-center'
                   style={{
                     cursor: 'pointer',
-                    padding: '12px',
-                    borderBottom: ind !== links.length - 1 ? '1px solid #757575' : '',
+                    padding: '12px 0px',
+                    borderBottom: ind !== links.length - 1 ? '1px solid #ECECEC' : '',
                   }}
                 >
                   {!el.path ? (
                     <p className='G-dropdown-list-style'>
-                      <span>{el.icon?.() || <LinkSvgIcon fill='#4844c5' />}</span>
+                      {/* <span>
+                        {el.icon?.() || <LinkSvgIcon fill="#4844c5" />}
+                      </span> */}
                       <span>{el.name}</span>
                     </p>
                   ) : (
                     <a href={el.path} target='_blank' rel='noreferrer' className='G-dropdown-list-style'>
-                      <span>{el.icon?.() || <LinkSvgIcon fill='#4844c5' />}</span>
+                      <span>{el.icon?.()}</span>
                       <span>{el.name}</span>
                     </a>
                   )}

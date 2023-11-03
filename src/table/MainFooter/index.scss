@@ -1,7 +1,14 @@
+.G-count-info{
+  margin-right: 48px;
+  color: var(--color-text-2-aaa-91, #494949);
+}
+.G-select-text{
+  color: var(--color-text-4-aa-461, #757575);
+}
 .G-Select-container{
   min-width: 56px;
   height: 32px;
-  border:1px solid black ;
+  border:1px solid #EFEFEF ;
   margin: 0 5px;
    .G-select-header{
      padding: 0;

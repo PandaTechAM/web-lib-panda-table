@@ -13,7 +13,8 @@
 .G-table-actions-header{
   background-color: white;
   align-items: center;
-  height:55px;
+  padding: 32px 0px 24px 0px;
+  // height:55px;
   .G-checkbox{
     cursor: pointer;
     width: 24px;
@@ -59,7 +60,6 @@
     }
   }
   .G-download{
-    margin-right: 15px;
   }
 }
 
@@ -361,10 +361,10 @@
 
 
 .G-dropdown-list-style{
-  font-size: 12px;
-  width: 80%;
+  font-size: 14px;
   color: black;
   display: flex;
-  gap: 10px;
-  align-Items: center;
+  // gap: 10px;
+  // align-Items: center;
+  font-weight: 600;
 }

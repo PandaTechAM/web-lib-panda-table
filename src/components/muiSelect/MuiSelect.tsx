@@ -12,13 +12,7 @@ interface IMuiSelect {
   onArgChange?(columnName: string, type: string): void
   handlesetData: (option: any) => void
 }
-export default function MuiSelect({
-  aggregates,
-  columnName,
-  selectedAggregates,
-  onArgChange,
-  handlesetData,
-}: IMuiSelect) {
+export default function MuiSelect({ aggregates, columnName, onArgChange, handlesetData }: IMuiSelect) {
   const [type, setType] = React.useState('')
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -26,9 +20,8 @@ export default function MuiSelect({
     onArgChange?.(columnName, event.target.value)
     handlesetData(event.target.value)
   }
-  // {type ? selectedAggregates[`${columnName}_${type}`] : ""}
+
   return (
-    // <Box sx={{ minWidth: 120 }}>
     <FormControl variant='standard' fullWidth>
       <InputLabel id='demo-simple-select-standard-label'>{type ? '' : 'Aggregates'}</InputLabel>
       <Select
@@ -45,6 +38,5 @@ export default function MuiSelect({
         ))}
       </Select>
     </FormControl>
-    // </Box>
   )
 }

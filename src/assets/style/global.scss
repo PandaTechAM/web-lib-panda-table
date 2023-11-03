@@ -11,12 +11,16 @@
   width            : 6px;
   height           : 6px;
   background-color : rgba(0, 0, 0, 0);
+  
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background    : rgba(206, 216, 221, 0.5);;
+  background-color    : rgba(206, 216, 221, 0.5);;
   border-radius : 20px;
+  // &:hover{
+  //   background-color:red
+  // }
 }
 
 .G-hidden {

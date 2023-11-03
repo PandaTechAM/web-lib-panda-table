@@ -104,7 +104,7 @@ const Pagination = ({
           onKeyDown={handleKeyPress}
           value={val}
           style={{
-            width: '24px',
+            width: `${24 + (val.length > 3 ? val.length * 3 : 0)}px`,
             height: '24px',
             border: '1px solid #ACBCC3',
             outline: 'none',
