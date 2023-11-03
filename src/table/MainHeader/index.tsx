@@ -17,7 +17,7 @@ import Filter from './Filter'
 import Select from '../../components/select/select'
 import Download from './Download'
 import { CheckedItems } from '../../Models/table.enum'
-
+import './style.scss'
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
   columnsHeaderStructure: IColumnHeaderStructure
@@ -91,13 +91,13 @@ const MainHeader = <T extends Object>({
             unCheck={unCheck}
             checkAllDataFromDb={checkAllDataFromDb}
           />
-          <div className='G-center' style={{ marginRight: '27px' }}>
+          <div className='G-center G-actions'>
             {checkedRows.length == 1 && handleEdit ? (
-              <div className='G-flex G-edit' style={{ marginRight: '20px' }} onClick={() => handleEdit(checkedRows[0])}>
-                <div>
+              <div className='G-flex G-edit' onClick={() => handleEdit(checkedRows[0])}>
+                <div className='G-center G-edit-icon'>
                   <EditSvgIcon />
+                  <span>Edit</span>
                 </div>
-                <span>Edit</span>
               </div>
             ) : null}
             {checkedRows.length && handleDelete ? (
@@ -105,10 +105,10 @@ const MainHeader = <T extends Object>({
                 className='G-flex G-delete'
                 onClick={() => handleDelete(selectedType === CheckedItems.SELECTED_ALL ? 'All' : checkedRows)}
               >
-                <div>
+                <div className='G-center G-delete-icon'>
                   <DeleteSvgIcon />
+                  <span>Delete</span>
                 </div>
-                <span>Delete</span>
               </div>
             ) : null}
             {checkedRows.length
