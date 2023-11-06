@@ -21,6 +21,7 @@ interface IFooter<T extends Object> {
   rightFreezedColumnWidth?: number
   listForDropdown?: ITotalList[]
   aggregates?: any
+  isLoadedData?: boolean
   handleArgChange?(columnName: string, type: string): void
 }
 const Footer = <T extends Object>({
@@ -34,6 +35,7 @@ const Footer = <T extends Object>({
   leftFreezedColumnWidth,
   rightFreezedColumnWidth,
   aggregates,
+  isLoadedData,
   handleArgChange,
 }: IFooter<T>) => {
   return (
@@ -46,6 +48,7 @@ const Footer = <T extends Object>({
         isStickyFirstColumn={isStickyFirstColumn}
         leftFreezedColumnWidth={leftFreezedColumnWidth}
         aggregates={aggregates}
+        isLoadedData={isLoadedData}
         handleArgChange={handleArgChange}
       />
       <FooterMain
@@ -56,6 +59,7 @@ const Footer = <T extends Object>({
         isStickyFirstColumn={isStickyFirstColumn}
         leftFreezedColumnWidth={leftFreezedColumnWidth}
         aggregates={aggregates}
+        isLoadedData={isLoadedData}
         handleArgChange={handleArgChange}
       />
       {freezedRightSideVisible ? (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Autocomplete, TextField, Box, CircularProgress, Button } from '@mui/material'
+import { Autocomplete, TextField, Box, CircularProgress, Button, Skeleton } from '@mui/material'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import './style.scss'
 import { containsOnlyNumbers } from '../../../../../utils'
@@ -18,12 +18,15 @@ const style = {
   borderRadius: 1,
 }
 interface IModalForSingleField {
+  columnsSizes: string
+  advancedSettings: boolean
   item: IComparisonType
   filterTypeing: ItemFields
   columnName: string
   perColumnListForFilters?: string[]
   isLoadingFilters?: boolean
   perColumnTotalCount?: number
+  isDisabled: boolean
   handleSelectItems: (option: any[], isClosed: boolean) => void
   setCoulmnName: (name: string) => void
   handleChangeValue: (value: string) => void
@@ -39,6 +42,9 @@ const ModalForSingleField = ({
   filterTypeing,
   isLoadingFilters,
   perColumnTotalCount,
+  isDisabled,
+  advancedSettings,
+  columnsSizes,
   handleChangeValue,
   handleSelectItems,
   setCoulmnName,
@@ -47,31 +53,49 @@ const ModalForSingleField = ({
   handleChangePagePerFilterField,
 }: IModalForSingleField) => {
   const [checkedItems, setcheckedItems] = useState<string[]>([])
-  const [fakeItems] = useState<string[]>([])
   const [val, setVal] = useState<string>('')
   const [errMessage, setErrMessage] = useState<string>('')
+  const [isOpened, setIsOpened] = useState<boolean>(false)
   const [isLoadedMoreData, setIsLoadedMoreData] = useState<boolean>(false)
   const handleOpenList = () => {
-    setCoulmnName(item.ColumnName)
-    // handleSelectItems([], true);
+    if (!isDisabled) {
+      setCoulmnName(item.ColumnName)
+      setIsOpened(true)
+      // handleSelectItems([], true);
+    }
   }
   const handleCloseList = () => {
+    setCoulmnName('')
     setVal('')
     setIsLoadedMoreData(false)
+    setIsOpened(false)
+    if (item.ColumnType !== 'Text') {
+      let newValues: number[] = []
+      checkedItems.map((item) => newValues.push(+item))
+      handleSelectItems(newValues, false)
+      setCheckedItemsLocaly(newValues)
+    } else {
+      handleSelectItems(checkedItems, false)
+      setCheckedItemsLocaly(checkedItems)
+    }
   }
   const selectValue = (event: any, value: any[]) => {
     setIsLoadedMoreData(false)
-
-    if (!value.length) {
-      setcheckedItems(value)
-      return
+    const selectedValue: string[] = value.length ? [value.at(-1)] : []
+    setcheckedItems(selectedValue)
+    if (item.ColumnType !== 'Text') {
+      let newValues: number[] = []
+      newValues = selectedValue.map((item: string) => +item)
+      if (!isOpened) {
+        handleSelectItems(newValues, false)
+      }
+      setCheckedItemsLocaly(newValues)
+    } else {
+      if (!isOpened) {
+        handleSelectItems(value, false)
+      }
+      setCheckedItemsLocaly(value)
     }
-    if (checkedItems.includes(value[0])) {
-      let newItems = checkedItems.filter((elem) => elem !== value[0])
-      setcheckedItems(newItems)
-      return
-    }
-    setcheckedItems((prev) => [...prev, value[0]])
   }
   const onChnage = (newInputValue: string) => {
     if (item.ColumnType !== 'Text' && !containsOnlyNumbers(newInputValue)) {
@@ -84,23 +108,7 @@ const ModalForSingleField = ({
     handleChangeValue(newInputValue)
     setVal(newInputValue)
   }
-  const onAccept = () => {
-    if (item.ColumnType !== 'Text') {
-      let newValues: number[] = []
-      checkedItems.map((item) => newValues.push(+item))
-      handleSelectItems(newValues, false)
-      setCheckedItemsLocaly(newValues)
-    } else {
-      handleSelectItems(checkedItems, false)
-      setCheckedItemsLocaly(checkedItems)
-    }
-    handleClose?.()
-  }
-  const onCancel = () => {
-    handleSelectItems(filterTypeing.CheckedItems, false)
-    setcheckedItems(filterTypeing.CheckedItems)
-    handleClose?.()
-  }
+
   const isEmpty = () => {
     if (item.ColumnType !== 'Text') {
       if (
@@ -148,138 +156,121 @@ const ModalForSingleField = ({
     }
   }, [])
   return (
-    <Box sx={style}>
-      <div className='G-justify-between' style={{ marginBottom: 32 }}>
-        <div style={{ width: '48%', position: 'relative' }}>
-          <Autocomplete
-            multiple
-            id='multiple-limit-tags'
-            noOptionsText={'Empty Data'}
-            options={rendData()}
-            value={fakeItems}
-            inputValue={val}
-            disabled={checkedItems.length > 0}
-            onInputChange={(event, newInputValue) => onChnage(newInputValue)}
-            onChange={selectValue}
-            onOpen={handleOpenList}
-            onClose={handleCloseList}
-            getOptionLabel={(option) => option}
-            disableCloseOnSelect
-            autoFocus={false}
-            fullWidth
-            freeSolo
-            filterOptions={(options, state) => options}
-            sx={{ height: 'max-content' }}
-            renderOption={(props, option, { selected }) => {
-              if (option !== '')
-                return (
-                  <div key={props.id} style={{ textAlign: 'center' }}>
-                    <li
-                      {...props}
-                      style={{
-                        marginLeft: 5,
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        minHeight: 40,
-                        borderBottom:
-                          //@ts-ignore
-                          props['data-option-index'] === 0 ? '1px solid #DCDCDC' : 'none',
-                      }}
-                    >
-                      {option === '' ? 'Empty' : option}
-                    </li>
-                    {perColumnListForFilters &&
-                    option === perColumnListForFilters[perColumnListForFilters.length - 1] ? (
-                      <div className='G-center' style={{ width: '100%' }}>
-                        {perColumnTotalCount && perColumnListForFilters.length < perColumnTotalCount ? (
-                          <Button
-                            size='large'
-                            style={{
-                              margin: '10px',
-                              width: '90%',
-                              backgroundColor: '#FB9C59',
-                              color: 'black',
-                            }}
-                            onClick={() => {
-                              handleChangePagePerFilterField?.()
-                              setIsLoadedMoreData(true)
-                            }}
-                          >
-                            load more
-                          </Button>
-                        ) : null}
-                      </div>
+    <div
+      style={{
+        width: advancedSettings ? columnsSizes : '100%',
+        position: 'relative',
+      }}
+    >
+      <Autocomplete
+        multiple
+        id='multiple-limit-tags'
+        noOptionsText={'Empty Data'}
+        options={rendData()}
+        value={checkedItems}
+        inputValue={val}
+        onInputChange={(event, newInputValue) => onChnage(newInputValue)}
+        onChange={selectValue}
+        onOpen={handleOpenList}
+        onClose={handleCloseList}
+        getOptionLabel={(option) => option}
+        disableCloseOnSelect
+        autoFocus={false}
+        fullWidth
+        freeSolo
+        filterOptions={(options, state) => options}
+        sx={{ height: 'max-content' }}
+        renderOption={(props, option, { selected }) => {
+          if (option !== '')
+            return (
+              <div key={props.id} style={{ textAlign: 'center' }}>
+                <li
+                  {...props}
+                  style={{
+                    marginLeft: 5,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    minHeight: 40,
+                    borderBottom:
+                      //@ts-ignore
+                      props['data-option-index'] === 0 ? '1px solid #DCDCDC' : 'none',
+                  }}
+                >
+                  {item.ColumnName === columnName && isLoadingFilters ? (
+                    <div style={{ width: '100%' }}>
+                      <Skeleton />
+                    </div>
+                  ) : (
+                    <>
+                      <div>{option === '' ? 'Empty' : option}</div>
+                    </>
+                  )}
+                </li>
+                {option === perColumnListForFilters?.at(-1) ? (
+                  <div className='G-center' style={{ width: '100%' }}>
+                    {perColumnTotalCount && perColumnListForFilters.length < perColumnTotalCount ? (
+                      <Button
+                        size='large'
+                        style={{
+                          margin: '0 16px',
+                          width: 'auto',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          border: 'none',
+                        }}
+                        onClick={() => {
+                          handleChangePagePerFilterField?.()
+                          setIsLoadedMoreData(true)
+                        }}
+                      >
+                        load more
+                      </Button>
                     ) : null}
                   </div>
-                )
+                ) : null}
+              </div>
+            )
+        }}
+        renderInput={(params) => (
+          <TextField
+            onFocus={() => setErrMessage('')}
+            onBlur={() => setErrMessage('')}
+            error={!!errMessage}
+            helperText={errMessage}
+            {...params}
+            label={filterTypeing.TypeForUi}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                  {item.ColumnName === columnName && isLoadingFilters && <CircularProgress color='inherit' size={20} />}
+                  {params.InputProps.endAdornment}
+                </>
+              ),
             }}
-            renderInput={(params) => (
-              <TextField
-                onFocus={() => setErrMessage('')}
-                onBlur={() => setErrMessage('')}
-                error={!!errMessage}
-                helperText={errMessage}
-                {...params}
-                label={filterTypeing.TypeForUi}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <>
-                      {item.ColumnName !== columnName ? null : (perColumnListForFilters &&
-                          perColumnListForFilters?.length > 0) ||
-                        (perColumnListForFilters?.length === 0 && !isLoadingFilters) ? null : (
-                        <CircularProgress color='inherit' size={20} />
-                      )}
-                      {params.InputProps.endAdornment}
-                    </>
-                  ),
-                }}
-              />
-            )}
           />
-          {isEmpty() ? (
-            <div
-              className='G-align-center G-shadow-around'
-              style={{
-                borderRadius: 4,
-                height: 56,
-                padding: 15,
-                color: 'silver',
-                position: 'absolute',
-                backgroundColor: 'white',
-                opacity: 1,
-                top: 58,
-                zIndex: 888888,
-                width: '100%',
-              }}
-            >
-              empty data
-            </div>
-          ) : null}
+        )}
+      />
+      {isEmpty() ? (
+        <div
+          className='G-align-center G-shadow-around'
+          style={{
+            borderRadius: 4,
+            height: 56,
+            padding: 15,
+            color: 'silver',
+            position: 'absolute',
+            backgroundColor: 'white',
+            opacity: 1,
+            top: 58,
+            zIndex: 888888,
+            width: '100%',
+          }}
+        >
+          empty data
         </div>
-        <Autocomplete
-          limitTags={1}
-          multiple
-          id='checkboxes-tag'
-          options={[]}
-          autoFocus={false}
-          value={checkedItems}
-          onChange={selectValue}
-          fullWidth
-          popupIcon={''}
-          inputValue=''
-          renderInput={(params) => (
-            <TextField key={params.id} {...params} label={filterTypeing.PropertyName} value='' />
-          )}
-          open={false}
-          sx={{ width: '48%', height: 'max-content' }}
-        />
-        {/* {checkedItems?.map((item) => {
-          return <div>{item}</div>;
-        })} */}
-      </div>
-      <AcceptCancel errMessage={errMessage} checkedItems={checkedItems} handleClose={onCancel} onAccept={onAccept} />
-    </Box>
+      ) : null}
+    </div>
   )
 }
 

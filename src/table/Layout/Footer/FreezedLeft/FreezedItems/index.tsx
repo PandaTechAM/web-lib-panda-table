@@ -13,6 +13,7 @@ interface IFreezedHeader<T extends Object> {
   columnMinWidth?: number
   footerColor?: string
   aggregates?: any
+  isLoadedData?: boolean
   handleArgChange?(columnName: string, type: string): void
 }
 const FreezedItems = <T extends Object>({
@@ -21,6 +22,7 @@ const FreezedItems = <T extends Object>({
   columnMinWidth,
   footerColor,
   aggregates,
+  isLoadedData,
   handleArgChange,
 }: IFreezedHeader<T>) => {
   return (
@@ -45,6 +47,7 @@ const FreezedItems = <T extends Object>({
                     item.title,
                     handleArgChange,
                     aggregates,
+                    isLoadedData,
                   )}
                 </li>
               )

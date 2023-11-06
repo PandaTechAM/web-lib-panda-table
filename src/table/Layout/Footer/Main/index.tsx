@@ -20,6 +20,7 @@ interface IFooterMain<T extends Object> {
   isStickyFirstColumn?: boolean
   leftFreezedColumnWidth?: number
   aggregates?: any
+  isLoadedData?: boolean
   handleArgChange?(columnName: string, type: string): void
 }
 const FooterMain = <T extends Object>({
@@ -30,6 +31,7 @@ const FooterMain = <T extends Object>({
   leftFreezedColumnWidth,
   columnsHeaderStructure,
   aggregates,
+  isLoadedData,
   handleArgChange,
 }: IFooterMain<T>) => {
   return (
@@ -64,6 +66,7 @@ const FooterMain = <T extends Object>({
                     item.title,
                     handleArgChange,
                     aggregates,
+                    isLoadedData,
                   )}
                 </li>
               )

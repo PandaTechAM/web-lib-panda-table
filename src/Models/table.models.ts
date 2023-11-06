@@ -39,6 +39,7 @@ export interface IProps<T extends Object> {
   hoverdRowPosition?: number
   selectedPageSizeId?: ISelected
   hasFilters?: boolean
+  isLoadedData?: boolean
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void
@@ -71,7 +72,7 @@ export interface IOrdering {
 }
 export interface IFilterDataForRequest {
   Filters: ItemFields[]
-  Aggregates: any[]
+  Aggregates: any
   Order: IOrdering
 }
 

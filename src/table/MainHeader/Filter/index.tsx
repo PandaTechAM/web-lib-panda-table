@@ -134,7 +134,7 @@ const Filter = ({
                   )
                 })
               ) : (
-                <div>something went wrong</div>
+                <div>Add Filters Columns</div>
               )
             ) : (
               data.map((item: any, index: any) => {

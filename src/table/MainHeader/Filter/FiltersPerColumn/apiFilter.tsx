@@ -42,7 +42,6 @@ const APIFilter = ({
   filteredColumn,
   isLoadingFilters,
   isDisabled,
-  selectedItem,
   perColumnTotalCount,
   checkIsDisabled,
   handleChangePagePerFilterField,
@@ -245,27 +244,30 @@ const APIFilter = ({
         )
       case 2:
         return (
-          <FiltersModalWrapper
-            isDisabled={isDisabled}
-            advancedSettings={advancedSettings}
+          // <FiltersModalWrapper
+          //   isDisabled={isDisabled}
+          //   advancedSettings={advancedSettings}
+          //   columnsSizes={columnsSizes}
+          //   filterTypeing={filterTypeing}
+          //   setCoulmnName={selectedColumnName}
+          // >
+          <ModalForSingleField
+            item={item}
             columnsSizes={columnsSizes}
+            advancedSettings={advancedSettings}
+            perColumnListForFilters={perColumnListForFilters}
+            columnName={columnName}
             filterTypeing={filterTypeing}
+            isLoadingFilters={isLoadingFilters}
+            perColumnTotalCount={perColumnTotalCount}
+            isDisabled={isDisabled}
+            setCheckedItemsLocaly={setCheckedItemsLocaly}
+            handleChangeValue={handleChangeValue}
+            handleSelectItems={handleSelectItems}
             setCoulmnName={selectedColumnName}
-          >
-            <ModalForSingleField
-              item={item}
-              perColumnListForFilters={perColumnListForFilters}
-              columnName={columnName}
-              filterTypeing={filterTypeing}
-              isLoadingFilters={isLoadingFilters}
-              perColumnTotalCount={perColumnTotalCount}
-              setCheckedItemsLocaly={setCheckedItemsLocaly}
-              handleChangeValue={handleChangeValue}
-              handleSelectItems={handleSelectItems}
-              setCoulmnName={selectedColumnName}
-              handleChangePagePerFilterField={handleChangePagePerFilterField}
-            />
-          </FiltersModalWrapper>
+            handleChangePagePerFilterField={handleChangePagePerFilterField}
+          />
+          // </FiltersModalWrapper>
         )
       case 3:
         return (

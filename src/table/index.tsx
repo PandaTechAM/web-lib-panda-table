@@ -49,6 +49,7 @@ function Table<T extends Object>({
   hasFilters,
   isEnableAggregates,
   aggregates,
+  isLoadedData,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -183,6 +184,7 @@ function Table<T extends Object>({
                   leftFreezedColumnWidth={leftFreezedColumnWidth}
                   rightFreezedColumnWidth={rightFreezedColumnWidth}
                   aggregates={aggregates}
+                  isLoadedData={isLoadedData}
                   handleArgChange={handleArgChange}
                 />
               </div>

@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
-import { Autocomplete, Button, CircularProgress, TextField, Checkbox } from '@mui/material'
+import { Autocomplete, Button, CircularProgress, TextField, Checkbox, Skeleton } from '@mui/material'
 // import Checkbox from "../../../../components/checkbox";
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
@@ -7,8 +7,8 @@ import { ICoulmnError } from '../apiFilter'
 
 interface IMultipleCHeck {
   columnsSizes: string
-  item: IComparisonType
   advancedSettings: boolean
+  item: IComparisonType
   perColumnListForFilters?: string[]
   columnName: string
   filterTypeing: ItemFields
@@ -169,15 +169,21 @@ const MultipleCheck = ({
                   minHeight: 40,
                 }}
               >
-                {option === '' ? 'Empty' : option}
-                <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                {item.ColumnName === columnName && isLoadingFilters ? (
+                  <div style={{ width: '100%' }}>
+                    <Skeleton />
+                  </div>
+                ) : (
+                  <>
+                    <div>{option === '' ? 'Empty' : option}</div>
+                    <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                  </>
+                )}
               </li>
 
-              {perColumnListForFilters &&
-              option === perColumnListForFilters[perColumnListForFilters.length - 1] &&
-              filterTypeing.PropertyName !== 'Gender' ? (
+              {option === perColumnListForFilters?.at(-1) ? (
                 <div className='G-center' style={{ width: '100%' }}>
-                  {perColumnTotalCount && perColumnListForFilters.length < perColumnTotalCount ? (
+                  {(perColumnListForFilters?.length ?? 0) < (perColumnTotalCount ?? 0) ? (
                     <Button
                       className='G-center'
                       size='large'
@@ -210,11 +216,7 @@ const MultipleCheck = ({
               ...params.InputProps,
               endAdornment: (
                 <>
-                  {item.ColumnName !== columnName ? null : (perColumnListForFilters &&
-                      perColumnListForFilters?.length > 0) ||
-                    (perColumnListForFilters?.length === 0 && !isLoadingFilters) ? null : (
-                    <CircularProgress color='inherit' size={20} />
-                  )}
+                  {item.ColumnName === columnName && isLoadingFilters && <CircularProgress color='inherit' size={20} />}
                   {params.InputProps.endAdornment}
                 </>
               ),
