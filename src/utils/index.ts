@@ -17,52 +17,6 @@ export const formatPrice = (num: number, symbol: string, isPrice = false, fixedC
   )
 }
 
-// export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {
-//   if (ColumnType === "Number" || ColumnType === 'NumericText') {
-//     if (ComparisonType === "Equal" || ComparisonType === "NotEqual" || ComparisonType === "In") {
-//       return 1;
-//     } else if (
-//       ComparisonType === "GreaterThan" ||
-//       ComparisonType === "LessThan" ||
-//       ComparisonType === "GreaterThanOrEqual" ||
-//       ComparisonType === "LessThanOrEqual"
-//     ) {
-//       return 2;
-//     } else if (ComparisonType === "Between") {
-//       return 3;
-//     } else {
-//       return 0;
-//     }
-//   } else if (ColumnType === "Text") {
-//     if (ComparisonType === "IsEmpty" || ComparisonType === "IsNotEmpty") {
-//       return 0;
-//     } else if (ComparisonType === "Equal" || ComparisonType === "NotEqual") {
-//       return 1
-//     }
-//     else {
-//       return 2;
-//     }
-//   } else if (ColumnType === "Boolean") {
-//     if (ComparisonType === "IsEmpty" || ComparisonType === "IsNotEmpty") {
-//       return 0;
-//     } else {
-//       return 4;
-//     }
-//   } else if (ColumnType === "Date") {
-//     if (ComparisonType === "IsEmpty" || ComparisonType === "IsNotEmpty") {
-//       return 0;
-//     } else if(ComparisonType === "Equal" || ComparisonType === "NotEqual" || ComparisonType === "In"){
-//       return 1;
-//     }
-//     else if (ComparisonType === "Between"){
-//       return 5;
-//     }
-//     else{
-//       return 6
-//     }
-//   }
-// };
-
 const filterUiHelperMap = {
   Number: {
     Equal: 1,
@@ -91,8 +45,13 @@ const filterUiHelperMap = {
     LessThanOrEqual: 2,
     Between: 3,
   },
-  NumericText: {
+  EncryptedData: {
     Equal: 1,
+    NotEqual: 1,
+  },
+  Base36Id: {
+    Equal: 1,
+    NotEqual: 1,
   },
   Text: {
     IsEmpty: 0,
@@ -110,6 +69,8 @@ const filterUiHelperMap = {
   },
   Date: {
     Between: 5,
+    Equal: 6,
+    NotEqual: 6,
     GreaterThan: 6,
     GreaterThanOrEqual: 6,
     LessThan: 6,
@@ -119,7 +80,6 @@ const filterUiHelperMap = {
     Contains: 1,
   },
 } as const
-
 export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {
   const columnTypeMap = filterUiHelperMap[ColumnType as keyof typeof filterUiHelperMap]
   if (columnTypeMap) {
@@ -128,7 +88,13 @@ export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {
   return 0
 }
 
-export const validateRangeColumns = (from: any, to: any, item: any, setErrorMessage: (option: any) => void) => {
+export const validateRangeColumns = (
+  from: any,
+  to: any,
+  item: any,
+  setErrorMessage: (option: any) => void,
+  errMessages?: any,
+) => {
   let isValid = false
   const columnError = { from: '', to: '' }
   if (from == undefined && to !== undefined && item.ColumnType === 'Date') {
@@ -178,8 +144,6 @@ export const validateRangeColumns = (from: any, to: any, item: any, setErrorMess
 }
 
 export const getColumnName = (inputString: string) => {
-  console.log(inputString)
-
   const underscoreIndex = inputString.indexOf('_')
 
   if (underscoreIndex !== -1) {

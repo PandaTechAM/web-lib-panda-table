@@ -11,8 +11,24 @@ const ClickOutside: FC<IClickOutSide> = ({ onClickOutside, children }) => {
 
   useEffect(() => {
     function handle(e: MouseEvent) {
+      const target = e.target as Node
+
+      const hasCommonAncestor = (element: HTMLElement, ancestorId: string): boolean => {
+        let ancestor = element.parentElement
+
+        while (ancestor) {
+          if (ancestor.id === ancestorId || ancestor.role === 'dialog' || ancestor.role === 'presentation') {
+            return true
+          }
+
+          ancestor = ancestor.parentElement
+        }
+
+        return false
+      }
+
       if (container.current) {
-        !container.current.contains(e.target as HTMLElement) && onClickOutside && onClickOutside(e)
+        !hasCommonAncestor(target as HTMLElement, 'alo') && onClickOutside?.(e)
       }
     }
 
@@ -23,7 +39,7 @@ const ClickOutside: FC<IClickOutSide> = ({ onClickOutside, children }) => {
   }, [container, onClickOutside])
 
   return (
-    <div className='E-click-outside' ref={container}>
+    <div className='E-click-outside' id='alo' ref={container}>
       {children}
     </div>
   )

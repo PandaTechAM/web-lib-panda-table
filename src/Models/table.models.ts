@@ -34,12 +34,13 @@ export interface IProps<T extends Object> {
   rowsFreezeAction?: boolean
   isEnableAggregates?: boolean
   aggregates?: any
-  EmptyDataIcon?: any
+  EmptyDataIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
   perColumnTotalCount?: number
   hoverdRowPosition?: number
   selectedPageSizeId?: ISelected
   hasFilters?: boolean
   isLoadedData?: boolean
+  translations?: Record<string, any>
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void
@@ -49,7 +50,8 @@ export interface IProps<T extends Object> {
   setSortedData?(option: any): void
   storeStructure?(): void
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
-  getFilteredData?(option: any): void
+  getFilteredData?(option: ItemFields[], ColumnName?: string): void
+  getFilteredDataWithDebounce?(option: ItemFields[], ColumnName?: string): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
@@ -73,7 +75,7 @@ export interface IOrdering {
 export interface IFilterDataForRequest {
   Filters: ItemFields[]
   Aggregates: any
-  Order: IOrdering
+  Order: any
 }
 
 export interface IFiltersTypes {
@@ -127,11 +129,15 @@ export interface IFreezeProps<T extends Object> {
 }
 
 export interface IComparisonType {
+  key?: string
   ColumnName: string
   ColumnType: string
   IsBold?: boolean
 }
 
+// export interface ITranslations {
+//   EmptyData:
+// }
 export interface IColumnConfig<T extends Object> {
   id?: string | number
   columnName?: number | string

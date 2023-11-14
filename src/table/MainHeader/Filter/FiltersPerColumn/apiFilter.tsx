@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { MenuItem, Select, TextField } from '@mui/material'
+import { Autocomplete, Box, FormControl, MenuItem, NativeSelect, Select, TextField } from '@mui/material'
 import { IComparisonType, ItemFields } from '../../../../Models/table.models'
 import { filterUiHelper } from '../../../../utils'
 import MultipleCheck from './UiTypes/MultipleCheck'
@@ -9,6 +9,7 @@ import BetweenNumbers from './UiTypes/BetweenNumbers'
 import ModalForSingleField from './UiTypes/ModalSingleField'
 import FiltersModalWrapper from '../../../../components/modal/FiltersModalWrapper'
 import MultipleSelectCheckmarks from './UiTypes/MultipleSelectCheckmarks'
+import { filterTypesUiHelper, inputSize } from '../../../../Models/table.enum'
 
 interface IPerField {
   item: IComparisonType
@@ -21,15 +22,13 @@ interface IPerField {
   isDisabled: boolean
   selectedItem?: ItemFields
   perColumnTotalCount?: number
+  translations?: Record<string, any>
   getFilteredData?(option: ItemFields, ColumnName?: string): void
   checkIsDisabled(option: boolean): void
   handleChangePagePerFilterField?(): void
 }
-export interface ICoulmnError {
-  columnName: string
-  errorMessage: string
-  columnField: string
-}
+
+const inputSizes: inputSize = 'small'
 const columnsSizes = '66%'
 const ComparisonType = '30%'
 
@@ -43,6 +42,7 @@ const APIFilter = ({
   isLoadingFilters,
   isDisabled,
   perColumnTotalCount,
+  translations,
   checkIsDisabled,
   handleChangePagePerFilterField,
 }: IPerField) => {
@@ -75,8 +75,7 @@ const APIFilter = ({
       columnFilter.Values = []
       columnFilter.Search = ''
     } else {
-      const idNumeric =
-        item.ColumnType === 'Number' || item.ColumnType === 'Percentage' || item.ColumnType === 'Currency'
+      const idNumeric = ['Number', 'Percentage', 'Currency'].includes(item.ColumnType)
 
       columnFilter.Values[0] = idNumeric ? Number(value) : value
       columnFilter.Search = idNumeric ? Number(value) : value
@@ -102,6 +101,7 @@ const APIFilter = ({
         columnFilter.Values = [from, to]
       }
     }
+
     getFilteredData?.(columnFilter, '')
   }
   const handleChangeValueSingleInputs = (value: any) => {
@@ -116,7 +116,7 @@ const APIFilter = ({
       columnFilter.Values = []
       columnFilter.Search = ''
     } else {
-      if (item.ColumnType === 'Number' || item.ColumnType === 'Percentage' || item.ColumnType === 'Currency') {
+      if (['Number', 'Percentage', 'Currency'].includes(item.ColumnType)) {
         let numeric = +value
         columnFilter.Values[0] = numeric
         columnFilter.Search = numeric
@@ -128,8 +128,7 @@ const APIFilter = ({
 
     getFilteredData?.(columnFilter, '')
   }
-  const selectComparisonType = (event: any) => {
-    const { value } = event.target
+  const selectComparisonType = (value: any) => {
     if (filterUiHelper(typeElem.ColumnType, value) === 2) {
     }
     let columnFilter: ItemFields = {
@@ -163,10 +162,7 @@ const APIFilter = ({
   const selectedColumnName = (options: string) => {
     setCoulmnName(options)
   }
-
-  const handleSelectItems = (checkedItems: any[], isOpened: boolean) => {
-    console.log(checkedItems)
-
+  const handleSelectItems = (checkedItems: any[], isOpened: boolean, fieldName?: string) => {
     if (isOpened) {
       getFilteredData?.(
         {
@@ -204,7 +200,7 @@ const APIFilter = ({
       getFilteredData?.(filteredData, '')
     }
   }
-  const setCheckedItemsLocaly = (option: any[]) => {
+  const setCheckedItemsLocaly = (option: any[], closeCallBack?: () => void) => {
     setfilterTypeing((prev) => {
       return { ...prev, CheckedItems: option }
     })
@@ -216,6 +212,7 @@ const APIFilter = ({
       case 0:
         return (
           <TextField
+            size={inputSizes}
             disabled
             id='outlined-basic'
             label={item.ColumnName}
@@ -235,6 +232,8 @@ const APIFilter = ({
             isLoadingFilters={isLoadingFilters}
             isDisabled={isDisabled}
             perColumnTotalCount={perColumnTotalCount}
+            inputSizes={inputSizes}
+            translations={translations}
             setCheckedItemsLocaly={setCheckedItemsLocaly}
             handleChangePagePerFilterField={handleChangePagePerFilterField}
             handleChangeValue={handleChangeValue}
@@ -261,6 +260,8 @@ const APIFilter = ({
             isLoadingFilters={isLoadingFilters}
             perColumnTotalCount={perColumnTotalCount}
             isDisabled={isDisabled}
+            inputSizes={inputSizes}
+            translations={translations}
             setCheckedItemsLocaly={setCheckedItemsLocaly}
             handleChangeValue={handleChangeValue}
             handleSelectItems={handleSelectItems}
@@ -278,6 +279,8 @@ const APIFilter = ({
             columnName={columnName}
             filterTypeing={filterTypeing}
             isDisabled={isDisabled}
+            inputSizes={inputSizes}
+            translations={translations}
             checkIsDisabled={checkIsDisabled}
             setCoulmnName={setCoulmnName}
             handleChangeRange={handleChangeRange}
@@ -294,6 +297,8 @@ const APIFilter = ({
             isDisabled={isDisabled}
             advancedSettings={advancedSettings}
             filterTypeing={filterTypeing}
+            inputSizes={inputSizes}
+            translations={translations}
             setCheckedItemsLocaly={setCheckedItemsLocaly}
             setCoulmnName={selectedColumnName}
             handleSelectItems={handleSelectItems}
@@ -308,6 +313,8 @@ const APIFilter = ({
             columnName={columnName}
             filterTypeing={filterTypeing}
             isDisabled={isDisabled}
+            inputSizes={inputSizes}
+            translations={translations}
             checkIsDisabled={checkIsDisabled}
             setCoulmnName={setCoulmnName}
             handleChangeRange={handleChangeRange}
@@ -322,6 +329,8 @@ const APIFilter = ({
             columnName={columnName}
             filterTypeing={filterTypeing}
             isDisabled={isDisabled}
+            inputSizes={inputSizes}
+            translations={translations}
             setCoulmnName={setCoulmnName}
             handleChangeValue={handleChangeValueSingleInputs}
           />
@@ -339,23 +348,60 @@ const APIFilter = ({
   }, [filteredColumn])
 
   return (
-    <div className='G-justify-between' style={{ marginTop: 16, flexDirection: 'row-reverse' }}>
-      {uiTypes()}
-
-      {advancedSettings && (
-        <Select
-          disabled={isDisabled}
-          sx={{ width: ComparisonType, height: 56 }}
-          onChange={selectComparisonType}
-          value={filterTypeing.TypeForUi}
-        >
-          {typeElem.FilterTypes.map((types: string) => (
-            <MenuItem key={types} value={types} style={{ padding: '6px 16px' }}>
-              {types}
-            </MenuItem>
-          ))}
-        </Select>
-      )}
+    <div style={{ marginTop: 16 }}>
+      {filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 5 ||
+      filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 3 ? (
+        <div style={{ margin: '0 0 10px 0', fontSize: 14 }}>{item.key || item.ColumnName}</div>
+      ) : null}
+      <div className='G-justify-between'>
+        {advancedSettings ? (
+          <div
+            style={{
+              width: advancedSettings ? ComparisonType : '100%',
+              position: 'relative',
+            }}
+          >
+            <Autocomplete
+              value={filterTypesUiHelper[filterTypeing.TypeForUi as keyof typeof filterTypesUiHelper]}
+              onChange={(event: any, newValue: string | null) => {
+                selectComparisonType(newValue)
+              }}
+              inputValue={filterTypesUiHelper[filterTypeing.TypeForUi as keyof typeof filterTypesUiHelper]}
+              disablePortal
+              disableClearable
+              disabled={isDisabled}
+              size={inputSizes}
+              onInputChange={() => console.log()}
+              sx={{ ':hover': { cursor: 'pointer' } }}
+              id='controllable-states-demo'
+              options={typeElem.FilterTypes}
+              renderOption={(props, option, { selected }) => {
+                return (
+                  <div key={props.id}>
+                    <li
+                      {...props}
+                      style={{
+                        padding: '6px 16px',
+                      }}
+                    >
+                      {filterTypesUiHelper[option as keyof typeof filterTypesUiHelper]}
+                    </li>
+                  </div>
+                )
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  sx={{
+                    caretColor: 'transparent',
+                  }}
+                />
+              )}
+            />
+          </div>
+        ) : null}
+        {uiTypes()}
+      </div>
     </div>
   )
 }

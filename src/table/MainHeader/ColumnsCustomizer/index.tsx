@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd'
 import './style.scss'
 import { IColumnConfigStructure, IColumnHeaderStructure, IColumns } from '../../../Models/table.models'
@@ -105,6 +105,7 @@ const onDragEnd = <T extends Object>(
 }
 
 interface IColumnsCustomizer<T extends Object> {
+  translations?: Record<string, any>
   columnsConfigStructure: IColumnConfigStructure<T>
   setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
   columnsHeaderStructure: IColumnHeaderStructure
@@ -117,11 +118,13 @@ function ColumnsCustomizer<T extends Object>({
   columnsHeaderStructure,
   setColumnHeaderStructure,
   storeStructure,
+  translations,
 }: IColumnsCustomizer<T>) {
   const [visibleColumnsCount, setVisibleColumnsCount] = useState<number>()
   const [freezeValidation, setFreezeValidation] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -133,41 +136,45 @@ function ColumnsCustomizer<T extends Object>({
       if (visibleColumnsCount === 1 && visible) {
         return
       }
-      setColumnsConfigStructure &&
-        setColumnsConfigStructure({
-          ...columnsConfigStructure,
-          [StructureConfig.Main]: {
-            ...columnsConfigStructure[StructureConfig.Main],
-            items: columnsConfigStructure[StructureConfig.Main].items.map((item, indexx) => {
-              if (index === indexx) {
-                return { ...item, isVisible: !item.isVisible }
-              }
-              return item
-            }),
-          },
-        })
+
+      setColumnsConfigStructure?.({
+        ...columnsConfigStructure,
+        [StructureConfig.Main]: {
+          ...columnsConfigStructure[StructureConfig.Main],
+          items: columnsConfigStructure[StructureConfig.Main].items.map((item, indexx) => {
+            if (index === indexx) {
+              return { ...item, isVisible: !item.isVisible }
+            }
+            return item
+          }),
+        },
+      })
     } else {
       if (visibleColumnsCount === 1 && visible) {
         return
       }
-      setColumnsConfigStructure &&
-        setColumnsConfigStructure({
-          ...columnsConfigStructure,
-          [StructureConfig.Freezed]: {
-            ...columnsConfigStructure[StructureConfig.Freezed],
-            items: columnsConfigStructure[StructureConfig.Freezed].items.map((item, indexx) => {
-              if (index === indexx) {
-                return { ...item, isVisible: !item.isVisible }
-              }
-              return item
-            }),
-          },
-        })
+
+      setColumnsConfigStructure?.({
+        ...columnsConfigStructure,
+        [StructureConfig.Freezed]: {
+          ...columnsConfigStructure[StructureConfig.Freezed],
+          items: columnsConfigStructure[StructureConfig.Freezed].items.map((item, indexx) => {
+            if (index === indexx) {
+              return { ...item, isVisible: !item.isVisible }
+            }
+            return item
+          }),
+        },
+      })
     }
   }
 
-  const allColumns = columnsConfigStructure[StructureConfig.Main].items.concat(
-    columnsConfigStructure[StructureConfig.Freezed].items,
+  const allColumns = useMemo(
+    () => [
+      ...columnsConfigStructure[StructureConfig.Main].items,
+      ...columnsConfigStructure[StructureConfig.Freezed].items,
+    ],
+    [columnsConfigStructure],
   )
 
   useEffect(() => {
@@ -178,7 +185,7 @@ function ColumnsCustomizer<T extends Object>({
       }
     })
     setVisibleColumnsCount(count)
-  }, [allColumns, columnsConfigStructure])
+  }, [columnsConfigStructure])
   return (
     <div style={{ marginLeft: '5px', flex: '1 1 auto' }}>
       <PopUp
@@ -187,7 +194,7 @@ function ColumnsCustomizer<T extends Object>({
         anchorEl={anchorEl}
         handleClick={handleClick}
         handleClose={handleClose}
-        modalName='Customize Columns'
+        modalName={translations?.customizationAction.modalName || 'Customize Columns'}
       >
         <div
           style={{
@@ -207,9 +214,15 @@ function ColumnsCustomizer<T extends Object>({
           >
             <div className='G-flex-column' style={{ height: '48px' }}>
               <div>
-                {visibleColumnsCount} of {allColumns.length} columns are visible
+                {translations?.customizationAction.info || 'Visible columns are '}
+                {visibleColumnsCount} - {allColumns.length}
               </div>
-              <div>{freezeValidation ? `The maximum number of freezing columns can be 3` : ''}</div>
+              <div>
+                {freezeValidation
+                  ? translations?.customizationAction.validationMessage ||
+                    'The maximum number of freezing columns can be 3'
+                  : ''}
+              </div>
             </div>
           </div>
           <div
@@ -344,7 +357,7 @@ function ColumnsCustomizer<T extends Object>({
                   handleClose?.()
                 }}
               >
-                Save
+                {translations?.customizationAction.actionButtonName || 'Save'}
               </button>
             </div>
           )}

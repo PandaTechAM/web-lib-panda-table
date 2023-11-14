@@ -7,6 +7,7 @@ import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import './style.scss'
 import { validateRangeColumns } from '../../../../../utils'
 import ActionList from '../../../../../components/datePickerActionList/ActionList'
+import { inputSize } from '../../../../../Models/table.enum'
 interface IPickDate {
   columnsSizes: string
   item: IComparisonType
@@ -14,6 +15,8 @@ interface IPickDate {
   filterTypeing: ItemFields
   columnName: string
   isDisabled: boolean
+  inputSizes: inputSize
+  translations?: Record<string, any>
   setCoulmnName: (name: string) => void
   checkIsDisabled: (option: boolean) => void
   handleChangeRange(from: any, to: any): void
@@ -29,6 +32,8 @@ const BetweenDates = ({
   columnName,
   filterTypeing,
   isDisabled,
+  inputSizes,
+  translations,
   checkIsDisabled,
   setCoulmnName,
   handleChangeRange,
@@ -60,13 +65,13 @@ const BetweenDates = ({
     setErrMessage({ from: '', to: '' })
 
     if (name === 'to') {
-      if (!validateRangeColumns(stateValues.from, value, item, setErrMessage)) {
+      if (!validateRangeColumns(stateValues.from, value, item, setErrMessage, translations?.filterAction.validations)) {
         handleChangeRange(stateValues.from, value)
       } else {
         checkIsDisabled(true)
       }
     } else {
-      if (!validateRangeColumns(value, stateValues.to, item, setErrMessage)) {
+      if (!validateRangeColumns(value, stateValues.to, item, setErrMessage, translations?.filterAction.validations)) {
         handleChangeRange(value, stateValues.to)
       } else {
         checkIsDisabled(true)
@@ -121,7 +126,7 @@ const BetweenDates = ({
   }, [val])
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
-      let newValues: string[] = filterTypeing.CheckedItems
+      let newValues: string[] = filterTypeing.Values
       setVal({ from: newValues[0], to: newValues[1] })
     }
   }, [filterTypeing])
@@ -129,7 +134,9 @@ const BetweenDates = ({
   return (
     <div
       className={`G-justify-between ${item.IsBold ? 'IsBold' : ''}`}
-      style={{ width: advancedSettings ? columnsSizes : '100%' }}
+      style={{
+        width: advancedSettings ? columnsSizes : '100%',
+      }}
     >
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <div
@@ -139,12 +146,16 @@ const BetweenDates = ({
           className={errMessage.from ? 'date-picker' : ''}
         >
           <DateTimePicker
-            ampm={false}
-            label='From'
             open={isOpenedModal.from}
             onOpen={() => handleOpenModal('from')}
             onClose={() => handleClose('from')}
-            format={!advancedSettings ? 'LLL' : 'YYYY-MM-DD'}
+            closeOnSelect
+            label={translations?.filterAction.from || 'From'}
+            ampm={false}
+            slotProps={{
+              textField: { size: inputSizes },
+            }}
+            format={'LLL'}
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
             maxDateTime={
               filterTypeing.Values.length ? dayjs(filterTypeing.Values[1]) : val.to !== undefined ? dayjs(val.to) : null
@@ -157,7 +168,7 @@ const BetweenDates = ({
                 ? dayjs(val.from)
                 : null
             }
-            onChange={(newValue: any) => handleChangeInputValue(newValue, 'from')}
+            onChange={(newValue: any, e) => handleChangeInputValue(newValue, 'from')}
             slots={{
               actionBar: ActionList,
             }}
@@ -165,15 +176,17 @@ const BetweenDates = ({
           {errMessage.from.length ? <div style={{ color: 'red', fontSize: 12 }}>{errMessage.from}</div> : null}
         </div>
       </LocalizationProvider>
+      <div className='G-center'>-</div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <div style={{ width: '48%' }} tabIndex={1} onBlur={unFocused} className={errMessage.to ? 'date-picker' : ''}>
           <DateTimePicker
             ampm={false}
-            label='To'
+            label={translations?.filterAction.to || 'To'}
+            slotProps={{ textField: { size: inputSizes } }}
             onOpen={() => handleOpenModal('to')}
             onClose={() => handleClose('to')}
             open={isOpenedModal.to}
-            format={!advancedSettings ? 'LLL' : 'YYYY-MM-DD'}
+            format={'LLL'}
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
             minDateTime={
               filterTypeing.Values.length

@@ -34,6 +34,7 @@ interface IActionsHeader<T extends Object> {
   selectedType: string
   perColumnTotalCount?: number
   hasFilters?: boolean
+  translations?: Record<string, any>
   setColumnTotalStructures?(option: IColumnTotalStructure): void
   handleCheckAll(): void
   setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
@@ -46,6 +47,7 @@ interface IActionsHeader<T extends Object> {
   unCheck(): void
   checkAllDataFromDb(): void
   getFilteredData?(options: any): void
+  getFilteredDataWithDebounce?(options: any): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
@@ -66,6 +68,7 @@ const MainHeader = <T extends Object>({
   selectedType,
   perColumnTotalCount,
   hasFilters,
+  translations,
   handleChangePagePerFilterField,
   unCheck,
   checkAllDataFromDb,
@@ -76,6 +79,7 @@ const MainHeader = <T extends Object>({
   handleDelete,
   storeStructure,
   getFilteredData,
+  getFilteredDataWithDebounce,
   getFilteredDataForTable,
   getDownloadType,
   customHeaderAction,
@@ -87,6 +91,7 @@ const MainHeader = <T extends Object>({
           <CheckRows
             data={data}
             checkedRows={checkedRows}
+            translations={translations}
             handleCheckAll={handleCheckAll}
             unCheck={unCheck}
             checkAllDataFromDb={checkAllDataFromDb}
@@ -96,23 +101,27 @@ const MainHeader = <T extends Object>({
               <div className='G-flex G-edit' onClick={() => handleEdit(checkedRows[0])}>
                 <div className='G-center G-edit-icon'>
                   <EditSvgIcon />
-                  <span>Edit</span>
+                  <span>{translations?.editAction || 'Edit'}</span>
                 </div>
               </div>
             ) : null}
             {checkedRows.length && handleDelete ? (
               <div
                 className='G-flex G-delete'
-                onClick={() => handleDelete(selectedType === CheckedItems.SELECTED_ALL ? 'All' : checkedRows)}
+                onClick={() =>
+                  handleDelete(selectedType === translations?.all || CheckedItems.SELECTED_ALL ? 'All' : checkedRows)
+                }
               >
                 <div className='G-center G-delete-icon'>
                   <DeleteSvgIcon />
-                  <span>Delete</span>
+                  <span>{translations?.deleteAction || 'Delete'}</span>
                 </div>
               </div>
             ) : null}
             {checkedRows.length
-              ? customHeaderAction?.(selectedType === CheckedItems.SELECTED_ALL ? 'All' : checkedRows)
+              ? customHeaderAction?.(
+                  selectedType === translations?.all || CheckedItems.SELECTED_ALL ? 'All' : checkedRows,
+                )
               : null}
           </div>
         </>
@@ -123,6 +132,7 @@ const MainHeader = <T extends Object>({
           setColumnsConfigStructure={setColumnsConfigStructure}
           columnsHeaderStructure={columnsHeaderStructure}
           setColumnHeaderStructure={setColumnHeaderStructure}
+          translations={translations}
           storeStructure={storeStructure}
         />
       ) : null}
@@ -136,16 +146,23 @@ const MainHeader = <T extends Object>({
           isLoadingFilters={isLoadingFilters}
           filtersTypes={filtersTypes}
           perColumnTotalCount={perColumnTotalCount}
+          translations={translations}
+          getFilteredDataWithDebounce={getFilteredDataWithDebounce}
           getFilter={getFilteredData}
           getFilteredDataForTable={getFilteredDataForTable}
           handleChangePagePerFilterField={handleChangePagePerFilterField}
         />
       ) : null}
-      {getDownloadType && (
+      {getDownloadType ? (
         <div className='G-center G-download'>
-          <Download selectedType={selectedType} getDownloadType={getDownloadType} checkedRows={checkedRows} />
+          <Download
+            selectedType={selectedType}
+            checkedRows={checkedRows}
+            translations={translations}
+            getDownloadType={getDownloadType}
+          />
         </div>
-      )}
+      ) : null}
     </div>
   )
 }

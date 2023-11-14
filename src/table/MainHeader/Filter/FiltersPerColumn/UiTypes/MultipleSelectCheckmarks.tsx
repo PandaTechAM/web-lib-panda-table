@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -7,7 +7,13 @@ import ListItemText from '@mui/material/ListItemText'
 import Select from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
-
+import { Autocomplete, CircularProgress, ListSubheader, Skeleton, TextField } from '@mui/material'
+import { inputSize } from '../../../../../Models/table.enum'
+import { containsOnlyNumbers } from '../../../../../utils'
+const selectStyles = {
+  display: 'flex',
+  alignItems: 'center', // Center vertically
+}
 interface IMultipleSelectCheckmarks {
   item: IComparisonType
   columnsSizes: string
@@ -17,6 +23,8 @@ interface IMultipleSelectCheckmarks {
   isLoadingFilters?: boolean
   advancedSettings: boolean
   filterTypeing: ItemFields
+  inputSizes: inputSize
+  translations?: Record<string, any>
   setCheckedItemsLocaly(options: any[]): void
   handleSelectItems: (option: any[], isClosed: boolean) => void
   setCoulmnName: (name: string) => void
@@ -31,18 +39,15 @@ const MultipleSelectCheckmarks = ({
   isLoadingFilters,
   advancedSettings,
   filterTypeing,
+  inputSizes,
+  translations,
   setCheckedItemsLocaly,
   handleSelectItems,
   setCoulmnName,
 }: IMultipleSelectCheckmarks) => {
   const [checkedItems, setCheckedItems] = useState<any[]>([])
-
-  const handleChange = (event: any) => {
-    const {
-      target: { value },
-    } = event
-    console.log(value)
-
+  const [val, setVal] = useState('')
+  const handleChange = (value: any) => {
     setCheckedItems(typeof value === 'string' ? value.split(',') : value)
     setCheckedItemsLocaly(value)
   }
@@ -57,11 +62,23 @@ const MultipleSelectCheckmarks = ({
     setCoulmnName('')
     handleSelectItems(checkedItems, false)
   }
+  const isEmpty = () => {
+    if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length) {
+      return true
+    }
+    return false
+  }
+
+  const getLabel = (option: any) => {
+    if (typeof option == 'boolean') {
+      return option + ''
+    }
+    return option
+  }
 
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
-      let newValues: string[] = filterTypeing.CheckedItems
-      setCheckedItems(newValues)
+      setCheckedItems(filterTypeing.CheckedItems)
     }
   }, [filterTypeing])
 
@@ -72,29 +89,85 @@ const MultipleSelectCheckmarks = ({
         position: 'relative',
       }}
     >
-      <FormControl fullWidth>
-        <InputLabel id='demo-multiple-checkbox-label'>{item.ColumnName}</InputLabel>
-        <Select
-          labelId='demo-multiple-checkbox-label'
-          id='demo-multiple-checkbox'
+      <FormControl fullWidth size={inputSizes}>
+        <Autocomplete
           multiple
+          limitTags={advancedSettings ? 1 : 2}
+          id='multiple-limit-tags'
           value={checkedItems}
-          fullWidth
-          onChange={handleChange}
+          inputValue={val}
+          options={perColumnListForFilters ?? []}
+          onChange={(event: SyntheticEvent<Element, Event>, value: any[]) => {
+            handleChange(value)
+          }}
+          onInputChange={(event, newInputValue) => setVal(newInputValue)}
+          getOptionLabel={getLabel}
           onOpen={handleOpenList}
           onClose={handleCloseList}
+          disableCloseOnSelect
+          size={inputSizes}
           disabled={isDisabled && item.ColumnName !== columnName}
-          input={<OutlinedInput label={item.ColumnName} />}
-          renderValue={(selected) => selected.join(', ')}
-        >
-          {perColumnListForFilters?.map((name) => (
-            <MenuItem key={name} value={name}>
-              <ListItemText primary={typeof name === 'boolean' ? String(name) : name} />
-              <Checkbox checked={checkedItems.indexOf(name) > -1} />
-            </MenuItem>
-          ))}
-        </Select>
+          freeSolo
+          renderOption={(props, option, { selected }) => {
+            return (
+              <div key={props.id} style={{ textAlign: 'center' }}>
+                <li
+                  {...props}
+                  style={{
+                    marginLeft: 5,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    minHeight: 40,
+                    borderBottom: option === '' ? '1px solid silver' : 'none',
+                  }}
+                >
+                  {item.ColumnName === columnName && isLoadingFilters ? null : (
+                    <>
+                      <div>{typeof option === 'boolean' ? String(option) : option}</div>
+                      <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                    </>
+                  )}
+                </li>
+              </div>
+            )
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={item.key || item.ColumnName}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <>
+                    {item.ColumnName === columnName && isLoadingFilters && (
+                      <CircularProgress color='inherit' size={20} />
+                    )}
+                    {params.InputProps.endAdornment}
+                  </>
+                ),
+              }}
+            />
+          )}
+        />
       </FormControl>
+      {isEmpty() ? (
+        <div
+          className='G-align-center G-shadow-around'
+          style={{
+            borderRadius: 4,
+            height: 56,
+            padding: 15,
+            color: 'silver',
+            position: 'absolute',
+            backgroundColor: 'white',
+            opacity: 1,
+            zIndex: 888888,
+            width: '100%',
+          }}
+        >
+          {translations?.filterAction.emptyFieldData || 'Empty data'}
+        </div>
+      ) : null}
     </div>
   )
 }

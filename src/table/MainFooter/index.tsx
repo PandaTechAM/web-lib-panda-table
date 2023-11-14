@@ -9,6 +9,7 @@ interface IFooterPagination {
   pagesTotalCount?: number
   currPage?: number
   selectedPageSizeId: ISelected
+  translations?: Record<string, any>
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
 }
 const FooterPagination = ({
@@ -16,6 +17,7 @@ const FooterPagination = ({
   pagesTotalCount = 0,
   currPage = 1,
   selectedPageSizeId = { id: 1 },
+  translations,
   getPageRowsCountAndCurrentPage,
 }: IFooterPagination) => {
   const [isOpenList, setOpen] = useState<boolean>(false)
@@ -43,17 +45,17 @@ const FooterPagination = ({
   return (
     <>
       <div className='G-count-info'>
-        {pageSizeStructure &&
+        {(pageSizeStructure &&
           (currentPage - 1) * pageSizeStructure?.[selectedPage.id - 1].count +
             1 +
             '-' +
             currentPage * pageSizeStructure?.[selectedPage.id - 1].count +
-            ' from ' +
-            pagesTotalCount}
+            translations?.pagination.from) ||
+          ' from ' + pagesTotalCount}
       </div>
       {pageSizeStructure && selectedPage ? (
         <div className='G-justify-between G-align-center'>
-          <div className='G-select-text'>Show</div>
+          <div className='G-select-text'>{translations?.pagination.show || 'Show'}</div>
           <Select
             optionsList={pageSizeStructure}
             value={selectedPage.id}
@@ -65,11 +67,12 @@ const FooterPagination = ({
             customClass='G-Select-container'
             ButtonSvg={DropdownSvgIcon}
           />
-          <div className='G-select-text'>Rows</div>
+          <div className='G-select-text'>{translations?.pagination.rows || 'Rows'}</div>
           <Pagination
             onPageChange={handleChangePage}
             totalCount={pagesTotalCount}
             currentPage={currentPage}
+            translations={translations}
             pageSizeStructure={pageSizeStructure && selectedPage ? pageSizeStructure[selectedPage.id - 1].count : 15}
             className={'G-pagionation'}
           />

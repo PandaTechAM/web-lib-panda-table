@@ -267,6 +267,7 @@
     }
   }
 }
+
 .G-total-footer{
   display: flex; 
   position: sticky; 
@@ -305,6 +306,16 @@
   }
 }
 
+.G-empty-data-component{
+  height:calc(100vh - 350px);
+  display: flex;
+  align-items: center;
+  padding:calc(((100vh - 350px) - 292px)/2);
+  .G-empty-data-icon{
+    position: sticky;
+    left: calc(100vw - 70%);
+  }
+}
 
 
 .G-dropdown-list-style{

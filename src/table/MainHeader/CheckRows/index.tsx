@@ -9,6 +9,7 @@ import PopUp from '../../../components/popUp'
 interface ICheckRows<T extends Object> {
   data: T[]
   checkedRows: T[]
+  translations?: Record<string, any>
   handleCheckAll(): void
   unCheck(): void
   checkAllDataFromDb(): void
@@ -28,6 +29,7 @@ const dropdownStyle = {
 const CheckRows = <T extends Object>({
   data,
   checkedRows,
+  translations,
   handleCheckAll,
   unCheck,
   checkAllDataFromDb,
@@ -46,7 +48,7 @@ ICheckRows<T>) => {
   const [listForDropdown] = useState<Object[]>([
     {
       id: 1,
-      title: CheckedItems.SELECTED_ALL,
+      title: translations?.checkbox.all || CheckedItems.SELECTED_ALL,
       action: () => {
         checkAllDataFromDb()
         setSelectedItem(0)
@@ -54,7 +56,7 @@ ICheckRows<T>) => {
     },
     {
       id: 2,
-      title: CheckedItems.SELECTED_VISIBLE,
+      title: translations?.checkbox.allVisible || CheckedItems.SELECTED_VISIBLE,
       action: () => {
         handleCheckAll()
         setSelectedItem(1)
@@ -62,7 +64,7 @@ ICheckRows<T>) => {
     },
     {
       id: 3,
-      title: CheckedItems.NONE,
+      title: translations?.checkbox.none || CheckedItems.NONE,
       action: () => {
         unCheck()
         setSelectedItem(2)

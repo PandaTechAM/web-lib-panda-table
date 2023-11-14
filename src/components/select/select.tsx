@@ -30,6 +30,7 @@ interface ISelect<T> {
   haveIcon?: boolean
   ButtonSvg?: any
   rowItem?: any
+  typesObject?: any
 }
 
 function Select<T>({
@@ -49,6 +50,7 @@ function Select<T>({
   selectedIconKey,
   haveIcon,
   rowItem,
+  typesObject,
   customClass = '',
   isImage = false,
 }: ISelect<T>) {
@@ -242,6 +244,9 @@ function Select<T>({
           >
             <ul>
               {optionsList.map((item, index) => {
+                if (typesObject) {
+                  return selectListItem(typesObject[item], index)
+                }
                 return selectListItem(item, index)
               })}
             </ul>

@@ -6,7 +6,7 @@ import APIFilter from './FiltersPerColumn/apiFilter'
 import LocalFilter from './FiltersPerColumn/localFiltering'
 import AdvancedFilerEnabled from '../../../svgIcons/AdvancedFilerEnabledSvgIcon'
 import AdvancedFilerDisabled from '../../../svgIcons/AdvancedFilerDisabledSvgIcon'
-import PopUp from '../../../components/popUp'
+import NativePopup from '../../../components/NativePopup/NativePopup'
 
 interface IFilter {
   data: any
@@ -17,44 +17,40 @@ interface IFilter {
   isLoadingFilters?: boolean
   filtersTypes?: IFiltersTypes[]
   perColumnTotalCount?: number
+  translations?: Record<string, any>
   getFilter?(option: ItemFields[], ColumnName?: string): void
+  getFilteredDataWithDebounce?(option: ItemFields[], ColumnName?: string): void
   getFilteredDataForTable?(): void
   handleChangePagePerFilterField?(): void
 }
-const filtersButton = {
-  display: 'flex',
-  justifyContent: 'start',
-  backgroundColor: 'white',
-  border: 'none',
-  margin: '0 30px',
-  padding: '0px 10px',
-}
+
 const Filter = ({
   data,
   filterColumns,
   perColumnListForFilters,
   filterDataForRequest,
-  isLocalFilter = true,
+  isLocalFilter = false,
   isLoadingFilters,
   filtersTypes,
   perColumnTotalCount,
+  translations,
   handleChangePagePerFilterField,
   getFilter,
+  getFilteredDataWithDebounce,
   getFilteredDataForTable,
 }: IFilter) => {
   const [advancedSettings, setAdvancedSettings] = useState<boolean>(false)
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
+  const [open, setIsOpen] = useState<boolean>(false)
+  const handleClick = () => {
+    setIsOpen((prev) => !prev)
   }
   const handleClose = () => {
-    setAnchorEl(null)
+    setIsOpen(false)
   }
   const handleCancel = () => {
     getFilter?.([], 'ClearAll')
-    handleClose()
+    setIsOpen(false)
   }
   const checkIsDisabled = (option: boolean) => {
     setIsDisabled(option)
@@ -74,21 +70,18 @@ const Filter = ({
         updatedRow.push(option)
       }
     }
-    getFilter?.(updatedRow, ColumnName)
+    option.Search ? getFilteredDataWithDebounce?.(updatedRow, ColumnName) : getFilter?.(updatedRow, ColumnName)
   }
 
   return (
     <div>
-      <PopUp
+      <NativePopup
         ActiveIcon={FilterSvgIcon}
-        modalName='Filter By'
-        style={filtersButton}
-        open={open}
-        anchorEl={anchorEl}
+        isOpen={open}
+        popupName={translations?.filterAction.modalName || 'Filter By'}
         handleClick={handleClick}
-        handleClose={handleClose}
       >
-        <div style={{ padding: '48px 32px', width: 553 }}>
+        <div style={{ padding: '20px 0', width: 553 }}>
           <div style={{ width: '100%' }} className='G-justify-end'>
             <div
               onClick={() => setAdvancedSettings((prev) => !prev)}
@@ -97,46 +90,27 @@ const Filter = ({
                 width: 'auto',
                 color: advancedSettings ? '#4844C5' : 'black',
                 cursor: 'pointer',
+                marginRight: 32,
+                textDecoration: 'underline',
               }}
             >
-              {advancedSettings ? <AdvancedFilerDisabled /> : <AdvancedFilerEnabled />}
+              {/* {advancedSettings ? ( */}
+              {translations?.filterAction.advanced}
+              {/* ) : (
+                <AdvancedFilerEnabled /> */}
             </div>
           </div>
-          <ul className='G-dropdown-list P-Filters' style={{ border: 'none', padding: 0 }}>
+          <ul
+            className='G-dropdown-list P-Filters'
+            style={{
+              border: 'none',
+              overflowX: 'auto',
+              overflowY: 'auto',
+              maxHeight: '70dvh',
+              padding: '0px 32px 10px 32px',
+            }}
+          >
             {isLocalFilter ? (
-              filterColumns?.length ? (
-                filterColumns.map((item: IComparisonType, index) => {
-                  return (
-                    <Fragment key={index}>
-                      {filtersTypes?.length &&
-                        filtersTypes.map((type: any) => {
-                          if (item.ColumnType === type.ColumnType)
-                            return (
-                              <Fragment key={item.ColumnName}>
-                                <APIFilter
-                                  isLoadingFilters={isLoadingFilters}
-                                  advancedSettings={advancedSettings}
-                                  item={item}
-                                  data={data}
-                                  typeElem={type}
-                                  isDisabled={isDisabled}
-                                  perColumnTotalCount={perColumnTotalCount}
-                                  handleChangePagePerFilterField={handleChangePagePerFilterField}
-                                  checkIsDisabled={checkIsDisabled}
-                                  filteredColumn={filterDataForRequest}
-                                  perColumnListForFilters={perColumnListForFilters}
-                                  getFilteredData={getFilteredData}
-                                />
-                              </Fragment>
-                            )
-                        })}
-                    </Fragment>
-                  )
-                })
-              ) : (
-                <div>Add Filters Columns</div>
-              )
-            ) : (
               data.map((item: any, index: any) => {
                 return (
                   <LocalFilter
@@ -150,36 +124,68 @@ const Filter = ({
                   />
                 )
               })
+            ) : filterColumns?.length ? (
+              filterColumns.map((item: IComparisonType, index) => {
+                return (
+                  <Fragment key={index}>
+                    {filtersTypes?.length &&
+                      filtersTypes.map((type: any) => {
+                        if (item.ColumnType === type.ColumnType)
+                          return (
+                            <Fragment key={item.ColumnName}>
+                              <APIFilter
+                                isLoadingFilters={isLoadingFilters}
+                                advancedSettings={advancedSettings}
+                                item={item}
+                                data={data}
+                                typeElem={type}
+                                isDisabled={isDisabled}
+                                perColumnTotalCount={perColumnTotalCount}
+                                translations={translations}
+                                handleChangePagePerFilterField={handleChangePagePerFilterField}
+                                checkIsDisabled={checkIsDisabled}
+                                filteredColumn={filterDataForRequest}
+                                perColumnListForFilters={perColumnListForFilters}
+                                getFilteredData={getFilteredData}
+                              />
+                            </Fragment>
+                          )
+                      })}
+                  </Fragment>
+                )
+              })
+            ) : (
+              <div>{translations?.filterAction.emptyColumns || 'Add Filters Columns'}</div>
             )}
-            <li>
-              <Button
-                size='large'
-                fullWidth
-                disabled={isDisabled}
-                style={{
-                  marginBottom: 16,
-                  boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.16)',
-                }}
-                onClick={(e) => {
-                  getFilteredDataForTable?.()
-                  handleClose()
-                }}
-              >
-                Submit
-              </Button>
-              <Button
-                size='large'
-                variant='outlined'
-                fullWidth
-                style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.04)' }}
-                onClick={handleCancel}
-              >
-                Clear All Filters
-              </Button>
-            </li>
           </ul>
+          <div style={{ padding: 20, border: '1px  solid #F3F6F8' }}>
+            <Button
+              size='medium'
+              fullWidth
+              disabled={isDisabled}
+              style={{
+                marginBottom: 16,
+                boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.16)',
+              }}
+              onClick={(e) => {
+                getFilteredDataForTable?.()
+                handleClick()
+              }}
+            >
+              {translations?.filterAction.confirmFilters || 'Submit'}
+            </Button>
+            <Button
+              size='medium'
+              variant='outlined'
+              fullWidth
+              style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.04)' }}
+              onClick={handleCancel}
+            >
+              {translations?.filterAction.clearFilters || 'Clear All Filters'}
+            </Button>
+          </div>
         </div>
-      </PopUp>
+      </NativePopup>
     </div>
   )
 }

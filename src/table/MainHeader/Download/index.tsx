@@ -9,11 +9,12 @@ interface IDownloadTypes {
   type: string
 }
 interface IDownload<T extends Object> {
-  getDownloadType: (option: string, checkedRows: T[] | string) => void
   checkedRows: T[]
   selectedType: string
+  translations?: Record<string, any>
+  getDownloadType: (option: string, checkedRows: T[] | string) => void
 }
-const Download = <T extends Object>({ getDownloadType, checkedRows, selectedType }: IDownload<T>) => {
+const Download = <T extends Object>({ checkedRows, selectedType, translations, getDownloadType }: IDownload<T>) => {
   const [fileType] = useState<IDownloadTypes[]>([
     { id: 1, type: 'XLSX' },
     { id: 2, type: 'CSV' },
@@ -41,7 +42,7 @@ const Download = <T extends Object>({ getDownloadType, checkedRows, selectedType
       isOpenList={isOpenList}
       setIsOpenList={setIsOpenList}
       customClass='P-download'
-      label='Download report'
+      label={translations?.dowloadAction || 'Download report'}
       ButtonSvg={isOpenList ? ArrowUp : ArrowDown}
     />
   )

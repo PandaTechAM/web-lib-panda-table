@@ -12,6 +12,7 @@ interface IPagination {
   currentPage: number
   pageSizeStructure: number
   className?: string
+  translations?: Record<string, any>
 }
 
 const Pagination = ({
@@ -21,6 +22,7 @@ const Pagination = ({
   currentPage,
   pageSizeStructure,
   className,
+  translations,
 }: IPagination) => {
   const paginationRange = usePagination({
     currentPage,
@@ -97,7 +99,7 @@ const Pagination = ({
         </li>
       </ul>
       <div className='G-align-center'>
-        <div>Go to</div>
+        <div>{translations?.pagination.to || 'Go to'}</div>
         <Input
           ref={ref}
           onChange={handleChange}

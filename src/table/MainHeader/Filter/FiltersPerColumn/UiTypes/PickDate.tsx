@@ -5,6 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import ActionList from '../../../../../components/datePickerActionList/ActionList'
+import { inputSize } from '../../../../../Models/table.enum'
 interface IPickDate {
   columnsSizes: string
   item: IComparisonType
@@ -12,6 +13,8 @@ interface IPickDate {
   filterTypeing: ItemFields
   columnName: string
   isDisabled: boolean
+  inputSizes: inputSize
+  translations?: Record<string, any>
   setCoulmnName: (name: string) => void
   handleChangeValue(option: any): void
 }
@@ -22,13 +25,15 @@ const PickDate = ({
   columnName,
   filterTypeing,
   isDisabled,
+  inputSizes,
+  translations,
   setCoulmnName,
   handleChangeValue,
 }: IPickDate) => {
   const [errMessage, setErrMessage] = useState('')
   const handlePick = (newValue: any) => {
     if (newValue !== null && isNaN(newValue.valueOf() as number)) {
-      setErrMessage('invalid')
+      setErrMessage(translations?.filterAction.validations.invalid || 'invalid')
     } else {
       setErrMessage('')
 
@@ -62,9 +67,10 @@ const PickDate = ({
           className={errMessage ? 'date-picker' : ''}
         >
           <DateTimePicker
+            slotProps={{ textField: { size: inputSizes } }}
             minutesStep={1}
             ampm={false}
-            label={item.ColumnName}
+            label={item.key || item.ColumnName}
             disabled={isDisabled && item.ColumnName !== columnName}
             displayWeekNumber
             onOpen={handleOpenList}

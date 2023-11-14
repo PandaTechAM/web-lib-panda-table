@@ -50,6 +50,7 @@ function Table<T extends Object>({
   isEnableAggregates,
   aggregates,
   isLoadedData,
+  translations,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -60,6 +61,7 @@ function Table<T extends Object>({
   getPageRowsCountAndCurrentPage,
   storeStructure,
   getFilteredData,
+  getFilteredDataWithDebounce,
   getFilteredDataForTable,
   getDownloadType,
   customHeaderAction,
@@ -82,6 +84,7 @@ function Table<T extends Object>({
     unCheck,
     checkAllDataFromDb,
   } = useTable(data, freezedRightSide, RightSideSelfAction)
+
   return (
     <div>
       {multipleCheck || draggableColumns || hasFilters || getDownloadType ? (
@@ -101,6 +104,7 @@ function Table<T extends Object>({
           selectedType={selectedType}
           perColumnTotalCount={perColumnTotalCount}
           hasFilters={hasFilters}
+          translations={translations}
           handleCheckAll={handleCheckAll}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
@@ -110,6 +114,7 @@ function Table<T extends Object>({
           unCheck={unCheck}
           checkAllDataFromDb={checkAllDataFromDb}
           getFilteredData={getFilteredData}
+          getFilteredDataWithDebounce={getFilteredDataWithDebounce}
           getFilteredDataForTable={getFilteredDataForTable}
           handleChangePagePerFilterField={handleChangePagePerFilterField}
           getDownloadType={getDownloadType}
@@ -118,24 +123,23 @@ function Table<T extends Object>({
       ) : null}
 
       <div className='G-data-table G-data-scroll'>
-        {data.length ? (
-          <>
-            <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
-              <Header
-                columnsConfigStructure={columnsConfigStructure}
-                columnsHeaderStructure={columnsHeaderStructure}
-                rightFreezeConfig={rightFreezeConfig}
-                headerColor={headerColor}
-                multipleCheck={multipleCheck}
-                isStickyFirstColumn={isStickyFirstColumn}
-                columnMinWidth={columnMinWidth}
-                freezedRightSideVisible={freezedRightSideVisible}
-                leftFreezedColumnWidth={leftFreezedColumnWidth}
-                rightFreezedColumnWidth={rightFreezedColumnWidth}
-                handleSorting={handleSorting}
-              />
-            </div>
-
+        <>
+          <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
+            <Header
+              columnsConfigStructure={columnsConfigStructure}
+              columnsHeaderStructure={columnsHeaderStructure}
+              rightFreezeConfig={rightFreezeConfig}
+              headerColor={headerColor}
+              multipleCheck={multipleCheck}
+              isStickyFirstColumn={isStickyFirstColumn}
+              columnMinWidth={columnMinWidth}
+              freezedRightSideVisible={freezedRightSideVisible}
+              leftFreezedColumnWidth={leftFreezedColumnWidth}
+              rightFreezedColumnWidth={rightFreezedColumnWidth}
+              handleSorting={handleSorting}
+            />
+          </div>
+          {data.length ? (
             <div className='G-data-table-body'>
               <Rows
                 freezedRows={freezedRows}
@@ -170,35 +174,42 @@ function Table<T extends Object>({
                 unFreezeRow={unFreezeRow}
               />
             </div>
+          ) : (
+            <div className='G-empty-data-component'>
+              {EmptyDataIcon ? (
+                <EmptyDataIcon className='G-empty-data-icon' />
+              ) : (
+                <div className='G-center' style={{ height: 500 }}>
+                  {translations?.emptyData || 'Empty data'}
+                </div>
+              )}
+            </div>
+          )}
 
-            {isEnableAggregates ? (
-              <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
-                <Footer
-                  rightFreezeConfig={rightFreezeConfig}
-                  columnsHeaderStructure={columnsHeaderStructure}
-                  columnsConfigStructure={columnsConfigStructure}
-                  columnMinWidth={columnMinWidth}
-                  footerColor={footerColor}
-                  freezedRightSideVisible={freezedRightSideVisible}
-                  isStickyFirstColumn={isStickyFirstColumn}
-                  leftFreezedColumnWidth={leftFreezedColumnWidth}
-                  rightFreezedColumnWidth={rightFreezedColumnWidth}
-                  aggregates={aggregates}
-                  isLoadedData={isLoadedData}
-                  handleArgChange={handleArgChange}
-                />
-              </div>
-            ) : null}
-          </>
-        ) : (
-          <div className='G-center'>
-            <EmptyDataIcon />
-          </div>
-        )}
+          {isEnableAggregates ? (
+            <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
+              <Footer
+                rightFreezeConfig={rightFreezeConfig}
+                columnsHeaderStructure={columnsHeaderStructure}
+                columnsConfigStructure={columnsConfigStructure}
+                columnMinWidth={columnMinWidth}
+                footerColor={footerColor}
+                freezedRightSideVisible={freezedRightSideVisible}
+                isStickyFirstColumn={isStickyFirstColumn}
+                leftFreezedColumnWidth={leftFreezedColumnWidth}
+                rightFreezedColumnWidth={rightFreezedColumnWidth}
+                aggregates={aggregates}
+                isLoadedData={isLoadedData}
+                handleArgChange={handleArgChange}
+              />
+            </div>
+          ) : null}
+        </>
       </div>
       <div className='G-justify-end G-align-center' style={{ padding: 10 }}>
-        {currentPage && pagesTotalCount && selectedPageSizeId ? (
+        {data.length && currentPage && pagesTotalCount && selectedPageSizeId ? (
           <MainFooter
+            translations={translations}
             pageSizeStructure={pageSizeStructure}
             currPage={currentPage}
             pagesTotalCount={pagesTotalCount}

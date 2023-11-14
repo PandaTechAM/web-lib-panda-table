@@ -8,3 +8,19 @@ export enum CheckedItems {
   SELECTED_VISIBLE = 'Selected visible rows',
   NONE = 'None',
 }
+
+export type inputSize = 'small' | 'medium'
+
+export enum filterTypesUiHelper {
+  'Equal' = '=',
+  'NotEqual' = '!=',
+  'Contains' = 'Contains',
+  'NotContains' = 'Not contain',
+  'StartsWith' = 'Starts with',
+  'EndsWith' = 'Ends with',
+  'Between' = 'Between',
+  'GreaterThan' = '>',
+  'GreaterThanOrEqual' = '>=',
+  'LessThan' = '<',
+  'LessThanOrEqual' = '<=',
+}

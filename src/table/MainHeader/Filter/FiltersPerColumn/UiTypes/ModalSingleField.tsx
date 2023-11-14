@@ -1,22 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Autocomplete, TextField, Box, CircularProgress, Button, Skeleton } from '@mui/material'
+import { Autocomplete, TextField, CircularProgress, Button, Skeleton } from '@mui/material'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import './style.scss'
 import { containsOnlyNumbers } from '../../../../../utils'
-import AcceptCancel from '../../../../../components/acceptCancel'
+import { inputSize } from '../../../../../Models/table.enum'
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '100%',
-  minHeight: 200,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 1,
-}
 interface IModalForSingleField {
   columnsSizes: string
   advancedSettings: boolean
@@ -27,6 +15,8 @@ interface IModalForSingleField {
   isLoadingFilters?: boolean
   perColumnTotalCount?: number
   isDisabled: boolean
+  inputSizes: inputSize
+  translations?: Record<string, any>
   handleSelectItems: (option: any[], isClosed: boolean) => void
   setCoulmnName: (name: string) => void
   handleChangeValue: (value: string) => void
@@ -45,11 +35,12 @@ const ModalForSingleField = ({
   isDisabled,
   advancedSettings,
   columnsSizes,
+  inputSizes,
+  translations,
   handleChangeValue,
   handleSelectItems,
   setCoulmnName,
   setCheckedItemsLocaly,
-  handleClose,
   handleChangePagePerFilterField,
 }: IModalForSingleField) => {
   const [checkedItems, setcheckedItems] = useState<string[]>([])
@@ -99,7 +90,7 @@ const ModalForSingleField = ({
   }
   const onChnage = (newInputValue: string) => {
     if (item.ColumnType !== 'Text' && !containsOnlyNumbers(newInputValue)) {
-      setErrMessage('only numbers')
+      setErrMessage(translations?.filterAction.onlyNumbers || 'only numbers')
       setVal(newInputValue)
       return
     }
@@ -110,19 +101,14 @@ const ModalForSingleField = ({
   }
 
   const isEmpty = () => {
-    if (item.ColumnType !== 'Text') {
-      if (
-        containsOnlyNumbers(val) &&
-        item.ColumnName === columnName &&
-        !isLoadingFilters &&
-        !perColumnListForFilters?.length &&
-        val.length
-      )
+    if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length && val.length) {
+      if (item.ColumnType !== 'Text') {
+        if (containsOnlyNumbers(val)) return true
+      } else {
         return true
-    } else {
-      if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length && val.length)
-        return true
+      }
     }
+
     return false
   }
   const rendData = () => {
@@ -169,6 +155,7 @@ const ModalForSingleField = ({
         options={rendData()}
         value={checkedItems}
         inputValue={val}
+        // disablePortal
         onInputChange={(event, newInputValue) => onChnage(newInputValue)}
         onChange={selectValue}
         onOpen={handleOpenList}
@@ -178,6 +165,7 @@ const ModalForSingleField = ({
         autoFocus={false}
         fullWidth
         freeSolo
+        size={inputSizes}
         filterOptions={(options, state) => options}
         sx={{ height: 'max-content' }}
         renderOption={(props, option, { selected }) => {
@@ -223,7 +211,7 @@ const ModalForSingleField = ({
                           setIsLoadedMoreData(true)
                         }}
                       >
-                        load more
+                        {translations?.filterAction.loadMore || 'Load more'}
                       </Button>
                     ) : null}
                   </div>
@@ -238,7 +226,7 @@ const ModalForSingleField = ({
             error={!!errMessage}
             helperText={errMessage}
             {...params}
-            label={filterTypeing.TypeForUi}
+            label={item.key || item.ColumnName}
             InputProps={{
               ...params.InputProps,
               endAdornment: (
@@ -262,12 +250,11 @@ const ModalForSingleField = ({
             position: 'absolute',
             backgroundColor: 'white',
             opacity: 1,
-            top: 58,
             zIndex: 888888,
             width: '100%',
           }}
         >
-          empty data
+          {translations?.filterAction.emptyFieldData || 'Empty data'}
         </div>
       ) : null}
     </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TextField } from '@mui/material'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { validateRangeColumns } from '../../../../../utils'
+import { inputSize } from '../../../../../Models/table.enum'
 interface IBetweenNumbers {
   columnsSizes: string
   item: IComparisonType
@@ -9,6 +10,8 @@ interface IBetweenNumbers {
   filterTypeing: ItemFields
   isDisabled: boolean
   columnName: string
+  inputSizes: inputSize
+  translations?: Record<string, any>
   checkIsDisabled: (option: boolean) => void
   setCoulmnName: (name: string) => void
   handleChangeRange(value: string, type: string): void
@@ -20,6 +23,8 @@ const BetweenNumbers = ({
   filterTypeing,
   columnName,
   isDisabled,
+  inputSizes,
+  translations,
   setCoulmnName,
   handleChangeRange,
   checkIsDisabled,
@@ -42,13 +47,13 @@ const BetweenNumbers = ({
     }
     setErrMessage({ from: '', to: '' })
     if (name === 'to') {
-      if (!validateRangeColumns(stateValues.from, value, item, setErrMessage)) {
+      if (!validateRangeColumns(stateValues.from, value, item, setErrMessage, translations?.filterAction.validations)) {
         handleChangeRange(stateValues.from, value)
       } else {
         checkIsDisabled(true)
       }
     } else {
-      if (!validateRangeColumns(value, stateValues.to, item, setErrMessage)) {
+      if (!validateRangeColumns(value, stateValues.to, item, setErrMessage, translations?.filterAction.validations)) {
         handleChangeRange(value, stateValues.to)
       } else {
         checkIsDisabled(true)
@@ -104,9 +109,9 @@ const BetweenNumbers = ({
     <div className='G-justify-between' style={{ width: advancedSettings ? columnsSizes : '100%' }}>
       <TextField
         id='outlined-basic'
-        label='From'
+        label={translations?.filterAction.from || 'From'}
         variant='outlined'
-        name='from'
+        name={translations?.filterAction.from}
         onBlur={() => {
           setIsEnabled((prev) => {
             return { ...prev, isEnabledFrom: false }
@@ -120,13 +125,16 @@ const BetweenNumbers = ({
           width: '48%',
         }}
         value={val.from}
+        size={inputSizes}
         onChange={handleChangeInputValue}
       />
+      <div className='G-center'>-</div>
       <TextField
         id='outlined-basic'
-        label='To'
+        label={translations?.filterAction.to || 'To'}
         variant='outlined'
-        name='to'
+        name={translations?.filterAction.from}
+        size={inputSizes}
         onBlur={() => {
           setIsEnabled((prev) => {
             return { ...prev, isEnabledTo: false }

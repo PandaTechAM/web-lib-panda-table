@@ -1,22 +1,24 @@
-import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
+import React, { SyntheticEvent, memo, useCallback, useEffect, useState } from 'react'
 import { Autocomplete, Button, CircularProgress, TextField, Checkbox, Skeleton } from '@mui/material'
 // import Checkbox from "../../../../components/checkbox";
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
-import { ICoulmnError } from '../apiFilter'
+import { inputSize } from '../../../../../Models/table.enum'
 
 interface IMultipleCHeck {
   columnsSizes: string
   advancedSettings: boolean
   item: IComparisonType
-  perColumnListForFilters?: string[]
+  perColumnListForFilters?: any[]
   columnName: string
   filterTypeing: ItemFields
   isLoadingFilters?: boolean
   isDisabled: boolean
   perColumnTotalCount?: number
-  setCheckedItemsLocaly(options: any[]): void
-  handleSelectItems: (option: any[], isClosed: boolean) => void
+  inputSizes: inputSize
+  translations?: Record<string, any>
+  setCheckedItemsLocaly(options: any[], closeCallBack?: () => void): void
+  handleSelectItems: (option: any[], isClosed: boolean, fieldName?: string) => void
   setCoulmnName: (name: string) => void
   handleChangeValue: (value: string) => void
   handleChangePagePerFilterField?(): void
@@ -32,6 +34,8 @@ const MultipleCheck = ({
   isLoadingFilters,
   isDisabled,
   perColumnTotalCount,
+  inputSizes,
+  translations,
   setCheckedItemsLocaly,
   handleSelectItems,
   setCoulmnName,
@@ -43,16 +47,23 @@ const MultipleCheck = ({
   const [val, setVal] = useState<string>('')
   const [errMessage, setErrMessage] = useState<string>('')
 
-  const onChnage = (newInputValue: any) => {
-    if (
-      item.ColumnType !== 'Text' &&
-      item.ColumnType !== 'NumericText' &&
-      item.ColumnType !== 'Tags' &&
-      !containsOnlyNumbers(newInputValue)
-    ) {
-      setErrMessage('only numbers')
+  const checkList = () => {
+    return item.ColumnName === columnName && perColumnListForFilters && errMessage === ''
+      ? perColumnListForFilters.includes(null)
+        ? removeNullItemsFromArray(perColumnListForFilters)
+        : perColumnListForFilters
+      : []
+  }
+  const onChange = (newInputValue: any) => {
+    if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType) && !containsOnlyNumbers(newInputValue)) {
+      setErrMessage(translations?.filterAction.onlyNumbers || 'only numbers')
       setVal(newInputValue)
 
+      return
+    }
+    if (item.ColumnType === 'EncryptedData' && !newInputValue) {
+      setErrMessage('')
+      setVal(newInputValue)
       return
     }
     setErrMessage('')
@@ -61,9 +72,8 @@ const MultipleCheck = ({
   }
   const selectValue = (event: SyntheticEvent<Element, Event>, value: any[]) => {
     setcheckedItems(value)
-    if (item.ColumnType === 'Number' || item.ColumnType === 'Currency' || item.ColumnType === 'Percentage') {
-      let newValues: number[] = []
-      newValues = value.map((item: string) => +item)
+    if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType)) {
+      let newValues: number[] = value.map((item: string) => +item)
       if (!isOpened) {
         handleSelectItems(newValues, false)
       }
@@ -77,8 +87,8 @@ const MultipleCheck = ({
   }
   const handleOpenList = () => {
     if (!isDisabled) {
+      item.ColumnType !== 'EncryptedData' && handleSelectItems([], true, item.ColumnName)
       setCoulmnName(item.ColumnName)
-      handleSelectItems([], true)
       setIsOpened(true)
     }
   }
@@ -87,36 +97,60 @@ const MultipleCheck = ({
     setVal('')
     setIsOpened(false)
 
-    if (item.ColumnType === 'Number' || item.ColumnType === 'Currency' || item.ColumnType === 'Percentage') {
-      let newValues: number[] = []
-      newValues = checkedItems.map((item: string) => +item)
-      handleSelectItems(newValues, false)
+    if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType)) {
+      const newValues: number[] = checkedItems.map((item: string) => +item)
+      handleSelectItems(newValues, false, item.ColumnName)
     } else {
-      handleSelectItems(checkedItems, false)
+      handleSelectItems(checkedItems, false, item.ColumnName)
     }
   }
   const getLabel = (options: any) => {
+    if (typeof options !== 'string') {
+      return options + ''
+    }
     return options
   }
   const isEqual = (option: any, value: any) => {
-    if (option === value) {
+    let numericValue = value
+    if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType) && typeof value === 'string') {
+      numericValue = +value
+      console.log(option, numericValue)
+    }
+
+    if (option === numericValue) {
       return true
     }
     return false
   }
   const isEmpty = () => {
-    if (item.ColumnType !== 'Text') {
-      if (
-        containsOnlyNumbers(val) &&
-        item.ColumnName === columnName &&
-        !isLoadingFilters &&
-        !perColumnListForFilters?.length
-      )
+    if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length) {
+      if (item.ColumnType !== 'Text') {
+        if (item.ColumnType === 'EncryptedData') {
+          if (val.length) return true
+        } else if (item.ColumnType === 'Base36Id') {
+          return true
+        } else {
+          if (containsOnlyNumbers(val)) return true
+        }
+      } else {
         return true
-    } else {
-      if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length) return true
+      }
     }
+
     return false
+  }
+  const drawOptionLabel = (option: any) => {
+    if (option === '') {
+      return translations?.filterAction.emptyString || 'Empty'
+    }
+    if (option === null) {
+      return translations?.filterAction.blank || 'Blank'
+    }
+    return option
+  }
+  function removeNullItemsFromArray(arr: any[]) {
+    let newArray = arr.filter((item: any) => item !== null)
+    return [null, ...newArray]
   }
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
@@ -135,18 +169,29 @@ const MultipleCheck = ({
         position: 'relative',
       }}
     >
+      {isOpened ? (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, )', // Adjust the overlay color and opacity
+            zIndex: 999, // Adjust the zIndex to make sure it's on top
+          }}
+        ></div>
+      ) : null}
       <Autocomplete
         multiple
         limitTags={advancedSettings ? 1 : 2}
         id='multiple-limit-tags'
-        options={
-          item.ColumnName === columnName && perColumnListForFilters && errMessage === '' ? perColumnListForFilters : []
-        }
+        options={checkList()}
         disabled={isDisabled && item.ColumnName !== columnName}
         disableCloseOnSelect
         onOpen={handleOpenList}
         onClose={handleCloseList}
-        onInputChange={(event, newInputValue) => onChnage(newInputValue)}
+        onInputChange={(event, newInputValue) => onChange(newInputValue)}
         onChange={selectValue}
         noOptionsText={'Empty Data'}
         getOptionLabel={getLabel}
@@ -155,7 +200,8 @@ const MultipleCheck = ({
         inputValue={val}
         isOptionEqualToValue={isEqual}
         freeSolo
-        size='medium'
+        size={inputSizes}
+        sx={{ fontSize: '8px' }}
         filterOptions={(options, state) => options}
         renderOption={(props, option, { selected }) => {
           return (
@@ -167,6 +213,7 @@ const MultipleCheck = ({
                   display: 'flex',
                   justifyContent: 'space-between',
                   minHeight: 40,
+                  borderBottom: option === '' ? '1px solid silver' : 'none',
                 }}
               >
                 {item.ColumnName === columnName && isLoadingFilters ? (
@@ -175,7 +222,7 @@ const MultipleCheck = ({
                   </div>
                 ) : (
                   <>
-                    <div>{option === '' ? 'Empty' : option}</div>
+                    <div>{drawOptionLabel(option)}</div>
                     <Checkbox style={{ marginRight: 8 }} checked={selected} />
                   </>
                 )}
@@ -196,7 +243,7 @@ const MultipleCheck = ({
                       }}
                       onClick={handleChangePagePerFilterField}
                     >
-                      Load more
+                      {translations?.filterAction.loadMore || 'Load more'}
                     </Button>
                   ) : null}
                 </div>
@@ -211,7 +258,7 @@ const MultipleCheck = ({
             error={!!errMessage}
             helperText={errMessage}
             {...params}
-            label={item.ColumnName}
+            label={item.key || item.ColumnName}
             InputProps={{
               ...params.InputProps,
               endAdornment: (
@@ -239,7 +286,7 @@ const MultipleCheck = ({
             width: '100%',
           }}
         >
-          empty data
+          {translations?.filterAction.emptyFieldData || 'Empty data'}
         </div>
       ) : null}
     </div>
