@@ -21,11 +21,11 @@
   }
   .popup-overlay {
 
-    transform: translate(-80%, -80px);
     border-radius: 4px;
     z-index: 30;
     position: absolute;
-    
+    top: -33px;
+    right: 0px;
   }
   
   .popup-content {
@@ -40,7 +40,7 @@
     &.fade-in {
       animation: fadeIn 0.5s ease-in-out;
       opacity: 1;
-      border:1px solid var(--color-light-100, #ECECEC);
+      border-top:1px solid var(--color-light-100, #ECECEC);
       box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.01), 0px 8px 10px 1px rgba(0,0,0,0.014), 0px 3px 14px 2px rgba(0,0,0,0.012) !important;
     }
     &.fade-out {

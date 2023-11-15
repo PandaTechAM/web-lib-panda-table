@@ -106,7 +106,7 @@ const Filter = ({
               border: 'none',
               overflowX: 'auto',
               overflowY: 'auto',
-              maxHeight: '70dvh',
+              maxHeight: '60dvh',
               padding: '0px 32px 10px 32px',
             }}
           >
