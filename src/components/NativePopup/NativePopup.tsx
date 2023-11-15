@@ -40,7 +40,7 @@ const NativePopup = ({ ActiveIcon, isOpen, children, popupName, handleClick }: I
   }, [isOpen])
 
   return (
-    <div className='G-wrapper-button'>
+    <div role='button' aria-label='open' className='G-wrapper-button'>
       <div onClick={handleClick} className='G-center G-popup-button'>
         <ActiveIcon className='G-icon' />
         <label className='G-label'>{popupName}</label>

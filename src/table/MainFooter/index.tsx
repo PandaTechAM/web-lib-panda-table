@@ -45,13 +45,13 @@ const FooterPagination = ({
   return (
     <>
       <div className='G-count-info'>
-        {(pageSizeStructure &&
+        {pageSizeStructure &&
           (currentPage - 1) * pageSizeStructure?.[selectedPage.id - 1].count +
             1 +
             '-' +
             currentPage * pageSizeStructure?.[selectedPage.id - 1].count +
-            translations?.pagination.from) ||
-          ' from ' + pagesTotalCount}
+            (` ${translations?.pagination.from} ` || ' from ') +
+            pagesTotalCount}
       </div>
       {pageSizeStructure && selectedPage ? (
         <div className='G-justify-between G-align-center'>
