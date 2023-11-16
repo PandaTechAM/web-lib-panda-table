@@ -15,7 +15,7 @@ export enum filterTypesUiHelper {
   'Equal' = '=',
   'NotEqual' = '!=',
   'Contains' = 'Contains',
-  'NotContains' = 'Not contain',
+  'NotContaining' = 'Not Containing',
   'StartsWith' = 'Starts with',
   'EndsWith' = 'Ends with',
   'Between' = 'Between',

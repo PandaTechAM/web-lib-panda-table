@@ -214,6 +214,7 @@ function Table<T extends Object>({
             currPage={currentPage}
             pagesTotalCount={pagesTotalCount}
             selectedPageSizeId={selectedPageSizeId}
+            unCheck={unCheck}
             getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
           />
         ) : null}

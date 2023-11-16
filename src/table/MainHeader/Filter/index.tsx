@@ -158,7 +158,7 @@ const Filter = ({
               <div>{translations?.filterAction.emptyColumns || 'Add Filters Columns'}</div>
             )}
           </ul>
-          <div style={{ padding: 20, border: '1px  solid #F3F6F8' }}>
+          <div style={{ padding: 20, borderTop: '1px  solid #F3F6F8' }}>
             <Button
               size='medium'
               fullWidth

@@ -10,6 +10,7 @@ interface IFooterPagination {
   currPage?: number
   selectedPageSizeId: ISelected
   translations?: Record<string, any>
+  unCheck: () => void
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
 }
 const FooterPagination = ({
@@ -18,6 +19,7 @@ const FooterPagination = ({
   currPage = 1,
   selectedPageSizeId = { id: 1 },
   translations,
+  unCheck,
   getPageRowsCountAndCurrentPage,
 }: IFooterPagination) => {
   const [isOpenList, setOpen] = useState<boolean>(false)
@@ -37,6 +39,7 @@ const FooterPagination = ({
   }
   const handleChangePage = (option: number) => {
     setCurrentPage(option)
+    unCheck()
     if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
       getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1])
     }
