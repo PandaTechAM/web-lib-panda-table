@@ -307,9 +307,6 @@
 }
 
 .G-empty-data-component{
-  height:calc(100vh - 350px);
-  display: flex;
-  align-items: center;
   padding:calc(((100vh - 350px) - 292px)/2);
   .G-empty-data-icon{
     position: sticky;

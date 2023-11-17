@@ -109,7 +109,7 @@ const MainHeader = <T extends Object>({
               <div
                 className='G-flex G-delete'
                 onClick={() =>
-                  handleDelete(selectedType === translations?.all || CheckedItems.SELECTED_ALL ? 'All' : checkedRows)
+                  handleDelete(selectedType === CheckedItems.SELECTED_ALL ? translations?.all || 'All' : checkedRows)
                 }
               >
                 <div className='G-center G-delete-icon'>
@@ -120,7 +120,7 @@ const MainHeader = <T extends Object>({
             ) : null}
             {checkedRows.length
               ? customHeaderAction?.(
-                  selectedType === translations?.all || CheckedItems.SELECTED_ALL ? 'All' : checkedRows,
+                  selectedType === CheckedItems.SELECTED_ALL ? translations?.all || 'All' : checkedRows,
                 )
               : null}
           </div>
