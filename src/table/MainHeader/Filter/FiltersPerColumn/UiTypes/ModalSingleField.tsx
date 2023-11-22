@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { Autocomplete, TextField, CircularProgress, Button, Skeleton } from '@mui/material'
-import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
-import './style.scss'
-import { containsOnlyNumbers } from '../../../../../utils'
+import { Autocomplete, Button, CircularProgress, Skeleton, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { inputSize } from '../../../../../Models/table.enum'
+import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
+import { containsOnlyNumbers } from '../../../../../utils'
+import './style.scss'
 
 interface IModalForSingleField {
   columnsSizes: string
@@ -17,6 +17,7 @@ interface IModalForSingleField {
   isDisabled: boolean
   inputSizes: inputSize
   translations?: Record<string, any>
+  filterColumns?: IComparisonType[]
   handleSelectItems: (option: any[], isClosed: boolean) => void
   setCoulmnName: (name: string) => void
   handleChangeValue: (value: string) => void
@@ -37,6 +38,7 @@ const ModalForSingleField = ({
   columnsSizes,
   inputSizes,
   translations,
+  filterColumns,
   handleChangeValue,
   handleSelectItems,
   setCoulmnName,
@@ -250,6 +252,7 @@ const ModalForSingleField = ({
             position: 'absolute',
             backgroundColor: 'white',
             opacity: 1,
+            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -60 : 60,
             zIndex: 888888,
             width: '100%',
           }}

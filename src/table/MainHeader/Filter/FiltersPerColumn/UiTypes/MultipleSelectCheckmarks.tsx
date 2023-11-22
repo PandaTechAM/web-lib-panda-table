@@ -1,15 +1,9 @@
-import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import ListItemText from '@mui/material/ListItemText'
-import Select from '@mui/material/Select'
+import { Autocomplete, CircularProgress, TextField } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
-import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
-import { Autocomplete, CircularProgress, ListSubheader, Skeleton, TextField } from '@mui/material'
+import FormControl from '@mui/material/FormControl'
+import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
 import { inputSize } from '../../../../../Models/table.enum'
-import { containsOnlyNumbers } from '../../../../../utils'
+import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 const selectStyles = {
   display: 'flex',
   alignItems: 'center', // Center vertically
@@ -24,6 +18,7 @@ interface IMultipleSelectCheckmarks {
   advancedSettings: boolean
   filterTypeing: ItemFields
   inputSizes: inputSize
+  filterColumns?: IComparisonType[]
   translations?: Record<string, any>
   setCheckedItemsLocaly(options: any[]): void
   handleSelectItems: (option: any[], isClosed: boolean) => void
@@ -41,6 +36,7 @@ const MultipleSelectCheckmarks = ({
   filterTypeing,
   inputSizes,
   translations,
+  filterColumns,
   setCheckedItemsLocaly,
   handleSelectItems,
   setCoulmnName,
@@ -160,6 +156,7 @@ const MultipleSelectCheckmarks = ({
             color: 'silver',
             position: 'absolute',
             backgroundColor: 'white',
+            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -60 : 60,
             opacity: 1,
             zIndex: 888888,
             width: '100%',

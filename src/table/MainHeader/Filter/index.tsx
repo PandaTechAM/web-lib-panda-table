@@ -145,6 +145,7 @@ const Filter = ({
                                 filteredColumn={filterDataForRequest}
                                 perColumnListForFilters={perColumnListForFilters}
                                 getFilteredData={getFilteredData}
+                                filterColumns={filterColumns}
                               />
                             </Fragment>
                           )

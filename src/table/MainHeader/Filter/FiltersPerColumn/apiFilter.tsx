@@ -22,6 +22,7 @@ interface IPerField {
   selectedItem?: ItemFields
   perColumnTotalCount?: number
   translations?: Record<string, any>
+  filterColumns?: IComparisonType[]
   getFilteredData?(option: ItemFields, ColumnName?: string): void
   checkIsDisabled(option: boolean): void
   handleChangePagePerFilterField?(): void
@@ -42,6 +43,7 @@ const APIFilter = ({
   isDisabled,
   perColumnTotalCount,
   translations,
+  filterColumns,
   checkIsDisabled,
   handleChangePagePerFilterField,
 }: IPerField) => {
@@ -233,6 +235,7 @@ const APIFilter = ({
             perColumnTotalCount={perColumnTotalCount}
             inputSizes={inputSizes}
             translations={translations}
+            filterColumns={filterColumns}
             setCheckedItemsLocaly={setCheckedItemsLocaly}
             handleChangePagePerFilterField={handleChangePagePerFilterField}
             handleChangeValue={handleChangeValue}
@@ -254,6 +257,7 @@ const APIFilter = ({
             isDisabled={isDisabled}
             inputSizes={inputSizes}
             translations={translations}
+            filterColumns={filterColumns}
             setCheckedItemsLocaly={setCheckedItemsLocaly}
             handleChangeValue={handleChangeValue}
             handleSelectItems={handleSelectItems}
@@ -290,6 +294,7 @@ const APIFilter = ({
             filterTypeing={filterTypeing}
             inputSizes={inputSizes}
             translations={translations}
+            filterColumns={filterColumns}
             setCheckedItemsLocaly={setCheckedItemsLocaly}
             setCoulmnName={selectedColumnName}
             handleSelectItems={handleSelectItems}

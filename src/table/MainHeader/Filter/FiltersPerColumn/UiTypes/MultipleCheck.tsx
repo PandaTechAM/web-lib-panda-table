@@ -17,6 +17,7 @@ interface IMultipleCHeck {
   perColumnTotalCount?: number
   inputSizes: inputSize
   translations?: Record<string, any>
+  filterColumns?: IComparisonType[]
   setCheckedItemsLocaly(options: any[], closeCallBack?: () => void): void
   handleSelectItems: (option: any[], isClosed: boolean, fieldName?: string) => void
   setCoulmnName: (name: string) => void
@@ -36,6 +37,7 @@ const MultipleCheck = ({
   perColumnTotalCount,
   inputSizes,
   translations,
+  filterColumns,
   setCheckedItemsLocaly,
   handleSelectItems,
   setCoulmnName,
@@ -114,7 +116,6 @@ const MultipleCheck = ({
     let numericValue = value
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType) && typeof value === 'string') {
       numericValue = +value
-      console.log(option, numericValue)
     }
 
     if (option === numericValue) {
@@ -232,7 +233,7 @@ const MultipleCheck = ({
                   </>
                 )}
               </li>
-
+              {/* <div>Empty</div> */}
               {option === perColumnListForFilters?.at(-1) ? (
                 <div className='G-center' style={{ width: '100%' }}>
                   {(perColumnListForFilters?.length ?? 0) < (perColumnTotalCount ?? 0) ? (
@@ -285,6 +286,7 @@ const MultipleCheck = ({
             padding: 15,
             color: 'silver',
             position: 'absolute',
+            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -60 : 60,
             backgroundColor: 'white',
             opacity: 1,
             zIndex: 888888,
