@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
-import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd'
-import './style.scss'
+import React, { memo, useEffect, useMemo, useState } from 'react'
+import { DragDropContext, Draggable, DropResult, Droppable } from 'react-beautiful-dnd'
+import { StructureConfig } from '../../../Models/table.enum'
 import { IColumnConfigStructure, IColumnHeaderStructure, IColumns } from '../../../Models/table.models'
 import Checkbox from '../../../components/checkbox'
-import { StructureConfig } from '../../../Models/table.enum'
+import PopUp from '../../../components/popUp'
 import ColumnsSvgIcon from '../../../svgIcons/ColumnsSvgIcon'
 import GroupSvgIcons from '../../../svgIcons/GroupSvgIcon'
-import PopUp from '../../../components/popUp'
+import './style.scss'
 const onDragEnd = <T extends Object>(
   result: DropResult,
   columnsConfigStructure: IColumnConfigStructure<T>,
@@ -196,23 +196,16 @@ function ColumnsCustomizer<T extends Object>({
         handleClose={handleClose}
         modalName={translations?.customizationAction.modalName || 'Customize Columns'}
       >
-        <div
-          style={{
-            border: '1px solid #A3A5AF',
-            backgroundColor: 'white',
-            borderRadius: '4px',
-          }}
-        >
+        <div>
           <div
+            className='G-align-center'
             style={{
-              margin: '0 0 0 32px',
-              height: '74px',
-              display: 'flex',
-              alignItems: 'center',
               fontSize: '18px',
+              padding: 20,
+              borderBottom: '1px solid rgba(0, 0, 0, 0.16)',
             }}
           >
-            <div className='G-flex-column' style={{ height: '48px' }}>
+            <div className='G-flex-column'>
               <div>
                 {translations?.customizationAction.info || 'Visible columns are '}
                 {visibleColumnsCount} - {allColumns.length}
@@ -223,6 +216,14 @@ function ColumnsCustomizer<T extends Object>({
                     'The maximum number of freezing columns can be 3'
                   : ''}
               </div>
+            </div>
+          </div>
+          <div className='G-flex' style={{ padding: '30px 0px 10px 20px' }}>
+            <div className='G-flex' style={{ width: '50%' }}>
+              Columns
+            </div>
+            <div className='G-flex' style={{ width: '50%' }}>
+              Pinned Columns
             </div>
           </div>
           <div
@@ -251,11 +252,15 @@ function ColumnsCustomizer<T extends Object>({
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
-                      borderTop: '1px solid rgba(0, 0, 0, 0.16)',
+                      // borderTop: "1px solid rgba(0, 0, 0, 0.16)",
                     }}
                     key={columnId}
                   >
-                    <div style={{ margin: 8 }}>
+                    <div
+                      style={{
+                        margin: columnId === 'Freezed' ? '8px 24px 8px 8px' : 8,
+                      }}
+                    >
                       <Droppable droppableId={typeof columnId === 'string' ? columnId : '' + columnId} key={columnId}>
                         {(provided) => {
                           return (
@@ -263,7 +268,7 @@ function ColumnsCustomizer<T extends Object>({
                               {...provided.droppableProps}
                               ref={provided.innerRef}
                               style={{
-                                background: 'white',
+                                background: columnId === 'Freezed' ? '#F6F6F6' : 'white',
                                 borderRadius: '4px',
                                 padding: 4,
                                 width: 250,
@@ -288,7 +293,7 @@ function ColumnsCustomizer<T extends Object>({
                                           style={{
                                             userSelect: 'none',
                                             padding: 13,
-                                            backgroundColor: snapshot.isDragging ? '#F0F4F6' : 'white',
+                                            backgroundColor: snapshot.isDragging ? '#F0F4F6' : 'rgba(255, 255, 255,0)',
                                             ...provided.draggableProps.style,
                                           }}
                                           className='G-flex G-justify-between'
@@ -367,4 +372,4 @@ function ColumnsCustomizer<T extends Object>({
   )
 }
 
-export default ColumnsCustomizer
+export default memo(ColumnsCustomizer) as <T extends Object>(props: IColumnsCustomizer<T>) => JSX.Element

@@ -1,5 +1,5 @@
-import React, { useState, ReactElement } from 'react'
 import { Button, Menu } from '@mui/material'
+import React, { ReactElement } from 'react'
 import './style.scss'
 interface IPopUp {
   children: ReactElement

@@ -55,7 +55,7 @@ const FooterMain = <T extends Object>({
                   tabIndex={0}
                   style={{
                     ...column.customStyle,
-                    minWidth: columnMinWidth + 'px',
+                    maxWidth: (column.width || columnMinWidth) + 'px',
                     backgroundColor: footerColor && footerColor,
                   }}
                   key={column.id}

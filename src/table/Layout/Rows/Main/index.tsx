@@ -184,7 +184,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                         key={column.id}
                         style={{
                           ...column.customStyle,
-                          minWidth: columnMinWidth + 'px',
+                          maxWidth: (column.width || columnMinWidth) + 'px',
                         }}
                       >
                         {column.setRow(item)}

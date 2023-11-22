@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { CheckedItems } from '../Models/table.enum'
 
 const useTable = <T extends Object>(
@@ -11,6 +11,7 @@ const useTable = <T extends Object>(
   const [checkedRows, setCheckedRows] = useState<T[]>([])
   const [checkedLink, setCheckedLink] = useState<T>()
   const [selectedType, setSelectedType] = useState<string>('none')
+
   const freezeRow = (e: any, indexx: number) => {
     e.stopPropagation()
     //@ts-ignore
@@ -23,7 +24,6 @@ const useTable = <T extends Object>(
       }
     })
   }
-
   const unFreezeRow = (e: any, index: number) => {
     e.stopPropagation()
 
@@ -31,11 +31,9 @@ const useTable = <T extends Object>(
     setFreezedRows(freezedRows)
     setUnFreezedRows((prev) => [newFreezeRows[0], ...prev])
   }
-
   const dragDropFreezeRow = (option: any) => {
     setFreezedRows(option)
   }
-
   const getRowForDropdown = (id: number) => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
 
@@ -47,21 +45,22 @@ const useTable = <T extends Object>(
       }
     })
   }
-
-  const handleCheckAll = () => {
+  const handleCheckAll = useCallback(() => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
     setCheckedRows(allRows)
     setSelectedType(CheckedItems.SELECTED_VISIBLE)
-  }
-  const unCheck = () => {
+  }, [unFreezedRows, freezedRows, checkedRows, selectedType])
+
+  const unCheck = useCallback(() => {
     setCheckedRows([])
     setSelectedType(CheckedItems.NONE)
-  }
-  const checkAllDataFromDb = () => {
+  }, [])
+
+  const checkAllDataFromDb = useCallback(() => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
     setCheckedRows(allRows)
     setSelectedType(CheckedItems.SELECTED_ALL)
-  }
+  }, [unFreezedRows, freezedRows, checkedRows, selectedType])
 
   const handleCheck = (id: number) => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
@@ -84,7 +83,6 @@ const useTable = <T extends Object>(
       }
     })
   }
-
   const isCheckedRows = (id: number): boolean => {
     let isChecked = false
     checkedRows.map((elem: any) => {
@@ -96,6 +94,7 @@ const useTable = <T extends Object>(
 
   useEffect(() => {
     setUnFreezedRows(data)
+    setCheckedRows([])
   }, [data])
 
   return {

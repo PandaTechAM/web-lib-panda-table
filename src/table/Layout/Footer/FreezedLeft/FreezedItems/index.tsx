@@ -36,7 +36,7 @@ const FreezedItems = <T extends Object>({
                 <li
                   style={{
                     ...column.customStyle,
-                    minWidth: columnMinWidth && columnMinWidth + 'px',
+                    maxWidth: columnMinWidth && columnMinWidth + 'px',
                     position: 'sticky',
                     backgroundColor: footerColor && footerColor,
                   }}

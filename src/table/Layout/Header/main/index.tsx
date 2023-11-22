@@ -50,7 +50,7 @@ const HeaderMain = <T extends Object>({
                   style={{
                     ...column.customStyle,
                     cursor: 'pointer',
-                    minWidth: columnMinWidth + 'px',
+                    maxWidth: (column.width || columnMinWidth) + 'px',
                     backgroundColor: headerColor && headerColor,
                   }}
                   key={column.id}

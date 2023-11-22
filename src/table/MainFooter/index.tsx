@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
+import { IPageSizes, ISelected } from '../../Models/table.models'
 import Pagination from '../../components/pagination'
 import Select from '../../components/select/select'
-import { IPageSizes, ISelected } from '../../Models/table.models'
 import DropdownSvgIcon from '../../svgIcons/DropdownSvgIcon'
 import './index.scss'
 interface IFooterPagination {
   pageSizeStructure?: IPageSizes[]
   pagesTotalCount?: number
   currPage?: number
-  selectedPageSizeId: ISelected
+  selectedPageSizeId?: ISelected
   translations?: Record<string, any>
-  unCheck: () => void
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
 }
 const FooterPagination = ({
@@ -19,7 +18,6 @@ const FooterPagination = ({
   currPage = 1,
   selectedPageSizeId = { id: 1 },
   translations,
-  unCheck,
   getPageRowsCountAndCurrentPage,
 }: IFooterPagination) => {
   const [isOpenList, setOpen] = useState<boolean>(false)
@@ -39,7 +37,7 @@ const FooterPagination = ({
   }
   const handleChangePage = (option: number) => {
     setCurrentPage(option)
-    unCheck()
+
     if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
       getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1])
     }
@@ -85,4 +83,4 @@ const FooterPagination = ({
   )
 }
 
-export default FooterPagination
+export default memo(FooterPagination)

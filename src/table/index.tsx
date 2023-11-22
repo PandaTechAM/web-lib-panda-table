@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { IProps } from '../Models/table.models'
-import MainHeader from './MainHeader'
+import '../assets/style/index.scss'
+import Footer from './Layout/Footer'
 import Header from './Layout/Header'
 import Rows from './Layout/Rows'
-import useTable from './useTable'
-import Footer from './Layout/Footer'
-import './index.scss'
-import '../assets/style/index.scss'
 import MainFooter from './MainFooter'
+import MainHeader from './MainHeader'
+import './index.scss'
+import useTable from './useTable'
 
 function Table<T extends Object>({
   data = [],
@@ -214,7 +214,6 @@ function Table<T extends Object>({
             currPage={currentPage}
             pagesTotalCount={pagesTotalCount}
             selectedPageSizeId={selectedPageSizeId}
-            unCheck={unCheck}
             getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
           />
         ) : null}
@@ -223,4 +222,4 @@ function Table<T extends Object>({
   )
 }
 
-export default Table
+export default memo(Table)

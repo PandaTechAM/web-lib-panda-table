@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import Checkbox from '../../../components/checkbox'
 import { Button, Menu } from '@mui/material'
 import { useState } from 'react'
@@ -124,4 +124,4 @@ ICheckRows<T>) => {
   )
 }
 
-export default CheckRows
+export default memo(CheckRows)

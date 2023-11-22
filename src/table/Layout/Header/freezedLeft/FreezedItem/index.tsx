@@ -32,7 +32,7 @@ const FreezedItem = <T extends Object>({
                 <li
                   style={{
                     ...column.customStyle,
-                    minWidth: columnMinWidth && columnMinWidth + 'px',
+                    maxWidth: columnMinWidth && columnMinWidth + 'px',
                     backgroundColor: headerColor && headerColor,
                     position: 'sticky',
                   }}

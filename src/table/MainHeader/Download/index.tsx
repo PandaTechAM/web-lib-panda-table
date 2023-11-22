@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import Select from '../../../components/select/select'
 import ArrowDown from '../../../svgIcons/ArrowBottomSvgIcon'
 import ArrowUp from '../../../svgIcons/ArrowtopSvgIcon'
@@ -32,6 +32,7 @@ const Download = <T extends Object>({ checkedRows, selectedType, translations, g
       getDownloadType(option.type, checkedRows)
     }
   }
+
   return (
     <Select
       optionsList={fileType}
@@ -48,4 +49,4 @@ const Download = <T extends Object>({ checkedRows, selectedType, translations, g
   )
 }
 
-export default Download
+export default memo(Download) as <T extends Object>(props: IDownload<T>) => JSX.Element

@@ -1,15 +1,13 @@
-import React, { useState, Fragment } from 'react'
-import { Button, Menu } from '@mui/material'
-import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
+import { Button } from '@mui/material'
+import React, { Fragment, memo, useState } from 'react'
 import { IComparisonType, IFiltersTypes, ItemFields } from '../../../Models/table.models'
+import NativePopup from '../../../components/NativePopup/NativePopup'
+import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
 import APIFilter from './FiltersPerColumn/apiFilter'
 import LocalFilter from './FiltersPerColumn/localFiltering'
-import AdvancedFilerEnabled from '../../../svgIcons/AdvancedFilerEnabledSvgIcon'
-import AdvancedFilerDisabled from '../../../svgIcons/AdvancedFilerDisabledSvgIcon'
-import NativePopup from '../../../components/NativePopup/NativePopup'
 
 interface IFilter {
-  data: any
+  data?: any
   filterColumns?: IComparisonType[]
   perColumnListForFilters?: string[]
   filterDataForRequest?: ItemFields[]
@@ -164,7 +162,7 @@ const Filter = ({
               fullWidth
               disabled={isDisabled}
               style={{
-                marginBottom: 16,
+                marginBottom: 8,
                 boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.16)',
               }}
               onClick={(e) => {
@@ -190,4 +188,4 @@ const Filter = ({
   )
 }
 
-export default Filter
+export default memo(Filter)

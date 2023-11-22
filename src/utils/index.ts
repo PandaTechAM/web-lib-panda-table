@@ -80,6 +80,7 @@ const filterUiHelperMap = {
     Contains: 1,
   },
 } as const
+
 export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {
   const columnTypeMap = filterUiHelperMap[ColumnType as keyof typeof filterUiHelperMap]
   if (columnTypeMap) {

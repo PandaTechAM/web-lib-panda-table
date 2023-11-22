@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Autocomplete, Box, FormControl, MenuItem, NativeSelect, Select, TextField } from '@mui/material'
+import { Autocomplete, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { filterTypesUiHelper, inputSize } from '../../../../Models/table.enum'
 import { IComparisonType, ItemFields } from '../../../../Models/table.models'
 import { filterUiHelper } from '../../../../utils'
-import MultipleCheck from './UiTypes/MultipleCheck'
-import PickDate from './UiTypes/PickDate'
 import BetweenDates from './UiTypes/BetweenDates'
 import BetweenNumbers from './UiTypes/BetweenNumbers'
 import ModalForSingleField from './UiTypes/ModalSingleField'
-import FiltersModalWrapper from '../../../../components/modal/FiltersModalWrapper'
+import MultipleCheck from './UiTypes/MultipleCheck'
 import MultipleSelectCheckmarks from './UiTypes/MultipleSelectCheckmarks'
-import { filterTypesUiHelper, inputSize } from '../../../../Models/table.enum'
+import PickDate from './UiTypes/PickDate'
 
 interface IPerField {
   item: IComparisonType
@@ -243,13 +242,6 @@ const APIFilter = ({
         )
       case 2:
         return (
-          // <FiltersModalWrapper
-          //   isDisabled={isDisabled}
-          //   advancedSettings={advancedSettings}
-          //   columnsSizes={columnsSizes}
-          //   filterTypeing={filterTypeing}
-          //   setCoulmnName={selectedColumnName}
-          // >
           <ModalForSingleField
             item={item}
             columnsSizes={columnsSizes}
@@ -268,7 +260,6 @@ const APIFilter = ({
             setCoulmnName={selectedColumnName}
             handleChangePagePerFilterField={handleChangePagePerFilterField}
           />
-          // </FiltersModalWrapper>
         )
       case 3:
         return (
@@ -348,7 +339,7 @@ const APIFilter = ({
   }, [filteredColumn])
 
   return (
-    <div style={{ marginTop: 16 }}>
+    <div style={{ marginTop: 8 }}>
       {filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 5 ||
       filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 3 ? (
         <div style={{ margin: '0 0 10px 0', fontSize: 14 }}>{item.key || item.ColumnName}</div>

@@ -1,9 +1,9 @@
-import React, { SyntheticEvent, memo, useCallback, useEffect, useState } from 'react'
-import { Autocomplete, Button, CircularProgress, TextField, Checkbox, Skeleton } from '@mui/material'
+import { Autocomplete, Button, Checkbox, CircularProgress, Skeleton, TextField } from '@mui/material'
+import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
 // import Checkbox from "../../../../components/checkbox";
+import { inputSize } from '../../../../../Models/table.enum'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
-import { inputSize } from '../../../../../Models/table.enum'
 
 interface IMultipleCHeck {
   columnsSizes: string
@@ -223,7 +223,12 @@ const MultipleCheck = ({
                 ) : (
                   <>
                     <div>{drawOptionLabel(option)}</div>
-                    <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                    <Checkbox
+                      checked={selected}
+                      sx={{
+                        color: '#ACBCC3',
+                      }}
+                    />
                   </>
                 )}
               </li>

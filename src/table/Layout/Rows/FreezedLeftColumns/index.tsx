@@ -14,7 +14,7 @@ const FreezedLeftColumns = forwardRef<any, IFreezeProps<any>>(
                 key={column.id}
                 style={{
                   ...column.customStyle,
-                  minWidth: columnMinWidth && columnMinWidth + 'px',
+                  maxWidth: columnMinWidth && columnMinWidth + 'px',
                   backgroundColor: freezedLeftSideColor && freezedLeftSideColor,
                 }}
               >
