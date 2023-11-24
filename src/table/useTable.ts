@@ -35,13 +35,12 @@ const useTable = <T extends Object>(
     setFreezedRows(option)
   }
   const getRowForDropdown = (id: number) => {
-    const allRows: T[] = freezedRows.concat(unFreezedRows)
+    const allRows: T[] = [...freezedRows, ...unFreezedRows]
 
-    allRows.map((item) => {
+    allRows.forEach((item) => {
       //@ts-ignore
       if (item.id === id) {
-        freezedRightSide && freezedRightSide == 'dropdown' && setCheckedLink(item)
-        RightSideSelfAction && RightSideSelfAction(item)
+        freezedRightSide && freezedRightSide === 'dropdown' ? setCheckedLink(item) : RightSideSelfAction?.(item)
       }
     })
   }

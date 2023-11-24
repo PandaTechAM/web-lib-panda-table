@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ILinksList } from '../../../../../Models/table.models'
-import { useState } from 'react'
-import LinkSvgIcon from '../../../../../svgIcons/LinkSvgIcon'
 import PopUp from '../../../../../components/popUp'
+import LinkSvgIcon from '../../../../../svgIcons/LinkSvgIcon'
 interface IDropDown<T extends Object> {
   item: T
   checkedLink?: T
