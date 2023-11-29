@@ -40,8 +40,9 @@ const Filter = ({
   const [advancedSettings, setAdvancedSettings] = useState<boolean>(false)
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [open, setIsOpen] = useState<boolean>(false)
-  const handleClick = () => {
-    setIsOpen((prev) => !prev)
+
+  const handleOpen = () => {
+    setIsOpen(true)
   }
   const handleClose = () => {
     setIsOpen(false)
@@ -77,7 +78,8 @@ const Filter = ({
         ActiveIcon={FilterSvgIcon}
         isOpen={open}
         popupName={translations?.filterAction.modalName || 'Filter By'}
-        handleClick={handleClick}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
       >
         <div style={{ padding: '20px 0', width: 553 }}>
           <div style={{ width: '100%' }} className='G-justify-end'>
@@ -92,14 +94,11 @@ const Filter = ({
                 textDecoration: 'underline',
               }}
             >
-              {/* {advancedSettings ? ( */}
               {translations?.filterAction.advanced}
-              {/* ) : (
-                <AdvancedFilerEnabled /> */}
             </div>
           </div>
           <ul
-            className='G-dropdown-list P-Filters'
+            className='P-Filters'
             style={{
               border: 'none',
               overflowX: 'auto',
@@ -168,7 +167,7 @@ const Filter = ({
               }}
               onClick={(e) => {
                 getFilteredDataForTable?.()
-                handleClick()
+                handleClose()
               }}
             >
               {translations?.filterAction.confirmFilters || 'Submit'}

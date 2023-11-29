@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { CheckedItems } from '../Models/table.enum'
 
 const useTable = <T extends Object>(

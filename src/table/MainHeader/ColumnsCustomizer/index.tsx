@@ -168,7 +168,6 @@ function ColumnsCustomizer<T extends Object>({
       })
     }
   }
-
   const allColumns = useMemo(
     () => [
       ...columnsConfigStructure[StructureConfig.Main].items,
@@ -187,7 +186,7 @@ function ColumnsCustomizer<T extends Object>({
     setVisibleColumnsCount(count)
   }, [columnsConfigStructure])
   return (
-    <div style={{ marginLeft: '5px', flex: '1 1 auto' }}>
+    <div className='G-costumize-wrapper'>
       <PopUp
         ActiveIcon={ColumnsSvgIcon}
         open={open}
@@ -196,15 +195,8 @@ function ColumnsCustomizer<T extends Object>({
         handleClose={handleClose}
         modalName={translations?.customizationAction.modalName || 'Customize Columns'}
       >
-        <div>
-          <div
-            className='G-align-center'
-            style={{
-              fontSize: '18px',
-              padding: 20,
-              borderBottom: '1px solid rgba(0, 0, 0, 0.16)',
-            }}
-          >
+        <div className='G-costumize-modal'>
+          <div className='G-align-center G-costumize-header'>
             <div className='G-flex-column'>
               <div>
                 {translations?.customizationAction.info || 'Visible columns are '}
@@ -218,7 +210,7 @@ function ColumnsCustomizer<T extends Object>({
               </div>
             </div>
           </div>
-          <div className='G-flex' style={{ padding: '30px 0px 10px 20px' }}>
+          <div className='G-flex G-columns-header'>
             <div className='G-flex' style={{ width: '50%' }}>
               Columns
             </div>
@@ -227,9 +219,8 @@ function ColumnsCustomizer<T extends Object>({
             </div>
           </div>
           <div
+            className='G-align-center'
             style={{
-              display: 'flex',
-              justifyContent: 'center',
               height: '100%',
             }}
           >
@@ -247,15 +238,7 @@ function ColumnsCustomizer<T extends Object>({
             >
               {Object.entries(columnsConfigStructure).map(([columnId, column]: [string, IColumns<T>], indexx) => {
                 return (
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      // borderTop: "1px solid rgba(0, 0, 0, 0.16)",
-                    }}
-                    key={columnId}
-                  >
+                  <div className='G-column-center' key={columnId}>
                     <div
                       style={{
                         margin: columnId === 'Freezed' ? '8px 24px 8px 8px' : 8,
@@ -267,14 +250,9 @@ function ColumnsCustomizer<T extends Object>({
                             <div
                               {...provided.droppableProps}
                               ref={provided.innerRef}
+                              className='G-left-column'
                               style={{
                                 background: columnId === 'Freezed' ? '#F6F6F6' : 'white',
-                                borderRadius: '4px',
-                                padding: 4,
-                                width: 250,
-                                minHeight: 250,
-                                maxHeight: 250,
-                                overflowY: 'auto',
                               }}
                             >
                               {column.items.map((item, index) => {
@@ -296,20 +274,19 @@ function ColumnsCustomizer<T extends Object>({
                                             backgroundColor: snapshot.isDragging ? '#F0F4F6' : 'rgba(255, 255, 255,0)',
                                             ...provided.draggableProps.style,
                                           }}
-                                          className='G-flex G-justify-between'
+                                          className='G-justify-between'
                                         >
                                           <div
-                                            className='G-flex G-justify-start '
+                                            className='G-justify-start '
                                             style={{
                                               alignItems: 'center',
                                               height: '24px',
                                             }}
                                           >
                                             <div
+                                              className='G-justify-center'
                                               style={{
                                                 marginRight: 8,
-                                                display: 'flex',
-                                                alignItems: 'center',
                                               }}
                                             >
                                               <GroupSvgIcons />
@@ -322,19 +299,7 @@ function ColumnsCustomizer<T extends Object>({
                                               customClass='G-checkbox'
                                             />
                                           </div>
-                                          <div
-                                            style={{
-                                              minWidth: '150px',
-                                              fontSize: '18px',
-                                              display: 'flex',
-                                              justifyContent: 'start',
-                                              maxWidth: '150px',
-                                              overflow: 'hidden',
-                                              whiteSpace: 'nowrap',
-                                              textOverflow: 'ellipsis',
-                                              alignItems: 'center',
-                                            }}
-                                          >
+                                          <div className='G-item-name'>
                                             <div>{item.columnName}</div>
                                           </div>
                                         </div>

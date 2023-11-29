@@ -15,7 +15,7 @@ interface IPopUp {
   handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   getRowForDropdown?: (option: any) => void
 }
-const PopUp = ({
+const PopUp = <T extends Object>({
   children,
   ActiveIcon,
   DisabledIcon,
@@ -86,6 +86,7 @@ const PopUp = ({
         id='basic-menu'
         anchorEl={anchorEl}
         open={checkedLink && item ? (checkedLink.id === item.id ? open : false) : open}
+        elevation={0}
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',

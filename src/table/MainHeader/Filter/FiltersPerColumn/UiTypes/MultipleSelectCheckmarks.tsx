@@ -156,7 +156,7 @@ const MultipleSelectCheckmarks = ({
             color: 'silver',
             position: 'absolute',
             backgroundColor: 'white',
-            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -60 : 60,
+            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -55 : 40,
             opacity: 1,
             zIndex: 888888,
             width: '100%',

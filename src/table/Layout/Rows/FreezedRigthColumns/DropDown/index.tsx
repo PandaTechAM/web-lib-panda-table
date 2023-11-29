@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ILinksList } from '../../../../../Models/table.models'
 import PopUp from '../../../../../components/popUp'
 import LinkSvgIcon from '../../../../../svgIcons/LinkSvgIcon'
+import './style.scss'
 interface IDropDown<T extends Object> {
   item: T
   checkedLink?: T
@@ -19,7 +20,6 @@ const DropDown = <T extends Object>({ checkedLink, links, item, RightSideIcon, g
   }
   const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation()
-
     setAnchorEl(null)
   }
 
@@ -35,7 +35,7 @@ const DropDown = <T extends Object>({ checkedLink, links, item, RightSideIcon, g
         handleClick={handleClick}
         handleClose={handleClose}
       >
-        <div style={{ padding: '12px 24px', maxWidth: 240 }}>
+        <div className='G-right-freezed-dropdown'>
           {links &&
             links.length &&
             links.map((el, ind) => {
@@ -46,18 +46,13 @@ const DropDown = <T extends Object>({ checkedLink, links, item, RightSideIcon, g
                     e.stopPropagation()
                     el.action?.(checkedLink, ind)
                   }}
-                  className='G-align-center'
+                  className='G-align-center G-item-element'
                   style={{
-                    cursor: 'pointer',
-                    padding: '12px 0px',
                     borderBottom: ind !== links.length - 1 ? '1px solid #ECECEC' : '',
                   }}
                 >
                   {!el.path ? (
                     <p className='G-dropdown-list-style'>
-                      {/* <span>
-                        {el.icon?.() || <LinkSvgIcon fill="#4844c5" />}
-                      </span> */}
                       <span>{el.name}</span>
                     </p>
                   ) : (

@@ -1,9 +1,8 @@
 // Modal.tsx
 
-import React, { ReactNode, cloneElement, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import './style.scss'
 // import ClickOutside from "../click-outside";
-import { Button } from '@mui/material'
 import ClickOutside from '../click-outside'
 
 interface IModalProps {
@@ -11,7 +10,8 @@ interface IModalProps {
   children: ReactNode
   isOpen: boolean
   popupName: string
-  handleClick: () => void
+  handleOpen: () => void
+  handleClose: () => void
 }
 
 interface MyComponentProps {
@@ -20,7 +20,7 @@ interface MyComponentProps {
   handleClick?: () => void
 }
 
-const NativePopup = ({ ActiveIcon, isOpen, children, popupName, handleClick }: IModalProps) => {
+const NativePopup = ({ ActiveIcon, isOpen, children, popupName, handleOpen, handleClose }: IModalProps) => {
   const [animated, setAnimated] = useState(false)
 
   const isAnimated = () => {
@@ -41,12 +41,12 @@ const NativePopup = ({ ActiveIcon, isOpen, children, popupName, handleClick }: I
 
   return (
     <div className='G-wrapper-button'>
-      <div role='button' aria-label='open' onClick={handleClick} className='G-center G-popup-button'>
+      <div role='button' aria-label='open' onClick={handleOpen} className='G-center G-popup-button'>
         <ActiveIcon className='G-icon' />
         <label className='G-label'>{popupName}</label>
       </div>
       {isOpen || animated ? (
-        <ClickOutside onClickOutside={handleClick}>
+        <ClickOutside onClickOutside={handleClose}>
           <div className='popup-overlay '>
             <div
               onAnimationEnd={(e) => {

@@ -5,22 +5,50 @@
     font-size: 20px !important;
     margin-right: 10px;
 }
-.G-columns-customize{
-    margin-left: "5px";
-    flex: "1 1 auto" ;
-    
+.G-costumize-wrapper{
+    margin-left: 5px;
+    flex: 1 1 auto;
 }
-
-.G-confirm-button{
-    
-    display: flex;
-    justify-content: end;
-    button{
-        background: #FB9C59;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
+.G-costumize-modal{
+    border-radius: 4px;
+    border: 1px solid var(--color-light-100, #ECECEC);
+    background: #FFF;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.04);
+    .G-costumize-header{
+        font-size: 18px;
+        padding: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    }
+    .G-columns-header{
+        padding: 30px 0px 10px 20px
+    }
+    .G-left-column{
         border-radius: 4px;
-        margin: 24px;
-        width: 100%;
-        padding: 6px 0;
+        padding: 4px;
+        width: 250px;
+        aspect-ratio: 1/1;
+        overflow-y: auto;
+        .G-item-name{
+            min-width: 150px;
+            font-size: 18px;
+            max-width: 150px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+    .G-confirm-button{
+        
+        display: flex;
+        justify-content: end;
+        button{
+            background: #FB9C59;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.16);
+            border-radius: 4px;
+            margin: 24px;
+            width: 100%;
+            padding: 6px 0;
+        }
     }
 }
+

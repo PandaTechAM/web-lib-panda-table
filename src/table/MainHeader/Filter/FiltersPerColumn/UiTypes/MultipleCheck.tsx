@@ -286,7 +286,7 @@ const MultipleCheck = ({
             padding: 15,
             color: 'silver',
             position: 'absolute',
-            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -60 : 60,
+            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -55 : 40,
             backgroundColor: 'white',
             opacity: 1,
             zIndex: 888888,

@@ -252,7 +252,7 @@ const ModalForSingleField = ({
             position: 'absolute',
             backgroundColor: 'white',
             opacity: 1,
-            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -60 : 60,
+            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -55 : 40,
             zIndex: 888888,
             width: '100%',
           }}

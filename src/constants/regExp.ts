@@ -10,3 +10,46 @@ export const regExp = {
   PHONE_NUMBER: phoneNumberExp,
   OTP: otpRegexp,
 }
+
+export const translations = {
+  emptyData: 'Empty data',
+  checkbox: {
+    all: 'Select All',
+    allVisible: 'Select visible rows',
+    none: 'None',
+  },
+  customizationAction: {
+    modalName: 'Customize columns',
+    info: 'Visible columns are ',
+    actionButtonName: 'Save as default',
+    validationMessage: 'The maximum number of freezing columns can be 3',
+  },
+  deleteAction: 'Delete',
+  editAction: 'Edit',
+  filterAction: {
+    modalName: 'Filter by',
+    advanced: 'Advanced filters',
+    confirmFilters: 'Submit',
+    clearFilters: 'Clear all filters',
+    clearDate: 'Clear',
+    todayButton: 'Today',
+    hour: 'Hour',
+    min: 'Min',
+    sec: 'Sec',
+    loadMore: 'Load more',
+    emptyFieldData: 'Empty Data',
+    blank: 'Blank',
+    emptyString: 'Empty',
+    from: 'From',
+    to: 'To',
+    validations: { isEmpty: 'Empty field', onlyNumbers: 'Only numbers', err: 'err', invalid: 'invalid' },
+    emptyColumns: 'Add Filters Columns',
+  },
+  dowloadAction: 'Download report',
+  pagination: {
+    from: 'from',
+    show: 'Show',
+    rows: 'Rows',
+    to: 'Go to',
+  },
+}

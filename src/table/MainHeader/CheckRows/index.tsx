@@ -1,11 +1,9 @@
-import React, { memo } from 'react'
-import Checkbox from '../../../components/checkbox'
-import { Button, Menu } from '@mui/material'
-import { useState } from 'react'
-import './style.scss'
+import React, { memo, useState } from 'react'
 import { CheckedItems } from '../../../Models/table.enum'
-import DropdownSvgIcon from '../../../svgIcons/DropdownSvgIcon'
+import Checkbox from '../../../components/checkbox'
 import PopUp from '../../../components/popUp'
+import DropdownSvgIcon from '../../../svgIcons/DropdownSvgIcon'
+import './style.scss'
 interface ICheckRows<T extends Object> {
   data: T[]
   checkedRows: T[]
