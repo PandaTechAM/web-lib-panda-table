@@ -22,6 +22,8 @@ interface IFooter<T extends Object> {
   listForDropdown?: ITotalList[]
   aggregates?: any
   isLoadedData?: boolean
+  hasOrdering?: boolean
+  multipleCheck?: boolean
   handleArgChange?(columnName: string, type: string): void
 }
 const Footer = <T extends Object>({
@@ -36,6 +38,7 @@ const Footer = <T extends Object>({
   rightFreezedColumnWidth,
   aggregates,
   isLoadedData,
+  multipleCheck,
   handleArgChange,
 }: IFooter<T>) => {
   return (
@@ -49,6 +52,7 @@ const Footer = <T extends Object>({
         leftFreezedColumnWidth={leftFreezedColumnWidth}
         aggregates={aggregates}
         isLoadedData={isLoadedData}
+        multipleCheck={multipleCheck}
         handleArgChange={handleArgChange}
       />
       <FooterMain
@@ -60,6 +64,7 @@ const Footer = <T extends Object>({
         leftFreezedColumnWidth={leftFreezedColumnWidth}
         aggregates={aggregates}
         isLoadedData={isLoadedData}
+        multipleCheck={multipleCheck}
         handleArgChange={handleArgChange}
       />
       {freezedRightSideVisible ? (

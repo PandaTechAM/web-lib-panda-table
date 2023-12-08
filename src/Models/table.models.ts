@@ -41,6 +41,7 @@ export interface IProps<T extends Object> {
   hasFilters?: boolean
   isLoadedData?: boolean
   translations?: Record<string, any>
+  hasOrdering?: boolean
   getRow?(option: any): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void

@@ -51,6 +51,7 @@ function Table<T extends Object>({
   aggregates,
   isLoadedData,
   translations,
+  hasOrdering,
   handleChangePagePerFilterField,
   getRow,
   RightSideSelfAction,
@@ -136,6 +137,7 @@ function Table<T extends Object>({
               freezedRightSideVisible={freezedRightSideVisible}
               leftFreezedColumnWidth={leftFreezedColumnWidth}
               rightFreezedColumnWidth={rightFreezedColumnWidth}
+              hasOrdering={hasOrdering}
               handleSorting={handleSorting}
             />
           </div>
@@ -164,6 +166,7 @@ function Table<T extends Object>({
                 headerHeight={headerHeight}
                 rowsFreezeAction={rowsFreezeAction}
                 selectedType={selectedType}
+                hasOrdering={hasOrdering}
                 getRow={getRow}
                 RightSideSelfAction={RightSideSelfAction}
                 freezeRow={freezeRow}
@@ -200,6 +203,8 @@ function Table<T extends Object>({
                 rightFreezedColumnWidth={rightFreezedColumnWidth}
                 aggregates={aggregates}
                 isLoadedData={isLoadedData}
+                hasOrdering={hasOrdering}
+                multipleCheck={multipleCheck}
                 handleArgChange={handleArgChange}
               />
             </div>

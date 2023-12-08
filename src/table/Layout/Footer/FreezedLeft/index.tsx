@@ -20,6 +20,7 @@ interface IFooterFreezedLeft<T extends Object> {
   leftFreezedColumnWidth?: number
   aggregates?: any
   isLoadedData?: boolean
+  multipleCheck?: boolean
   handleArgChange?(columnName: string, type: string): void
 }
 
@@ -32,6 +33,7 @@ const FooterFreezedLeft = <T extends Object>({
   columnsHeaderStructure,
   aggregates,
   isLoadedData,
+  multipleCheck,
   handleArgChange,
 }: IFooterFreezedLeft<T>) => {
   return (
@@ -43,7 +45,7 @@ const FooterFreezedLeft = <T extends Object>({
         boxShadow: '7px 0px 9px -1px rgba(0,0,0,0.02)',
       }}
     >
-      {isStickyFirstColumn ? (
+      {isStickyFirstColumn && multipleCheck ? (
         <li
           className='G-dropdown'
           style={{

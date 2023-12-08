@@ -29,19 +29,16 @@ const HeaderMain = <T extends Object>({
 }: ITopMain<T>) => {
   return (
     <ul className='G-data-table-header' style={{ flex: 1, backgroundColor: headerColor && headerColor }}>
-      {isStickyFirstColumn ? null : (
+      {!isStickyFirstColumn && multipleCheck ? (
         <li
           style={{
             minWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
             maxWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
             backgroundColor: headerColor && headerColor,
           }}
-        >
-          {multipleCheck ? '' : 'N'}
-        </li>
-      )}
+        ></li>
+      ) : null}
       {columnsHeaderStructure[StructureConfig.Main].items.map((item: IColumnHeader, index: number) =>
-        //@ts-ignore
         columnsConfigStructure[StructureConfig.Main].items.map((column: IColumnConfig<T>, indexx: number) => {
           if (index === indexx) {
             return (

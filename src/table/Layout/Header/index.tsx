@@ -15,6 +15,7 @@ interface IHeader<T extends Object> {
   freezedRightSideVisible?: boolean
   leftFreezedColumnWidth?: number
   rightFreezedColumnWidth?: number
+  hasOrdering?: boolean
   handleSorting?(option: string): void
 }
 const Header = <T extends Object>({

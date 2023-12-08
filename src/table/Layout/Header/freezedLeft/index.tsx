@@ -31,7 +31,7 @@ const FreezedHeaderLeft = <T extends Object>({
         boxShadow: '7px 0px 9px -1px rgba(0,0,0,0.02)',
       }}
     >
-      {isStickyFirstColumn ? (
+      {isStickyFirstColumn && multipleCheck ? (
         <li
           style={{
             minWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
@@ -39,9 +39,7 @@ const FreezedHeaderLeft = <T extends Object>({
 
             backgroundColor: headerColor && headerColor,
           }}
-        >
-          {multipleCheck ? '' : 'N'}
-        </li>
+        ></li>
       ) : null}
       {columnsHeaderStructure[StructureConfig.Freezed].items.length ? (
         <FreezedItem

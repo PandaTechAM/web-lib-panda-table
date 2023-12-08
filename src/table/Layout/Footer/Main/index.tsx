@@ -21,6 +21,7 @@ interface IFooterMain<T extends Object> {
   leftFreezedColumnWidth?: number
   aggregates?: any
   isLoadedData?: boolean
+  multipleCheck?: boolean
   handleArgChange?(columnName: string, type: string): void
 }
 const FooterMain = <T extends Object>({
@@ -32,11 +33,12 @@ const FooterMain = <T extends Object>({
   columnsHeaderStructure,
   aggregates,
   isLoadedData,
+  multipleCheck,
   handleArgChange,
 }: IFooterMain<T>) => {
   return (
     <ul className='G-data-table-footer' style={{ flex: 1, backgroundColor: footerColor && footerColor }}>
-      {!isStickyFirstColumn ? (
+      {!isStickyFirstColumn && multipleCheck ? (
         <li
           className='G-Total-dropdown'
           style={{

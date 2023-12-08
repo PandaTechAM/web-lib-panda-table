@@ -54,7 +54,7 @@ const Pagination = ({
   }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    if (ref.current && containsOnlyNumbers(value) && +value <= totalCount / pageSizeStructure) setVal(value)
+    if (ref.current && containsOnlyNumbers(value) && +value <= Math.ceil(totalCount / pageSizeStructure)) setVal(value)
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

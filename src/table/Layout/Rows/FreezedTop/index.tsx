@@ -29,6 +29,7 @@ interface IFreezedRows<T extends Object> {
   rightFreezedColumnWidth?: number
   headerHeight?: number
   selectedType: string
+  hasOrdering?: boolean
   getRow?(options: any): any
   RightSideSelfAction?: (option: number | string) => void
   getRowForDropdown(option: number): void
@@ -57,6 +58,7 @@ const FreezedRows = <T extends Object>({
   rightFreezedColumnWidth,
   headerHeight,
   selectedType,
+  hasOrdering,
   getRow,
   RightSideSelfAction,
   getRowForDropdown,
@@ -152,7 +154,7 @@ const FreezedRows = <T extends Object>({
                         {/* FREEZED LEFT */}
 
                         <ul style={{ position: 'sticky', left: 0, zIndex: 45 }} className={pickBackGroundColor(index)}>
-                          {isStickyFirstColumn ? (
+                          {isStickyFirstColumn && multipleCheck ? (
                             <li
                               style={{
                                 maxWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
@@ -160,17 +162,13 @@ const FreezedRows = <T extends Object>({
                                 backgroundColor: freezedLeftSideColor && freezedLeftSideColor,
                               }}
                             >
-                              {multipleCheck ? (
-                                <Checkbox
-                                  isDisable={selectedType === CheckedItems.SELECTED_ALL}
-                                  isCheck={isCheckedRows(item.id)}
-                                  //@ts-ignore
-                                  onClick={() => handleCheck(item.id)}
-                                  customClass='G-checkbox'
-                                />
-                              ) : (
-                                <p>{index + 1}</p>
-                              )}
+                              <Checkbox
+                                isDisable={selectedType === CheckedItems.SELECTED_ALL}
+                                isCheck={isCheckedRows(item.id)}
+                                //@ts-ignore
+                                onClick={() => handleCheck(item.id)}
+                                customClass='G-checkbox'
+                              />
                             </li>
                           ) : null}
                           <FreezedLeftColumns
@@ -182,7 +180,7 @@ const FreezedRows = <T extends Object>({
                         </ul>
                         {/* MAIN */}
                         <ul style={{ flex: 1 }} className={pickBackGroundColor(index)}>
-                          {isStickyFirstColumn ? null : (
+                          {!isStickyFirstColumn && multipleCheck ? (
                             <li
                               style={{
                                 maxWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
@@ -190,18 +188,14 @@ const FreezedRows = <T extends Object>({
                                 backgroundColor: freezedLeftSideColor && freezedLeftSideColor,
                               }}
                             >
-                              {multipleCheck ? (
-                                <Checkbox
-                                  isDisable={selectedType === CheckedItems.SELECTED_ALL}
-                                  isCheck={isCheckedRows(item.id)}
-                                  onClick={() => handleCheck(item.id)}
-                                  customClass='G-checkbox'
-                                />
-                              ) : (
-                                <p>{index + 1}</p>
-                              )}
+                              <Checkbox
+                                isDisable={selectedType === CheckedItems.SELECTED_ALL}
+                                isCheck={isCheckedRows(item.id)}
+                                onClick={() => handleCheck(item.id)}
+                                customClass='G-checkbox'
+                              />
                             </li>
-                          )}
+                          ) : null}
                           {columnsConfigStructure[StructureConfig.Main].items.map((column) => {
                             return (
                               column.isVisible && (

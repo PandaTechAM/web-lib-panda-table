@@ -29,6 +29,7 @@ interface IMainRows<T extends Object> {
   rightFreezedColumnWidth?: number
   rowsFreezeAction?: boolean
   selectedType: string
+  hasOrdering?: boolean
   getRow?(options: any): void
   RightSideSelfAction?: (option: number | string) => void
   freezeRow(e: any, option: number): void
@@ -60,6 +61,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       rightFreezedColumnWidth,
       rowsFreezeAction,
       selectedType,
+      hasOrdering,
       getRow,
       RightSideSelfAction,
       freezeRow,
@@ -117,7 +119,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                   boxShadow: '10px 1px 9px -2px  rgba(0,0,0,0.02)',
                 }}
               >
-                {isStickyFirstColumn ? (
+                {isStickyFirstColumn && multipleCheck ? (
                   <li
                     style={{
                       maxWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
@@ -125,16 +127,12 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                       backgroundColor: freezedLeftSideColor && freezedLeftSideColor,
                     }}
                   >
-                    {multipleCheck ? (
-                      <Checkbox
-                        isDisable={selectedType === CheckedItems.SELECTED_ALL}
-                        isCheck={isCheckedRows(item.id)}
-                        onClick={() => handleCheck(item.id)}
-                        customClass={'G-checkbox'}
-                      />
-                    ) : (
-                      <p>{freezedRows.length + index + 1}</p>
-                    )}
+                    <Checkbox
+                      isDisable={selectedType === CheckedItems.SELECTED_ALL}
+                      isCheck={isCheckedRows(item.id)}
+                      onClick={() => handleCheck(item.id)}
+                      customClass={'G-checkbox'}
+                    />
                   </li>
                 ) : null}
                 {columnsConfigStructure[StructureConfig.Freezed].items.length ? (
@@ -155,7 +153,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                 }}
                 className={pickBackGroundColor(index)}
               >
-                {isStickyFirstColumn ? null : (
+                {!isStickyFirstColumn && multipleCheck ? (
                   <li
                     style={{
                       maxWidth: leftFreezedColumnWidth ? `${leftFreezedColumnWidth}px` : '60px',
@@ -163,18 +161,14 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                       backgroundColor: freezedLeftSideColor && freezedLeftSideColor,
                     }}
                   >
-                    {multipleCheck ? (
-                      <Checkbox
-                        isDisable={selectedType === CheckedItems.SELECTED_ALL}
-                        isCheck={isCheckedRows(item.id)}
-                        onClick={() => handleCheck(item.id)}
-                        customClass='G-checkbox'
-                      />
-                    ) : (
-                      <p>{freezedRows.length + index + 1}</p>
-                    )}
+                    <Checkbox
+                      isDisable={selectedType === CheckedItems.SELECTED_ALL}
+                      isCheck={isCheckedRows(item.id)}
+                      onClick={() => handleCheck(item.id)}
+                      customClass='G-checkbox'
+                    />
                   </li>
-                )}
+                ) : null}
 
                 {/* Columns */}
                 {columnsConfigStructure[StructureConfig.Main].items.map((column: IColumnConfig<any>) => {
