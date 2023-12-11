@@ -347,7 +347,7 @@ const APIFilter = ({
     <div style={{ marginTop: 8 }}>
       {filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 5 ||
       filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 3 ? (
-        <div style={{ margin: '0 0 10px 0', fontSize: 14 }}>{item.key || item.ColumnName}</div>
+        <div style={{ margin: '15px 0 10px 0', fontSize: 14 }}>{item.key || item.ColumnName}</div>
       ) : null}
       <div className='G-justify-between'>
         {advancedSettings ? (

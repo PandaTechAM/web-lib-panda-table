@@ -271,6 +271,7 @@ function ColumnsCustomizer<T extends Object>({
                                           style={{
                                             userSelect: 'none',
                                             padding: 13,
+                                            width: 235,
                                             backgroundColor: snapshot.isDragging ? '#F0F4F6' : 'rgba(255, 255, 255,0)',
                                             ...provided.draggableProps.style,
                                           }}
