@@ -1,31 +1,28 @@
-import { Autocomplete, CircularProgress, TextField } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import FormControl from "@mui/material/FormControl";
-import React, { SyntheticEvent, memo, useEffect, useState } from "react";
-import { inputSize } from "../../../../../Models/table.enum";
-import {
-  IComparisonType,
-  ItemFields,
-} from "../../../../../Models/table.models";
+import { Autocomplete, CircularProgress, TextField } from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
+import FormControl from '@mui/material/FormControl'
+import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
+import { inputSize } from '../../../../../Models/table.enum'
+import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 const selectStyles = {
-  display: "flex",
-  alignItems: "center", // Center vertically
-};
+  display: 'flex',
+  alignItems: 'center', // Center vertically
+}
 interface IMultipleSelectCheckmarks {
-  item: IComparisonType;
-  columnsSizes: string;
-  isDisabled: boolean;
-  perColumnListForFilters?: string[];
-  columnName: string;
-  isLoadingFilters?: boolean;
-  advancedSettings: boolean;
-  filterTypeing: ItemFields;
-  inputSizes: inputSize;
-  filterColumns?: IComparisonType[];
-  translations?: Record<string, any>;
-  setCheckedItemsLocaly(options: any[]): void;
-  handleSelectItems: (option: any[], isClosed: boolean) => void;
-  setCoulmnName: (name: string) => void;
+  item: IComparisonType
+  columnsSizes: string
+  isDisabled: boolean
+  perColumnListForFilters?: string[]
+  columnName: string
+  isLoadingFilters?: boolean
+  advancedSettings: boolean
+  filterTypeing: ItemFields
+  inputSizes: inputSize
+  filterColumns?: IComparisonType[]
+  translations?: Record<string, any>
+  setCheckedItemsLocaly(options: any[]): void
+  handleSelectItems: (option: any[], isClosed: boolean) => void
+  setCoulmnName: (name: string) => void
 }
 
 const MultipleSelectCheckmarks = ({
@@ -44,64 +41,74 @@ const MultipleSelectCheckmarks = ({
   handleSelectItems,
   setCoulmnName,
 }: IMultipleSelectCheckmarks) => {
-  const [checkedItems, setCheckedItems] = useState<any[]>([]);
-  const [val, setVal] = useState("");
+  const [checkedItems, setCheckedItems] = useState<any[]>([])
+  const [val, setVal] = useState('')
+  const [isOpened, setIsOpened] = useState<boolean>(false)
   const handleChange = (value: any) => {
-    setCheckedItems(typeof value === "string" ? value.split(",") : value);
-    setCheckedItemsLocaly(value);
-  };
+    setCheckedItems(typeof value === 'string' ? value.split(',') : value)
+    if (!isOpened) {
+      handleSelectItems(value, false)
+    }
+    setCheckedItemsLocaly(value)
+  }
 
   const handleOpenList = () => {
     if (!isDisabled) {
-      setCoulmnName(item.ColumnName);
-      handleSelectItems([], true);
+      setCoulmnName(item.ColumnName)
+      handleSelectItems([], true)
+      setIsOpened(true)
     }
-  };
+  }
   const handleCloseList = () => {
-    setCoulmnName("");
-    handleSelectItems(checkedItems, false);
-  };
-  const isEmpty = () => {
-    if (
-      item.ColumnName === columnName &&
-      !isLoadingFilters &&
-      !perColumnListForFilters?.length
-    ) {
-      return true;
-    }
-    return false;
-  };
+    setCoulmnName('')
+    handleSelectItems(checkedItems, false)
+    setIsOpened(false)
+  }
+  const isEmpty = item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length
 
   const getLabel = (option: any) => {
-    if (typeof option == "boolean") {
-      return option + "";
+    if (typeof option == 'boolean') {
+      return option + ''
     }
-    return option;
-  };
+    return option
+  }
 
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
-      setCheckedItems(filterTypeing.CheckedItems);
+      setCheckedItems(filterTypeing.CheckedItems)
     }
-  }, [filterTypeing]);
+  }, [filterTypeing])
 
   return (
     <div
       style={{
-        width: advancedSettings ? columnsSizes : "100%",
-        position: "relative",
+        width: advancedSettings ? columnsSizes : '100%',
+        position: 'relative',
       }}
     >
+      {isOpened ? (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, )',
+            zIndex: 999,
+          }}
+        ></div>
+      ) : null}
       <FormControl fullWidth size={inputSizes}>
         <Autocomplete
           multiple
           limitTags={advancedSettings ? 1 : 2}
-          id="multiple-limit-tags"
+          id='multiple-limit-tags'
           value={checkedItems}
           inputValue={val}
           options={perColumnListForFilters ?? []}
           onChange={(event: SyntheticEvent<Element, Event>, value: any[]) => {
-            handleChange(value);
+            handleChange(value)
           }}
           onInputChange={(event, newInputValue) => setVal(newInputValue)}
           getOptionLabel={getLabel}
@@ -113,28 +120,26 @@ const MultipleSelectCheckmarks = ({
           freeSolo
           renderOption={(props, option, { selected }) => {
             return (
-              <div key={props.id} style={{ textAlign: "center" }}>
+              <div key={props.id} style={{ textAlign: 'center' }}>
                 <li
                   {...props}
                   style={{
                     marginLeft: 5,
-                    display: "flex",
-                    justifyContent: "space-between",
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     minHeight: 40,
-                    borderBottom: option === "" ? "1px solid silver" : "none",
+                    borderBottom: option === '' ? '1px solid silver' : 'none',
                   }}
                 >
                   {item.ColumnName === columnName && isLoadingFilters ? null : (
                     <>
-                      <div>
-                        {typeof option === "boolean" ? String(option) : option}
-                      </div>
+                      <div>{typeof option === 'boolean' ? String(option) : option}</div>
                       <Checkbox style={{ marginRight: 8 }} checked={selected} />
                     </>
                   )}
                 </li>
               </div>
-            );
+            )
           }}
           renderInput={(params) => (
             <TextField
@@ -145,7 +150,7 @@ const MultipleSelectCheckmarks = ({
                 endAdornment: (
                   <>
                     {item.ColumnName === columnName && isLoadingFilters && (
-                      <CircularProgress color="inherit" size={20} />
+                      <CircularProgress color='inherit' size={20} />
                     )}
                     {params.InputProps.endAdornment}
                   </>
@@ -155,28 +160,27 @@ const MultipleSelectCheckmarks = ({
           )}
         />
       </FormControl>
-      {isEmpty() ? (
+      {isEmpty ? (
         <div
-          className="G-align-center G-shadow-around"
+          className='G-align-center G-shadow-around'
           style={{
             borderRadius: 4,
             height: 56,
             padding: 15,
-            color: "silver",
-            position: "absolute",
-            backgroundColor: "white",
-            top:
-              filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -55 : 40,
+            color: 'silver',
+            position: 'absolute',
+            backgroundColor: 'white',
+            top: filterColumns?.at(-1)?.ColumnName === item.ColumnName ? -55 : 40,
             opacity: 1,
             zIndex: 888888,
-            width: "100%",
+            width: '100%',
           }}
         >
-          {translations?.filterAction.emptyFieldData || "Empty data"}
+          {translations?.filterAction.emptyFieldData || 'Empty data'}
         </div>
       ) : null}
     </div>
-  );
-};
+  )
+}
 
-export default memo(MultipleSelectCheckmarks);
+export default memo(MultipleSelectCheckmarks)

@@ -73,12 +73,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
   ) => {
     const myRef = useRef<any>(null)
     const [width, setWidth] = useState<number>(0)
-    function pickBackGroundColor(option: number) {
-      if (option % 2 == 0) {
-        return 'G-dark-background'
-      }
-      return 'G-light-background'
-    }
+    const pickBackGroundColor = (option: number) => (option % 2 == 0 ? 'G-dark-background' : 'G-light-background')
 
     useEffect(() => {
       if (myRef?.current) {
@@ -201,7 +196,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                 >
                   {rightFreezeConfig ? (
                     rightFreezeConfig.map((elem, i) => {
-                      if (i < 4)
+                      if (i < 4) {
                         return (
                           <li
                             key={elem.id}
@@ -215,6 +210,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                             {elem.setRow(item)}
                           </li>
                         )
+                      }
                     })
                   ) : (
                     <li
