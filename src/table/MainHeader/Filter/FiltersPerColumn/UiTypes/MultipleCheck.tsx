@@ -81,10 +81,16 @@ const MultipleCheck = ({
       }
       setCheckedItemsLocaly(newValues)
     } else {
+      let newValues = value.map((item: string) => {
+        if (item === 'null') {
+          return null
+        }
+        return item
+      })
       if (!isOpened) {
-        handleSelectItems(value, false)
+        handleSelectItems(newValues, false)
       }
-      setCheckedItemsLocaly(value)
+      setCheckedItemsLocaly(newValues)
     }
   }
   const handleOpenList = () => {
