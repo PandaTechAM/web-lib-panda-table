@@ -82,7 +82,7 @@ const MultipleCheck = ({
       setCheckedItemsLocaly(newValues)
     } else {
       let newValues = value.map((item: string) => {
-        if (item === 'null') {
+        if (item === 'Blank') {
           return null
         }
         return item
