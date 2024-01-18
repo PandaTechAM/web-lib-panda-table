@@ -162,7 +162,7 @@ const MultipleCheck = ({
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
       let newValues: string[] = filterTypeing.CheckedItems
-      if (item.ColumnType !== 'Text') {
+      if (item.ColumnType !== 'Text' && item.ColumnType !== 'Base36Id') {
         newValues = filterTypeing.CheckedItems.map((item: number) => item + '')
       }
       setcheckedItems(newValues)
