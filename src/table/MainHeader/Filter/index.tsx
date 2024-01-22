@@ -5,6 +5,7 @@ import NativePopup from '../../../components/NativePopup/NativePopup'
 import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
 import APIFilter from './FiltersPerColumn/apiFilter'
 import LocalFilter from './FiltersPerColumn/localFiltering'
+import { debounce } from '../../../utils/debounce'
 
 interface IFilter {
   data?: any
@@ -70,8 +71,13 @@ const Filter = ({
       }
     }
 
-    option.Search ? getFilteredDataWithDebounce?.(updatedRow, ColumnName) : getFilter?.(updatedRow, ColumnName)
+    updatedRow.length ? getFilteredDataWithDebounce?.(updatedRow, ColumnName) : getFilter?.(updatedRow, ColumnName)
   }
+
+  const debouncedChangeHandler = debounce(
+    (option: ItemFields, ColumnName?: string) => getFilteredData(option, ColumnName),
+    300,
+  )
 
   return (
     <div>
@@ -144,7 +150,7 @@ const Filter = ({
                                 checkIsDisabled={checkIsDisabled}
                                 filteredColumn={filterDataForRequest}
                                 perColumnListForFilters={perColumnListForFilters}
-                                getFilteredData={getFilteredData}
+                                getFilteredData={debouncedChangeHandler}
                                 filterColumns={filterColumns}
                               />
                             </Fragment>
