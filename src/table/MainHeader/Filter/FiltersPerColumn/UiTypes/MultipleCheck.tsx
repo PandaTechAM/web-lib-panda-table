@@ -75,7 +75,12 @@ const MultipleCheck = ({
   const selectValue = (event: SyntheticEvent<Element, Event>, value: any[]) => {
     setcheckedItems(value)
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType)) {
-      let newValues: number[] = value.map((item: string) => +item)
+      let newValues: (number | null)[] = value.map((item: string) => {
+        if (item === 'Blank') {
+          return null
+        }
+        return +item
+      })
       if (!isOpened) {
         handleSelectItems(newValues, false)
       }
@@ -87,6 +92,7 @@ const MultipleCheck = ({
         }
         return item
       })
+
       if (!isOpened) {
         handleSelectItems(newValues, false)
       }
