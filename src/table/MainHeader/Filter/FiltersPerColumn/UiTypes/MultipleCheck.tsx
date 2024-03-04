@@ -76,7 +76,7 @@ const MultipleCheck = ({
     setcheckedItems(value)
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType)) {
       let newValues: (number | null)[] = value.map((item: string) => {
-        if (item === 'Blank') {
+        if (item === null) {
           return null
         }
         return +item
