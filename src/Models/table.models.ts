@@ -42,7 +42,7 @@ export interface IProps<T extends Object> {
   isLoadedData?: boolean
   translations?: Record<string, any>
   hasOrdering?: boolean
-  getRow?(option: any): void
+  getRow?(option: T): void
   RightSideSelfAction?: (option: any) => void
   handleEdit?: (option: T) => void
   handleDelete?: (option: T[] | string) => void
@@ -127,6 +127,7 @@ export interface IFreezeProps<T extends Object> {
   columnMinWidth?: number
   item: T
   freezedLeftSideColor?: string
+  isLoadedData?: boolean
 }
 
 export interface IComparisonType {
@@ -143,7 +144,7 @@ export interface IColumnConfig<T extends Object> {
   id?: string | number
   columnName?: number | string
   title: any
-  setRow: (data?: T) => any
+  setRow: (data?: T, isLoadingData?: boolean) => any
   footer?: any
   isVisible: boolean
   customStyle?: Object

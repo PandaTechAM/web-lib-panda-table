@@ -29,6 +29,7 @@ interface IRows<T extends Object> {
   rowsFreezeAction?: boolean
   selectedType: string
   hasOrdering?: boolean
+  isLoadedData?: boolean
   getRow?: (option: any) => void
   RightSideSelfAction?: (option: number | string) => void
   freezeRow(e: any, option: number): void
@@ -65,6 +66,7 @@ const Rows = forwardRef<any, IRows<any>>(
       rowsFreezeAction,
       selectedType,
       hasOrdering,
+      isLoadedData,
       getRow,
       RightSideSelfAction,
       freezeRow,
@@ -100,6 +102,7 @@ const Rows = forwardRef<any, IRows<any>>(
             headerHeight={headerHeight}
             selectedType={selectedType}
             hasOrdering={hasOrdering}
+            isLoadedData={isLoadedData}
             getRow={getRow}
             RightSideSelfAction={RightSideSelfAction}
             getRowForDropdown={getRowForDropdown}
@@ -133,6 +136,7 @@ const Rows = forwardRef<any, IRows<any>>(
           rowsFreezeAction={rowsFreezeAction}
           selectedType={selectedType}
           hasOrdering={hasOrdering}
+          isLoadedData={isLoadedData}
           getRow={getRow}
           RightSideSelfAction={RightSideSelfAction}
           freezeRow={freezeRow}

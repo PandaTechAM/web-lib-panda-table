@@ -30,6 +30,7 @@ interface IFreezedRows<T extends Object> {
   headerHeight?: number
   selectedType: string
   hasOrdering?: boolean
+  isLoadedData?: boolean
   getRow?(options: any): any
   RightSideSelfAction?: (option: number | string) => void
   getRowForDropdown(option: number): void
@@ -59,6 +60,7 @@ const FreezedRows = <T extends Object>({
   headerHeight,
   selectedType,
   hasOrdering,
+  isLoadedData,
   getRow,
   RightSideSelfAction,
   getRowForDropdown,
@@ -176,6 +178,7 @@ const FreezedRows = <T extends Object>({
                             columnMinWidth={columnMinWidth}
                             item={item}
                             freezedLeftSideColor={freezedLeftSideColor}
+                            isLoadedData={isLoadedData}
                           />
                         </ul>
                         {/* MAIN */}
@@ -206,7 +209,7 @@ const FreezedRows = <T extends Object>({
                                   }}
                                   key={column.id}
                                 >
-                                  {column.setRow(item)}
+                                  {column.setRow(item, isLoadedData)}
                                 </li>
                               )
                             )

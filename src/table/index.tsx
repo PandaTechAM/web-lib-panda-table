@@ -167,6 +167,7 @@ function Table<T extends Object>({
                 rowsFreezeAction={rowsFreezeAction}
                 selectedType={selectedType}
                 hasOrdering={hasOrdering}
+                isLoadedData={isLoadedData}
                 getRow={getRow}
                 RightSideSelfAction={RightSideSelfAction}
                 freezeRow={freezeRow}

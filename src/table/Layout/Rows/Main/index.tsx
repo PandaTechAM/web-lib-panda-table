@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { IColumnConfig, IColumnConfigStructure, ILinksList, IrowActions } from '../../../../Models/table.models'
 import { forwardRef } from 'react'
 import FreezedRightColumns from '../FreezedRigthColumns'
@@ -6,6 +6,7 @@ import Checkbox from '../../../../components/checkbox'
 import FreezedLeftColumns from '../FreezedLeftColumns'
 import { CheckedItems, StructureConfig } from '../../../../Models/table.enum'
 import HoveredRow from '../HoveredRow'
+import { Skeleton } from '@mui/material'
 interface IMainRows<T extends Object> {
   unFreezedRows: T[]
   freezedRows: T[]
@@ -30,6 +31,7 @@ interface IMainRows<T extends Object> {
   rowsFreezeAction?: boolean
   selectedType: string
   hasOrdering?: boolean
+  isLoadedData?: boolean
   getRow?(options: any): void
   RightSideSelfAction?: (option: number | string) => void
   freezeRow(e: any, option: number): void
@@ -62,6 +64,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       rowsFreezeAction,
       selectedType,
       hasOrdering,
+      isLoadedData,
       getRow,
       RightSideSelfAction,
       freezeRow,
@@ -137,6 +140,7 @@ const MainRows = forwardRef<any, IMainRows<any>>(
                     columnMinWidth={columnMinWidth}
                     item={item}
                     freezedLeftSideColor={freezedLeftSideColor}
+                    isLoadedData={isLoadedData}
                   />
                 ) : null}
               </ul>
@@ -167,18 +171,21 @@ const MainRows = forwardRef<any, IMainRows<any>>(
 
                 {/* Columns */}
                 {columnsConfigStructure[StructureConfig.Main].items.map((column: IColumnConfig<any>) => {
+                  console.log(column.width, columnMinWidth)
+
                   return (
-                    column.isVisible && (
-                      <li
-                        key={column.id}
-                        style={{
-                          ...column.customStyle,
-                          maxWidth: (column.width || columnMinWidth) + 'px',
-                        }}
-                      >
-                        {column.setRow(item)}
-                      </li>
-                    )
+                    <Fragment key={column.id}>
+                      {column.isVisible ? (
+                        <li
+                          style={{
+                            ...column.customStyle,
+                            maxWidth: (column.width || columnMinWidth) + 'px',
+                          }}
+                        >
+                          {column.setRow(item, isLoadedData)}
+                        </li>
+                      ) : null}
+                    </Fragment>
                   )
                 })}
               </ul>
