@@ -7,6 +7,7 @@ import PopUp from '../../../components/popUp'
 import ColumnsSvgIcon from '../../../svgIcons/ColumnsSvgIcon'
 import GroupSvgIcons from '../../../svgIcons/GroupSvgIcon'
 import './style.scss'
+import { Button } from '@mui/material'
 const onDragEnd = <T extends Object>(
   result: DropResult,
   columnsConfigStructure: IColumnConfigStructure<T>,
@@ -321,15 +322,17 @@ function ColumnsCustomizer<T extends Object>({
             </DragDropContext>
           </div>
           {storeStructure && (
-            <div className='G-confirm-button'>
-              <button
-                onClick={() => {
+            <div style={{ padding: 8 }}>
+              <Button
+                size='medium'
+                fullWidth
+                onClick={(e) => {
                   storeStructure()
                   handleClose?.()
                 }}
               >
                 {translations?.customizationAction.actionButtonName || 'Save'}
-              </button>
+              </Button>
             </div>
           )}
         </div>

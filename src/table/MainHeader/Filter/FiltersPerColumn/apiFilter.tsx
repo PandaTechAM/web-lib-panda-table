@@ -367,7 +367,6 @@ const APIFilter = ({
               disableClearable
               disabled={isDisabled}
               size={inputSizes}
-              onInputChange={() => console.log()}
               sx={{ ':hover': { cursor: 'pointer' } }}
               id='controllable-states-demo'
               options={typeElem.FilterTypes}

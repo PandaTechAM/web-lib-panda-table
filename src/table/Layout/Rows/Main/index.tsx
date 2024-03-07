@@ -171,8 +171,6 @@ const MainRows = forwardRef<any, IMainRows<any>>(
 
                 {/* Columns */}
                 {columnsConfigStructure[StructureConfig.Main].items.map((column: IColumnConfig<any>) => {
-                  console.log(column.width, columnMinWidth)
-
                   return (
                     <Fragment key={column.id}>
                       {column.isVisible ? (
