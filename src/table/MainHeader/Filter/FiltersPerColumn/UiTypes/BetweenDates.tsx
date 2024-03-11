@@ -17,7 +17,7 @@ interface IPickDate {
   isDisabled: boolean
   inputSizes: inputSize
   translations?: Record<string, any>
-  setCoulmnName: (name: string) => void
+  setColumnName: (name: string) => void
   checkIsDisabled: (option: boolean) => void
   handleChangeRange(from: any, to: any): void
 }
@@ -35,7 +35,7 @@ const BetweenDates = ({
   inputSizes,
   translations,
   checkIsDisabled,
-  setCoulmnName,
+  setColumnName,
   handleChangeRange,
 }: IPickDate) => {
   const [val, setVal] = useState<IDateValues>({
@@ -94,10 +94,10 @@ const BetweenDates = ({
     setVal(stateValues)
   }
   const unFocused = () => {
-    !isDisabled && setCoulmnName('')
+    !isDisabled && setColumnName('')
   }
   const handleOpenModal = (type: string) => {
-    setCoulmnName(item.ColumnName)
+    setColumnName(item.ColumnName)
     if (type === 'from') {
       setIsOpenedModal((prev) => {
         return { ...prev, from: true }
@@ -109,7 +109,7 @@ const BetweenDates = ({
     }
   }
   const handleClose = (type: string) => {
-    !isDisabled && setCoulmnName('')
+    !isDisabled && setColumnName('')
     if (type === 'from') {
       setIsOpenedModal((prev) => {
         return { ...prev, from: false }
@@ -122,7 +122,7 @@ const BetweenDates = ({
   }
 
   useEffect(() => {
-    setCoulmnName(item.ColumnName)
+    setColumnName(item.ColumnName)
   }, [val])
   useEffect(() => {
     if (item.ColumnName === filterTypeing.PropertyName) {
@@ -130,7 +130,6 @@ const BetweenDates = ({
       setVal({ from: newValues[0], to: newValues[1] })
     }
   }, [filterTypeing])
-  const options = { timeZone: 'Asia/Yerevan' }
 
   return (
     <div
@@ -182,7 +181,6 @@ const BetweenDates = ({
         <div style={{ width: '48%' }} tabIndex={1} onBlur={unFocused} className={errMessage.to ? 'date-picker' : ''}>
           <DateTimePicker
             ampm={false}
-            // ampmInClock={false}
             label={translations?.filterAction.to || 'To'}
             slotProps={{ textField: { size: inputSizes } }}
             onOpen={() => handleOpenModal('to')}

@@ -212,7 +212,7 @@ function Table<T extends Object>({
           ) : null}
         </>
       </div>
-      <div className='G-justify-end G-align-center' style={{ padding: 10 }}>
+      <div className='G-justify-end G-align-center' style={{ padding: '30px 10px 10px 10px' }}>
         {data.length && currentPage && pagesTotalCount && selectedPageSizeId ? (
           <MainFooter
             translations={translations}

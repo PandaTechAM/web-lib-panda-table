@@ -19,7 +19,7 @@ interface IModalForSingleField {
   translations?: Record<string, any>
   filterColumns?: IComparisonType[]
   handleSelectItems: (option: any[], isClosed: boolean) => void
-  setCoulmnName: (name: string) => void
+  setColumnName: (name: string) => void
   handleChangeValue: (value: string) => void
   setCheckedItemsLocaly(options: any[]): void
   handleChangePagePerFilterField?(): void
@@ -41,7 +41,7 @@ const ModalForSingleField = ({
   filterColumns,
   handleChangeValue,
   handleSelectItems,
-  setCoulmnName,
+  setColumnName,
   setCheckedItemsLocaly,
   handleChangePagePerFilterField,
 }: IModalForSingleField) => {
@@ -52,13 +52,13 @@ const ModalForSingleField = ({
   const [isLoadedMoreData, setIsLoadedMoreData] = useState<boolean>(false)
   const handleOpenList = () => {
     if (!isDisabled) {
-      setCoulmnName(item.ColumnName)
+      setColumnName(item.ColumnName)
       setIsOpened(true)
       // handleSelectItems([], true);
     }
   }
   const handleCloseList = () => {
-    setCoulmnName('')
+    setColumnName('')
     setVal('')
     setIsLoadedMoreData(false)
     setIsOpened(false)

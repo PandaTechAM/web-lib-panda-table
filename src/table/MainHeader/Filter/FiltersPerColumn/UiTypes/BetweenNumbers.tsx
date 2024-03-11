@@ -13,7 +13,7 @@ interface IBetweenNumbers {
   inputSizes: inputSize
   translations?: Record<string, any>
   checkIsDisabled: (option: boolean) => void
-  setCoulmnName: (name: string) => void
+  setColumnName: (name: string) => void
   handleChangeRange(value: string, type: string): void
 }
 const BetweenNumbers = ({
@@ -25,7 +25,7 @@ const BetweenNumbers = ({
   isDisabled,
   inputSizes,
   translations,
-  setCoulmnName,
+  setColumnName,
   handleChangeRange,
   checkIsDisabled,
 }: IBetweenNumbers) => {
@@ -73,7 +73,7 @@ const BetweenNumbers = ({
         return { ...prev, isEnabledTo: true }
       })
     }
-    setCoulmnName(item.ColumnName)
+    setColumnName(item.ColumnName)
   }
   const getError = (messageLength: number) => {
     if (!isEnabled.isEnabledFrom && !isEnabled.isEnabledTo && messageLength) {
@@ -101,7 +101,7 @@ const BetweenNumbers = ({
 
   useEffect(() => {
     if (!isEnabled.isEnabledFrom && !isEnabled.isEnabledTo && errMessage.from == '' && errMessage.to == '') {
-      setCoulmnName('')
+      setColumnName('')
     }
   }, [isEnabled])
 

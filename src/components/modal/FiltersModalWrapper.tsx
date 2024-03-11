@@ -8,7 +8,7 @@ interface IModal {
   columnsSizes: string
   advancedSettings: boolean
   filterTypeing: ItemFields
-  setCoulmnName: (name: string) => void
+  setColumnName: (name: string) => void
 }
 
 const FiltersModalWrapper = ({
@@ -17,7 +17,7 @@ const FiltersModalWrapper = ({
   columnsSizes,
   advancedSettings,
   filterTypeing,
-  setCoulmnName,
+  setColumnName,
 }: IModal) => {
   const [open, setOpen] = useState(false)
 
@@ -26,7 +26,7 @@ const FiltersModalWrapper = ({
   }
   const handleClose = () => {
     setOpen(false)
-    setCoulmnName('')
+    setColumnName('')
   }
   const childrenWithProps = cloneElement(children, {
     handleClose,

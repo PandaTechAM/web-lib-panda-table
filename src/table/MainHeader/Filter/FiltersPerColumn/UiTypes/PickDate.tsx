@@ -15,7 +15,7 @@ interface IPickDate {
   isDisabled: boolean
   inputSizes: inputSize
   translations?: Record<string, any>
-  setCoulmnName: (name: string) => void
+  setColumnName: (name: string) => void
   handleChangeValue(option: any): void
 }
 const PickDate = ({
@@ -27,7 +27,7 @@ const PickDate = ({
   isDisabled,
   inputSizes,
   translations,
-  setCoulmnName,
+  setColumnName,
   handleChangeValue,
 }: IPickDate) => {
   const [errMessage, setErrMessage] = useState('')
@@ -37,7 +37,7 @@ const PickDate = ({
     } else {
       setErrMessage('')
 
-      setCoulmnName(item.ColumnName)
+      setColumnName(item.ColumnName)
       handleChangeValue(
         newValue
           ? isNaN(newValue.valueOf() as number)
@@ -48,13 +48,13 @@ const PickDate = ({
     }
   }
   const handleOpenList = () => {
-    setCoulmnName(item.ColumnName)
+    setColumnName(item.ColumnName)
   }
   const handleClose = () => {
-    !isDisabled && setCoulmnName('')
+    !isDisabled && setColumnName('')
   }
   const unFocused = () => {
-    !isDisabled && setCoulmnName('')
+    !isDisabled && setColumnName('')
   }
   return (
     <div className={item.IsBold ? 'IsBold' : ''} style={{ width: advancedSettings ? columnsSizes : '100%' }}>

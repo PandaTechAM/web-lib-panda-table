@@ -186,9 +186,13 @@ function ColumnsCustomizer<T extends Object>({
     })
     setVisibleColumnsCount(count)
   }, [columnsConfigStructure])
+
   return (
     <div className='G-costumize-wrapper'>
       <PopUp
+        style={{
+          textTransform: 'capitalize',
+        }}
         ActiveIcon={ColumnsSvgIcon}
         open={open}
         anchorEl={anchorEl}

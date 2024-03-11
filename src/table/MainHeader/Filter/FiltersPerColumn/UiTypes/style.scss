@@ -28,7 +28,7 @@
     }
     
 }
-.MuiPaper-root .css-1g7nc1s-MuiPickersLayout-root{
+.MuiPaper-root .MuiPickersLayout-root{
     display: flex;
     flex-direction: column-reverse;
     
@@ -39,3 +39,15 @@
         border-color: red !important;
     }
 }
+
+// li.MuiButtonBase-root :after {
+//         content: "";
+//         background: red;
+//         width: 20px;
+//         aspect-ratio: 1/1;
+//         height: auto !important;
+//     }
+
+// .css-lk6str-MuiList-root-MuiMultiSectionDigitalClockSection-root:after {
+//     height: auto !important;
+// }

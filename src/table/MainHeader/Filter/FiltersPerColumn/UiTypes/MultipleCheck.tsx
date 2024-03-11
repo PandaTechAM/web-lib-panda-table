@@ -20,7 +20,7 @@ interface IMultipleCHeck {
   filterColumns?: IComparisonType[]
   setCheckedItemsLocaly(options: any[], closeCallBack?: () => void): void
   handleSelectItems: (option: any[], isClosed: boolean, fieldName?: string) => void
-  setCoulmnName: (name: string) => void
+  setColumnName: (name: string) => void
   handleChangeValue: (value: string) => void
   handleChangePagePerFilterField?(): void
 }
@@ -40,7 +40,7 @@ const MultipleCheck = ({
   filterColumns,
   setCheckedItemsLocaly,
   handleSelectItems,
-  setCoulmnName,
+  setColumnName,
   handleChangePagePerFilterField,
   handleChangeValue,
 }: IMultipleCHeck) => {
@@ -102,12 +102,12 @@ const MultipleCheck = ({
   const handleOpenList = () => {
     if (!isDisabled) {
       item.ColumnType !== 'EncryptedData' && handleSelectItems([], true, item.ColumnName)
-      setCoulmnName(item.ColumnName)
+      setColumnName(item.ColumnName)
       setIsOpened(true)
     }
   }
   const handleCloseList = () => {
-    setCoulmnName('')
+    setColumnName('')
     setVal('')
     setIsOpened(false)
 

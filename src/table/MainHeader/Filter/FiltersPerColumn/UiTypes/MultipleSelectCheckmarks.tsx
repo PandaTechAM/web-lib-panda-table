@@ -22,7 +22,7 @@ interface IMultipleSelectCheckmarks {
   translations?: Record<string, any>
   setCheckedItemsLocaly(options: any[]): void
   handleSelectItems: (option: any[], isClosed: boolean) => void
-  setCoulmnName: (name: string) => void
+  setColumnName: (name: string) => void
 }
 
 const MultipleSelectCheckmarks = ({
@@ -39,7 +39,7 @@ const MultipleSelectCheckmarks = ({
   filterColumns,
   setCheckedItemsLocaly,
   handleSelectItems,
-  setCoulmnName,
+  setColumnName,
 }: IMultipleSelectCheckmarks) => {
   const [checkedItems, setCheckedItems] = useState<any[]>([])
   const [val, setVal] = useState('')
@@ -54,13 +54,13 @@ const MultipleSelectCheckmarks = ({
 
   const handleOpenList = () => {
     if (!isDisabled) {
-      setCoulmnName(item.ColumnName)
+      setColumnName(item.ColumnName)
       handleSelectItems([], true)
       setIsOpened(true)
     }
   }
   const handleCloseList = () => {
-    setCoulmnName('')
+    setColumnName('')
     handleSelectItems(checkedItems, false)
     setIsOpened(false)
   }

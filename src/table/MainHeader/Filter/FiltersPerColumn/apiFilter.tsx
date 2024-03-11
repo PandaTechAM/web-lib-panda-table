@@ -55,7 +55,7 @@ const APIFilter = ({
     ComparisonType: typeElem.DefaultSearchType,
     TypeForUi: typeElem.DefaultSearchType,
   })
-  const [columnName, setCoulmnName] = useState<string>('')
+  const [columnName, setColumnName] = useState<string>('')
 
   const handleChangeValue = (value: any) => {
     let columnFilter: ItemFields = {
@@ -161,7 +161,7 @@ const APIFilter = ({
     getFilteredData?.(columnFilter, '')
   }
   const selectedColumnName = (options: string) => {
-    setCoulmnName(options)
+    setColumnName(options)
   }
   const handleSelectItems = (checkedItems: any[], isOpened: boolean, fieldName?: string) => {
     if (isOpened) {
@@ -191,7 +191,7 @@ const APIFilter = ({
       }
       if (filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) !== 2) {
         filteredData.ComparisonType =
-          item.ColumnType === 'Tags' && filteredData.ComparisonType === 'Contains'
+          item.ColumnType === 'Tags' && filteredData.ComparisonType === 'In'
             ? filteredData.ComparisonType
             : checkedItems.length > 1
             ? 'In'
@@ -240,7 +240,7 @@ const APIFilter = ({
             handleChangePagePerFilterField={handleChangePagePerFilterField}
             handleChangeValue={handleChangeValue}
             handleSelectItems={handleSelectItems}
-            setCoulmnName={selectedColumnName}
+            setColumnName={selectedColumnName}
           />
         )
       case 2:
@@ -261,7 +261,7 @@ const APIFilter = ({
             setCheckedItemsLocaly={setCheckedItemsLocaly}
             handleChangeValue={handleChangeValue}
             handleSelectItems={handleSelectItems}
-            setCoulmnName={selectedColumnName}
+            setColumnName={selectedColumnName}
             handleChangePagePerFilterField={handleChangePagePerFilterField}
           />
         )
@@ -277,7 +277,7 @@ const APIFilter = ({
             inputSizes={inputSizes}
             translations={translations}
             checkIsDisabled={checkIsDisabled}
-            setCoulmnName={setCoulmnName}
+            setColumnName={setColumnName}
             handleChangeRange={handleChangeRange}
           />
         )
@@ -296,7 +296,7 @@ const APIFilter = ({
             translations={translations}
             filterColumns={filterColumns}
             setCheckedItemsLocaly={setCheckedItemsLocaly}
-            setCoulmnName={selectedColumnName}
+            setColumnName={selectedColumnName}
             handleSelectItems={handleSelectItems}
           />
         )
@@ -312,7 +312,7 @@ const APIFilter = ({
             inputSizes={inputSizes}
             translations={translations}
             checkIsDisabled={checkIsDisabled}
-            setCoulmnName={setCoulmnName}
+            setColumnName={setColumnName}
             handleChangeRange={handleChangeRange}
           />
         )
@@ -327,7 +327,7 @@ const APIFilter = ({
             isDisabled={isDisabled}
             inputSizes={inputSizes}
             translations={translations}
-            setCoulmnName={setCoulmnName}
+            setColumnName={setColumnName}
             handleChangeValue={handleChangeValueSingleInputs}
           />
         )
@@ -344,7 +344,7 @@ const APIFilter = ({
   }, [filteredColumn])
 
   return (
-    <div style={{ marginTop: 8 }}>
+    <li style={{ marginTop: 8 }}>
       {filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 5 ||
       filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 3 ? (
         <div style={{ margin: '15px 0 10px 0', fontSize: 14 }}>{item.key || item.ColumnName}</div>
@@ -397,7 +397,7 @@ const APIFilter = ({
         ) : null}
         {uiTypes()}
       </div>
-    </div>
+    </li>
   )
 }
 

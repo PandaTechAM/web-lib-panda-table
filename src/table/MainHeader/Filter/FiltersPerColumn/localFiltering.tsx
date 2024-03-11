@@ -30,7 +30,7 @@ const LocalFilter = ({
 
     CheckedItems: [],
   })
-  const [columnName, setCoulmnName] = useState<string>('')
+  const [columnName, setColumnName] = useState<string>('')
 
   const selectComparisonType = (event: any) => {
     setFilter((prev) => {
@@ -62,7 +62,7 @@ const LocalFilter = ({
   }, [filter])
 
   return (
-    <div className='G-justify-between' style={{ marginTop: 16 }}>
+    <li className='G-justify-between' style={{ marginTop: 16 }}>
       <Autocomplete
         multiple
         limitTags={advancedSettings ? 1 : 2}
@@ -71,10 +71,10 @@ const LocalFilter = ({
         disableCloseOnSelect
         onOpen={() => {
           getColumnName?.(item.ColumnName)
-          setCoulmnName(item.ColumnName)
+          setColumnName(item.ColumnName)
         }}
         onClose={() => {
-          setCoulmnName('')
+          setColumnName('')
           getColumnName?.('')
         }}
         onInputChange={(event, newInputValue) => {
@@ -113,7 +113,7 @@ const LocalFilter = ({
         )}
         sx={{ width: '100%' }}
       />
-    </div>
+    </li>
   )
 }
 

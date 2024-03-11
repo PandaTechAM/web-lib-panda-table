@@ -24,8 +24,8 @@
     }
     .G-left-column{
         border-radius: 4px;
-        padding: 4px;
-        width: 250px;
+        // padding: 4px;
+        min-width: 250px;
         aspect-ratio: 1/1;
         overflow-y: auto;
         .G-item-name{
