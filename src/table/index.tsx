@@ -43,7 +43,7 @@ function Table<T extends Object>({
   filterColumns,
   filtersTypes,
   rowsFreezeAction,
-  EmptyDataIcon,
+  emptyDataIcon,
   perColumnTotalCount,
   selectedPageSizeId,
   hasFilters,
@@ -123,7 +123,7 @@ function Table<T extends Object>({
         />
       ) : null}
 
-      <div className='G-data-table G-data-scroll'>
+      <div className='G-data-table G-data-scroll' style={{ overflow: data.length ? 'auto' : 'hidden' }}>
         <>
           <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
             <Header
@@ -180,8 +180,8 @@ function Table<T extends Object>({
             </div>
           ) : (
             <div className='G-empty-data-component'>
-              {EmptyDataIcon ? (
-                <EmptyDataIcon className='G-empty-data-icon' />
+              {emptyDataIcon ? (
+                <img className='G-empty-data-icon' src={emptyDataIcon} alt='Empty data' height={300} />
               ) : (
                 <div className='G-center' style={{ height: 500 }}>
                   {translations?.emptyData || 'Empty data'}

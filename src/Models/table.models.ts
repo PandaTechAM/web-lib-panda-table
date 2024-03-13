@@ -34,7 +34,7 @@ export interface IProps<T extends Object> {
   rowsFreezeAction?: boolean
   isEnableAggregates?: boolean
   aggregates?: any
-  EmptyDataIcon?: React.MemoExoticComponent<(props: React.SVGProps<SVGSVGElement>) => JSX.Element>
+  emptyDataIcon?: string
   perColumnTotalCount?: number
   hoverdRowPosition?: number
   selectedPageSizeId?: ISelected
