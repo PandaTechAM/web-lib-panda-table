@@ -217,10 +217,10 @@ function ColumnsCustomizer<T extends Object>({
           </div>
           <div className='G-flex G-columns-header'>
             <div className='G-flex' style={{ width: '50%' }}>
-              Columns
+              {translations?.customizationAction.columns || 'Columns'}
             </div>
             <div className='G-flex' style={{ width: '50%' }}>
-              Pinned Columns
+              {translations?.customizationAction.pinnedColumns || 'Pinned Columns'}
             </div>
           </div>
           <div

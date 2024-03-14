@@ -12,8 +12,7 @@
 
 .G-data-table {
   color         : #161515;
-  // overflow-y    : auto;
-  // overflow-x    : auto;
+  // overflow   : auto;
   max-height    : calc(100vh - 220px);
   border-radius : 5px;
   margin        : 0;
@@ -34,7 +33,7 @@
 }
 
 .G-data-scroll {
-  display : grid;
+  // display : grid;
 .G-header{
   display: flex; 
   position: sticky; 
@@ -307,11 +306,10 @@
 }
 
 .G-empty-data-component{
-  padding:calc(((100vh - 350px) - 292px)/2);
-  .G-empty-data-icon{
-    position: sticky;
-    left: calc(100vw - 70%);
-  }
+padding:  64px 0;
+// margin-inline: auto;
+display: flex;
+justify-content: center;
 }
 
 
