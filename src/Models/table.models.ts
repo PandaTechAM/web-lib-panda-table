@@ -3,7 +3,7 @@ export interface IProps<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
   columnsHeaderStructure: IColumnHeaderStructure
   rightFreezeConfig?: IColumnConfig<T>[]
-  perColumnListForFilters?: string[]
+  perColumnListForFilters?: (string | ISelect)[]
   links?: ILinksList[]
   rowActions?: IrowActions[]
   pageSizeStructure?: IPageSizes[]
@@ -53,7 +53,7 @@ export interface IProps<T extends Object> {
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
   getFilteredData?(option: ItemFields[], ColumnName?: string): void
   getFilteredDataWithDebounce?(option: ItemFields[], ColumnName?: string): void
-  getFilteredDataForTable?(): void
+  getFilteredDataForTable?(option: ItemFields[]): void
   handleChangePagePerFilterField?(): void
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element
@@ -197,4 +197,9 @@ export interface IFiltersFieldsRef {
   totalCount?: number
   currentPage?: number
   columnName?: string
+}
+
+export interface ISelect {
+  id: number
+  name: string
 }

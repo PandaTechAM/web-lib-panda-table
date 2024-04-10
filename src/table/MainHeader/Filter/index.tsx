@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 import React, { Fragment, memo, useState } from 'react'
-import { IComparisonType, IFiltersTypes, ItemFields } from '../../../Models/table.models'
+import { IComparisonType, IFiltersTypes, ISelect, ItemFields } from '../../../Models/table.models'
 import NativePopup from '../../../components/NativePopup/NativePopup'
 import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
 import APIFilter from './FiltersPerColumn/apiFilter'
@@ -10,7 +10,7 @@ import { debounce } from '../../../utils/debounce'
 interface IFilter {
   data?: any
   filterColumns?: IComparisonType[]
-  perColumnListForFilters?: string[]
+  perColumnListForFilters?: (string | ISelect)[]
   filterDataForRequest?: ItemFields[]
   isLocalFilter?: boolean
   isLoadingFilters?: boolean
@@ -19,7 +19,7 @@ interface IFilter {
   translations?: Record<string, any>
   getFilter?(option: ItemFields[], ColumnName?: string): void
   getFilteredDataWithDebounce?(option: ItemFields[], ColumnName?: string): void
-  getFilteredDataForTable?(): void
+  getFilteredDataForTable?(option: ItemFields[]): void
   handleChangePagePerFilterField?(): void
 }
 
@@ -41,7 +41,7 @@ const Filter = ({
   const [advancedSettings, setAdvancedSettings] = useState<boolean>(false)
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [open, setIsOpen] = useState<boolean>(false)
-
+  const [collectedData, setCollectedData] = useState<ItemFields[]>([])
   const handleOpen = () => {
     setIsOpen(true)
   }
@@ -51,6 +51,11 @@ const Filter = ({
   const handleCancel = () => {
     getFilter?.([], 'ClearAll')
     setIsOpen(false)
+    getFilteredDataForTable?.([])
+  }
+  const handleSave = () => {
+    getFilteredDataForTable?.(collectedData)
+    handleClose()
   }
   const checkIsDisabled = (option: boolean) => {
     setIsDisabled(option)
@@ -70,14 +75,15 @@ const Filter = ({
         updatedRow.push(option)
       }
     }
-
     updatedRow.length ? getFilteredDataWithDebounce?.(updatedRow, ColumnName) : getFilter?.(updatedRow, ColumnName)
+    setCollectedData(updatedRow)
   }
 
-  const debouncedChangeHandler = debounce(
-    (option: ItemFields, ColumnName?: string) => getFilteredData(option, ColumnName),
-    300,
-  )
+  // const debouncedChangeHandler = debounce(
+  //   (option: ItemFields, ColumnName?: string) =>
+  //     getFilteredData(option, ColumnName),
+  //   300
+  // );
 
   return (
     <div>
@@ -114,54 +120,57 @@ const Filter = ({
               padding: '0px 32px 10px 32px',
             }}
           >
-            {isLocalFilter ? (
-              data.map((item: any, index: any) => {
-                return (
-                  <LocalFilter
-                    advancedSettings={advancedSettings}
-                    key={item}
-                    item={item}
-                    data={data}
-                    filteredColumn={filterDataForRequest}
-                    perColumnListForFilters={perColumnListForFilters}
-                    getFilteredData={getFilteredData}
-                  />
-                )
-              })
-            ) : filterColumns?.length ? (
-              filterColumns.map((item: IComparisonType, index) => {
-                return (
-                  <Fragment key={index}>
-                    {filtersTypes?.length &&
-                      filtersTypes.map((type: any) => {
-                        if (item.ColumnType === type.ColumnType)
-                          return (
-                            <Fragment key={item.ColumnName}>
-                              <APIFilter
-                                isLoadingFilters={isLoadingFilters}
-                                advancedSettings={advancedSettings}
-                                item={item}
-                                data={data}
-                                typeElem={type}
-                                isDisabled={isDisabled}
-                                perColumnTotalCount={perColumnTotalCount}
-                                translations={translations}
-                                handleChangePagePerFilterField={handleChangePagePerFilterField}
-                                checkIsDisabled={checkIsDisabled}
-                                filteredColumn={filterDataForRequest}
-                                perColumnListForFilters={perColumnListForFilters}
-                                getFilteredData={debouncedChangeHandler}
-                                filterColumns={filterColumns}
-                              />
-                            </Fragment>
-                          )
-                      })}
-                  </Fragment>
-                )
-              })
-            ) : (
-              <div>{translations?.filterAction.emptyColumns || 'Add Filters Columns'}</div>
-            )}
+            {
+              // isLocalFilter ? (
+              //   data.map((item: any, index: any) => {
+              //     return (
+              //       <LocalFilter
+              //         advancedSettings={advancedSettings}
+              //         key={item}
+              //         item={item}
+              //         data={data}
+              //         filteredColumn={filterDataForRequest}
+              //         perColumnListForFilters={perColumnListForFilters}
+              //         getFilteredData={getFilteredData}
+              //       />
+              //     );
+              //   })
+              // ) :
+              filterColumns?.length ? (
+                filterColumns.map((item: IComparisonType, index) => {
+                  return (
+                    <Fragment key={index}>
+                      {filtersTypes?.length &&
+                        filtersTypes.map((type: any) => {
+                          if (item.ColumnType === type.ColumnType)
+                            return (
+                              <Fragment key={item.ColumnName}>
+                                <APIFilter
+                                  isLoadingFilters={isLoadingFilters}
+                                  advancedSettings={advancedSettings}
+                                  item={item}
+                                  data={data}
+                                  typeElem={type}
+                                  isDisabled={isDisabled}
+                                  perColumnTotalCount={perColumnTotalCount}
+                                  translations={translations}
+                                  handleChangePagePerFilterField={handleChangePagePerFilterField}
+                                  checkIsDisabled={checkIsDisabled}
+                                  filteredColumn={filterDataForRequest}
+                                  perColumnListForFilters={perColumnListForFilters}
+                                  getFilteredData={getFilteredData}
+                                  filterColumns={filterColumns}
+                                />
+                              </Fragment>
+                            )
+                        })}
+                    </Fragment>
+                  )
+                })
+              ) : (
+                <div>{translations?.filterAction.emptyColumns || 'Add Filters Columns'}</div>
+              )
+            }
           </ul>
           <div style={{ padding: 20, borderTop: '1px  solid #F3F6F8' }}>
             <Button
@@ -171,10 +180,7 @@ const Filter = ({
               style={{
                 marginBottom: 8,
               }}
-              onClick={(e) => {
-                getFilteredDataForTable?.()
-                handleClose()
-              }}
+              onClick={handleSave}
             >
               {translations?.filterAction.confirmFilters || 'Submit'}
             </Button>

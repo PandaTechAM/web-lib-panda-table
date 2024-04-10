@@ -23,6 +23,8 @@ export const translations = {
     info: 'Visible columns are ',
     actionButtonName: 'Save as default',
     validationMessage: 'The maximum number of freezing columns can be 3',
+    columns: 'hexukColumns',
+    pinnedColumns: 'pinnedColumns',
   },
   deleteAction: 'Delete',
   editAction: 'Edit',

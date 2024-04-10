@@ -77,7 +77,7 @@ const filterUiHelperMap = {
     LessThanOrEqual: 6,
   },
   Tags: {
-    Contains: 1,
+    In: 4,
   },
 } as const
 

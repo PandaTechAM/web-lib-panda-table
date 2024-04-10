@@ -3,16 +3,13 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
 import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
 import { inputSize } from '../../../../../Models/table.enum'
-import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
-const selectStyles = {
-  display: 'flex',
-  alignItems: 'center', // Center vertically
-}
+import { IComparisonType, ISelect, ItemFields } from '../../../../../Models/table.models'
+
 interface IMultipleSelectCheckmarks {
   item: IComparisonType
   columnsSizes: string
   isDisabled: boolean
-  perColumnListForFilters?: string[]
+  perColumnListForFilters?: ISelect[]
   columnName: string
   isLoadingFilters?: boolean
   advancedSettings: boolean
@@ -41,11 +38,11 @@ const MultipleSelectCheckmarks = ({
   handleSelectItems,
   setColumnName,
 }: IMultipleSelectCheckmarks) => {
-  const [checkedItems, setCheckedItems] = useState<any[]>([])
+  const [checkedItems, setCheckedItems] = useState<ISelect[]>([])
   const [val, setVal] = useState('')
   const [isOpened, setIsOpened] = useState<boolean>(false)
   const handleChange = (value: any) => {
-    setCheckedItems(typeof value === 'string' ? value.split(',') : value)
+    setCheckedItems(value)
     if (!isOpened) {
       handleSelectItems(value, false)
     }
@@ -67,10 +64,7 @@ const MultipleSelectCheckmarks = ({
   const isEmpty = item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length
 
   const getLabel = (option: any) => {
-    if (typeof option == 'boolean') {
-      return option + ''
-    }
-    return option
+    return option.name
   }
 
   useEffect(() => {
@@ -128,12 +122,12 @@ const MultipleSelectCheckmarks = ({
                     display: 'flex',
                     justifyContent: 'space-between',
                     minHeight: 40,
-                    borderBottom: option === '' ? '1px solid silver' : 'none',
+                    borderBottom: option.name === '' ? '1px solid silver' : 'none',
                   }}
                 >
                   {item.ColumnName === columnName && isLoadingFilters ? null : (
                     <>
-                      <div>{typeof option === 'boolean' ? String(option) : option}</div>
+                      <div>{option.name}</div>
                       <Checkbox style={{ marginRight: 8 }} checked={selected} />
                     </>
                   )}

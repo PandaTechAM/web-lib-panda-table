@@ -1,6 +1,7 @@
 import React from 'react'
 import { PickersActionBarProps } from '@mui/x-date-pickers'
 import './style.scss'
+import { Button, Grid } from '@mui/material'
 const ActionList = (props: PickersActionBarProps) => {
   const { onClear, onSetToday, className } = props
   const actions = [
@@ -10,13 +11,24 @@ const ActionList = (props: PickersActionBarProps) => {
 
   return (
     <div className={`G-justify-between P-date-actions-component ${className}`}>
-      <div className='G-flex P-actions-component'>
+      <Grid container gap={1} className='G-flex P-actions-component'>
         {actions.map(({ text, method }) => (
-          <div key={text} onClick={method} className='G-center'>
-            {text}
-          </div>
+          <Grid item xs={4} key={text}>
+            <Button
+              size='medium'
+              variant={text === 'Clear' ? 'outlined' : 'text'}
+              fullWidth
+              style={{
+                textTransform: 'capitalize',
+              }}
+              key={text}
+              onClick={method}
+            >
+              {text}
+            </Button>
+          </Grid>
         ))}
-      </div>
+      </Grid>
       <div className='G-center P-time-component'>
         <div>Hour</div>
         <div>Min</div>

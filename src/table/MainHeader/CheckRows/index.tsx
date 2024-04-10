@@ -8,7 +8,7 @@ interface ICheckRows<T extends Object> {
   data: T[]
   checkedRows: T[]
   translations?: Record<string, any>
-  handleCheckAll(): void
+  handleCheckAll(data?: T[]): void
   unCheck(): void
   checkAllDataFromDb(): void
   handleClose?: () => void
@@ -31,8 +31,7 @@ const CheckRows = <T extends Object>({
   handleCheckAll,
   unCheck,
   checkAllDataFromDb,
-}: // handleClose,
-ICheckRows<T>) => {
+}: ICheckRows<T>) => {
   const [selectedItem, setSelectedItem] = useState(2)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -55,8 +54,8 @@ ICheckRows<T>) => {
     {
       id: 2,
       title: translations?.checkbox.allVisible || CheckedItems.SELECTED_VISIBLE,
-      action: () => {
-        handleCheckAll()
+      action: (data?: T[]) => {
+        handleCheckAll(data)
         setSelectedItem(1)
       },
     },
@@ -74,7 +73,7 @@ ICheckRows<T>) => {
     <>
       <div className='G-align-center G-check-all-component'>
         <Checkbox
-          isCheck={data.length === checkedRows.length}
+          isCheck={data.length === checkedRows.length && checkedRows.length > 1}
           onClick={
             data.length === checkedRows.length
               ? () => {
@@ -104,7 +103,7 @@ ICheckRows<T>) => {
                 <li
                   key={item.id}
                   onClick={() => {
-                    item.action()
+                    item.action(data)
                     handleClose()
                   }}
                   style={{

@@ -7,7 +7,7 @@ import PopUp from '../../../components/popUp'
 import ColumnsSvgIcon from '../../../svgIcons/ColumnsSvgIcon'
 import GroupSvgIcons from '../../../svgIcons/GroupSvgIcon'
 import './style.scss'
-import { Button } from '@mui/material'
+import { Button, Tooltip } from '@mui/material'
 const onDragEnd = <T extends Object>(
   result: DropResult,
   columnsConfigStructure: IColumnConfigStructure<T>,
@@ -306,7 +306,9 @@ function ColumnsCustomizer<T extends Object>({
                                             />
                                           </div>
                                           <div className='G-item-name'>
-                                            <div>{item.columnName}</div>
+                                            <div className='G-item-name-text' title={String(item.columnName)}>
+                                              {item.columnName}
+                                            </div>
                                           </div>
                                         </div>
                                       )

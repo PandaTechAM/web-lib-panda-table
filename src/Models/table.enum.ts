@@ -23,4 +23,5 @@ export enum filterTypesUiHelper {
   'GreaterThanOrEqual' = '>=',
   'LessThan' = '<',
   'LessThanOrEqual' = '<=',
+  'In' = 'In',
 }

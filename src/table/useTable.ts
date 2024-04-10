@@ -7,7 +7,7 @@ const useTable = <T extends Object>(
   RightSideSelfAction?: (options: any) => void,
 ) => {
   const [freezedRows, setFreezedRows] = useState<T[]>([])
-  const [unFreezedRows, setUnFreezedRows] = useState<any[]>(data)
+  const [unFreezedRows, setUnFreezedRows] = useState<T[]>(data)
   const [checkedRows, setCheckedRows] = useState<T[]>([])
   const [checkedLink, setCheckedLink] = useState<T>()
   const [selectedType, setSelectedType] = useState<string>('none')
@@ -44,23 +44,23 @@ const useTable = <T extends Object>(
       }
     })
   }
-  const handleCheckAll = useCallback(() => {
-    const allRows: T[] = freezedRows.concat(unFreezedRows)
-    setCheckedRows(allRows)
-    setSelectedType(CheckedItems.SELECTED_VISIBLE)
-  }, [unFreezedRows, freezedRows, checkedRows, selectedType])
-
+  const handleCheckAll = useCallback(
+    (data?: T[]) => {
+      const allRows: T[] = freezedRows.concat(data || unFreezedRows)
+      setCheckedRows(allRows)
+      setSelectedType(CheckedItems.SELECTED_VISIBLE)
+    },
+    [data, unFreezedRows, freezedRows, checkedRows, selectedType],
+  )
   const unCheck = useCallback(() => {
     setCheckedRows([])
     setSelectedType(CheckedItems.NONE)
   }, [])
-
   const checkAllDataFromDb = useCallback(() => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
     setCheckedRows(allRows)
     setSelectedType(CheckedItems.SELECTED_ALL)
   }, [unFreezedRows, freezedRows, checkedRows, selectedType])
-
   const handleCheck = (id: number) => {
     const allRows: T[] = freezedRows.concat(unFreezedRows)
     let unchecked = false

@@ -7,6 +7,7 @@ import {
   IComparisonType,
   IFiltersTypes,
   IPageSizes,
+  ISelect,
   ISelected,
   ItemFields,
 } from '../../Models/table.models'
@@ -27,7 +28,6 @@ interface IActionsHeader<T extends Object> {
   checkedRows: T[]
   draggableColumns?: boolean
   filterColumns?: IComparisonType[]
-  perColumnListForFilters?: string[]
   filterDataForRequest?: ItemFields[]
   isLoadingFilters?: boolean
   filtersTypes?: IFiltersTypes[]
@@ -35,8 +35,9 @@ interface IActionsHeader<T extends Object> {
   perColumnTotalCount?: number
   hasFilters?: boolean
   translations?: Record<string, any>
+  perColumnListForFilters?: (string | ISelect)[]
   setColumnTotalStructures?(option: IColumnTotalStructure): void
-  handleCheckAll(): void
+  handleCheckAll(data?: T[]): void
   setColumnsConfigStructure?: (option: IColumnConfigStructure<T>) => void
   setColumnHeaderStructure?: (options: IColumnHeaderStructure) => void
   handleChangePage?(option: number): void
@@ -48,7 +49,7 @@ interface IActionsHeader<T extends Object> {
   checkAllDataFromDb(): void
   getFilteredData?(options: any): void
   getFilteredDataWithDebounce?(options: any): void
-  getFilteredDataForTable?(): void
+  getFilteredDataForTable?(option: ItemFields[]): void
   handleChangePagePerFilterField?(): void
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element

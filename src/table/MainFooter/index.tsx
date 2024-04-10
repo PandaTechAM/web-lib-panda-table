@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { IPageSizes, ISelected } from '../../Models/table.models'
 import Pagination from '../../components/pagination'
 import Select from '../../components/select/select'
@@ -21,13 +21,12 @@ const FooterPagination = ({
   getPageRowsCountAndCurrentPage,
 }: IFooterPagination) => {
   const [isOpenList, setOpen] = useState<boolean>(false)
-  const [currentPage, setCurrentPage] = useState<number>(currPage)
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const [selectedPage, setSelectedPage] = useState<ISelected>(selectedPageSizeId)
 
   const setIsOpenList = () => {
     setOpen((prev) => !prev)
   }
-
   const handleSelectItem = (options: IPageSizes) => {
     setSelectedPage({ id: options.id })
     setCurrentPage(1)
@@ -37,12 +36,14 @@ const FooterPagination = ({
   }
   const handleChangePage = (option: number) => {
     setCurrentPage(option)
-
     if (pageSizeStructure && selectedPage && getPageRowsCountAndCurrentPage) {
       getPageRowsCountAndCurrentPage(option, pageSizeStructure[selectedPage.id - 1])
     }
   }
 
+  useEffect(() => {
+    if (currentPage !== currPage) setCurrentPage(currPage)
+  }, [currPage])
   return (
     <>
       <div className='G-count-info'>

@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { filterTypesUiHelper, inputSize } from '../../../../Models/table.enum'
-import { IComparisonType, ItemFields } from '../../../../Models/table.models'
+import { IComparisonType, ISelect, ItemFields } from '../../../../Models/table.models'
 import { filterUiHelper } from '../../../../utils'
 import BetweenDates from './UiTypes/BetweenDates'
 import BetweenNumbers from './UiTypes/BetweenNumbers'
@@ -15,7 +15,7 @@ interface IPerField {
   data: any
   advancedSettings: boolean
   typeElem: any
-  perColumnListForFilters?: string[]
+  perColumnListForFilters?: (string | ISelect)[]
   filteredColumn?: ItemFields[]
   isLoadingFilters?: boolean
   isDisabled: boolean
@@ -249,7 +249,7 @@ const APIFilter = ({
             item={item}
             columnsSizes={columnsSizes}
             advancedSettings={advancedSettings}
-            perColumnListForFilters={perColumnListForFilters}
+            perColumnListForFilters={perColumnListForFilters as string[]}
             columnName={columnName}
             filterTypeing={filterTypeing}
             isLoadingFilters={isLoadingFilters}
@@ -286,7 +286,7 @@ const APIFilter = ({
           <MultipleSelectCheckmarks
             item={item}
             columnsSizes={columnsSizes}
-            perColumnListForFilters={perColumnListForFilters}
+            perColumnListForFilters={perColumnListForFilters as ISelect[]}
             columnName={columnName}
             isLoadingFilters={isLoadingFilters}
             isDisabled={isDisabled}

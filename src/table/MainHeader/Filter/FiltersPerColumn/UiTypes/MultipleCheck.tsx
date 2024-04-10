@@ -209,7 +209,15 @@ const MultipleCheck = ({
         noOptionsText={'Empty Data'}
         getOptionLabel={getLabel}
         clearOnEscape
-        value={checkedItems}
+        value={checkedItems.map((item) => {
+          if (item === '') {
+            return translations?.filterAction.emptyString || 'Empty'
+          } else if (item === 'null' || item === null) {
+            return translations?.filterAction.blank || 'Blank'
+          } else {
+            return item
+          }
+        })}
         inputValue={val}
         isOptionEqualToValue={isEqual}
         freeSolo
