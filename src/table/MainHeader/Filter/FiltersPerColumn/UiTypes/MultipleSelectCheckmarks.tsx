@@ -1,6 +1,5 @@
 //@ts-nocheck
-import { Autocomplete, CircularProgress, TextField } from '@mui/material'
-import Checkbox from '@mui/material/Checkbox'
+import { Autocomplete, CircularProgress, TextField, Checkbox } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
 import { inputSize } from '../../../../../Models/table.enum'
@@ -40,9 +39,8 @@ const MultipleSelectCheckmarks = ({
   setColumnName,
 }: IMultipleSelectCheckmarks) => {
   const [checkedItems, setCheckedItems] = useState<ISelect[]>([])
-  const [val, setVal] = useState('')
   const [isOpened, setIsOpened] = useState<boolean>(false)
-  const handleChange = (value: any) => {
+  const handleChange = (value: ISelect[]) => {
     setCheckedItems(value)
     if (!isOpened) {
       handleSelectItems(value, false)
@@ -99,16 +97,15 @@ const MultipleSelectCheckmarks = ({
           multiple
           limitTags={advancedSettings ? 1 : 2}
           id='multiple-limit-tags'
-          value={checkedItems}
-          inputValue={val}
           options={perColumnListForFilters ?? []}
+          value={checkedItems}
           onChange={(event: SyntheticEvent<Element, Event>, value: any[]) => {
             handleChange(value)
           }}
-          onInputChange={(event, newInputValue) => setVal(newInputValue)}
           getOptionLabel={getLabel}
           onOpen={handleOpenList}
           onClose={handleCloseList}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           disableCloseOnSelect
           size={inputSizes}
           disabled={isDisabled && item.ColumnName !== columnName}
@@ -129,10 +126,7 @@ const MultipleSelectCheckmarks = ({
                   {item.ColumnName === columnName && isLoadingFilters ? null : (
                     <>
                       <div>{option.name}</div>
-                      <Checkbox
-                        style={{ marginRight: 8 }}
-                        checked={checkedItems.findIndex((item) => item.id === option.id) !== -1}
-                      />
+                      <Checkbox style={{ marginRight: 8 }} checked={selected} />
                     </>
                   )}
                 </li>

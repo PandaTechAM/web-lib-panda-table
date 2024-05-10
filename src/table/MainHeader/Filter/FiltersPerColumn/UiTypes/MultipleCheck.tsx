@@ -1,6 +1,5 @@
 import { Autocomplete, Button, Checkbox, CircularProgress, Skeleton, TextField } from '@mui/material'
 import React, { SyntheticEvent, memo, useEffect, useRef, useState } from 'react'
-// import Checkbox from "../../../../components/checkbox";
 import { inputSize } from '../../../../../Models/table.enum'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
@@ -48,6 +47,7 @@ const MultipleCheck = ({
   const [isOpened, setIsOpened] = useState<boolean>(false)
   const [val, setVal] = useState<string>('')
   const [errMessage, setErrMessage] = useState<string>('')
+
   const checkList = () => {
     return item.ColumnName === columnName && perColumnListForFilters && errMessage === ''
       ? perColumnListForFilters.includes(null)
@@ -55,7 +55,6 @@ const MultipleCheck = ({
         : perColumnListForFilters
       : []
   }
-
   const onChange = (event: React.SyntheticEvent<Element, Event>, newInputValue?: any) => {
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType) && !containsOnlyNumbers(newInputValue)) {
       setErrMessage(translations?.filterAction.onlyNumbers || 'only numbers')
@@ -130,6 +129,9 @@ const MultipleCheck = ({
   }
   const isEqual = (option: any, value: any) => {
     let numericValue = value
+    if (option === '' || option === null || option === 'null') {
+      return true
+    }
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType) && typeof value === 'string') {
       numericValue = +value
     }
@@ -194,8 +196,8 @@ const MultipleCheck = ({
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, )', // Adjust the overlay color and opacity
-            zIndex: 999, // Adjust the zIndex to make sure it's on top
+            backgroundColor: 'rgba(0, 0, 0, )',
+            zIndex: 999,
           }}
         ></div>
       ) : null}
