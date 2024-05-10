@@ -1,5 +1,5 @@
 import { Autocomplete, Button, Checkbox, CircularProgress, Skeleton, TextField } from '@mui/material'
-import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
+import React, { SyntheticEvent, memo, useEffect, useRef, useState } from 'react'
 // import Checkbox from "../../../../components/checkbox";
 import { inputSize } from '../../../../../Models/table.enum'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
@@ -48,7 +48,6 @@ const MultipleCheck = ({
   const [isOpened, setIsOpened] = useState<boolean>(false)
   const [val, setVal] = useState<string>('')
   const [errMessage, setErrMessage] = useState<string>('')
-
   const checkList = () => {
     return item.ColumnName === columnName && perColumnListForFilters && errMessage === ''
       ? perColumnListForFilters.includes(null)
@@ -56,7 +55,17 @@ const MultipleCheck = ({
         : perColumnListForFilters
       : []
   }
-  const onChange = (newInputValue: any) => {
+  const backSpaceRef = useRef(false)
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    // console.log(event?.key, val);
+    // if (event?.key === "Backspace" && !val) {
+    //   backSpaceRef.current = true;
+    // } else if (event?.key !== "Backspace") {
+    //   console.log(123456);
+    //   backSpaceRef.current = false;
+    // }
+  }
+  const onChange = (event: React.SyntheticEvent<Element, Event>, newInputValue?: any) => {
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType) && !containsOnlyNumbers(newInputValue)) {
       setErrMessage(translations?.filterAction.onlyNumbers || 'only numbers')
       setVal(newInputValue)
@@ -76,7 +85,7 @@ const MultipleCheck = ({
     setcheckedItems(value)
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType)) {
       let newValues: (number | null)[] = value.map((item: string) => {
-        if (item === null) {
+        if (item === translations?.filterAction.blank || item === null) {
           return null
         }
         return +item
@@ -87,7 +96,7 @@ const MultipleCheck = ({
       setCheckedItemsLocaly(newValues)
     } else {
       let newValues = value.map((item: string) => {
-        if (item === 'Blank') {
+        if (item === translations?.filterAction.blank) {
           return null
         }
         return item
@@ -110,9 +119,10 @@ const MultipleCheck = ({
     setColumnName('')
     setVal('')
     setIsOpened(false)
-
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType)) {
-      const newValues: number[] = checkedItems.map((item: string) => +item)
+      const newValues: number[] = checkedItems.map((item: string) =>
+        item !== null || item !== translations?.filterAction.blank ? +item : item,
+      )
       handleSelectItems(newValues, false, item.ColumnName)
     } else {
       handleSelectItems(checkedItems, false, item.ColumnName)
@@ -199,12 +209,13 @@ const MultipleCheck = ({
         multiple
         limitTags={advancedSettings ? 1 : 2}
         id='multiple-limit-tags'
+        onKeyUp={(event) => handleKeyUp(event)}
         options={checkList()}
         disabled={isDisabled && item.ColumnName !== columnName}
         disableCloseOnSelect
         onOpen={handleOpenList}
         onClose={handleCloseList}
-        onInputChange={(event, newInputValue) => onChange(newInputValue)}
+        onInputChange={(event, newInputValue) => onChange(event, newInputValue)}
         onChange={selectValue}
         noOptionsText={'Empty Data'}
         getOptionLabel={getLabel}
@@ -234,7 +245,7 @@ const MultipleCheck = ({
                   display: 'flex',
                   justifyContent: 'space-between',
                   minHeight: 40,
-                  borderBottom: option === '' ? '1px solid silver' : 'none',
+                  borderBottom: option === '' || option === 'null' || option === 'Blank' ? '1px solid silver' : 'none',
                 }}
               >
                 {item.ColumnName === columnName && isLoadingFilters ? (

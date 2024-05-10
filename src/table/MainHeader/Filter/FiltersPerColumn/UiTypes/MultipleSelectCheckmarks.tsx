@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Autocomplete, CircularProgress, TextField } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
@@ -38,6 +39,9 @@ const MultipleSelectCheckmarks = ({
   handleSelectItems,
   setColumnName,
 }: IMultipleSelectCheckmarks) => {
+  const newList = perColumnListForFilters?.map((item, index) => {
+    return { id: index, name: item }
+  })
   const [checkedItems, setCheckedItems] = useState<ISelect[]>([])
   const [val, setVal] = useState('')
   const [isOpened, setIsOpened] = useState<boolean>(false)
@@ -100,7 +104,7 @@ const MultipleSelectCheckmarks = ({
           id='multiple-limit-tags'
           value={checkedItems}
           inputValue={val}
-          options={perColumnListForFilters ?? []}
+          options={newList ?? []}
           onChange={(event: SyntheticEvent<Element, Event>, value: any[]) => {
             handleChange(value)
           }}
@@ -128,7 +132,10 @@ const MultipleSelectCheckmarks = ({
                   {item.ColumnName === columnName && isLoadingFilters ? null : (
                     <>
                       <div>{option.name}</div>
-                      <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                      <Checkbox
+                        style={{ marginRight: 8 }}
+                        checked={checkedItems.findIndex((item) => item.id === option.id) !== -1}
+                      />
                     </>
                   )}
                 </li>

@@ -63,6 +63,7 @@ const BetweenNumbers = ({
       return { ...prev, [name]: value }
     })
   }
+
   const handleOpenList = (type: string) => {
     if (type === 'from') {
       setIsEnabled((prev) => {
@@ -111,7 +112,7 @@ const BetweenNumbers = ({
         id='outlined-basic'
         label={translations?.filterAction.from || 'From'}
         variant='outlined'
-        name={translations?.filterAction.from}
+        name={'from'}
         onBlur={() => {
           setIsEnabled((prev) => {
             return { ...prev, isEnabledFrom: false }
@@ -133,7 +134,7 @@ const BetweenNumbers = ({
         id='outlined-basic'
         label={translations?.filterAction.to || 'To'}
         variant='outlined'
-        name={translations?.filterAction.from}
+        name={'to'}
         size={inputSizes}
         onBlur={() => {
           setIsEnabled((prev) => {

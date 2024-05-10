@@ -11,7 +11,6 @@ const useTable = <T extends Object>(
   const [checkedRows, setCheckedRows] = useState<T[]>([])
   const [checkedLink, setCheckedLink] = useState<T>()
   const [selectedType, setSelectedType] = useState<string>('none')
-
   const freezeRow = (e: any, indexx: number) => {
     e.stopPropagation()
     //@ts-ignore

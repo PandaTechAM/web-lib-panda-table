@@ -27,6 +27,15 @@ const filterUiHelperMap = {
     LessThanOrEqual: 2,
     Between: 3,
   },
+  NumericText: {
+    Equal: 1,
+    NotEqual: 1,
+    GreaterThan: 2,
+    LessThan: 2,
+    GreaterThanOrEqual: 2,
+    LessThanOrEqual: 2,
+    Between: 3,
+  },
   Currency: {
     Equal: 1,
     NotEqual: 1,
@@ -99,43 +108,43 @@ export const validateRangeColumns = (
   let isValid = false
   const columnError = { from: '', to: '' }
   if (from == undefined && to !== undefined && item.ColumnType === 'Date') {
-    columnError.from = 'is empty'
+    columnError.from = errMessages.isEmpty
     isValid = true
   }
   if (from !== undefined && to === undefined && item.ColumnType === 'Date') {
-    columnError.to = 'is empty'
+    columnError.to = errMessages.isEmpty
     isValid = true
   }
   if (item.ColumnType !== 'Date' && !containsOnlyNumbers(from) && from !== '') {
-    columnError.from = 'only numbers'
+    columnError.from = errMessages.onlyNumbers
     isValid = true
   }
   if (item.ColumnType !== 'Date' && !containsOnlyNumbers(to) && to !== '') {
-    columnError.to = 'only numbers'
+    columnError.to = errMessages.onlyNumbers
     isValid = true
   }
   if (from !== null && isNaN(from.valueOf() as number) && item.ColumnType === 'Date') {
-    columnError.from = 'invalid'
+    columnError.from = errMessages.invalid
     isValid = true
   }
   if (to !== null && isNaN(to.valueOf() as number) && item.ColumnType === 'Date') {
-    columnError.to = 'invalid'
+    columnError.to = errMessages.invalid
     isValid = true
   }
   if (from > to && item.ColumnType === 'Date') {
-    columnError.to = 'errr'
+    columnError.to = errMessages.err
     isValid = true
   }
   if (item.ColumnType !== 'Date' && +from > +to) {
-    columnError.to = 'errr'
+    columnError.to = errMessages.err
     isValid = true
   }
   if (from == '' && to !== '') {
-    columnError.from = 'is empty'
+    columnError.from = errMessages.isEmpty
     isValid = true
   }
   if (from !== '' && to === '') {
-    columnError.to = 'is empty'
+    columnError.to = errMessages.isEmpty
     isValid = true
   }
 

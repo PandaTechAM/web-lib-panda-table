@@ -192,7 +192,7 @@ const ModalForSingleField = ({
                     </div>
                   ) : (
                     <>
-                      <div>{option === '' ? 'Empty' : option}</div>
+                      <div>{option === '' ? translations?.filterAction.emptyString : option}</div>
                     </>
                   )}
                 </li>

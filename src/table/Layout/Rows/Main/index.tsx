@@ -6,7 +6,6 @@ import Checkbox from '../../../../components/checkbox'
 import FreezedLeftColumns from '../FreezedLeftColumns'
 import { CheckedItems, StructureConfig } from '../../../../Models/table.enum'
 import HoveredRow from '../HoveredRow'
-import { Skeleton } from '@mui/material'
 interface IMainRows<T extends Object> {
   unFreezedRows: T[]
   freezedRows: T[]

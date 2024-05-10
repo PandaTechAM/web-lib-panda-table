@@ -47,11 +47,13 @@ const Filter = ({
   }
   const handleClose = () => {
     setIsOpen(false)
+    setIsDisabled(false)
   }
   const handleCancel = () => {
     getFilter?.([], 'ClearAll')
     setIsOpen(false)
     getFilteredDataForTable?.([])
+    setIsDisabled(false)
   }
   const handleSave = () => {
     getFilteredDataForTable?.(collectedData)
@@ -75,7 +77,11 @@ const Filter = ({
         updatedRow.push(option)
       }
     }
-    updatedRow.length ? getFilteredDataWithDebounce?.(updatedRow, ColumnName) : getFilter?.(updatedRow, ColumnName)
+
+    getFilteredDataWithDebounce?.(updatedRow, ColumnName)
+    // updatedRow.length
+    //   ? getFilteredDataWithDebounce?.(updatedRow, ColumnName)
+    //   : getFilter?.(updatedRow, ColumnName);
     setCollectedData(updatedRow)
   }
 

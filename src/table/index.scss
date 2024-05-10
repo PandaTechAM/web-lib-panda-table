@@ -33,7 +33,15 @@
 }
 
 .G-data-scroll {
-  // display : grid;
+  overflow:  auto;
+  &.G-empty-data-wrapper{
+    overflow: hidden;
+    position: relative;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 .G-header{
   display: flex; 
   position: sticky; 
@@ -306,11 +314,11 @@
 }
 
 .G-empty-data-component{
-padding:  64px 0;
-// margin-inline: auto;
-display: flex;
-justify-content: center;
+
 }
 
 
 
+#table-wrapper{
+position: relative;
+}

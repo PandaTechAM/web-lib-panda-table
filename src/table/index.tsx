@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useRef } from 'react'
 import { IProps } from '../Models/table.models'
 import '../assets/style/index.scss'
 import Footer from './Layout/Footer'
@@ -87,7 +87,21 @@ function Table<T extends Object>({
   } = useTable(data, freezedRightSide, RightSideSelfAction)
 
   return (
-    <div>
+    <div id='table-wrapper'>
+      {data.length !== 0 ? null : (
+        <img
+          style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            top: '25%',
+          }}
+          className='G-empty-data-icon'
+          src={emptyDataIcon}
+          alt='Empty data'
+          width={500}
+        />
+      )}
       {multipleCheck || draggableColumns || hasFilters || getDownloadType ? (
         <MainHeader
           columnsConfigStructure={columnsConfigStructure}
@@ -123,7 +137,7 @@ function Table<T extends Object>({
         />
       ) : null}
 
-      <div className='G-data-table G-data-scroll' style={{ overflow: data.length ? 'auto' : 'hidden' }}>
+      <div className={`G-data-table G-data-scroll ${!data.length ? 'G-empty-data-wrapper' : ''}`}>
         <>
           <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
             <Header
@@ -141,54 +155,67 @@ function Table<T extends Object>({
               handleSorting={handleSorting}
             />
           </div>
-          {data.length ? (
-            <div className='G-data-table-body'>
-              <Rows
-                freezedRows={freezedRows}
-                rightFreezeConfig={rightFreezeConfig}
-                columnsConfigStructure={columnsConfigStructure}
-                multipleCheck={multipleCheck}
-                columnMinWidth={columnMinWidth}
-                rowActions={rowActions}
-                FreezeIcon={FreezeIcon}
-                links={links}
-                checkedLink={checkedLink}
-                unFreezedRows={unFreezedRows}
-                isHoveredRow={isHoveredRow}
-                freezedLeftSideColor={freezedLeftSideColor}
-                freezedRightSideColor={freezedRightSideColor}
-                freezedRightSideVisible={freezedRightSideVisible}
-                freezedRightSide={freezedRightSide}
-                isStickyFirstColumn={isStickyFirstColumn}
-                RightSideIcon={RightSideIcon}
-                leftFreezedColumnWidth={leftFreezedColumnWidth}
-                rightFreezedColumnWidth={rightFreezedColumnWidth}
-                headerHeight={headerHeight}
-                rowsFreezeAction={rowsFreezeAction}
-                selectedType={selectedType}
-                hasOrdering={hasOrdering}
-                isLoadedData={isLoadedData}
-                getRow={getRow}
-                RightSideSelfAction={RightSideSelfAction}
-                freezeRow={freezeRow}
-                getRowForDropdown={getRowForDropdown}
-                isCheckedRows={isCheckedRows}
-                handleCheck={handleCheck}
-                dragDropFreezeRow={dragDropFreezeRow}
-                unFreezeRow={unFreezeRow}
-              />
-            </div>
-          ) : (
-            <div className='G-empty-data-component'>
-              {emptyDataIcon ? (
-                <img className='G-empty-data-icon' src={emptyDataIcon} alt='Empty data' height={300} />
-              ) : (
-                <div className='G-center' style={{ height: 500 }}>
-                  {translations?.emptyData || 'Empty data'}
-                </div>
-              )}
-            </div>
-          )}
+          {
+            data.length ? (
+              <div className='G-data-table-body'>
+                <Rows
+                  freezedRows={freezedRows}
+                  rightFreezeConfig={rightFreezeConfig}
+                  columnsConfigStructure={columnsConfigStructure}
+                  multipleCheck={multipleCheck}
+                  columnMinWidth={columnMinWidth}
+                  rowActions={rowActions}
+                  FreezeIcon={FreezeIcon}
+                  links={links}
+                  checkedLink={checkedLink}
+                  unFreezedRows={unFreezedRows}
+                  isHoveredRow={isHoveredRow}
+                  freezedLeftSideColor={freezedLeftSideColor}
+                  freezedRightSideColor={freezedRightSideColor}
+                  freezedRightSideVisible={freezedRightSideVisible}
+                  freezedRightSide={freezedRightSide}
+                  isStickyFirstColumn={isStickyFirstColumn}
+                  RightSideIcon={RightSideIcon}
+                  leftFreezedColumnWidth={leftFreezedColumnWidth}
+                  rightFreezedColumnWidth={rightFreezedColumnWidth}
+                  headerHeight={headerHeight}
+                  rowsFreezeAction={rowsFreezeAction}
+                  selectedType={selectedType}
+                  hasOrdering={hasOrdering}
+                  isLoadedData={isLoadedData}
+                  getRow={getRow}
+                  RightSideSelfAction={RightSideSelfAction}
+                  freezeRow={freezeRow}
+                  getRowForDropdown={getRowForDropdown}
+                  isCheckedRows={isCheckedRows}
+                  handleCheck={handleCheck}
+                  dragDropFreezeRow={dragDropFreezeRow}
+                  unFreezeRow={unFreezeRow}
+                />
+              </div>
+            ) : null
+            // <div
+            //   style={{
+            //     position: "sticky",
+
+            //     left: setNoDataImageStyles() + "px",
+            //   }}
+            //   className="G-empty-data-component"
+            // >
+            //   {emptyDataIcon ? (
+            //     <img
+            //       className="G-empty-data-icon"
+            //       src={emptyDataIcon}
+            //       alt="Empty data"
+            //       width={500}
+            //     />
+            //   ) : (
+            //     <div className="G-center">
+            //       {translations?.emptyData || "Empty data"}
+            //     </div>
+            //   )}
+            // </div>
+          }
 
           {isEnableAggregates ? (
             <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
