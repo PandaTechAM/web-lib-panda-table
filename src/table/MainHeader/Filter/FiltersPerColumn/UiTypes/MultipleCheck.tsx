@@ -55,16 +55,7 @@ const MultipleCheck = ({
         : perColumnListForFilters
       : []
   }
-  const backSpaceRef = useRef(false)
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    // console.log(event?.key, val);
-    // if (event?.key === "Backspace" && !val) {
-    //   backSpaceRef.current = true;
-    // } else if (event?.key !== "Backspace") {
-    //   console.log(123456);
-    //   backSpaceRef.current = false;
-    // }
-  }
+
   const onChange = (event: React.SyntheticEvent<Element, Event>, newInputValue?: any) => {
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType) && !containsOnlyNumbers(newInputValue)) {
       setErrMessage(translations?.filterAction.onlyNumbers || 'only numbers')
@@ -85,7 +76,7 @@ const MultipleCheck = ({
     setcheckedItems(value)
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType)) {
       let newValues: (number | null)[] = value.map((item: string) => {
-        if (item === translations?.filterAction.blank || item === null) {
+        if (item === translations?.filterAction.blank || item === 'null' || item === null) {
           return null
         }
         return +item
@@ -120,9 +111,12 @@ const MultipleCheck = ({
     setVal('')
     setIsOpened(false)
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType)) {
-      const newValues: number[] = checkedItems.map((item: string) =>
-        item !== null || item !== translations?.filterAction.blank ? +item : item,
-      )
+      const newValues: (number | null)[] = checkedItems.map((item: string) => {
+        if (item === translations?.filterAction.blank || item === 'null' || item === null) {
+          return null
+        }
+        return +item
+      })
       handleSelectItems(newValues, false, item.ColumnName)
     } else {
       handleSelectItems(checkedItems, false, item.ColumnName)
@@ -166,7 +160,7 @@ const MultipleCheck = ({
     if (option === '') {
       return translations?.filterAction.emptyString || 'Empty'
     }
-    if (option === null) {
+    if (option === null || option === 'null') {
       return translations?.filterAction.blank || 'Blank'
     }
     return option
@@ -179,7 +173,7 @@ const MultipleCheck = ({
     if (item.ColumnName === filterTypeing.PropertyName) {
       let newValues: string[] = filterTypeing.CheckedItems
       if (item.ColumnType !== 'Text' && item.ColumnType !== 'Base36Id') {
-        newValues = filterTypeing.CheckedItems.map((item: number) => item + '')
+        newValues = filterTypeing.CheckedItems.map((item: any) => item + '')
       }
       setcheckedItems(newValues)
     }
@@ -209,7 +203,6 @@ const MultipleCheck = ({
         multiple
         limitTags={advancedSettings ? 1 : 2}
         id='multiple-limit-tags'
-        onKeyUp={(event) => handleKeyUp(event)}
         options={checkList()}
         disabled={isDisabled && item.ColumnName !== columnName}
         disableCloseOnSelect

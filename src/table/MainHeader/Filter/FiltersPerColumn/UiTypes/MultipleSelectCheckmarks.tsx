@@ -39,9 +39,6 @@ const MultipleSelectCheckmarks = ({
   handleSelectItems,
   setColumnName,
 }: IMultipleSelectCheckmarks) => {
-  const newList = perColumnListForFilters?.map((item, index) => {
-    return { id: index, name: item }
-  })
   const [checkedItems, setCheckedItems] = useState<ISelect[]>([])
   const [val, setVal] = useState('')
   const [isOpened, setIsOpened] = useState<boolean>(false)
@@ -104,7 +101,7 @@ const MultipleSelectCheckmarks = ({
           id='multiple-limit-tags'
           value={checkedItems}
           inputValue={val}
-          options={newList ?? []}
+          options={perColumnListForFilters ?? []}
           onChange={(event: SyntheticEvent<Element, Event>, value: any[]) => {
             handleChange(value)
           }}
