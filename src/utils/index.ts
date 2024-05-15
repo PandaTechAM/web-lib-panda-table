@@ -86,8 +86,8 @@ const filterUiHelperMap = {
     LessThanOrEqual: 6,
   },
   Tags: {
-    In: 4,
-  },
+    Contains:4
+  }
 } as const
 
 export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {

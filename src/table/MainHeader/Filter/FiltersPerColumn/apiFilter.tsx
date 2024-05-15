@@ -191,7 +191,7 @@ const APIFilter = ({
       }
       if (filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) !== 2) {
         filteredData.ComparisonType =
-          item.ColumnType === 'Tags' && filteredData.ComparisonType === 'In'
+          item.ColumnType === 'Tags' && filteredData.ComparisonType === 'Contains'
             ? filteredData.ComparisonType
             : checkedItems.length > 1
             ? 'In'
