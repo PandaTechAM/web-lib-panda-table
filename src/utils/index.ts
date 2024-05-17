@@ -70,7 +70,7 @@ const filterUiHelperMap = {
     StartsWith: 2,
     EndsWith: 2,
     Contains: 2,
-    NotContaining: 2,
+    NotContains: 2,
   },
   Boolean: {
     Equal: 4,
