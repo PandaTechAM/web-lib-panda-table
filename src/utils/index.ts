@@ -86,6 +86,9 @@ const filterUiHelperMap = {
     LessThanOrEqual: 6,
   },
   Tags: {
+    In:4
+  },
+  TagsCollection: {
     Contains:4
   }
 } as const

@@ -129,8 +129,11 @@ const MultipleCheck = ({
   }
   const isEqual = (option: any, value: any) => {
     let numericValue = value
-    if (option === '' || option === null || option === 'null') {
-      return true
+    if (numericValue === 'Empty') {
+      numericValue = ''
+    }
+    if (numericValue === 'Blank') {
+      numericValue = null
     }
     if (['Number', 'Currency', 'Percentage'].includes(item.ColumnType) && typeof value === 'string') {
       numericValue = +value
