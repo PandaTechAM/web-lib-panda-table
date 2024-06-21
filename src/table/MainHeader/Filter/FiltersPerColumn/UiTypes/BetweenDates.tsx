@@ -12,7 +12,7 @@ interface IPickDate {
   columnsSizes: string
   item: IComparisonType
   advancedSettings: boolean
-  filterTypeing: ItemFields
+  filterTyping: ItemFields
   columnName: string
   isDisabled: boolean
   inputSizes: inputSize
@@ -30,7 +30,7 @@ const BetweenDates = ({
   item,
   advancedSettings,
   columnName,
-  filterTypeing,
+  filterTyping,
   isDisabled,
   inputSizes,
   translations,
@@ -125,11 +125,11 @@ const BetweenDates = ({
     setColumnName(item.ColumnName)
   }, [val])
   useEffect(() => {
-    if (item.ColumnName === filterTypeing.PropertyName) {
-      let newValues: string[] = filterTypeing.Values
+    if (item.ColumnName === filterTyping.PropertyName) {
+      let newValues: string[] = filterTyping.Values
       setVal({ from: newValues[0], to: newValues[1] })
     }
-  }, [filterTypeing])
+  }, [filterTyping])
 
   return (
     <div
@@ -158,12 +158,12 @@ const BetweenDates = ({
             format='YYYY-MM-DD HH:mm:ss'
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
             maxDateTime={
-              filterTypeing.Values.length ? dayjs(filterTypeing.Values[1]) : val.to !== undefined ? dayjs(val.to) : null
+              filterTyping.Values.length ? dayjs(filterTyping.Values[1]) : val.to !== undefined ? dayjs(val.to) : null
             }
             disabled={isDisabled && item.ColumnName !== columnName}
             value={
-              filterTypeing.Values.length
-                ? dayjs(filterTypeing.Values[0])
+              filterTyping.Values.length
+                ? dayjs(filterTyping.Values[0])
                 : val.from !== undefined
                 ? dayjs(val.from)
                 : null
@@ -189,15 +189,15 @@ const BetweenDates = ({
             format='YYYY-MM-DD HH:mm:ss'
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
             minDateTime={
-              filterTypeing.Values.length
-                ? dayjs(filterTypeing.Values[0])
+              filterTyping.Values.length
+                ? dayjs(filterTyping.Values[0])
                 : val.from !== undefined
                 ? dayjs(val.from)
                 : null
             }
             disabled={isDisabled && item.ColumnName !== columnName}
             value={
-              filterTypeing.Values.length ? dayjs(filterTypeing.Values[1]) : val.to !== undefined ? dayjs(val.to) : null
+              filterTyping.Values.length ? dayjs(filterTyping.Values[1]) : val.to !== undefined ? dayjs(val.to) : null
             }
             onChange={(newValue: any) => handleChangeInputValue(newValue, 'to')}
             slots={{

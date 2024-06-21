@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useMemo, useState } from 'react'
 import { IPageSizes, ISelected } from '../../Models/table.models'
 import Pagination from '../../components/pagination'
 import Select from '../../components/select/select'
@@ -41,20 +41,30 @@ const FooterPagination = ({
     }
   }
 
+  const dataInfo = useMemo(() => {
+    if (pageSizeStructure) {
+      const fromCount =
+        pagesTotalCount < currentPage * pageSizeStructure?.[selectedPage.id - 1].count
+          ? pagesTotalCount
+          : currentPage * pageSizeStructure?.[selectedPage.id - 1].count
+      const infoMessage =
+        (currentPage - 1) * pageSizeStructure?.[selectedPage.id - 1].count +
+        1 +
+        '-' +
+        fromCount +
+        (` ${translations?.pagination.from} ` || ' from ') +
+        pagesTotalCount
+      return infoMessage
+    }
+  }, [pageSizeStructure, currentPage, selectedPage.id, pagesTotalCount])
+
   useEffect(() => {
     if (currentPage !== currPage) setCurrentPage(currPage)
   }, [currPage])
+
   return (
     <>
-      <div className='G-count-info'>
-        {pageSizeStructure &&
-          (currentPage - 1) * pageSizeStructure?.[selectedPage.id - 1].count +
-            1 +
-            '-' +
-            currentPage * pageSizeStructure?.[selectedPage.id - 1].count +
-            (` ${translations?.pagination.from} ` || ' from ') +
-            pagesTotalCount}
-      </div>
+      <div className='G-count-info'>{dataInfo}</div>
       {pageSizeStructure && selectedPage ? (
         <div className='G-justify-between G-align-center'>
           <div className='G-select-text'>{translations?.pagination.show || 'Show'}</div>

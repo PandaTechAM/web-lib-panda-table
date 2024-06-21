@@ -13,7 +13,7 @@ interface IMultipleSelectCheckmarks {
   columnName: string
   isLoadingFilters?: boolean
   advancedSettings: boolean
-  filterTypeing: ItemFields
+  filterTyping: ItemFields
   inputSizes: inputSize
   filterColumns?: IComparisonType[]
   translations?: Record<string, any>
@@ -30,7 +30,7 @@ const MultipleSelectCheckmarks = ({
   columnName,
   isLoadingFilters,
   advancedSettings,
-  filterTypeing,
+  filterTyping,
   inputSizes,
   translations,
   filterColumns,
@@ -67,10 +67,10 @@ const MultipleSelectCheckmarks = ({
   }
 
   useEffect(() => {
-    if (item.ColumnName === filterTypeing.PropertyName) {
-      setCheckedItems(filterTypeing.CheckedItems)
+    if (item.ColumnName === filterTyping.PropertyName) {
+      setCheckedItems(filterTyping.CheckedItems)
     }
-  }, [filterTypeing])
+  }, [filterTyping])
 
   return (
     <div
@@ -94,9 +94,9 @@ const MultipleSelectCheckmarks = ({
       ) : null}
       <FormControl fullWidth size={inputSizes}>
         <Autocomplete
+          id={item.ColumnName}
           multiple
           limitTags={advancedSettings ? 1 : 2}
-          id='multiple-limit-tags'
           options={perColumnListForFilters ?? []}
           value={checkedItems}
           onChange={(event: SyntheticEvent<Element, Event>, value: any[]) => {
@@ -136,6 +136,7 @@ const MultipleSelectCheckmarks = ({
           renderInput={(params) => (
             <TextField
               {...params}
+              name={item.ColumnName}
               label={item.key || item.ColumnName}
               InputProps={{
                 ...params.InputProps,
@@ -176,3 +177,5 @@ const MultipleSelectCheckmarks = ({
 }
 
 export default memo(MultipleSelectCheckmarks)
+
+// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top

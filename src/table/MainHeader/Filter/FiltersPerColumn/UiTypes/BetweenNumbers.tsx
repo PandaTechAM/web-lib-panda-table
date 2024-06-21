@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { TextField } from '@mui/material'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { validateRangeColumns } from '../../../../../utils'
-import { inputSize } from '../../../../../Models/table.enum'
+import { ColumnTypeEnums, inputSize } from '../../../../../Models/table.enum'
 interface IBetweenNumbers {
   columnsSizes: string
   item: IComparisonType
   advancedSettings: boolean
-  filterTypeing: ItemFields
+  filterTyping: ItemFields
   isDisabled: boolean
   columnName: string
   inputSizes: inputSize
@@ -20,7 +20,7 @@ const BetweenNumbers = ({
   columnsSizes,
   advancedSettings,
   item,
-  filterTypeing,
+  filterTyping,
   columnName,
   isDisabled,
   inputSizes,
@@ -63,7 +63,6 @@ const BetweenNumbers = ({
       return { ...prev, [name]: value }
     })
   }
-
   const handleOpenList = (type: string) => {
     if (type === 'from') {
       setIsEnabled((prev) => {
@@ -83,7 +82,6 @@ const BetweenNumbers = ({
 
     return false
   }
-
   const errMessageText = (errMessage: string) => {
     if (!isEnabled.isEnabledFrom && !isEnabled.isEnabledTo && errMessage.length) {
       return errMessage
@@ -91,14 +89,14 @@ const BetweenNumbers = ({
     return ''
   }
   useEffect(() => {
-    if (item.ColumnName === filterTypeing.PropertyName) {
-      let newValues: string[] = filterTypeing.Values
-      if (item.ColumnType !== 'Text') {
-        newValues = filterTypeing.Values.map((item: number) => item + '')
+    if (item.ColumnName === filterTyping.PropertyName) {
+      let newValues: string[] = filterTyping.Values
+      if (item.ColumnType !== ColumnTypeEnums.Text) {
+        newValues = filterTyping.Values.map((item: number) => item + '')
       }
       setVal({ from: newValues[0], to: newValues[1] })
     }
-  }, [filterTypeing])
+  }, [filterTyping])
 
   useEffect(() => {
     if (!isEnabled.isEnabledFrom && !isEnabled.isEnabledTo && errMessage.from == '' && errMessage.to == '') {
@@ -109,7 +107,7 @@ const BetweenNumbers = ({
   return (
     <div className='G-justify-between' style={{ width: advancedSettings ? columnsSizes : '100%' }}>
       <TextField
-        id='outlined-basic'
+        id={`from-${item.ColumnName}`}
         label={translations?.filterAction.from || 'From'}
         variant='outlined'
         name={'from'}
@@ -131,7 +129,7 @@ const BetweenNumbers = ({
       />
       <div className='G-center'>-</div>
       <TextField
-        id='outlined-basic'
+        id={`to-${item.ColumnName}`}
         label={translations?.filterAction.to || 'To'}
         variant='outlined'
         name={'to'}

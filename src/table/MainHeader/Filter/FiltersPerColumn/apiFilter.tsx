@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { filterTypesUiHelper, inputSize } from '../../../../Models/table.enum'
+import { ColumnTypeEnums, filterTypesUiHelper, inputSize, numberFields } from '../../../../Models/table.enum'
 import { IComparisonType, ISelect, ItemFields } from '../../../../Models/table.models'
 import { filterUiHelper } from '../../../../utils'
 import BetweenDates from './UiTypes/BetweenDates'
@@ -9,6 +9,7 @@ import ModalForSingleField from './UiTypes/ModalSingleField'
 import MultipleCheck from './UiTypes/MultipleCheck'
 import MultipleSelectCheckmarks from './UiTypes/MultipleSelectCheckmarks'
 import PickDate from './UiTypes/PickDate'
+import TextInputField from './UiTypes/TextInputField'
 
 interface IPerField {
   item: IComparisonType
@@ -23,7 +24,7 @@ interface IPerField {
   perColumnTotalCount?: number
   translations?: Record<string, any>
   filterColumns?: IComparisonType[]
-  getFilteredData?(option: ItemFields, ColumnName?: string): void
+  getFilteredData?(option: ItemFields, ColumnName?: string, isOpened?: boolean): void
   checkIsDisabled(option: boolean): void
   handleChangePagePerFilterField?(): void
 }
@@ -47,27 +48,29 @@ const APIFilter = ({
   checkIsDisabled,
   handleChangePagePerFilterField,
 }: IPerField) => {
-  const [filterTypeing, setfilterTypeing] = useState<ItemFields>({
+  const [filterTyping, setfilterTyping] = useState<ItemFields>({
     PropertyName: item.ColumnName,
     Search: '',
     Values: [],
     CheckedItems: [],
     ComparisonType: typeElem.DefaultSearchType,
     TypeForUi: typeElem.DefaultSearchType,
+    ColumnType: item.ColumnType,
   })
   const [columnName, setColumnName] = useState<string>('')
 
   const handleChangeValue = (value: any) => {
     let columnFilter: ItemFields = {
+      ...filterTyping,
       PropertyName: item.ColumnName,
       Values: [],
-      CheckedItems: filterTypeing.CheckedItems,
       ComparisonType:
-        item.ColumnType === 'Text' && filterTypeing.TypeForUi === 'Equal' ? 'Contains' : filterTypeing.TypeForUi,
-      TypeForUi: filterTypeing.TypeForUi,
+        item.ColumnType === ColumnTypeEnums.Text && filterTyping.TypeForUi === 'Equal'
+          ? 'Contains'
+          : filterTyping.TypeForUi,
       Search: '',
     }
-    if (value === 'invalid' && item.ColumnType === 'Date') {
+    if (value === 'invalid' && item.ColumnType === ColumnTypeEnums.Date) {
       checkIsDisabled(true)
       return
     }
@@ -76,25 +79,25 @@ const APIFilter = ({
       columnFilter.Values = []
       columnFilter.Search = ''
     } else {
-      const idNumeric = ['Number', 'Percentage', 'Currency'].includes(item.ColumnType)
-
+      const idNumeric = numberFields.includes(item.ColumnType)
       columnFilter.Values[0] = idNumeric ? Number(value) : value
       columnFilter.Search = idNumeric ? Number(value) : value
     }
-    if (filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) === 2 && value === '') {
+
+    if (filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi) === 2 && value === '') {
       getFilteredData?.(columnFilter, '')
       return
     }
-    getFilteredData?.(columnFilter, filterTypeing.PropertyName)
+    getFilteredData?.(columnFilter, filterTyping.PropertyName)
   }
   const handleChangeRange = (from: string, to: string) => {
-    let columnFilter: ItemFields = filterTypeing
+    let columnFilter: ItemFields = filterTyping
     checkIsDisabled(false)
 
     if (from === '' && to === '') {
       columnFilter.Values = []
     } else {
-      if (item.ColumnType !== 'Date') {
+      if (item.ColumnType !== ColumnTypeEnums.Date) {
         let numericFrom = +from
         let numericTo = +to
         columnFilter.Values = [numericFrom, numericTo]
@@ -106,9 +109,9 @@ const APIFilter = ({
     getFilteredData?.(columnFilter, '')
   }
   const handleChangeValueSingleInputs = (value: any) => {
-    let columnFilter: ItemFields = filterTypeing
+    let columnFilter: ItemFields = filterTyping
 
-    if (value === 'invalid' && item.ColumnType === 'Date') {
+    if (value === 'invalid' && item.ColumnType === ColumnTypeEnums.Date) {
       checkIsDisabled(true)
       return
     }
@@ -117,7 +120,7 @@ const APIFilter = ({
       columnFilter.Values = []
       columnFilter.Search = ''
     } else {
-      if (['Number', 'Percentage', 'Currency'].includes(item.ColumnType)) {
+      if (numberFields.includes(item.ColumnType)) {
         let numeric = +value
         columnFilter.Values[0] = numeric
         columnFilter.Search = numeric
@@ -133,14 +136,14 @@ const APIFilter = ({
     if (filterUiHelper(typeElem.ColumnType, value) === 2) {
     }
     let columnFilter: ItemFields = {
+      ...filterTyping,
       PropertyName: item.ColumnName,
       Search: '',
       Values: [],
-      CheckedItems: filterTypeing.CheckedItems,
       ComparisonType: value,
       TypeForUi: value,
     }
-    setfilterTypeing((prev) => {
+    setfilterTyping((prev) => {
       return {
         ...prev,
         Values: [],
@@ -167,31 +170,29 @@ const APIFilter = ({
     if (isOpened) {
       getFilteredData?.(
         {
-          PropertyName: filterTypeing.PropertyName,
+          ...filterTyping,
           Values: [],
           ComparisonType: 'Contains',
           CheckedItems: [],
           Search: '',
-          TypeForUi: filterTypeing.ComparisonType,
         },
-        filterTypeing.PropertyName,
+        filterTyping.PropertyName,
+        isOpened,
       )
 
-      setfilterTypeing((prev) => {
-        return { ...prev, ComparisonType: filterTypeing.TypeForUi }
+      setfilterTyping((prev) => {
+        return { ...prev, ComparisonType: filterTyping.TypeForUi }
       })
     } else {
       let filteredData = {
-        PropertyName: filterTypeing.PropertyName,
+        ...filterTyping,
         Values: checkedItems,
-        ComparisonType: filterTypeing.TypeForUi,
         CheckedItems: checkedItems,
         Search: '',
-        TypeForUi: filterTypeing.TypeForUi,
       }
-      if (filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) !== 2) {
+      if (filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi) !== 2) {
         filteredData.ComparisonType =
-          item.ColumnType === 'Tags' || item.ColumnType === 'TagsCollection'
+          item.ColumnType === ColumnTypeEnums.Tags
             ? filteredData.ComparisonType
             : checkedItems.length > 1
             ? 'In'
@@ -202,25 +203,15 @@ const APIFilter = ({
     }
   }
   const setCheckedItemsLocaly = (option: any[], closeCallBack?: () => void) => {
-    setfilterTypeing((prev) => {
+    setfilterTyping((prev) => {
       return { ...prev, CheckedItems: option }
     })
   }
+
   const uiTypes = () => {
-    const type = filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi)
+    const type = filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi)
 
     switch (type) {
-      case 0:
-        return (
-          <TextField
-            size={inputSizes}
-            disabled
-            id='outlined-basic'
-            label={item.ColumnName}
-            variant='outlined'
-            sx={{ width: advancedSettings ? columnsSizes : '100%' }}
-          />
-        )
       case 1:
         return (
           <MultipleCheck
@@ -229,7 +220,7 @@ const APIFilter = ({
             item={item}
             perColumnListForFilters={perColumnListForFilters}
             columnName={columnName}
-            filterTypeing={filterTypeing}
+            filterTyping={filterTyping}
             isLoadingFilters={isLoadingFilters}
             isDisabled={isDisabled}
             perColumnTotalCount={perColumnTotalCount}
@@ -251,7 +242,7 @@ const APIFilter = ({
             advancedSettings={advancedSettings}
             perColumnListForFilters={perColumnListForFilters as string[]}
             columnName={columnName}
-            filterTypeing={filterTypeing}
+            filterTyping={filterTyping}
             isLoadingFilters={isLoadingFilters}
             perColumnTotalCount={perColumnTotalCount}
             isDisabled={isDisabled}
@@ -272,7 +263,7 @@ const APIFilter = ({
             advancedSettings={advancedSettings}
             item={item}
             columnName={columnName}
-            filterTypeing={filterTypeing}
+            filterTyping={filterTyping}
             isDisabled={isDisabled}
             inputSizes={inputSizes}
             translations={translations}
@@ -291,7 +282,7 @@ const APIFilter = ({
             isLoadingFilters={isLoadingFilters}
             isDisabled={isDisabled}
             advancedSettings={advancedSettings}
-            filterTypeing={filterTypeing}
+            filterTyping={filterTyping}
             inputSizes={inputSizes}
             translations={translations}
             filterColumns={filterColumns}
@@ -307,7 +298,7 @@ const APIFilter = ({
             advancedSettings={advancedSettings}
             item={item}
             columnName={columnName}
-            filterTypeing={filterTypeing}
+            filterTyping={filterTyping}
             isDisabled={isDisabled}
             inputSizes={inputSizes}
             translations={translations}
@@ -323,12 +314,27 @@ const APIFilter = ({
             advancedSettings={advancedSettings}
             item={item}
             columnName={columnName}
-            filterTypeing={filterTypeing}
+            filterTyping={filterTyping}
             isDisabled={isDisabled}
             inputSizes={inputSizes}
             translations={translations}
             setColumnName={setColumnName}
             handleChangeValue={handleChangeValueSingleInputs}
+          />
+        )
+      case 7:
+        return (
+          <TextInputField
+            item={item}
+            inputSizes={inputSizes}
+            isDisabled={isDisabled}
+            filterTyping={filterTyping}
+            columnName={columnName}
+            columnsSizes={columnsSizes}
+            translations={translations}
+            advancedSettings={advancedSettings}
+            setColumnName={setColumnName}
+            handleChangeValue={handleChangeValue}
           />
         )
     }
@@ -338,15 +344,15 @@ const APIFilter = ({
     if (filteredColumn?.length)
       filteredColumn?.map((column) => {
         if (column.PropertyName === item.ColumnName) {
-          setfilterTypeing(column)
+          setfilterTyping(column)
         }
       })
   }, [filteredColumn])
 
   return (
     <li style={{ marginTop: 8 }}>
-      {filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 5 ||
-      filterUiHelper(typeElem.ColumnType, filterTypeing.TypeForUi) == 3 ? (
+      {filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi) == 5 ||
+      filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi) == 3 ? (
         <div style={{ margin: '15px 0 10px 0', fontSize: 14 }}>{item.key || item.ColumnName}</div>
       ) : null}
       <div className='G-justify-between'>
@@ -358,11 +364,11 @@ const APIFilter = ({
             }}
           >
             <Autocomplete
-              value={filterTypesUiHelper[filterTypeing.TypeForUi as keyof typeof filterTypesUiHelper]}
+              value={filterTypesUiHelper[filterTyping.TypeForUi as keyof typeof filterTypesUiHelper]}
               onChange={(event: any, newValue: string | null) => {
                 selectComparisonType(newValue)
               }}
-              inputValue={filterTypesUiHelper[filterTypeing.TypeForUi as keyof typeof filterTypesUiHelper]}
+              inputValue={filterTypesUiHelper[filterTyping.TypeForUi as keyof typeof filterTypesUiHelper]}
               disablePortal
               disableClearable
               disabled={isDisabled}

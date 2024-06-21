@@ -3,20 +3,21 @@ import { PickersActionBarProps } from '@mui/x-date-pickers'
 import './style.scss'
 import { Button, Grid } from '@mui/material'
 const ActionList = (props: PickersActionBarProps) => {
-  const { onClear, onSetToday, className } = props
+  const { onClear, onSetToday, onAccept, className } = props
   const actions = [
-    { text: 'Clear', method: onClear },
-    { text: 'Today', method: onSetToday },
+    { text: 'OK', method: onAccept, variant: 'text' },
+    { text: 'Clear', method: onClear, variant: 'outlined' },
+    { text: 'Today', method: onSetToday, variant: 'container' },
   ]
 
   return (
     <div className={`G-justify-between P-date-actions-component ${className}`}>
       <Grid container gap={1} className='G-flex P-actions-component'>
-        {actions.map(({ text, method }) => (
-          <Grid item xs={4} key={text}>
+        {actions.map(({ text, method, variant }) => (
+          <Grid item xs={3} key={text}>
             <Button
               size='medium'
-              variant={text === 'Clear' ? 'outlined' : 'text'}
+              variant={variant as any}
               fullWidth
               style={{
                 textTransform: 'capitalize',

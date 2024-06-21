@@ -10,7 +10,7 @@ interface IPickDate {
   columnsSizes: string
   item: IComparisonType
   advancedSettings: boolean
-  filterTypeing: ItemFields
+  filterTyping: ItemFields
   columnName: string
   isDisabled: boolean
   inputSizes: inputSize
@@ -23,7 +23,7 @@ const PickDate = ({
   advancedSettings,
   item,
   columnName,
-  filterTypeing,
+  filterTyping,
   isDisabled,
   inputSizes,
   translations,
@@ -74,7 +74,7 @@ const PickDate = ({
             displayWeekNumber
             onOpen={handleOpenList}
             onClose={handleClose}
-            value={filterTypeing.Values.length ? dayjs(filterTypeing.Values[0]) : null}
+            value={filterTyping.Values.length ? dayjs(filterTyping.Values[0]) : null}
             format='YYYY-MM-DD HH:mm:ss'
             onChange={handlePick}
             views={['year', 'day', 'hours', 'minutes', 'seconds']}

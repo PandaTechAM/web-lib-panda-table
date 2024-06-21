@@ -7,7 +7,7 @@ interface IModal {
   isDisabled: boolean
   columnsSizes: string
   advancedSettings: boolean
-  filterTypeing: ItemFields
+  filterTyping: ItemFields
   setColumnName: (name: string) => void
 }
 
@@ -16,7 +16,7 @@ const FiltersModalWrapper = ({
   children,
   columnsSizes,
   advancedSettings,
-  filterTypeing,
+  filterTyping,
   setColumnName,
 }: IModal) => {
   const [open, setOpen] = useState(false)
@@ -41,11 +41,11 @@ const FiltersModalWrapper = ({
         readOnly
         disabled={isDisabled}
         limitTags={advancedSettings ? 1 : 2}
-        value={filterTypeing.CheckedItems}
+        value={filterTyping.CheckedItems}
         autoFocus={false}
         fullWidth
         onOpen={handleOpen}
-        renderInput={(params) => <TextField key={params.id} {...params} label={filterTypeing.PropertyName} disabled />}
+        renderInput={(params) => <TextField key={params.id} {...params} label={filterTyping.PropertyName} disabled />}
       />
       <Dialog
         open={open}

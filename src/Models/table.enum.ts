@@ -25,3 +25,33 @@ export enum filterTypesUiHelper {
   'LessThanOrEqual' = '<=',
   'In' = 'In',
 }
+
+export enum ConditionalOperatorsEnums {
+  Equal = '=',
+  NotEqual = '!=',
+  LessThan = '<',
+  GreaterThan = '>',
+  GreaterThanOrEqual = '>=',
+  LessThanOrEqual = '<=',
+  Contains = '=*',
+  NotContains = '!*',
+  StartsWith = '^',
+  NotStartsWith = '!^',
+  EndsWith = '$',
+  NotEndsWith = '!$',
+}
+export enum ColumnTypeEnums {
+  EncryptedData = 'EncryptedData',
+  Base36Id = 'Base36Id',
+  Number = 'Number',
+  Text = 'Text',
+  Currency = 'Currency',
+  Percentage = 'Percentage',
+  Date = 'Date',
+  Boolean = 'Boolean',
+  Tags = 'Tags',
+  NumberCollection = 'NumberCollection',
+  TextCollection = 'TextCollection',
+}
+
+export const numberFields = [ColumnTypeEnums.Number, ColumnTypeEnums.Currency, ColumnTypeEnums.Percentage]

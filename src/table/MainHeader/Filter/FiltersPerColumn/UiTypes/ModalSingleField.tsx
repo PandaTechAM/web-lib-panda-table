@@ -1,6 +1,6 @@
 import { Autocomplete, Button, CircularProgress, Skeleton, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { inputSize } from '../../../../../Models/table.enum'
+import { ColumnTypeEnums, inputSize } from '../../../../../Models/table.enum'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
 import './style.scss'
@@ -9,7 +9,7 @@ interface IModalForSingleField {
   columnsSizes: string
   advancedSettings: boolean
   item: IComparisonType
-  filterTypeing: ItemFields
+  filterTyping: ItemFields
   columnName: string
   perColumnListForFilters?: string[]
   isLoadingFilters?: boolean
@@ -30,7 +30,7 @@ const ModalForSingleField = ({
   item,
   perColumnListForFilters,
   columnName,
-  filterTypeing,
+  filterTyping,
   isLoadingFilters,
   perColumnTotalCount,
   isDisabled,
@@ -45,7 +45,7 @@ const ModalForSingleField = ({
   setCheckedItemsLocaly,
   handleChangePagePerFilterField,
 }: IModalForSingleField) => {
-  const [checkedItems, setcheckedItems] = useState<string[]>([])
+  const [checkedItems, setCheckedItems] = useState<string[]>([])
   const [val, setVal] = useState<string>('')
   const [errMessage, setErrMessage] = useState<string>('')
   const [isOpened, setIsOpened] = useState<boolean>(false)
@@ -54,7 +54,6 @@ const ModalForSingleField = ({
     if (!isDisabled) {
       setColumnName(item.ColumnName)
       setIsOpened(true)
-      // handleSelectItems([], true);
     }
   }
   const handleCloseList = () => {
@@ -62,7 +61,7 @@ const ModalForSingleField = ({
     setVal('')
     setIsLoadedMoreData(false)
     setIsOpened(false)
-    if (item.ColumnType !== 'Text') {
+    if (item.ColumnType !== ColumnTypeEnums.Text) {
       let newValues: number[] = []
       checkedItems.map((item) => newValues.push(+item))
       handleSelectItems(newValues, false)
@@ -72,11 +71,11 @@ const ModalForSingleField = ({
       setCheckedItemsLocaly(checkedItems)
     }
   }
-  const selectValue = (event: any, value: any[]) => {
+  const selectValue = (event: React.SyntheticEvent, value: any[]) => {
     setIsLoadedMoreData(false)
     const selectedValue: string[] = value.length ? [value.at(-1)] : []
-    setcheckedItems(selectedValue)
-    if (item.ColumnType !== 'Text') {
+    setCheckedItems(selectedValue)
+    if (item.ColumnType !== ColumnTypeEnums.Text) {
       let newValues: number[] = []
       newValues = selectedValue.map((item: string) => +item)
       if (!isOpened) {
@@ -90,8 +89,8 @@ const ModalForSingleField = ({
       setCheckedItemsLocaly(value)
     }
   }
-  const onChnage = (newInputValue: string) => {
-    if (item.ColumnType !== 'Text' && !containsOnlyNumbers(newInputValue)) {
+  const onChange = (newInputValue: string) => {
+    if (item.ColumnType !== ColumnTypeEnums.Text && !containsOnlyNumbers(newInputValue)) {
       setErrMessage(translations?.filterAction.onlyNumbers || 'only numbers')
       setVal(newInputValue)
       return
@@ -104,7 +103,7 @@ const ModalForSingleField = ({
 
   const isEmpty = () => {
     if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length && val.length) {
-      if (item.ColumnType !== 'Text') {
+      if (item.ColumnType !== ColumnTypeEnums.Text) {
         if (containsOnlyNumbers(val)) return true
       } else {
         return true
@@ -115,7 +114,7 @@ const ModalForSingleField = ({
   }
   const rendData = () => {
     if (
-      filterTypeing.PropertyName === columnName &&
+      filterTyping.PropertyName === columnName &&
       errMessage === '' &&
       val.length &&
       perColumnListForFilters?.length
@@ -135,12 +134,12 @@ const ModalForSingleField = ({
   }
 
   useEffect(() => {
-    if (item.ColumnName === filterTypeing.PropertyName) {
-      let newValues: string[] = filterTypeing.CheckedItems
-      if (item.ColumnType !== 'Text') {
-        newValues = filterTypeing.CheckedItems.map((item: number) => item + '')
+    if (item.ColumnName === filterTyping.PropertyName) {
+      let newValues: string[] = filterTyping.CheckedItems
+      if (item.ColumnType !== ColumnTypeEnums.Text) {
+        newValues = filterTyping.CheckedItems.map((item: number) => item + '')
       }
-      setcheckedItems(newValues)
+      setCheckedItems(newValues)
     }
   }, [])
   return (
@@ -152,13 +151,12 @@ const ModalForSingleField = ({
     >
       <Autocomplete
         multiple
-        id='multiple-limit-tags'
+        id={item.ColumnName}
         noOptionsText={'Empty Data'}
         options={rendData()}
         value={checkedItems}
         inputValue={val}
-        // disablePortal
-        onInputChange={(event, newInputValue) => onChnage(newInputValue)}
+        onInputChange={(event, newInputValue) => onChange(newInputValue)}
         onChange={selectValue}
         onOpen={handleOpenList}
         onClose={handleCloseList}
@@ -181,9 +179,7 @@ const ModalForSingleField = ({
                     display: 'flex',
                     justifyContent: 'space-between',
                     minHeight: 40,
-                    borderBottom:
-                      //@ts-ignore
-                      props['data-option-index'] === 0 ? '1px solid #DCDCDC' : 'none',
+                    borderBottom: props['data-option-index' as keyof typeof props] === 0 ? '1px solid #DCDCDC' : 'none',
                   }}
                 >
                   {item.ColumnName === columnName && isLoadingFilters ? (
@@ -223,6 +219,7 @@ const ModalForSingleField = ({
         }}
         renderInput={(params) => (
           <TextField
+            name={item.ColumnName}
             onFocus={() => setErrMessage('')}
             onBlur={() => setErrMessage('')}
             error={!!errMessage}

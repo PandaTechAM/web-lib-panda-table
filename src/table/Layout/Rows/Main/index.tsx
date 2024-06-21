@@ -82,10 +82,17 @@ const MainRows = forwardRef<any, IMainRows<any>>(
         setWidth(myRef?.current.offsetWidth)
       }
     }, [])
+    const rows = unFreezedRows.length
+      ? unFreezedRows
+      : Array.from(
+          Array.from({ length: isLoadedData ? 10 : 0 }, (_, index) => ({
+            id: index + 1,
+          })),
+        )
 
     return (
       <>
-        {unFreezedRows.map((item: any, index: number) => {
+        {rows.map((item: any, index: number) => {
           return (
             <div key={item.id} className='G-flex G-row' onClick={() => getRow?.(item)}>
               <ul
@@ -171,8 +178,6 @@ const MainRows = forwardRef<any, IMainRows<any>>(
 
                 {/* Columns */}
                 {columnsConfigStructure[StructureConfig.Main].items.map((column: IColumnConfig<any>) => {
-                  // console.log(column.width, columnMinWidth);
-
                   return (
                     <Fragment key={column.id}>
                       {column.isVisible ? (

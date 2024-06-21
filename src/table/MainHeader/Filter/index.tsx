@@ -4,8 +4,6 @@ import { IComparisonType, IFiltersTypes, ISelect, ItemFields } from '../../../Mo
 import NativePopup from '../../../components/NativePopup/NativePopup'
 import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
 import APIFilter from './FiltersPerColumn/apiFilter'
-import LocalFilter from './FiltersPerColumn/localFiltering'
-import { debounce } from '../../../utils/debounce'
 
 interface IFilter {
   data?: any
@@ -62,7 +60,7 @@ const Filter = ({
   const checkIsDisabled = (option: boolean) => {
     setIsDisabled(option)
   }
-  const getFilteredData = (option: ItemFields, ColumnName?: string) => {
+  const getFilteredData = (option: ItemFields, ColumnName?: string, isOpened?: boolean) => {
     const updatedRow = filterDataForRequest ? [...filterDataForRequest] : []
     if (option.Values.length === 0) {
       const indexToRemove = updatedRow.findIndex((item) => item.PropertyName === option.PropertyName)
@@ -78,18 +76,9 @@ const Filter = ({
       }
     }
 
-    getFilteredDataWithDebounce?.(updatedRow, ColumnName)
-    // updatedRow.length
-    //   ? getFilteredDataWithDebounce?.(updatedRow, ColumnName)
-    //   : getFilter?.(updatedRow, ColumnName);
+    !isOpened ? getFilteredDataWithDebounce?.(updatedRow, ColumnName) : getFilter?.(updatedRow, ColumnName)
     setCollectedData(updatedRow)
   }
-
-  // const debouncedChangeHandler = debounce(
-  //   (option: ItemFields, ColumnName?: string) =>
-  //     getFilteredData(option, ColumnName),
-  //   300
-  // );
 
   return (
     <div>
@@ -126,57 +115,40 @@ const Filter = ({
               padding: '0px 32px 10px 32px',
             }}
           >
-            {
-              // isLocalFilter ? (
-              //   data.map((item: any, index: any) => {
-              //     return (
-              //       <LocalFilter
-              //         advancedSettings={advancedSettings}
-              //         key={item}
-              //         item={item}
-              //         data={data}
-              //         filteredColumn={filterDataForRequest}
-              //         perColumnListForFilters={perColumnListForFilters}
-              //         getFilteredData={getFilteredData}
-              //       />
-              //     );
-              //   })
-              // ) :
-              filterColumns?.length ? (
-                filterColumns.map((item: IComparisonType, index) => {
-                  return (
-                    <Fragment key={index}>
-                      {filtersTypes?.length &&
-                        filtersTypes.map((type: any) => {
-                          if (item.ColumnType === type.ColumnType)
-                            return (
-                              <Fragment key={item.ColumnName}>
-                                <APIFilter
-                                  isLoadingFilters={isLoadingFilters}
-                                  advancedSettings={advancedSettings}
-                                  item={item}
-                                  data={data}
-                                  typeElem={type}
-                                  isDisabled={isDisabled}
-                                  perColumnTotalCount={perColumnTotalCount}
-                                  translations={translations}
-                                  handleChangePagePerFilterField={handleChangePagePerFilterField}
-                                  checkIsDisabled={checkIsDisabled}
-                                  filteredColumn={filterDataForRequest}
-                                  perColumnListForFilters={perColumnListForFilters}
-                                  getFilteredData={getFilteredData}
-                                  filterColumns={filterColumns}
-                                />
-                              </Fragment>
-                            )
-                        })}
-                    </Fragment>
-                  )
-                })
-              ) : (
-                <div>{translations?.filterAction.emptyColumns || 'Add Filters Columns'}</div>
-              )
-            }
+            {filterColumns?.length ? (
+              filterColumns.map((item: IComparisonType, index) => {
+                return (
+                  <Fragment key={index}>
+                    {filtersTypes?.length &&
+                      filtersTypes.map((type: any) => {
+                        if (item.ColumnType === type.ColumnType)
+                          return (
+                            <Fragment key={item.ColumnName}>
+                              <APIFilter
+                                isLoadingFilters={isLoadingFilters}
+                                advancedSettings={advancedSettings}
+                                item={item}
+                                data={data}
+                                typeElem={type}
+                                isDisabled={isDisabled}
+                                perColumnTotalCount={perColumnTotalCount}
+                                translations={translations}
+                                handleChangePagePerFilterField={handleChangePagePerFilterField}
+                                checkIsDisabled={checkIsDisabled}
+                                filteredColumn={filterDataForRequest}
+                                perColumnListForFilters={perColumnListForFilters}
+                                getFilteredData={getFilteredData}
+                                filterColumns={filterColumns}
+                              />
+                            </Fragment>
+                          )
+                      })}
+                  </Fragment>
+                )
+              })
+            ) : (
+              <div>{translations?.filterAction.emptyColumns || 'Add Filters Columns'}</div>
+            )}
           </ul>
           <div style={{ padding: 20, borderTop: '1px  solid #F3F6F8' }}>
             <Button

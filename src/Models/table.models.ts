@@ -1,3 +1,5 @@
+import { ColumnTypeEnums } from './table.enum'
+
 export interface IProps<T extends Object> {
   data: T[]
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -68,6 +70,7 @@ export interface ItemFields {
   TypeForUi: string
   Search: string | number
   CheckedItems: any[]
+  ColumnType: ColumnTypeEnums
 }
 export interface IOrdering {
   PropertyName: string
@@ -75,7 +78,6 @@ export interface IOrdering {
 }
 export interface IFilterDataForRequest {
   Filters: ItemFields[]
-  Aggregates: any
   Order: any
 }
 
@@ -133,7 +135,7 @@ export interface IFreezeProps<T extends Object> {
 export interface IComparisonType {
   key?: string
   ColumnName: string
-  ColumnType: string
+  ColumnType: ColumnTypeEnums
   IsBold?: boolean
 }
 
@@ -201,5 +203,10 @@ export interface IFiltersFieldsRef {
 
 export interface ISelect {
   id: number
-  name: string
+  name: string | number
+}
+
+export interface ICounterpartyTableColumns<T extends string> {
+  ColumnName: string
+  ColumnType: T
 }

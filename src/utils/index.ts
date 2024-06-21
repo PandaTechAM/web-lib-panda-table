@@ -1,5 +1,8 @@
+import { ColumnTypeEnums } from '../Models/table.enum'
+import { ItemFields } from '../Models/table.models'
+
 export const containsOnlyNumbers = (value: string) => {
-  return /^\d+$/.test(value) || value.trim() === ''
+  return /^-?\d*\.?\d+$/.test(value) || value.trim() === ''
 }
 export const formatPrice = (num: number, symbol: string, isPrice = false, fixedCount = 5) => {
   const moneyFix = isPrice ? 2 : fixedCount
@@ -19,15 +22,6 @@ export const formatPrice = (num: number, symbol: string, isPrice = false, fixedC
 
 const filterUiHelperMap = {
   Number: {
-    Equal: 1,
-    NotEqual: 1,
-    GreaterThan: 2,
-    LessThan: 2,
-    GreaterThanOrEqual: 2,
-    LessThanOrEqual: 2,
-    Between: 3,
-  },
-  NumericText: {
     Equal: 1,
     NotEqual: 1,
     GreaterThan: 2,
@@ -63,8 +57,6 @@ const filterUiHelperMap = {
     NotEqual: 1,
   },
   Text: {
-    IsEmpty: 0,
-    IsNotEmpty: 0,
     Equal: 1,
     NotEqual: 1,
     StartsWith: 2,
@@ -86,11 +78,27 @@ const filterUiHelperMap = {
     LessThanOrEqual: 6,
   },
   Tags: {
-    In:4
+    In: 4,
   },
-  TagsCollection: {
-    Contains:4
-  }
+  NumberCollection: {
+    Equal: 7,
+    NotEqual: 7,
+    GreaterThan: 7,
+    LessThan: 7,
+    GreaterThanOrEqual: 7,
+    LessThanOrEqual: 7,
+    Between: 3,
+  },
+  TextCollection: {
+    IsEmpty: 7,
+    IsNotEmpty: 7,
+    Equal: 7,
+    NotEqual: 7,
+    StartsWith: 7,
+    EndsWith: 7,
+    Contains: 7,
+    NotContains: 7,
+  },
 } as const
 
 export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {
@@ -164,4 +172,17 @@ export const getColumnName = (inputString: string) => {
     const type = inputString.slice(underscoreIndex + 1)
     return { columnNam, type }
   }
+}
+
+export const handleEnumColumns = (option: ItemFields[]) => {
+  return option.map((el) => {
+    if (el.ColumnType === ColumnTypeEnums.Tags) {
+      return {
+        ...el,
+        Values: el.Values.map((item) => (typeof item === 'object' ? item.id : item)),
+      }
+    } else {
+      return el
+    }
+  })
 }
