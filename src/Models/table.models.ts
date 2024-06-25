@@ -53,10 +53,10 @@ export interface IProps<T extends Object> {
   setSortedData?(option: any): void
   storeStructure?(): void
   getPageRowsCountAndCurrentPage?(pageNumber: number, rowsCount: IPageSizes): void
-  getFilteredData?(option: ItemFields[], ColumnName?: string): void
-  getFilteredDataWithDebounce?(option: ItemFields[], ColumnName?: string): void
+  getFilteredData?(option: ItemFields[], ColumnName: string, columnType?: ColumnTypeEnums): void
+  getFilteredDataWithDebounce?(option: ItemFields[], ColumnName: string, columnType: ColumnTypeEnums): void
   getFilteredDataForTable?(option: ItemFields[]): void
-  handleChangePagePerFilterField?(): void
+  handleChangePagePerFilterField?(option: ItemFields): void
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element
   handleSorting?(option: string): void

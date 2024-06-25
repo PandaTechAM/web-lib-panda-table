@@ -4,21 +4,21 @@ import { IComparisonType, IFiltersTypes, ISelect, ItemFields } from '../../../Mo
 import NativePopup from '../../../components/NativePopup/NativePopup'
 import FilterSvgIcon from '../../../svgIcons/FilterSvgIcon'
 import APIFilter from './FiltersPerColumn/apiFilter'
+import { ColumnTypeEnums } from '../../../Models/table.enum'
 
 interface IFilter {
   data?: any
   filterColumns?: IComparisonType[]
   perColumnListForFilters?: (string | ISelect)[]
   filterDataForRequest?: ItemFields[]
-  isLocalFilter?: boolean
   isLoadingFilters?: boolean
   filtersTypes?: IFiltersTypes[]
   perColumnTotalCount?: number
   translations?: Record<string, any>
-  getFilter?(option: ItemFields[], ColumnName?: string): void
-  getFilteredDataWithDebounce?(option: ItemFields[], ColumnName?: string): void
+  getFilter?(option: ItemFields[], ColumnName: string, columnType?: ColumnTypeEnums): void
+  getFilteredDataWithDebounce?(option: ItemFields[], ColumnName: string, columnType: ColumnTypeEnums): void
   getFilteredDataForTable?(option: ItemFields[]): void
-  handleChangePagePerFilterField?(): void
+  handleChangePagePerFilterField?(option: ItemFields): void
 }
 
 const Filter = ({
@@ -26,7 +26,6 @@ const Filter = ({
   filterColumns,
   perColumnListForFilters,
   filterDataForRequest,
-  isLocalFilter = false,
   isLoadingFilters,
   filtersTypes,
   perColumnTotalCount,
@@ -60,7 +59,7 @@ const Filter = ({
   const checkIsDisabled = (option: boolean) => {
     setIsDisabled(option)
   }
-  const getFilteredData = (option: ItemFields, ColumnName?: string, isOpened?: boolean) => {
+  const getFilteredData = (option: ItemFields, ColumnName: string, isOpened: boolean, columnType: ColumnTypeEnums) => {
     const updatedRow = filterDataForRequest ? [...filterDataForRequest] : []
     if (option.Values.length === 0) {
       const indexToRemove = updatedRow.findIndex((item) => item.PropertyName === option.PropertyName)
@@ -75,8 +74,9 @@ const Filter = ({
         updatedRow.push(option)
       }
     }
-
-    !isOpened ? getFilteredDataWithDebounce?.(updatedRow, ColumnName) : getFilter?.(updatedRow, ColumnName)
+    !isOpened
+      ? getFilteredDataWithDebounce?.(updatedRow, ColumnName, columnType)
+      : getFilter?.(updatedRow, ColumnName, columnType)
     setCollectedData(updatedRow)
   }
 
@@ -92,6 +92,8 @@ const Filter = ({
         <div style={{ padding: '20px 0', width: 553 }}>
           <div style={{ width: '100%' }} className='G-justify-end'>
             <div
+              role='button'
+              aria-label='advanced setting'
               onClick={() => setAdvancedSettings((prev) => !prev)}
               style={{
                 backgroundColor: 'white',

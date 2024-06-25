@@ -1,7 +1,13 @@
 import { Autocomplete, Button, Checkbox, CircularProgress, Skeleton, TextField } from '@mui/material'
 import React, { SyntheticEvent, memo, useEffect, useRef, useState } from 'react'
 // import Checkbox from "../../../../components/checkbox";
-import { ColumnTypeEnums, inputSize, numberFields } from '../../../../../Models/table.enum'
+import {
+  ColumnTypeEnums,
+  ConditionalOperatorsEnums,
+  filterTypesUiHelper,
+  inputSize,
+  numberFields,
+} from '../../../../../Models/table.enum'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
 
@@ -22,7 +28,7 @@ interface IMultipleCHeck {
   handleSelectItems: (option: (string | number)[], isClosed: boolean, fieldName?: string) => void
   setColumnName: (name: string) => void
   handleChangeValue: (value: string) => void
-  handleChangePagePerFilterField?(): void
+  handleChangePagePerFilterField?(option: ItemFields): void
 }
 
 const MultipleCheck = ({
@@ -84,7 +90,6 @@ const MultipleCheck = ({
   }
   const selectValue = (event: SyntheticEvent<Element, Event>, value: (string | number)[]) => {
     setCheckedItems(value)
-    // if (["Number", "Currency", "Percentage"].includes(item.ColumnType)) {
     let newValues: (number | string)[] = value.map((elem: number | string) => {
       return elem === emptyValue ? '' : elem
     })
@@ -92,15 +97,6 @@ const MultipleCheck = ({
       handleSelectItems(newValues, false)
     }
     setCheckedItemsLocaly(newValues)
-    // } else {
-    //   let newValues: string[] = value.map((elem: string | number) => {
-    //     return elem as string;
-    //   });
-    //   if (!isOpened) {
-    //     handleSelectItems(newValues, false);
-    //   }
-    //   setCheckedItemsLocaly(newValues);
-    // }
   }
   const handleOpenList = () => {
     if (!isDisabled) {
@@ -156,6 +152,15 @@ const MultipleCheck = ({
     return option
   }
 
+  const nextPageOption: ItemFields = {
+    PropertyName: columnName,
+    Search: '',
+    Values: [perColumnListForFilters?.at(-1)],
+    CheckedItems: [perColumnListForFilters?.at(-1)],
+    ComparisonType: 'GreaterThan',
+    TypeForUi: 'GreaterThan',
+    ColumnType: item.ColumnType,
+  }
   useEffect(() => {
     if (item.ColumnName === filterTyping.PropertyName) {
       let newValues: (string | number)[] = filterTyping.CheckedItems
@@ -172,6 +177,7 @@ const MultipleCheck = ({
       setCheckedItems(newValues)
     }
   }, [filterTyping])
+  console.log(item.ColumnName === columnName ? isLoadingFilters : '')
 
   return (
     <div
@@ -241,10 +247,9 @@ const MultipleCheck = ({
                   </>
                 )}
               </li>
-              {/* <div>Empty</div> */}
               {option === perColumnListForFilters?.at(-1) ? (
                 <div className='G-center' style={{ width: '100%' }}>
-                  {(perColumnListForFilters?.length ?? 0) < (perColumnTotalCount ?? 0) ? (
+                  {perColumnTotalCount === 30 ? (
                     <Button
                       className='G-center'
                       size='large'
@@ -255,7 +260,7 @@ const MultipleCheck = ({
                         color: 'black',
                         border: 'none',
                       }}
-                      onClick={handleChangePagePerFilterField}
+                      onClick={() => handleChangePagePerFilterField?.(nextPageOption)}
                     >
                       {translations?.filterAction.loadMore || 'Load more'}
                     </Button>

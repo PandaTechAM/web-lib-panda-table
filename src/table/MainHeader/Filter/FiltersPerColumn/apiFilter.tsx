@@ -24,9 +24,9 @@ interface IPerField {
   perColumnTotalCount?: number
   translations?: Record<string, any>
   filterColumns?: IComparisonType[]
-  getFilteredData?(option: ItemFields, ColumnName?: string, isOpened?: boolean): void
+  getFilteredData?(option: ItemFields, ColumnName: string, isOpened: boolean, columnType: ColumnTypeEnums): void
   checkIsDisabled(option: boolean): void
-  handleChangePagePerFilterField?(): void
+  handleChangePagePerFilterField?(option: ItemFields): void
 }
 
 const inputSizes: inputSize = 'small'
@@ -35,7 +35,6 @@ const ComparisonType = '30%'
 
 const APIFilter = ({
   item,
-  getFilteredData,
   perColumnListForFilters,
   typeElem,
   advancedSettings,
@@ -45,6 +44,7 @@ const APIFilter = ({
   perColumnTotalCount,
   translations,
   filterColumns,
+  getFilteredData,
   checkIsDisabled,
   handleChangePagePerFilterField,
 }: IPerField) => {
@@ -58,7 +58,14 @@ const APIFilter = ({
     ColumnType: item.ColumnType,
   })
   const [columnName, setColumnName] = useState<string>('')
-
+  const uiType = filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi)
+  const handlePropertyName = (value?: string) => {
+    const typesList = [ColumnTypeEnums.TextCollection, ColumnTypeEnums.NumberCollection]
+    if ((uiType === 2 && value === '') || typesList.includes(filterTyping.ColumnType)) {
+      return ''
+    }
+    return filterTyping.PropertyName
+  }
   const handleChangeValue = (value: any) => {
     let columnFilter: ItemFields = {
       ...filterTyping,
@@ -84,12 +91,10 @@ const APIFilter = ({
       columnFilter.Search = idNumeric ? Number(value) : value
     }
 
-    if (filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi) === 2 && value === '') {
-      getFilteredData?.(columnFilter, '')
-      return
-    }
-    getFilteredData?.(columnFilter, filterTyping.PropertyName)
+    const propertyName = handlePropertyName(value)
+    getFilteredData?.(columnFilter, propertyName, false, filterTyping.ColumnType)
   }
+
   const handleChangeRange = (from: string, to: string) => {
     let columnFilter: ItemFields = filterTyping
     checkIsDisabled(false)
@@ -106,8 +111,9 @@ const APIFilter = ({
       }
     }
 
-    getFilteredData?.(columnFilter, '')
+    getFilteredData?.(columnFilter, '', false, filterTyping.ColumnType)
   }
+
   const handleChangeValueSingleInputs = (value: any) => {
     let columnFilter: ItemFields = filterTyping
 
@@ -130,11 +136,10 @@ const APIFilter = ({
       }
     }
 
-    getFilteredData?.(columnFilter, '')
+    getFilteredData?.(columnFilter, '', false, filterTyping.ColumnType)
   }
+
   const selectComparisonType = (value: any) => {
-    if (filterUiHelper(typeElem.ColumnType, value) === 2) {
-    }
     let columnFilter: ItemFields = {
       ...filterTyping,
       PropertyName: item.ColumnName,
@@ -161,11 +166,13 @@ const APIFilter = ({
       columnFilter.Values = [false]
     }
 
-    getFilteredData?.(columnFilter, '')
+    getFilteredData?.(columnFilter, '', false, filterTyping.ColumnType)
   }
+
   const selectedColumnName = (options: string) => {
     setColumnName(options)
   }
+
   const handleSelectItems = (checkedItems: any[], isOpened: boolean, fieldName?: string) => {
     if (isOpened) {
       getFilteredData?.(
@@ -176,8 +183,9 @@ const APIFilter = ({
           CheckedItems: [],
           Search: '',
         },
-        filterTyping.PropertyName,
+        handlePropertyName(),
         isOpened,
+        filterTyping.ColumnType,
       )
 
       setfilterTyping((prev) => {
@@ -199,9 +207,10 @@ const APIFilter = ({
             : 'Equal'
       }
 
-      getFilteredData?.(filteredData, '')
+      getFilteredData?.(filteredData, '', false, filterTyping.ColumnType)
     }
   }
+
   const setCheckedItemsLocaly = (option: any[], closeCallBack?: () => void) => {
     setfilterTyping((prev) => {
       return { ...prev, CheckedItems: option }

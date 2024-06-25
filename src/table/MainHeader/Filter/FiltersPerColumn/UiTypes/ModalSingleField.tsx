@@ -1,6 +1,6 @@
 import { Autocomplete, Button, CircularProgress, Skeleton, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { ColumnTypeEnums, inputSize } from '../../../../../Models/table.enum'
+import { ColumnTypeEnums, ConditionalOperatorsEnums, inputSize } from '../../../../../Models/table.enum'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import { containsOnlyNumbers } from '../../../../../utils'
 import './style.scss'
@@ -22,7 +22,7 @@ interface IModalForSingleField {
   setColumnName: (name: string) => void
   handleChangeValue: (value: string) => void
   setCheckedItemsLocaly(options: any[]): void
-  handleChangePagePerFilterField?(): void
+  handleChangePagePerFilterField?(option: ItemFields): void
   handleClose?: () => void
 }
 
@@ -132,7 +132,15 @@ const ModalForSingleField = ({
       return []
     }
   }
-
+  const nextPageOption: ItemFields = {
+    PropertyName: columnName,
+    Search: '',
+    Values: [perColumnListForFilters?.at(-1)],
+    CheckedItems: [perColumnListForFilters?.at(-1)],
+    ComparisonType: ConditionalOperatorsEnums['>' as keyof typeof ConditionalOperatorsEnums],
+    TypeForUi: ConditionalOperatorsEnums['>' as keyof typeof ConditionalOperatorsEnums],
+    ColumnType: item.ColumnType,
+  }
   useEffect(() => {
     if (item.ColumnName === filterTyping.PropertyName) {
       let newValues: string[] = filterTyping.CheckedItems
@@ -155,11 +163,10 @@ const ModalForSingleField = ({
         noOptionsText={'Empty Data'}
         options={rendData()}
         value={checkedItems}
+        open={isOpened}
         inputValue={val}
         onInputChange={(event, newInputValue) => onChange(newInputValue)}
         onChange={selectValue}
-        onOpen={handleOpenList}
-        onClose={handleCloseList}
         getOptionLabel={(option) => option}
         disableCloseOnSelect
         autoFocus={false}
@@ -205,7 +212,7 @@ const ModalForSingleField = ({
                           border: 'none',
                         }}
                         onClick={() => {
-                          handleChangePagePerFilterField?.()
+                          handleChangePagePerFilterField?.(nextPageOption)
                           setIsLoadedMoreData(true)
                         }}
                       >
@@ -220,8 +227,14 @@ const ModalForSingleField = ({
         renderInput={(params) => (
           <TextField
             name={item.ColumnName}
-            onFocus={() => setErrMessage('')}
-            onBlur={() => setErrMessage('')}
+            onFocus={() => {
+              setErrMessage('')
+              handleOpenList()
+            }}
+            onBlur={() => {
+              setErrMessage('')
+              handleCloseList()
+            }}
             error={!!errMessage}
             helperText={errMessage}
             {...params}

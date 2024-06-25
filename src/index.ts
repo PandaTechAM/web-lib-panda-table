@@ -19,7 +19,7 @@ import {
   ItemFields,
   IFilterDataForRequest,
 } from './Models/table.models'
-import { StructureConfig } from './Models/table.enum'
+import { StructureConfig, ColumnTypeEnums, ConditionalOperatorsEnums } from './Models/table.enum'
 
 export {
   Table,
@@ -40,6 +40,8 @@ export {
   IrowActions,
   ILinksList,
   StructureConfig,
+  ColumnTypeEnums,
+  ConditionalOperatorsEnums,
   ItemFields,
   IFilterDataForRequest,
 }

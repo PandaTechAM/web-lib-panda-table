@@ -85,7 +85,6 @@ function Table<T extends Object>({
     unCheck,
     checkAllDataFromDb,
   } = useTable(data, freezedRightSide, RightSideSelfAction)
-  console.log(!isLoadedData, !data.length, data)
 
   return (
     <div id='table-wrapper'>

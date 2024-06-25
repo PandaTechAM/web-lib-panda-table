@@ -15,9 +15,8 @@ import CheckRows from './CheckRows'
 import DeleteSvgIcon from '../../svgIcons/DeleteSvgIcon'
 import EditSvgIcon from '../../svgIcons/EditSvgIcon'
 import Filter from './Filter'
-import Select from '../../components/select/select'
 import Download from './Download'
-import { CheckedItems } from '../../Models/table.enum'
+import { CheckedItems, ColumnTypeEnums } from '../../Models/table.enum'
 import './style.scss'
 interface IActionsHeader<T extends Object> {
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -47,10 +46,10 @@ interface IActionsHeader<T extends Object> {
   storeStructure?(): void
   unCheck(): void
   checkAllDataFromDb(): void
-  getFilteredData?(options: any): void
-  getFilteredDataWithDebounce?(options: any): void
+  getFilteredData?(option: ItemFields[], ColumnName: string, columnType?: ColumnTypeEnums): void
+  getFilteredDataWithDebounce?(option: ItemFields[], ColumnName: string, columnType: ColumnTypeEnums): void
   getFilteredDataForTable?(option: ItemFields[]): void
-  handleChangePagePerFilterField?(): void
+  handleChangePagePerFilterField?(option: ItemFields): void
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element
 }

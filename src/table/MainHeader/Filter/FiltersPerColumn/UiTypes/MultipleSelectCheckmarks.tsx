@@ -1,9 +1,9 @@
 //@ts-nocheck
-import { Autocomplete, CircularProgress, TextField, Checkbox } from '@mui/material'
+import { Autocomplete, CircularProgress, TextField, Checkbox, Skeleton } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import React, { SyntheticEvent, memo, useEffect, useState } from 'react'
 import { inputSize } from '../../../../../Models/table.enum'
-import { IComparisonType, ISelect, ItemFields } from '../../../../../Models/table.models'
+import { IComparisonType, ISelect, ISelected, ItemFields } from '../../../../../Models/table.models'
 
 interface IMultipleSelectCheckmarks {
   item: IComparisonType
@@ -62,8 +62,11 @@ const MultipleSelectCheckmarks = ({
   }
   const isEmpty = item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length
 
-  const getLabel = (option: any) => {
-    return option.name
+  const getLabel = (options: ISelect) => {
+    if (typeof options.name !== 'string') {
+      return options + ''
+    }
+    return options.name as string
   }
 
   useEffect(() => {
@@ -96,6 +99,7 @@ const MultipleSelectCheckmarks = ({
         <Autocomplete
           id={item.ColumnName}
           multiple
+          open={isOpened}
           limitTags={advancedSettings ? 1 : 2}
           options={perColumnListForFilters ?? []}
           value={checkedItems}
@@ -103,8 +107,8 @@ const MultipleSelectCheckmarks = ({
             handleChange(value)
           }}
           getOptionLabel={getLabel}
-          onOpen={handleOpenList}
-          onClose={handleCloseList}
+          // onOpen={handleOpenList}
+          // onClose={handleCloseList}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           disableCloseOnSelect
           size={inputSizes}
@@ -123,7 +127,11 @@ const MultipleSelectCheckmarks = ({
                     borderBottom: option.name === '' ? '1px solid silver' : 'none',
                   }}
                 >
-                  {item.ColumnName === columnName && isLoadingFilters ? null : (
+                  {item.ColumnName === columnName && isLoadingFilters ? (
+                    <div style={{ width: '100%' }}>
+                      <Skeleton />
+                    </div>
+                  ) : (
                     <>
                       <div>{option.name}</div>
                       <Checkbox style={{ marginRight: 8 }} checked={selected} />
@@ -138,6 +146,8 @@ const MultipleSelectCheckmarks = ({
               {...params}
               name={item.ColumnName}
               label={item.key || item.ColumnName}
+              onFocus={handleOpenList}
+              onBlur={handleCloseList}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (

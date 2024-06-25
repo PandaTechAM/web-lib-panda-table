@@ -64,10 +64,6 @@ const filterUiHelperMap = {
     Contains: 2,
     NotContains: 2,
   },
-  Boolean: {
-    Equal: 4,
-    NotEqual: 4,
-  },
   Date: {
     Between: 5,
     Equal: 6,
@@ -79,6 +75,9 @@ const filterUiHelperMap = {
   },
   Tags: {
     In: 4,
+  },
+  Boolean: {
+    Equal: 4,
   },
   NumberCollection: {
     Equal: 7,
@@ -176,7 +175,7 @@ export const getColumnName = (inputString: string) => {
 
 export const handleEnumColumns = (option: ItemFields[]) => {
   return option.map((el) => {
-    if (el.ColumnType === ColumnTypeEnums.Tags) {
+    if (el.ColumnType === ColumnTypeEnums.Tags || el.ColumnType === ColumnTypeEnums.Boolean) {
       return {
         ...el,
         Values: el.Values.map((item) => (typeof item === 'object' ? item.id : item)),

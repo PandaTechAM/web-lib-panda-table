@@ -5,7 +5,7 @@ export const filtersConvertor = (filterData: ItemFields[]) => {
   const regex = /([(),|\\]|\[\/i)/g
 
   const returnType = (item: any) => {
-    if (typeof item === 'number') {
+    if (typeof item === 'number' || typeof item === 'boolean') {
       return item
     } else if (typeof item === 'string') {
       return item.replace(regex, '\\$1')
