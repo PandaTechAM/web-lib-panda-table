@@ -195,7 +195,9 @@ const ModalForSingleField = ({
                     </div>
                   ) : (
                     <>
-                      <div>{option === '' ? translations?.filterAction.emptyString : option}</div>
+                      <div style={{ textAlign: 'start' }}>
+                        {option === '' ? translations?.filterAction.emptyString : option}
+                      </div>
                     </>
                   )}
                 </li>

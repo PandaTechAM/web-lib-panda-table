@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { CheckedItems } from '../Models/table.enum'
 
 const useTable = <T extends Object>(
@@ -6,6 +6,7 @@ const useTable = <T extends Object>(
   freezedRightSide?: string,
   RightSideSelfAction?: (options: any) => void,
 ) => {
+  const scrollRef = useRef<HTMLDivElement | null>(null)
   const [freezedRows, setFreezedRows] = useState<T[]>([])
   const [unFreezedRows, setUnFreezedRows] = useState<T[]>(data)
   const [checkedRows, setCheckedRows] = useState<T[]>([])
@@ -91,6 +92,9 @@ const useTable = <T extends Object>(
   }
 
   useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
     setUnFreezedRows(data)
     setCheckedRows([])
   }, [data])
@@ -101,6 +105,7 @@ const useTable = <T extends Object>(
     checkedRows,
     checkedLink,
     selectedType,
+    scrollRef,
     freezeRow,
     unFreezeRow,
     dragDropFreezeRow,

@@ -177,7 +177,6 @@ const MultipleCheck = ({
       setCheckedItems(newValues)
     }
   }, [filterTyping])
-  console.log(item.ColumnName === columnName ? isLoadingFilters : '')
 
   return (
     <div
@@ -237,7 +236,7 @@ const MultipleCheck = ({
                   </div>
                 ) : (
                   <>
-                    <div>{drawOptionLabel(option)}</div>
+                    <div style={{ textAlign: 'start' }}>{drawOptionLabel(option)}</div>
                     <Checkbox
                       checked={selected}
                       sx={{

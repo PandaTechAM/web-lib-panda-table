@@ -133,7 +133,7 @@ const MultipleSelectCheckmarks = ({
                     </div>
                   ) : (
                     <>
-                      <div>{option.name}</div>
+                      <div style={{ textAlign: 'start' }}>{option.name}</div>
                       <Checkbox style={{ marginRight: 8 }} checked={selected} />
                     </>
                   )}

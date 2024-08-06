@@ -89,7 +89,7 @@ const Filter = ({
         handleOpen={handleOpen}
         handleClose={handleClose}
       >
-        <div style={{ padding: '20px 0', width: 553 }}>
+        <div style={{ padding: '20px 0', width: 'clamp(330px, 35vw, 553px)' }}>
           <div style={{ width: '100%' }} className='G-justify-end'>
             <div
               role='button'
@@ -113,7 +113,7 @@ const Filter = ({
               border: 'none',
               overflowX: 'auto',
               overflowY: 'auto',
-              maxHeight: '60dvh',
+              maxHeight: '55dvh',
               padding: '0px 32px 10px 32px',
             }}
           >

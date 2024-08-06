@@ -75,6 +75,7 @@ function Table<T extends Object>({
     checkedRows,
     checkedLink,
     selectedType,
+    scrollRef,
     freezeRow,
     unFreezeRow,
     dragDropFreezeRow,
@@ -155,7 +156,7 @@ function Table<T extends Object>({
               handleSorting={handleSorting}
             />
           </div>
-          <div className='G-data-table-body'>
+          <div ref={scrollRef} className='G-data-table-body'>
             <Rows
               freezedRows={freezedRows}
               rightFreezeConfig={rightFreezeConfig}
