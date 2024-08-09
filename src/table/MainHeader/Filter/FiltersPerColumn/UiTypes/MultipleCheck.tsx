@@ -66,7 +66,9 @@ const MultipleCheck = ({
           : perColumnListForFilters
 
       if (item.ColumnType === ColumnTypeEnums.EncryptedData) {
-        return val ? list : checkedItems
+        let drawList = typeof list[0] === 'string' ? list : []
+
+        return val ? drawList : checkedItems
       } else {
         return list.map((item) => (item === null || item === '' ? emptyValue : item))
       }
