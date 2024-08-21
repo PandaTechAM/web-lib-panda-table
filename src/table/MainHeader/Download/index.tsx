@@ -18,7 +18,7 @@ const Download = <T extends Object>({ checkedRows, selectedType, translations, g
   const [fileType] = useState<IDownloadTypes[]>([
     { id: 1, type: 'XLSX' },
     { id: 2, type: 'CSV' },
-    { id: 3, type: 'PDF' },
+    // { id: 3, type: 'PDF' },
   ])
   const [isOpenList, setOpen] = useState<boolean>(false)
 
