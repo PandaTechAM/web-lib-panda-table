@@ -66,13 +66,15 @@ const APIFilter = ({
     }
     return filterTyping.PropertyName
   }
+  const listWithContains = [ColumnTypeEnums.Text, ColumnTypeEnums.TextCollection, ColumnTypeEnums.NumberCollection]
+
   const handleChangeValue = (value: any) => {
     let columnFilter: ItemFields = {
       ...filterTyping,
       PropertyName: item.ColumnName,
       Values: [],
       ComparisonType:
-        item.ColumnType === ColumnTypeEnums.Text && filterTyping.TypeForUi === 'Equal'
+        listWithContains.includes(item.ColumnType) && filterTyping.TypeForUi === 'Equal'
           ? 'Contains'
           : filterTyping.TypeForUi,
       Search: '',
