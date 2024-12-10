@@ -85,6 +85,7 @@ function Table<T extends Object>({
     isCheckedRows,
     unCheck,
     checkAllDataFromDb,
+    handleActionKey,
   } = useTable(data, freezedRightSide, RightSideSelfAction)
 
   return (
@@ -138,7 +139,10 @@ function Table<T extends Object>({
         />
       ) : null}
 
-      <div className={`G-data-table G-data-scroll ${!isLoadedData && !data.length ? 'G-empty-data-wrapper' : ''}`}>
+      <div
+        ref={scrollRef}
+        className={`G-data-table G-data-scroll ${!isLoadedData && !data.length ? 'G-empty-data-wrapper' : ''}`}
+      >
         <>
           <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
             <Header
@@ -153,10 +157,13 @@ function Table<T extends Object>({
               leftFreezedColumnWidth={leftFreezedColumnWidth}
               rightFreezedColumnWidth={rightFreezedColumnWidth}
               hasOrdering={hasOrdering}
-              handleSorting={handleSorting}
+              handleSorting={(option) => {
+                handleActionKey('sort')
+                handleSorting?.(option)
+              }}
             />
           </div>
-          <div ref={scrollRef} className='G-data-table-body'>
+          <div className='G-data-table-body'>
             <Rows
               freezedRows={freezedRows}
               rightFreezeConfig={rightFreezeConfig}

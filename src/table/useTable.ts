@@ -12,6 +12,11 @@ const useTable = <T extends Object>(
   const [checkedRows, setCheckedRows] = useState<T[]>([])
   const [checkedLink, setCheckedLink] = useState<T>()
   const [selectedType, setSelectedType] = useState<string>('none')
+  const [actionKey, setActionKey] = useState<string>('')
+
+  const handleActionKey = (option: string) => {
+    setActionKey(option)
+  }
   const freezeRow = (e: any, indexx: number) => {
     e.stopPropagation()
     //@ts-ignore
@@ -93,10 +98,22 @@ const useTable = <T extends Object>(
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      actionKey === 'sort'
+        ? scrollRef.current.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          })
+        : scrollRef.current.scrollTo({
+            behavior: 'smooth',
+            top: 0,
+            left: 0,
+          })
     }
     setUnFreezedRows(data)
     setCheckedRows([])
+    return () => {
+      handleActionKey('')
+    }
   }, [data])
 
   return {
@@ -115,6 +132,7 @@ const useTable = <T extends Object>(
     isCheckedRows,
     unCheck,
     checkAllDataFromDb,
+    handleActionKey,
   }
 }
 
