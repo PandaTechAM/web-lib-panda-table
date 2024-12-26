@@ -209,8 +209,8 @@ function Table<T extends Object>({
           ) : null}
         </>
       </div>
-      <div className='G-justify-end G-align-center' style={{ padding: '30px 10px 10px 10px' }}>
-        {data.length && currentPage && pagesTotalCount && selectedPageSizeId ? (
+      {data.length && currentPage && pagesTotalCount && selectedPageSizeId ? (
+        <div className='G-justify-end G-align-center' style={{ padding: '30px 10px 10px 10px' }}>
           <MainFooter
             translations={translations}
             pageSizeStructure={pageSizeStructure}
@@ -219,8 +219,8 @@ function Table<T extends Object>({
             selectedPageSizeId={selectedPageSizeId}
             getPageRowsCountAndCurrentPage={getPageRowsCountAndCurrentPage}
           />
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </div>
   )
 }
