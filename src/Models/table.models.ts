@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { ColumnTypeEnums } from './table.enum'
 
 export interface IProps<T extends Object> {
@@ -36,7 +37,7 @@ export interface IProps<T extends Object> {
   rowsFreezeAction?: boolean
   isEnableAggregates?: boolean
   aggregates?: any
-  emptyDataIcon?: string
+  EmptyDataContainer?: ReactNode
   perColumnTotalCount?: number
   hoverdRowPosition?: number
   selectedPageSizeId?: ISelected

@@ -43,7 +43,7 @@ function Table<T extends Object>({
   filterColumns,
   filtersTypes,
   rowsFreezeAction,
-  emptyDataIcon,
+  EmptyDataContainer,
   perColumnTotalCount,
   selectedPageSizeId,
   hasFilters,
@@ -90,20 +90,7 @@ function Table<T extends Object>({
 
   return (
     <div id='table-wrapper'>
-      {!isLoadedData && !data.length ? (
-        <img
-          style={{
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            top: '25%',
-          }}
-          className='G-empty-data-icon'
-          src={emptyDataIcon}
-          alt='Empty data'
-          width={500}
-        />
-      ) : null}
+      {!isLoadedData && !data.length ? <div className='empty-container'>{EmptyDataContainer}</div> : null}
       {multipleCheck || draggableColumns || hasFilters || getDownloadType ? (
         <MainHeader
           columnsConfigStructure={columnsConfigStructure}
