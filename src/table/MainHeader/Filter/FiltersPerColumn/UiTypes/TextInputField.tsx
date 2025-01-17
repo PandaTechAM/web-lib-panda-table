@@ -79,7 +79,7 @@ const TextInputField = ({
   return (
     <TextField
       id={item.ColumnName}
-      label={item.ColumnName}
+      label={item.key || item.ColumnName}
       name={item.ColumnName}
       disabled={columnName !== item.ColumnName && isDisabled}
       value={value}

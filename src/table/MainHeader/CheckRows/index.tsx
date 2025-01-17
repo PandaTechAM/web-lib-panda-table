@@ -44,14 +44,6 @@ const CheckRows = <T extends Object>({
 
   const [listForDropdown] = useState<Object[]>([
     {
-      id: 1,
-      title: translations?.checkbox.all || CheckedItems.SELECTED_ALL,
-      action: () => {
-        checkAllDataFromDb()
-        setSelectedItem(0)
-      },
-    },
-    {
       id: 2,
       title: translations?.checkbox.allVisible || CheckedItems.SELECTED_VISIBLE,
       action: (data?: T[]) => {
