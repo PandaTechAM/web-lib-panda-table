@@ -2,12 +2,16 @@ import React from 'react'
 import { PickersActionBarProps } from '@mui/x-date-pickers'
 import './style.scss'
 import { Button, Grid } from '@mui/material'
-const ActionList = (props: PickersActionBarProps) => {
+const ActionList = (props: PickersActionBarProps, translations: Record<string, string>) => {
   const { onClear, onSetToday, onAccept, className } = props
   const actions = [
-    { text: 'OK', method: onAccept, variant: 'text' },
-    { text: 'Clear', method: onClear, variant: 'outlined' },
-    { text: 'Today', method: onSetToday, variant: 'container' },
+    { text: translations.confirmFilters, method: onAccept, variant: 'text' },
+    { text: translations.clearDate, method: onClear, variant: 'outlined' },
+    {
+      text: translations.todayButton,
+      method: onSetToday,
+      variant: 'container',
+    },
   ]
 
   return (
@@ -31,9 +35,9 @@ const ActionList = (props: PickersActionBarProps) => {
         ))}
       </Grid>
       <div className='G-center P-time-component'>
-        <div>Hour</div>
-        <div>Min</div>
-        <div>Sec</div>
+        <div>{translations.hour}</div>
+        <div>{translations.min}</div>
+        <div>{translations.sec}</div>
       </div>
     </div>
   )

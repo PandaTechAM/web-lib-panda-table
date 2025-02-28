@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { IComparisonType, ItemFields } from '../../../../../Models/table.models'
 import ActionList from '../../../../../components/datePickerActionList/ActionList'
 import { inputSize } from '../../../../../Models/table.enum'
+import 'dayjs/locale/en'
+import 'dayjs/locale/ru'
+import 'dayjs/locale/hy-am'
 interface IPickDate {
   columnsSizes: string
   item: IComparisonType
@@ -15,6 +18,7 @@ interface IPickDate {
   isDisabled: boolean
   inputSizes: inputSize
   translations?: Record<string, any>
+  locale?: string | null
   setColumnName: (name: string) => void
   handleChangeValue(option: any): void
 }
@@ -27,6 +31,7 @@ const PickDate = ({
   isDisabled,
   inputSizes,
   translations,
+  locale = 'hy-am',
   setColumnName,
   handleChangeValue,
 }: IPickDate) => {
@@ -58,7 +63,7 @@ const PickDate = ({
   }
   return (
     <div className={item.IsBold ? 'IsBold' : ''} style={{ width: advancedSettings ? columnsSizes : '100%' }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
         <div
           style={{ width: '100%', position: 'relative' }}
           tabIndex={0}
@@ -80,7 +85,7 @@ const PickDate = ({
             views={['year', 'day', 'hours', 'minutes', 'seconds']}
             sx={{ width: '100%' }}
             slots={{
-              actionBar: ActionList,
+              actionBar: (props) => ActionList(props, translations?.filterAction),
             }}
           />
           {errMessage.length ? <div style={{ color: 'red', fontSize: 12 }}>{errMessage}</div> : null}

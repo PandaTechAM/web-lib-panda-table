@@ -219,6 +219,7 @@ const APIFilter = ({
     })
   }
 
+  const locale = localStorage.getItem('locale')
   const uiTypes = () => {
     const type = filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi)
 
@@ -313,6 +314,7 @@ const APIFilter = ({
             isDisabled={isDisabled}
             inputSizes={inputSizes}
             translations={translations}
+            locale={locale}
             checkIsDisabled={checkIsDisabled}
             setColumnName={setColumnName}
             handleChangeRange={handleChangeRange}
@@ -329,6 +331,7 @@ const APIFilter = ({
             isDisabled={isDisabled}
             inputSizes={inputSizes}
             translations={translations}
+            locale={locale}
             setColumnName={setColumnName}
             handleChangeValue={handleChangeValueSingleInputs}
           />

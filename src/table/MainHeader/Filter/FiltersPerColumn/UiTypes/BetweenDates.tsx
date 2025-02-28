@@ -8,6 +8,9 @@ import './style.scss'
 import { validateRangeColumns } from '../../../../../utils'
 import ActionList from '../../../../../components/datePickerActionList/ActionList'
 import { inputSize } from '../../../../../Models/table.enum'
+import 'dayjs/locale/en'
+import 'dayjs/locale/ru'
+import 'dayjs/locale/hy-am'
 interface IPickDate {
   columnsSizes: string
   item: IComparisonType
@@ -17,6 +20,7 @@ interface IPickDate {
   isDisabled: boolean
   inputSizes: inputSize
   translations?: Record<string, any>
+  locale?: string | null
   setColumnName: (name: string) => void
   checkIsDisabled: (option: boolean) => void
   handleChangeRange(from: any, to: any): void
@@ -34,6 +38,7 @@ const BetweenDates = ({
   isDisabled,
   inputSizes,
   translations,
+  locale = 'hy-am',
   checkIsDisabled,
   setColumnName,
   handleChangeRange,
@@ -138,7 +143,7 @@ const BetweenDates = ({
         width: advancedSettings ? columnsSizes : '100%',
       }}
     >
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
         <div
           style={{ width: '48%', position: 'relative' }}
           tabIndex={0}
@@ -170,14 +175,14 @@ const BetweenDates = ({
             }
             onChange={(newValue: any, e) => handleChangeInputValue(newValue, 'from')}
             slots={{
-              actionBar: ActionList,
+              actionBar: (props) => ActionList(props, translations?.filterAction),
             }}
           />
           {errMessage.from.length ? <div style={{ color: 'red', fontSize: 12 }}>{errMessage.from}</div> : null}
         </div>
       </LocalizationProvider>
       <div className='G-center'>-</div>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
         <div style={{ width: '48%' }} tabIndex={1} onBlur={unFocused} className={errMessage.to ? 'date-picker' : ''}>
           <DateTimePicker
             ampm={false}
@@ -201,7 +206,7 @@ const BetweenDates = ({
             }
             onChange={(newValue: any) => handleChangeInputValue(newValue, 'to')}
             slots={{
-              actionBar: ActionList,
+              actionBar: (props) => ActionList(props, translations?.filterAction),
             }}
           />
           {errMessage.to.length ? <div style={{ color: 'red', fontSize: 12 }}>{errMessage.to}</div> : null}
