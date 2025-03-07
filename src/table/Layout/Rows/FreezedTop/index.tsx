@@ -8,7 +8,7 @@ import { CheckedItems, StructureConfig } from '../../../../Models/table.enum'
 import FreezeRowSvgIcon from '../../../../svgIcons/FrameSvgIcon'
 import EditSvgIcon from '../../../../svgIcons/EditSvgIcon'
 import DeleteSvgIcon from '../../../../svgIcons/DeleteSvgIcon'
-import Select from '../../../../components/select/select'
+import { hasScroll } from '../../../../utils'
 interface IFreezedRows<T extends Object> {
   freezedRows: T[]
   columnsConfigStructure: IColumnConfigStructure<T>
@@ -115,7 +115,7 @@ const FreezedRows = <T extends Object>({
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <div style={{ display: 'flex' }} className='G-row'>
+                      <div style={{ display: 'flex', width: hasScroll() ? 'max-content' : 'auto' }} className='G-row'>
                         {/* HOVERED ROWS */}
                         <ul
                           className='G-rows-icons'

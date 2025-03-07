@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react'
+import React, { memo } from 'react'
 import { IProps } from '../Models/table.models'
 import '../assets/style/index.scss'
 import Footer from './Layout/Footer'
@@ -8,7 +8,7 @@ import MainFooter from './MainFooter'
 import MainHeader from './MainHeader'
 import './index.scss'
 import useTable from './useTable'
-
+import { hasScroll } from '../utils'
 function Table<T extends Object>({
   data = [],
   pageSizeStructure,
@@ -131,7 +131,10 @@ function Table<T extends Object>({
         className={`G-data-table G-data-scroll ${!isLoadedData && !data.length ? 'G-empty-data-wrapper' : ''}`}
       >
         <>
-          <div className='G-header' style={{ minHeight: headerHeight ? `${headerHeight}px` : 48 }}>
+          <div
+            className='G-header'
+            style={{ minHeight: headerHeight ? `${headerHeight}px` : 48, width: hasScroll() ? 'max-content' : 'auto' }}
+          >
             <Header
               columnsConfigStructure={columnsConfigStructure}
               columnsHeaderStructure={columnsHeaderStructure}
@@ -188,7 +191,13 @@ function Table<T extends Object>({
           </div>
 
           {isEnableAggregates ? (
-            <div className='G-total-footer' style={{ minHeight: footerHeight ? `${footerHeight}px` : 48 }}>
+            <div
+              className='G-total-footer'
+              style={{
+                minHeight: footerHeight ? `${footerHeight}px` : 48,
+                width: hasScroll() ? 'max-content' : 'auto',
+              }}
+            >
               <Footer
                 rightFreezeConfig={rightFreezeConfig}
                 columnsHeaderStructure={columnsHeaderStructure}

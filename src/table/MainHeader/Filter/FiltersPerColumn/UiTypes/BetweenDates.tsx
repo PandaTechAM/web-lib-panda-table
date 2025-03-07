@@ -155,6 +155,7 @@ const BetweenDates = ({
             onOpen={() => handleOpenModal('from')}
             onClose={() => handleClose('from')}
             closeOnSelect
+            timeSteps={{ hours: 1, minutes: 1, seconds: 1 }}
             label={translations?.filterAction.from || 'From'}
             ampm={false}
             slotProps={{
@@ -186,6 +187,7 @@ const BetweenDates = ({
         <div style={{ width: '48%' }} tabIndex={1} onBlur={unFocused} className={errMessage.to ? 'date-picker' : ''}>
           <DateTimePicker
             ampm={false}
+            timeSteps={{ hours: 1, minutes: 1, seconds: 1 }}
             label={translations?.filterAction.to || 'To'}
             slotProps={{ textField: { size: inputSizes } }}
             onOpen={() => handleOpenModal('to')}

@@ -72,6 +72,7 @@ const PickDate = ({
         >
           <DateTimePicker
             slotProps={{ textField: { size: inputSizes } }}
+            timeSteps={{ hours: 1, minutes: 1, seconds: 1 }}
             minutesStep={1}
             ampm={false}
             label={item.key || item.ColumnName}

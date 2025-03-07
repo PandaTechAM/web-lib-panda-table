@@ -6,6 +6,7 @@ import Checkbox from '../../../../components/checkbox'
 import FreezedLeftColumns from '../FreezedLeftColumns'
 import { CheckedItems, StructureConfig } from '../../../../Models/table.enum'
 import HoveredRow from '../HoveredRow'
+import { hasScroll } from '../../../../utils'
 interface IMainRows<T extends Object> {
   unFreezedRows: T[]
   freezedRows: T[]
@@ -94,7 +95,12 @@ const MainRows = forwardRef<any, IMainRows<any>>(
       <>
         {rows.map((item: any, index: number) => {
           return (
-            <div key={item.id} className='G-flex G-row' onClick={() => getRow?.(item)}>
+            <div
+              key={item.id}
+              className='G-flex G-row'
+              style={{ width: hasScroll() ? 'max-content' : 'auto' }}
+              onClick={() => getRow?.(item)}
+            >
               <ul
                 className='G-rows-icons'
                 style={{

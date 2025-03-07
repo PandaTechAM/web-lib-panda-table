@@ -185,3 +185,9 @@ export const handleEnumColumns = (option: ItemFields[]) => {
     }
   })
 }
+
+export function hasScroll() {
+  const element = document.getElementsByClassName('G-data-scroll')[0]
+  if (!element) return
+  return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth
+}
