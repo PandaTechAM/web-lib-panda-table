@@ -13,6 +13,8 @@ const ActionList = (props: PickersActionBarProps, translations: Record<string, s
       variant: 'container',
     },
   ]
+  const locale = localStorage.getItem('locale')
+  const handlingLocale = locale === 'hy'
 
   return (
     <div className={`G-justify-between P-date-actions-component ${className}`}>
@@ -25,6 +27,7 @@ const ActionList = (props: PickersActionBarProps, translations: Record<string, s
               fullWidth
               style={{
                 textTransform: 'capitalize',
+                fontSize: handlingLocale ? '12px' : '14px',
               }}
               key={text}
               onClick={method}
