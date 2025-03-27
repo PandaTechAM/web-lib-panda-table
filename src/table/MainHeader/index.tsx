@@ -52,6 +52,7 @@ interface IActionsHeader<T extends Object> {
   handleChangePagePerFilterField?(option: ItemFields): void
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element
+  handleDeleteAll?: () => void
 }
 const MainHeader = <T extends Object>({
   columnsConfigStructure,
@@ -83,6 +84,7 @@ const MainHeader = <T extends Object>({
   getFilteredDataForTable,
   getDownloadType,
   customHeaderAction,
+  handleDeleteAll,
 }: IActionsHeader<T>) => {
   return (
     <div className='G-justify-start G-table-actions-header'>
@@ -123,6 +125,14 @@ const MainHeader = <T extends Object>({
                   selectedType === CheckedItems.SELECTED_ALL ? translations?.all || 'All' : checkedRows,
                 )
               : null}
+            {handleDeleteAll && (
+              <div className='G-flex G-delete' onClick={handleDeleteAll}>
+                <div className='G-center G-delete-icon'>
+                  <DeleteSvgIcon />
+                  <span>{translations?.deleteAllAction || 'Delete All'}</span>
+                </div>
+              </div>
+            )}
           </div>
         </>
       ) : null}

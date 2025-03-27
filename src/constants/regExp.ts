@@ -28,6 +28,7 @@ export const translations = {
   },
   deleteAction: 'Delete',
   editAction: 'Edit',
+  deleteAllAction: 'Delete All',
   filterAction: {
     modalName: 'Filter by',
     advanced: 'Advanced filters',

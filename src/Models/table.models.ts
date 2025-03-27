@@ -62,6 +62,7 @@ export interface IProps<T extends Object> {
   customHeaderAction?(option: T[] | string): JSX.Element
   handleSorting?(option: string): void
   handleArgChange?(columnName: string, type: string): void
+  handleDeleteAll?: () => void
 }
 
 export interface ItemFields {
