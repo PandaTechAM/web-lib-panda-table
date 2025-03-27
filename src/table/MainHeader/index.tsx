@@ -125,7 +125,7 @@ const MainHeader = <T extends Object>({
                   selectedType === CheckedItems.SELECTED_ALL ? translations?.all || 'All' : checkedRows,
                 )
               : null}
-            {handleDeleteAll && (
+            {handleDeleteAll && data.length > 1 && (
               <div className='G-flex G-delete' onClick={handleDeleteAll}>
                 <div className='G-center G-delete-icon'>
                   <DeleteSvgIcon />
