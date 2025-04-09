@@ -44,14 +44,18 @@ const Checkbox = ({
       className={`G-checkbox-component G-inline-flex G-align-center G-justify-start ${customClass ? customClass : ''}`}
     >
       <div
-        className={`G-checkbox G-flex G-flex-column ${isCheck ? 'G-active-checkbox' : ''} ${
+        className={`G-checkbox G-flex G-flex-column ${isDisable || isCheck ? 'G-active-checkbox' : ''} ${
           CheckBoxEnum[checkboxType]
         } ${isDisable ? 'G-disable-checkbox' : ''} `}
-      >
-        <span className={`G-active-checkbox-secondary-top`} />
+      />
+      {/* <span className={`G-active-checkbox-secondary-top`} />
         <span className={`G-active-checkbox-secondary-bottom`} />
-        <span className={`G-checkbox-mark ${isCheck ? ' G-checkbox-mark-active' : ''}`} />
-      </div>
+        <span
+          className={`G-checkbox-mark ${
+            isCheck ? " G-checkbox-mark-active" : ""
+          }`}
+        /> */}
+      {/* </div> */}
       {children ? children : <p>{label}</p>}
     </div>
   )

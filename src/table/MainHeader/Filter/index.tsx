@@ -138,7 +138,7 @@ const Filter = ({
                                 handleChangePagePerFilterField={handleChangePagePerFilterField}
                                 checkIsDisabled={checkIsDisabled}
                                 filteredColumn={filterDataForRequest}
-                                perColumnListForFilters={perColumnListForFilters}
+                                perColumnListForFilters={item.options}
                                 getFilteredData={getFilteredData}
                                 filterColumns={filterColumns}
                               />

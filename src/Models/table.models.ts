@@ -139,6 +139,7 @@ export interface IComparisonType {
   ColumnName: string
   ColumnType: ColumnTypeEnums
   IsBold?: boolean
+  options?: []
 }
 
 // export interface ITranslations {
@@ -211,4 +212,6 @@ export interface ISelect {
 export interface ICounterpartyTableColumns<T extends string> {
   ColumnName: string
   ColumnType: T
+  key?: string
+  options?: (string | ISelect)[]
 }
