@@ -96,7 +96,7 @@ function Table<T extends Object>({
         <MainHeader
           columnsConfigStructure={columnsConfigStructure}
           columnsHeaderStructure={columnsHeaderStructure}
-          perColumnListForFilters={perColumnListForFilters}
+          // perColumnListForFilters={perColumnListForFilters}
           selectedPageCount={selectedPageCount}
           multipleCheck={multipleCheck}
           data={data}
@@ -104,7 +104,7 @@ function Table<T extends Object>({
           draggableColumns={draggableColumns}
           filterColumns={filterColumns}
           filterDataForRequest={filterDataForRequest}
-          isLoadingFilters={isLoadingFilters}
+          // isLoadingFilters={isLoadingFilters}
           filtersTypes={filtersTypes}
           selectedType={selectedType}
           perColumnTotalCount={perColumnTotalCount}

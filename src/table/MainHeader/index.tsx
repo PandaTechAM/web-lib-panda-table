@@ -151,9 +151,9 @@ const MainHeader = <T extends Object>({
         <Filter
           data={data}
           filterColumns={filterColumns}
-          perColumnListForFilters={perColumnListForFilters}
+          // perColumnListForFilters={perColumnListForFilters}
           filterDataForRequest={filterDataForRequest}
-          isLoadingFilters={isLoadingFilters}
+          // isLoadingFilters={isLoadingFilters}
           filtersTypes={filtersTypes}
           perColumnTotalCount={perColumnTotalCount}
           translations={translations}

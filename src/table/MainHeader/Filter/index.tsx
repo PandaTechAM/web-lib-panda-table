@@ -127,7 +127,7 @@ const Filter = ({
                           return (
                             <Fragment key={item.ColumnName}>
                               <APIFilter
-                                isLoadingFilters={isLoadingFilters}
+                                isLoadingFilters={item.isLoading}
                                 advancedSettings={advancedSettings}
                                 item={item}
                                 data={data}

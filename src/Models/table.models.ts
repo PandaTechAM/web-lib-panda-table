@@ -140,6 +140,7 @@ export interface IComparisonType {
   ColumnType: ColumnTypeEnums
   IsBold?: boolean
   options?: []
+  isLoading?: boolean
 }
 
 // export interface ITranslations {
