@@ -74,6 +74,7 @@ const CheckRows = <T extends Object>({
       <div className='G-align-center G-check-all-component'>
         <Checkbox
           isCheck={selectedItem === 0 || checkedRows.length === data.length}
+          isDisable={!data.length}
           onClick={
             selectedItem === 0 || selectedItem === 1
               ? () => {

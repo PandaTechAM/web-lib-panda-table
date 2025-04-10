@@ -41,7 +41,7 @@ interface IActionsHeader<T extends Object> {
   setColumnHeaderStructure?: (options: IColumnHeaderStructure) => void
   handleChangePage?(option: number): void
   handleEdit?(option: T): void
-  handleDelete?(option: T[] | string): void
+  handleDelete?(option: T[]): void
   handleSelectDataSize?(options: IPageSizes): void
   storeStructure?(): void
   unCheck(): void
@@ -107,32 +107,25 @@ const MainHeader = <T extends Object>({
                 </div>
               </div>
             ) : null}
-            {checkedRows.length && handleDelete ? (
-              <div
-                className='G-flex G-delete'
-                onClick={() =>
-                  handleDelete(selectedType === CheckedItems.SELECTED_ALL ? translations?.all || 'All' : checkedRows)
-                }
-              >
+            {(selectedType === CheckedItems.SELECTED_ALL || checkedRows.length) && handleDelete ? (
+              <div className='G-flex G-delete' onClick={() => handleDelete(checkedRows)}>
                 <div className='G-center G-delete-icon'>
                   <DeleteSvgIcon />
                   <span>{translations?.deleteAction || 'Delete'}</span>
                 </div>
               </div>
             ) : null}
-            {checkedRows.length
-              ? customHeaderAction?.(
-                  selectedType === CheckedItems.SELECTED_ALL ? translations?.all || 'All' : checkedRows,
-                )
+            {selectedType === CheckedItems.SELECTED_ALL || checkedRows.length
+              ? customHeaderAction?.(checkedRows)
               : null}
-            {handleDeleteAll && data.length > 1 && (
-              <div className='G-flex G-delete' onClick={handleDeleteAll}>
-                <div className='G-center G-delete-icon'>
+            {/* {handleDeleteAll && data.length > 1 && (
+              <div className="G-flex G-delete" onClick={handleDeleteAll}>
+                <div className="G-center G-delete-icon">
                   <DeleteSvgIcon />
-                  <span>{translations?.deleteAllAction || 'Delete All'}</span>
+                  <span>{translations?.deleteAllAction || "Delete All"}</span>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </>
       ) : null}
