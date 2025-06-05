@@ -52,6 +52,7 @@ export enum ColumnTypeEnums {
   Tags = 'Tags',
   NumberCollection = 'NumberCollection',
   TextCollection = 'TextCollection',
+  TikoType = 'TikoType',
 }
 
 export const numberFields = [ColumnTypeEnums.Number, ColumnTypeEnums.Currency, ColumnTypeEnums.Percentage]

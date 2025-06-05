@@ -66,7 +66,12 @@ const APIFilter = ({
     }
     return filterTyping.PropertyName
   }
-  const listWithContains = [ColumnTypeEnums.Text, ColumnTypeEnums.TextCollection, ColumnTypeEnums.NumberCollection]
+  const listWithContains = [
+    ColumnTypeEnums.Text,
+    ColumnTypeEnums.TikoType,
+    ColumnTypeEnums.TextCollection,
+    ColumnTypeEnums.NumberCollection,
+  ]
 
   const handleChangeValue = (value: any) => {
     let columnFilter: ItemFields = {

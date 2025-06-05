@@ -98,6 +98,14 @@ const filterUiHelperMap = {
     Contains: 7,
     NotContains: 7,
   },
+  TikoType: {
+    Equal: 1,
+    NotEqual: 1,
+    StartsWith: 2,
+    EndsWith: 2,
+    Contains: 2,
+    NotContains: 2,
+  },
 } as const
 
 export const filterUiHelper = (ColumnType: string, ComparisonType: string) => {

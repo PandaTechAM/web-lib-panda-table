@@ -75,7 +75,7 @@ const ModalForSingleField = ({
     setIsLoadedMoreData(false)
     const selectedValue: string[] = value.length ? [value.at(-1)] : []
     setCheckedItems(selectedValue)
-    if (item.ColumnType !== ColumnTypeEnums.Text) {
+    if (item.ColumnType !== ColumnTypeEnums.Text && item.ColumnType !== ColumnTypeEnums.TikoType) {
       let newValues: number[] = []
       newValues = selectedValue.map((item: string) => +item)
       if (!isOpened) {
@@ -90,7 +90,11 @@ const ModalForSingleField = ({
     }
   }
   const onChange = (newInputValue: string) => {
-    if (item.ColumnType !== ColumnTypeEnums.Text && !containsOnlyNumbers(newInputValue)) {
+    if (
+      item.ColumnType !== ColumnTypeEnums.Text &&
+      item.ColumnType !== ColumnTypeEnums.TikoType &&
+      !containsOnlyNumbers(newInputValue)
+    ) {
       setErrMessage(translations?.filterAction.onlyNumbers || 'only numbers')
       setVal(newInputValue)
       return
@@ -103,7 +107,7 @@ const ModalForSingleField = ({
 
   const isEmpty = () => {
     if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length && val.length) {
-      if (item.ColumnType !== ColumnTypeEnums.Text) {
+      if (item.ColumnType !== ColumnTypeEnums.Text && item.ColumnType !== ColumnTypeEnums.TikoType) {
         if (containsOnlyNumbers(val)) return true
       } else {
         return true
@@ -144,7 +148,7 @@ const ModalForSingleField = ({
   useEffect(() => {
     if (item.ColumnName === filterTyping.PropertyName) {
       let newValues: string[] = filterTyping.CheckedItems
-      if (item.ColumnType !== ColumnTypeEnums.Text) {
+      if (item.ColumnType !== ColumnTypeEnums.Text && item.ColumnType !== ColumnTypeEnums.TikoType) {
         newValues = filterTyping.CheckedItems.map((item: number) => item + '')
       }
       setCheckedItems(newValues)

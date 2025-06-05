@@ -136,7 +136,7 @@ const MultipleCheck = ({
   }
   const isEmpty = () => {
     if (item.ColumnName === columnName && !isLoadingFilters && !perColumnListForFilters?.length) {
-      if (item.ColumnType !== ColumnTypeEnums.Text) {
+      if (item.ColumnType !== ColumnTypeEnums.Text && item.ColumnType !== ColumnTypeEnums.TikoType) {
         if (item.ColumnType === ColumnTypeEnums.EncryptedData) {
           if (val.length) return true
         } else if (item.ColumnType === ColumnTypeEnums.Base36Id) {
@@ -170,7 +170,11 @@ const MultipleCheck = ({
         if (elem === '') {
           return emptyValue
         }
-        if (item.ColumnType !== ColumnTypeEnums.Text && item.ColumnType !== ColumnTypeEnums.Base36Id) {
+        if (
+          item.ColumnType !== ColumnTypeEnums.Text &&
+          item.ColumnType !== ColumnTypeEnums.TikoType &&
+          item.ColumnType !== ColumnTypeEnums.Base36Id
+        ) {
           return elem + ''
         }
         return elem
