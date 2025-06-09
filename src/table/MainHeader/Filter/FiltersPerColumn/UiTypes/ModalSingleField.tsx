@@ -61,7 +61,7 @@ const ModalForSingleField = ({
     setVal('')
     setIsLoadedMoreData(false)
     setIsOpened(false)
-    if (item.ColumnType !== ColumnTypeEnums.Text) {
+    if (item.ColumnType !== ColumnTypeEnums.Text && item.ColumnType !== ColumnTypeEnums.TikoType) {
       let newValues: number[] = []
       checkedItems.map((item) => newValues.push(+item))
       handleSelectItems(newValues, false)
@@ -153,7 +153,7 @@ const ModalForSingleField = ({
       }
       setCheckedItems(newValues)
     }
-  }, [])
+  }, [filterTyping])
   return (
     <div
       style={{
