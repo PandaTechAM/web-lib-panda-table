@@ -127,8 +127,8 @@ const ModalForSingleField = ({
       if (!isLoadedMoreData) {
         newPerColumnList = perColumnListForFilters ? [val, ...perColumnListForFilters] : [val]
       }
-      if (perColumnListForFilters.length === 2) {
-        return [newPerColumnList[1]]
+      if (perColumnListForFilters.length === 1) {
+        return perColumnListForFilters
       } else {
         return newPerColumnList
       }
@@ -190,7 +190,11 @@ const ModalForSingleField = ({
                     display: 'flex',
                     justifyContent: 'space-between',
                     minHeight: 40,
-                    borderBottom: props['data-option-index' as keyof typeof props] === 0 ? '1px solid #DCDCDC' : 'none',
+                    borderBottom:
+                      props['data-option-index' as keyof typeof props] === 0 &&
+                      (perColumnListForFilters?.length ?? 0) > 1
+                        ? '1px solid #DCDCDC'
+                        : 'none',
                   }}
                 >
                   {item.ColumnName === columnName && isLoadingFilters ? (
