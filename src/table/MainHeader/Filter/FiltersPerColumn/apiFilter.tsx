@@ -205,13 +205,10 @@ const APIFilter = ({
         CheckedItems: checkedItems,
         Search: '',
       }
-      if (filterUiHelper(typeElem.ColumnType, filterTyping.TypeForUi) !== 2) {
-        filteredData.ComparisonType =
-          item.ColumnType === ColumnTypeEnums.Tags
-            ? filteredData.ComparisonType
-            : checkedItems.length > 1
-            ? 'In'
-            : 'Equal'
+      if (item.ColumnType === ColumnTypeEnums.Tags) {
+        filteredData.ComparisonType = filteredData.ComparisonType
+      } else {
+        filteredData.ComparisonType = checkedItems.length > 1 ? 'In' : 'Equal'
       }
 
       getFilteredData?.(filteredData, '', false, filterTyping.ColumnType)
