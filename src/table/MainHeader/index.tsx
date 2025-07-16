@@ -53,6 +53,7 @@ interface IActionsHeader<T extends Object> {
   getDownloadType?: (option: string, checkedRows: T[] | string) => void
   customHeaderAction?(option: T[] | string): JSX.Element
   handleDeleteAll?: () => void
+  staticAction?(): JSX.Element
 }
 const MainHeader = <T extends Object>({
   columnsConfigStructure,
@@ -85,6 +86,7 @@ const MainHeader = <T extends Object>({
   getDownloadType,
   customHeaderAction,
   handleDeleteAll,
+  staticAction,
 }: IActionsHeader<T>) => {
   return (
     <div className='G-justify-start G-table-actions-header'>
@@ -118,7 +120,9 @@ const MainHeader = <T extends Object>({
             {/* {selectedType === CheckedItems.SELECTED_ALL || checkedRows.length
               ? customHeaderAction?.(checkedRows)
               : null} */}
-            {customHeaderAction?.(checkedRows)}
+            {selectedType === CheckedItems.SELECTED_ALL || checkedRows.length
+              ? customHeaderAction?.(checkedRows)
+              : null}
             {/* {handleDeleteAll && data.length > 1 && (
               <div className="G-flex G-delete" onClick={handleDeleteAll}>
                 <div className="G-center G-delete-icon">
@@ -130,16 +134,26 @@ const MainHeader = <T extends Object>({
           </div>
         </>
       ) : null}
-      {draggableColumns ? (
-        <ColumnsCustomizer
-          columnsConfigStructure={columnsConfigStructure}
-          setColumnsConfigStructure={setColumnsConfigStructure}
-          columnsHeaderStructure={columnsHeaderStructure}
-          setColumnHeaderStructure={setColumnHeaderStructure}
-          translations={translations}
-          storeStructure={storeStructure}
-        />
-      ) : null}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '32px',
+          flex: '1 1 auto',
+        }}
+      >
+        {draggableColumns ? (
+          <ColumnsCustomizer
+            columnsConfigStructure={columnsConfigStructure}
+            setColumnsConfigStructure={setColumnsConfigStructure}
+            columnsHeaderStructure={columnsHeaderStructure}
+            setColumnHeaderStructure={setColumnHeaderStructure}
+            translations={translations}
+            storeStructure={storeStructure}
+          />
+        ) : null}
+        {staticAction?.()}
+      </div>
 
       {hasFilters ? (
         <Filter

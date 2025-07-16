@@ -69,6 +69,7 @@ function Table<T extends Object>({
   handleSorting,
   handleArgChange,
   handleDeleteAll,
+  staticAction,
 }: IProps<T>) {
   const {
     freezedRows,
@@ -125,6 +126,7 @@ function Table<T extends Object>({
           getDownloadType={getDownloadType}
           customHeaderAction={customHeaderAction}
           handleDeleteAll={handleDeleteAll}
+          staticAction={staticAction}
         />
       ) : null}
 

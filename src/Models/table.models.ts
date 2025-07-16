@@ -63,6 +63,7 @@ export interface IProps<T extends Object> {
   handleSorting?(option: string): void
   handleArgChange?(columnName: string, type: string): void
   handleDeleteAll?: () => void
+  staticAction?(): JSX.Element
 }
 
 export interface ItemFields {
